@@ -134,9 +134,16 @@
     --shadow-md: 0 4px 16px rgb(22 36 58 / 8%);
 
     /* Sticky header height, referenced by scroll-margin-top so anchor
-       targets are not hidden behind it. Both must move together. */
-    --header-height: 4.5rem;
+       targets are not hidden behind it. Both must move together — the
+       header stacks into two rows on mobile, so this grows to match. */
+    --header-height: 7rem;
 
     --transition: 160ms ease;
+  }
+
+  @media (width >= 48rem) {
+    :root {
+      --header-height: 4.5rem;
+    }
   }
 }

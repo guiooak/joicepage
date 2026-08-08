@@ -15,12 +15,25 @@
     border-block-end: 1px solid var(--color-border);
   }
 
+  /* Two rows on mobile — brand above a full-width nav — collapsing to a
+     single row once there is horizontal space. */
   .site-header__inner {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-5);
-    min-block-size: var(--header-height);
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-2);
+    padding-block: var(--space-3);
+  }
+
+  @media (width >= 48rem) {
+    .site-header__inner {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-5);
+      min-block-size: var(--header-height);
+      padding-block: 0;
+    }
   }
 
   .brand {
@@ -40,39 +53,34 @@
     flex-shrink: 0;
   }
 
-  .nav__toggle {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-    padding: var(--space-2) var(--space-3);
-    font-size: var(--text-caption);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-sm);
-    cursor: pointer;
-    list-style: none;
-  }
-
-  .nav__toggle::-webkit-details-marker {
-    display: none;
+  /* No hamburger, and deliberately so. A <details> disclosure cannot be
+     closed by CSS when a link inside it is followed, so the menu would stay
+     open covering the page after every tap — and closing it needs JS. Five
+     same-page anchors do not need a menu: they fit in a scrollable row that
+     has no open/closed state to get wrong. */
+  .nav {
+    min-inline-size: 0;
   }
 
   .nav__list {
     display: flex;
-    flex-direction: column;
     gap: var(--space-1);
-    padding: var(--space-4);
-    position: absolute;
-    inset-inline: 0;
-    background-color: var(--color-surface);
-    border-block-end: 1px solid var(--color-border);
-    box-shadow: var(--shadow-md);
+    padding: 0;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scrollbar-width: none;
+  }
+
+  .nav__list::-webkit-scrollbar {
+    display: none;
   }
 
   .nav__link {
     display: block;
-    padding: var(--space-3);
+    padding: var(--space-2) var(--space-3);
     font-size: var(--text-caption);
     text-decoration: none;
+    white-space: nowrap;
     border-radius: var(--radius-sm);
     transition: background-color var(--transition), color var(--transition);
   }
@@ -83,28 +91,9 @@
   }
 
   @media (width >= 48rem) {
-    .nav__toggle {
-      display: none;
-    }
-
-    /* Overrides the UA's hiding of closed <details> content. The
-       ::details-content rule covers newer Chrome, which hides via
-       content-visibility rather than display. */
-    .nav > details > .nav__list {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
+    .nav__list {
       gap: var(--space-2);
-      position: static;
-      padding: 0;
-      background: none;
-      border: 0;
-      box-shadow: none;
-    }
-
-    .nav > details::details-content {
-      content-visibility: visible;
-      block-size: auto;
+      overflow-x: visible;
     }
   }
 
