@@ -1,149 +1,149 @@
-/* Cascade order, declared once for the whole site. Everything downstream slots
-   into a named layer, so specificity never has to be argued about. */
-@layer reset, tokens, base, components, utilities;
+/* Cascade order, declared once for the whole site. */
+@layer reset, tokens, base, components;
+
+/* ============================================================================
+   DESIGN TOKENS — Joice Sperandio
+   Extracted from the Figma frame "Site desktop" (Layouts › Finais).
+
+   PROVENANCE, so future edits know what to trust:
+
+   EXACT — read off Figma's properties panel:
+     · type scale (all ten text styles, size/line-height-%)
+     · content width 1360px, frame 1440px
+     · section padding-top 160px, section gap token Sizes/72px
+
+   SAMPLED — measured from the rendered canvas, not from Figma variables.
+   The MCP tools that read variables require *edit* access on the file, which
+   is still pending. Every sampled value is a token below, so replacing them
+   from source is a one-line change each and touches no component CSS:
+     · all colour values
+     · corner radii
+     · the font family
+
+   Desktop only. There are deliberately no breakpoints in this stylesheet.
+   ========================================================================= */
 
 @layer tokens {
   :root {
-    /* ------------------------------------------------------------------
-       PRIMITIVES
-       Mirrors the "Primitivies" board in Figma. Raw values live only here.
+    /* ---- Primitives ---------------------------------------------------- */
+    --navy-900: #16233d;
+    --navy-800: #1c2c4c;
+    --navy-700: #24365a;
 
-       PROVISIONAL: sampled from design screenshots, not extracted from the
-       Figma variables. Replace from source once edit access lands — the
-       semantic aliases below should absorb the change without any component
-       CSS needing to move.
-       ------------------------------------------------------------------ */
-    --blue-50: #f3f8fc;
-    --blue-100: #e4eef7;
-    --blue-200: #d5e4f1;
-    --blue-300: #b9d0e6;
-    --blue-500: #5b7fa8;
-    --blue-700: #2e4a6b;
-    --blue-900: #16243a;
+    --blue-600: #3e5c93;
+    --blue-500: #5d7fa9;
+    --blue-400: #7b96bd;
+    --blue-300: #a9bedc;
+    --blue-200: #c4d6ea;
+    --blue-100: #d8e4f2;
+    --blue-050: #eef4fa;
 
-    --indigo-100: #e6e9f6;
-    --indigo-200: #d3d8ee;
-    --indigo-300: #b7bee2;
-    --indigo-500: #6b74b8;
-    --indigo-700: #3f4682;
+    --lilac-400: #a79ecb;
+    --lilac-300: #b3abd1;
+    --lilac-200: #cfcbdd;
 
-    --neutral-0: #ffffff;
-    --neutral-50: #f7f7f8;
-    --neutral-100: #eeeff1;
-    --neutral-200: #e2e4e8;
-    --neutral-400: #9aa0aa;
-    --neutral-600: #5c626c;
-    --neutral-900: #14161a;
+    --slate-600: #4a5468;
+    --slate-500: #667085;
+    --slate-300: #c3cfe4;
+    --slate-200: #e2e6ec;
 
-    /* ------------------------------------------------------------------
-       SEMANTIC ALIASES
-       Mirrors "Tokens — Colors" / "— Background" in Figma. Components may
-       only reference these, never the primitives above.
-       ------------------------------------------------------------------ */
-    --color-bg: var(--neutral-50);
-    --color-surface: var(--neutral-0);
-    --color-surface-soft: var(--blue-100);
-    --color-surface-muted: var(--blue-50);
-    --color-surface-accent: var(--indigo-200);
+    --white: #ffffff;
 
-    --color-text: var(--blue-900);
-    --color-text-muted: var(--neutral-600);
-    --color-text-on-accent: var(--indigo-700);
+    /* ---- Semantic ------------------------------------------------------ */
+    --color-page: var(--white);
+    --color-ink: var(--navy-800);
+    --color-ink-strong: var(--navy-900);
+    --color-body: var(--slate-600);
+    --color-body-soft: var(--slate-500);
 
-    --color-accent: var(--indigo-500);
-    --color-accent-strong: var(--indigo-700);
-    --color-border: var(--neutral-200);
-    --color-border-soft: var(--blue-200);
+    --color-accent: var(--blue-500);
+    --color-accent-deep: var(--blue-600);
+    --color-accent-soft: var(--blue-400);
+    --color-ghost-ink: var(--slate-300);
 
-    /* WhatsApp brand green — used only for the primary CTA. */
-    --color-whatsapp: #25d366;
-    --color-whatsapp-ink: #0b3d1e;
+    --color-surface-card: var(--blue-200);
+    --color-surface-card-alt: var(--blue-100);
+    --color-surface-tint: var(--blue-050);
+    --color-line: var(--slate-200);
+    --color-line-strong: var(--blue-300);
 
-    /* Hover/active states are derived, not declared. One token per role
-       instead of one per state keeps the surface small and guarantees the
-       states stay in sync when the base value changes. */
-    --color-accent-hover: color-mix(in oklab, var(--color-accent) 85%, black);
-    --color-surface-hover: color-mix(in oklab, var(--color-surface-soft) 88%, var(--color-accent));
+    --color-button: var(--navy-900);
+    --color-button-ink: var(--white);
+    --color-button-hover: color-mix(in oklab, var(--navy-900) 86%, white);
 
-    /* ------------------------------------------------------------------
-       TYPOGRAPHY
-       Scale from the Figma text styles, read as size/line-height-percent:
-       Display 72/92  H1 56/92  H2 48/100  H3 32/100  H4 28/120
-       H5 24/120  Paragrafo 20/140  Caption 16/150  Tag 16/100
+    /* Hero gradient — sampled from the canvas render. */
+    --gradient-hero: linear-gradient(
+      158deg,
+      var(--lilac-200) 0%,
+      var(--lilac-300) 46%,
+      var(--lilac-400) 100%
+    );
 
-       Fluid via clamp() so a 72px Display degrades gracefully to 375px
-       without a second scale. The preferred term is rem + vw rather than
-       pure vw, which keeps the text responsive to browser zoom.
-       Interpolates across a 375px -> 1440px viewport.
-       ------------------------------------------------------------------ */
-    --text-display: clamp(2.5rem, 1.796rem + 3.005vw, 4.5rem);
-    --text-h1: clamp(2.125rem, 1.641rem + 2.066vw, 3.5rem);
-    --text-h2: clamp(1.75rem, 1.31rem + 1.878vw, 3rem);
-    --text-h3: clamp(1.5rem, 1.324rem + 0.751vw, 2rem);
-    --text-h4: clamp(1.375rem, 1.243rem + 0.563vw, 1.75rem);
-    --text-h5: clamp(1.25rem, 1.162rem + 0.376vw, 1.5rem);
-    --text-body: clamp(1.0625rem, 0.996rem + 0.282vw, 1.25rem);
-    --text-caption: clamp(0.9375rem, 0.916rem + 0.094vw, 1rem);
-    --text-tag: 1rem;
-
-    --leading-tight: 0.92;
-    --leading-flat: 1;
-    --leading-snug: 1.2;
-    --leading-body: 1.4;
-    --leading-loose: 1.5;
-
-    /* PROVISIONAL: the real families come from Figma. System stacks keep the
-       page fully functional in the meantime and are the fallback layer once
-       self-hosted woff2 files land in assets/fonts/. */
-    --font-sans: "Joice Sans", ui-sans-serif, system-ui, -apple-system,
-      "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    /* ---- Typography ---------------------------------------------------- */
+    /* SAMPLED. The Figma variable name was truncated in the view-only panel
+       ("Typography/Font …"), so the real family is still unknown. The design
+       is a geometric humanist sans; this stack approximates it until the
+       woff2 files can be exported. */
+    --font-sans: "Joice Sans", Figtree, Poppins, ui-sans-serif, system-ui,
+      -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     --font-serif: "Joice Serif", ui-serif, Georgia, "Times New Roman", serif;
+
+    /* EXACT — the ten Figma text styles. Second number is line-height %. */
+    --text-display: 72px;
+    --leading-display: 0.92;
+    --text-h1: 56px;
+    --leading-h1: 0.92;
+    --text-h2: 48px;
+    --leading-h2: 1;
+    --text-h3: 32px;
+    --leading-h3: 1;
+    --text-h4: 28px;
+    --leading-h4: 1.2;
+    --text-h5: 24px;
+    --leading-h5: 1.2;
+    --text-paragraph: 20px;
+    --leading-paragraph: 1.4;
+    --leading-paragraph-bold: 1;
+    --text-caption: 16px;
+    --leading-caption: 1.5;
+    --text-tag: 16px;
+    --leading-tag: 1;
 
     --weight-regular: 400;
     --weight-medium: 500;
+    --weight-semibold: 600;
     --weight-bold: 700;
 
-    /* ------------------------------------------------------------------
-       DIMENSION — mirrors "Tokens — Dimension". 4px base.
-       ------------------------------------------------------------------ */
-    --space-1: 0.25rem;
-    --space-2: 0.5rem;
-    --space-3: 0.75rem;
-    --space-4: 1rem;
-    --space-5: 1.5rem;
-    --space-6: 2rem;
-    --space-7: 3rem;
-    --space-8: 4rem;
-    --space-9: 6rem;
-    --space-10: 8rem;
+    /* ---- Dimension ----------------------------------------------------- */
+    /* EXACT */
+    --frame-width: 1440px;
+    --content-width: 1360px;
+    --page-gutter: 40px;
+    --section-padding-top: 160px;
+    --size-72: 72px;
 
-    /* Section rhythm scales with the viewport so mobile doesn't get the
-       desktop's 128px gaps. */
-    --space-section: clamp(var(--space-8), 4rem + 6vw, var(--space-10));
+    --size-4: 4px;
+    --size-8: 8px;
+    --size-12: 12px;
+    --size-16: 16px;
+    --size-24: 24px;
+    --size-32: 32px;
+    --size-40: 40px;
+    --size-48: 48px;
+    --size-56: 56px;
+    --size-64: 64px;
+    --size-80: 80px;
+    --size-96: 96px;
+    --size-120: 120px;
 
-    --radius-sm: 0.5rem;
-    --radius-md: 0.75rem;
-    --radius-lg: 1.5rem;
-    --radius-pill: 62.4375rem;
+    /* SAMPLED */
+    --radius-sm: 8px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --radius-pill: 999px;
 
-    --measure: 68ch;
-    --container: 75rem;
-    --container-narrow: 48rem;
-
-    --shadow-sm: 0 1px 2px rgb(22 36 58 / 6%);
-    --shadow-md: 0 4px 16px rgb(22 36 58 / 8%);
-
-    /* Sticky header height, referenced by scroll-margin-top so anchor
-       targets are not hidden behind it. Both must move together — the
-       header stacks into two rows on mobile, so this grows to match. */
-    --header-height: 7rem;
+    --header-height: 76px;
 
     --transition: 160ms ease;
-  }
-
-  @media (width >= 48rem) {
-    :root {
-      --header-height: 4.5rem;
-    }
   }
 }

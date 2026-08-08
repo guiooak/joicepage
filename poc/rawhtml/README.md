@@ -1,116 +1,76 @@
 # poc/rawhtml
 
-Zero-dependency build of the Joice Sperandio landing page. Hand-authored HTML,
-pure modern CSS, no JavaScript, no build step, no `node_modules`.
+Zero-dependency implementation of the Joice Sperandio landing page, built to
+match the Figma frame **Layouts › Finais › "Site desktop"**.
 
-## Run
+Hand-authored HTML, pure CSS, no JavaScript, no build step, no `node_modules`.
 
 ```sh
 python3 -m http.server 8000
 ```
 
-There is nothing to install and nothing to compile. What is in this folder is
-exactly what ships.
+## Scope
 
-## What is here
+**Desktop only.** There are no breakpoints and no mobile CSS anywhere in this
+build — `body` holds `min-inline-size: 1440px` and the viewport meta is pinned
+to the frame width. Mobile is a separate exercise against the `Mobile` frame.
 
-```
-index.html          the whole page
-styles/
-  tokens.css        @layer declaration + primitives + semantic aliases
-  base.css          reset, base typography, utilities
-  sections.css      components — header, hero, cards, faq, cta, footer
-assets/fonts/       (empty) self-hosted woff2, once exported
-assets/img/         (empty) portrait + OG image, once exported
-robots.txt
-sitemap.xml
-```
+## Sections implemented
 
-## How the CSS is organised
+Header · Hero · Credentials bar · Visão · Princípios · Serviços · Processo
 
-Cascade order is declared once, at the top of `tokens.css`:
+All copy is transcribed verbatim from the mockup.
 
-```css
-@layer reset, tokens, base, components, utilities;
-```
+## Not yet built
 
-Everything else slots into a named layer, so specificity never has to be
-argued about and load order stops mattering.
+The nav links to seven sections; four still need capturing from Figma:
 
-Tokens come in two levels, mirroring the Figma file: primitives hold raw
-values, semantic aliases give them roles. Components may only reference the
-semantic level. A renamed Figma token should land as a one-line diff in
-`tokens.css` rather than a hunt through component CSS.
+- **Histórias** — testimonials
+- **Sobre**
+- **Dúvidas** — FAQ (the designer's comments show real questions, e.g. "A
+  conversa inicial tem custo?", "Os atendimentos são presenciais ou online?",
+  "Você executa os investimentos para mim?")
+- **Footer**
 
-Hover and active states derive with `color-mix()` instead of getting their own
-tokens, which keeps the token surface small and the states automatically in
-sync with their base colour.
+Also missing: panel copy for five of the six Processo accordion items, which
+are collapsed in the mockup and cannot be read from the canvas.
 
-## Platform features doing real work here
+## How the values were obtained
 
-| Feature | Replaces |
+Figma MCP requires **edit** access on the file; only view access is available,
+so the design was read through the canvas UI. That splits the values into two
+confidence levels, both recorded in `styles/tokens.css`:
+
+**Exact** — read off Figma's properties panel:
+
+| | |
 |---|---|
-| `scroll-behavior` + `scroll-margin-top` | the entire anchor-nav JS |
-| `@layer` | CSS-in-JS scoping discipline |
-| CSS nesting | Sass |
-| `clamp()` | a separate mobile type scale |
-| `color-mix()` | one token per interaction state |
-| container queries | viewport-width breakpoints on cards |
-| `<details>` | a JS accordion, and an SEO problem |
-| `animation-timeline: view()` | a scroll-reveal library |
-| inline SVG sprite + `<use>` | an icon component |
+| Type scale | all ten text styles, `size/line-height-%` |
+| Content width | 1360px (frame 1440px, 40px gutters) |
+| Section rhythm | `padding-top: 160px`, gap token `Sizes/72px` |
+| Copy | transcribed from the rendered frame |
 
-## Verified
+**Sampled** — measured off the rendered canvas, not from Figma variables:
+every colour, the corner radii, and the font family. Each is a token, so
+replacing it from source is a one-line change that touches no component CSS.
 
-- Renders correctly at 390px and 1512px
-- Zero `<script>` tags other than JSON-LD; zero inline event handlers
-- All three JSON-LD entities (`Person`, `FinancialService`, `FAQPage`) parse
-- Every word of content present in the raw HTTP response — nothing injected
-- Anchor targets clear the sticky header exactly: heading lands 139px from the
-  viewport top against a 136px `scroll-margin-top`
-- Mobile header stacks to two rows and `--header-height` moves with it
+## Known gaps against the mockup
 
-## Not yet done
+1. **The font is a substitute.** The Figma variable name was truncated in the
+   view-only panel (`Typography/Font …`), so the real family is unknown. The
+   fallback stack is wider than the design's face, so a few headlines wrap onto
+   one more line than the mockup. This is the single largest visual difference
+   and it resolves the moment the real woff2 lands.
+2. **Colours are sampled, not exact.** Close, but not guaranteed to the hex.
+3. **Images are placeholders** at the exact footprint they occupy in the
+   mockup — hero portrait 700 × 760, Princípios photo 1360 × 710.
+4. **The header is static, not sticky**, matching how the frame draws it. A
+   static frame cannot express stickiness, so this is a literal reading; say
+   the word if it should pin.
 
-Blocked on **Figma edit access** (the MCP tools need edit rights, not view):
+## What unblocks the rest
 
-- Token values in `tokens.css` are sampled from screenshots, not extracted.
-  Replace from source — the semantic aliases should absorb it without any
-  component CSS moving.
-- Fonts. `@font-face` blocks are written and commented out in `base.css`,
-  including the metric-override fallback that prevents layout shift on swap.
-  Needs the woff2 files, subset to latin + latin-ext for pt-BR diacritics.
-- Portrait and OG image. The hero has a placeholder box; the real `<picture>`
-  markup with AVIF/WebP sources and `fetchpriority="high"` is written out in a
-  comment next to it, along with the `<link rel="preload">` to add.
-- Logo. Currently a stand-in mark.
-
-Blocked on **Joice**:
-
-- All body copy is draft and needs her review.
-- Four FAQ answers are placeholders — they involve commercial claims
-  (remuneration, products, timelines) that only she can make.
-- Testimonials are empty slots by design. Real quotes, collected with
-  permission, or the section gets deleted.
-- Credential tags in the hero need confirming before publishing; professional
-  certifications are regulated claims.
-
-Blocked on **decisions**:
-
-- Domain. `joicesperandio.com.br` is a candidate throughout, not confirmed. It
-  must match the website field on her Google Business Profile exactly, www vs
-  non-www included, or the NAP match fails.
-- WhatsApp number. `5547991939397` assumes the 9th digit; the number given was
-  `+55 47 9193-9397`, which is 8 digits after the DDD. Her GBP lists the same
-  number, so reading the phone field off the listing settles it. Test the final
-  link on a real phone — a wrong number fails silently.
-- `areaServed` city in the JSON-LD.
-
-## Known ceiling
-
-One URL ranks for one primary intent cluster. "Planejamento financeiro" and
-"consultoria em investimentos" are different searches; the anchor sections may
-surface as sitelinks but will not rank independently. That is a limit of the
-single-page decision, not of this build — and the escape hatch is free, since
-adding `planejamento-financeiro.html` here is a new file rather than a
-migration.
+Edit access on `35gFTPRFgD9FZ0pwIxO3GL` for `guibrancopc@gmail.com`. That turns
+`get_variable_defs` into exact tokens, `get_design_context` into exact geometry
+per section, and `download_assets` into the real logo, icons and photos —
+replacing every "sampled" value above in a single pass.

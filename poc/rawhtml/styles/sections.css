@@ -1,506 +1,502 @@
+/* ============================================================================
+   COMPONENTS — desktop only, no breakpoints by design.
+   Geometry measured from the Figma frame "Site desktop" (1440px frame,
+   1360px content, 40px gutters).
+   ========================================================================= */
+
 @layer components {
-  /* ==================================================================
-     HEADER + NAV
-     The mobile menu is a native <details> disclosure. No JavaScript, no
-     checkbox hack, and it stays keyboard-accessible for free. On desktop
-     the summary is hidden and the list is forced visible regardless of
-     open state.
-     ================================================================== */
+  .shell {
+    inline-size: var(--content-width);
+    margin-inline: auto;
+  }
+
+  /* ---- Header ---------------------------------------------------------- */
+  /* Static, matching the mockup: the frame draws the header once at the top
+     of the page flow, not pinned. Making it sticky would also cover the
+     credentials bar that sits immediately under the hero. */
   .site-header {
-    position: sticky;
-    inset-block-start: 0;
-    z-index: 50;
-    background-color: color-mix(in srgb, var(--color-bg) 88%, transparent);
-    backdrop-filter: blur(12px);
-    border-block-end: 1px solid var(--color-border);
+    padding-block-start: var(--size-24);
   }
 
-  /* Two rows on mobile — brand above a full-width nav — collapsing to a
-     single row once there is horizontal space. */
-  .site-header__inner {
+  .site-header__bar {
     display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: var(--space-2);
-    padding-block: var(--space-3);
-  }
-
-  @media (width >= 48rem) {
-    .site-header__inner {
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-      gap: var(--space-5);
-      min-block-size: var(--header-height);
-      padding-block: 0;
-    }
+    align-items: center;
+    justify-content: space-between;
+    block-size: var(--header-height);
+    padding-inline: var(--size-32);
+    background-color: var(--color-page);
+    border-radius: var(--radius-md);
   }
 
   .brand {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-3);
+    font-family: var(--font-serif);
     font-size: var(--text-h5);
-    font-weight: var(--weight-bold);
-    line-height: var(--leading-flat);
-    text-decoration: none;
+    line-height: 1.05;
+    color: var(--color-ink);
     letter-spacing: -0.01em;
   }
 
-  .brand__mark {
-    inline-size: 2rem;
-    block-size: 2rem;
-    flex-shrink: 0;
-  }
-
-  /* No hamburger, and deliberately so. A <details> disclosure cannot be
-     closed by CSS when a link inside it is followed, so the menu would stay
-     open covering the page after every tap — and closing it needs JS. Five
-     same-page anchors do not need a menu: they fit in a scrollable row that
-     has no open/closed state to get wrong. */
-  .nav {
-    min-inline-size: 0;
-  }
-
-  .nav__list {
-    display: flex;
-    gap: var(--space-1);
-    padding: 0;
-    overflow-x: auto;
-    overscroll-behavior-inline: contain;
-    scrollbar-width: none;
-  }
-
-  .nav__list::-webkit-scrollbar {
-    display: none;
-  }
-
-  .nav__link {
+  .brand span {
     display: block;
-    padding: var(--space-2) var(--space-3);
-    font-size: var(--text-caption);
-    text-decoration: none;
-    white-space: nowrap;
-    border-radius: var(--radius-sm);
-    transition: background-color var(--transition), color var(--transition);
   }
 
-  .nav__link:hover {
-    background-color: var(--color-surface-soft);
-    color: var(--color-accent-strong);
-  }
-
-  @media (width >= 48rem) {
-    .nav__list {
-      gap: var(--space-2);
-      overflow-x: visible;
-    }
-  }
-
-  /* ==================================================================
-     BUTTONS
-     ================================================================== */
-  .button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: var(--space-3);
-    padding: var(--space-3) var(--space-5);
-    font-size: var(--text-caption);
-    font-weight: var(--weight-bold);
-    line-height: var(--leading-flat);
-    text-decoration: none;
-    border: 1px solid transparent;
-    border-radius: var(--radius-pill);
-    cursor: pointer;
-    transition: background-color var(--transition), transform var(--transition);
-  }
-
-  .button:hover {
-    transform: translateY(-1px);
-  }
-
-  .button--whatsapp {
-    background-color: var(--color-whatsapp);
-    color: var(--color-whatsapp-ink);
-  }
-
-  .button--whatsapp:hover {
-    background-color: color-mix(in oklab, var(--color-whatsapp) 88%, black);
-  }
-
-  .button--ghost {
-    background-color: transparent;
-    border-color: var(--color-border-soft);
-    color: var(--color-text);
-  }
-
-  .button--ghost:hover {
-    background-color: var(--color-surface-soft);
-  }
-
-  .button__icon {
-    inline-size: 1.25rem;
-    block-size: 1.25rem;
-    flex-shrink: 0;
-  }
-
-  /* ==================================================================
-     SECTION SHELL
-     ================================================================== */
-  .section {
-    padding-block: var(--space-section);
-  }
-
-  .section--soft {
-    background-color: var(--color-surface-muted);
-  }
-
-  .section__header {
+  .nav {
     display: flex;
-    flex-direction: column;
-    gap: var(--space-4);
-    margin-block-end: var(--space-7);
-    max-inline-size: var(--measure);
+    align-items: center;
+    gap: var(--size-32);
   }
 
-  .section__eyebrow {
-    font-size: var(--text-tag);
-    line-height: var(--leading-flat);
-    font-weight: var(--weight-bold);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+  .nav a {
+    font-size: var(--text-caption);
+    line-height: var(--leading-tag);
+    color: var(--color-ink);
+    transition: color var(--transition);
+  }
+
+  .nav a:hover {
     color: var(--color-accent);
   }
 
-  .section__lead {
-    font-size: var(--text-body);
-    color: var(--color-text-muted);
-  }
-
-  /* ==================================================================
-     HERO
-     ================================================================== */
-  .hero {
-    padding-block: var(--space-section);
-    background:
-      radial-gradient(
-        ellipse 80% 60% at 70% 0%,
-        var(--color-surface-soft),
-        transparent 70%
-      ),
-      var(--color-bg);
-  }
-
-  .hero__grid {
-    display: grid;
-    gap: var(--space-7);
+  /* ---- Buttons --------------------------------------------------------- */
+  .btn {
+    display: inline-flex;
     align-items: center;
+    justify-content: center;
+    font-size: var(--text-caption);
+    line-height: var(--leading-tag);
+    font-weight: var(--weight-medium);
+    cursor: pointer;
+    transition: background-color var(--transition), color var(--transition);
   }
 
-  @media (width >= 60rem) {
-    .hero__grid {
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: var(--space-8);
-    }
+  .btn--pill {
+    block-size: 54px;
+    padding-inline: var(--size-32);
+    background-color: var(--color-button);
+    color: var(--color-button-ink);
+    border-radius: var(--radius-pill);
+  }
+
+  .btn--pill:hover {
+    background-color: var(--color-button-hover);
+  }
+
+  .btn--solid {
+    block-size: 48px;
+    padding-inline: var(--size-24);
+    background-color: var(--color-button);
+    color: var(--color-button-ink);
+    border-radius: var(--radius-sm);
+  }
+
+  .btn--solid:hover {
+    background-color: var(--color-button-hover);
+  }
+
+  .btn--ghost {
+    block-size: 48px;
+    padding-inline: var(--size-24);
+    color: var(--white);
+    border: 1px solid rgb(255 255 255 / 55%);
+    border-radius: var(--radius-sm);
+  }
+
+  .btn--ghost:hover {
+    background-color: rgb(255 255 255 / 14%);
+  }
+
+  /* ---- Hero ------------------------------------------------------------ */
+  .hero {
+    position: relative;
+    block-size: 760px;
+    margin-block-start: var(--size-16);
+    padding: var(--size-48);
+    background-image: var(--gradient-hero);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  /* Placeholder occupies the exact footprint the portrait has in the mockup:
+     it is masked into the right side of the 1360x760 hero. */
+  .hero__portrait {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-end: 0;
+    inline-size: 700px;
+    display: grid;
+    place-items: center;
+    background-color: rgb(255 255 255 / 22%);
+    color: var(--white);
+    font-size: var(--text-caption);
+    text-align: center;
+  }
+
+  .hero__content {
+    position: relative;
+    z-index: 1;
+    inline-size: 560px;
   }
 
   .hero__title {
     font-size: var(--text-display);
-    line-height: var(--leading-tight);
+    line-height: var(--leading-display);
+    font-weight: var(--weight-semibold);
+    color: var(--white);
     letter-spacing: -0.02em;
   }
 
   .hero__lead {
-    margin-block-start: var(--space-5);
-    font-size: var(--text-body);
-    color: var(--color-text-muted);
+    inline-size: 480px;
+    margin-block-start: var(--size-32);
+    font-size: var(--text-caption);
+    line-height: var(--leading-caption);
+    color: rgb(255 255 255 / 88%);
   }
 
   .hero__actions {
     display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-3);
-    margin-block-start: var(--space-6);
+    gap: var(--size-16);
+    margin-block-start: var(--size-32);
   }
 
-  .hero__credentials {
+  .hero__caption {
+    position: absolute;
+    inset-inline-end: 64px;
+    inset-block-end: 72px;
+    z-index: 1;
+    inline-size: 250px;
+    font-size: var(--text-caption);
+    line-height: var(--leading-caption);
+    color: var(--white);
+  }
+
+  /* ---- Credentials bar ------------------------------------------------- */
+  .credentials {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    padding-block: var(--size-96);
+    padding-inline: var(--size-80);
+  }
+
+  .credentials li {
     display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2);
-    margin-block-start: var(--space-6);
-    padding: 0;
-    list-style: none;
+    align-items: flex-start;
+    gap: var(--size-16);
+    font-size: var(--text-caption);
+    line-height: var(--leading-caption);
+    color: var(--color-ink);
+  }
+
+  .credentials li + li {
+    border-inline-start: 1px solid var(--color-line);
+    padding-inline-start: var(--size-48);
+  }
+
+  .credentials strong {
+    display: block;
+    font-weight: var(--weight-regular);
+  }
+
+  .credentials svg {
+    inline-size: 40px;
+    block-size: 40px;
+    flex-shrink: 0;
+    color: var(--color-ink);
+  }
+
+  /* ---- Section shell --------------------------------------------------- */
+  .section {
+    padding-block-start: var(--section-padding-top);
   }
 
   .tag {
     display: inline-block;
-    padding: var(--space-2) var(--space-4);
+    padding: 10px var(--size-24);
     font-size: var(--text-tag);
-    line-height: var(--leading-flat);
-    background-color: var(--color-surface-accent);
-    color: var(--color-text-on-accent);
+    line-height: var(--leading-tag);
+    color: var(--color-accent);
+    border: 1px solid var(--color-line-strong);
     border-radius: var(--radius-pill);
   }
 
-  .hero__portrait {
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-md);
-    /* Explicit ratio reserves the box before the image decodes, so the
-       hero never shifts. Paired with width/height on the <img>. */
-    aspect-ratio: 4 / 5;
-    object-fit: cover;
-    inline-size: 100%;
+  .section__head {
+    margin-block-start: var(--size-40);
   }
 
-  /* ==================================================================
-     SERVICE CARDS
-     Container queries, so a card reflows based on the space it actually
-     occupies rather than the viewport width.
-     ================================================================== */
-  .card-grid {
+  /* ---- Visão ----------------------------------------------------------- */
+  .visao__grid {
     display: grid;
-    gap: var(--space-5);
-    grid-template-columns: repeat(auto-fit, minmax(min(20rem, 100%), 1fr));
+    grid-template-columns: 570px 440px;
+    justify-content: space-between;
+    margin-block-start: var(--size-40);
   }
 
-  .card {
-    container-type: inline-size;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-4);
-    padding: var(--space-6);
-    background-color: var(--color-surface-soft);
-    border-radius: var(--radius-lg);
-    transition: background-color var(--transition);
+  .visao__title {
+    font-size: var(--text-display);
+    line-height: var(--leading-display);
+    font-weight: var(--weight-semibold);
+    color: var(--color-accent-deep);
+    letter-spacing: -0.02em;
   }
 
-  .card:hover {
-    background-color: var(--color-surface-hover);
-  }
-
-  .card--accent {
-    background-color: var(--color-surface-accent);
-  }
-
-  .card__number {
-    font-family: var(--font-serif);
-    font-size: var(--text-h2);
-    line-height: var(--leading-flat);
-    font-weight: var(--weight-regular);
-    color: var(--color-accent);
-  }
-
-  .card__title {
-    font-size: var(--text-h4);
-  }
-
-  .card__text {
-    color: var(--color-text-muted);
-    font-size: var(--text-caption);
-    line-height: var(--leading-loose);
-  }
-
-  .card__list {
-    display: grid;
-    gap: var(--space-3);
-    margin-block-start: auto;
-    padding: 0;
-    list-style: none;
-    font-size: var(--text-caption);
-  }
-
-  .card__list li {
-    display: grid;
-    grid-template-columns: 1.25rem 1fr;
-    gap: var(--space-3);
-    align-items: start;
-    line-height: var(--leading-loose);
-  }
-
-  .card__list svg {
-    inline-size: 1.25rem;
-    block-size: 1.25rem;
-    margin-block-start: 0.15em;
-    color: var(--color-accent);
-  }
-
-  @container (width >= 26rem) {
-    .card {
-      padding: var(--space-7);
-    }
-  }
-
-  /* ==================================================================
-     TESTIMONIALS
-     ================================================================== */
-  .testimonial-grid {
-    display: grid;
-    gap: var(--space-5);
-    grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr));
-  }
-
-  .testimonial {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-5);
-    padding: var(--space-6);
-    background-color: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
-  }
-
-  .testimonial__quote {
-    margin: 0;
-    font-size: var(--text-caption);
-    line-height: var(--leading-loose);
-    color: var(--color-text-muted);
-    max-inline-size: none;
-  }
-
-  .testimonial__quote::before {
-    content: "\201C";
-    display: block;
-    font-family: var(--font-serif);
-    font-size: var(--text-h2);
-    line-height: 0.6;
-    color: var(--color-accent);
-  }
-
-  .testimonial__author {
-    margin-block-start: auto;
-    font-size: var(--text-caption);
+  /* Second half of the headline drops to a tint — a two-tone headline, not
+     two separate elements. */
+  .visao__title em {
     font-style: normal;
-    font-weight: var(--weight-bold);
+    color: var(--color-ghost-ink);
   }
 
-  .testimonial__role {
-    display: block;
-    font-weight: var(--weight-regular);
-    color: var(--color-text-muted);
-  }
-
-  /* ==================================================================
-     FAQ
-     Native <details>. Content ships in the DOM whether open or closed,
-     so every answer is crawlable — the reason this is not a JS accordion.
-     ================================================================== */
-  .faq {
+  .visao__body {
     display: grid;
-    gap: var(--space-3);
+    gap: var(--size-24);
+    align-content: center;
+    font-size: var(--text-caption);
+    line-height: var(--leading-caption);
+    color: var(--color-body);
   }
 
-  .faq__item {
-    background-color: var(--color-surface);
-    border: 1px solid var(--color-border);
+  /* ---- Princípios ------------------------------------------------------ */
+  .principios {
+    position: relative;
+    block-size: 710px;
+    margin-block-start: var(--size-72);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  /* Placeholder at the exact footprint of the mockup's background photo. */
+  .principios__image {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background-color: var(--color-surface-card);
+    color: var(--color-accent-deep);
+    font-size: var(--text-caption);
+  }
+
+  .principios__cards {
+    position: absolute;
+    inset-inline: var(--size-24);
+    inset-block-end: var(--size-24);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--size-24);
+  }
+
+  .principio {
+    padding: var(--size-24);
+    background-color: rgb(255 255 255 / 82%);
+    backdrop-filter: blur(10px);
     border-radius: var(--radius-md);
   }
 
-  .faq__item[open] {
-    border-color: var(--color-border-soft);
+  .principio svg {
+    inline-size: 28px;
+    block-size: 28px;
+    color: var(--color-accent);
   }
 
-  .faq__question {
+  .principio h3 {
+    margin-block-start: var(--size-40);
+    font-size: var(--text-caption);
+    line-height: var(--leading-tag);
+    font-weight: var(--weight-semibold);
+    color: var(--color-accent);
+  }
+
+  .principio p {
+    margin-block-start: var(--size-12);
+    font-size: var(--text-caption);
+    line-height: var(--leading-caption);
+    color: var(--color-body);
+  }
+
+  /* ---- Serviços -------------------------------------------------------- */
+  .servicos__head {
+    display: grid;
+    grid-template-columns: 570px 550px;
+    justify-content: space-between;
+    margin-block-start: var(--size-40);
+  }
+
+  .servicos__head h2 {
+    font-size: var(--text-h2);
+    line-height: var(--leading-h2);
+  }
+
+  .servicos__intro {
+    display: grid;
+    gap: var(--size-24);
+    font-size: var(--text-caption);
+    line-height: var(--leading-caption);
+    color: var(--color-body);
+  }
+
+  .servicos__grid {
+    display: grid;
+    grid-template-columns: 1fr 434px;
+    gap: var(--size-24);
+    margin-block-start: var(--size-72);
+  }
+
+  .service-card {
+    display: flex;
+    flex-direction: column;
+    padding: var(--size-48);
+    background-color: var(--color-surface-card);
+    border-radius: var(--radius-lg);
+  }
+
+  .service-card--muted {
+    position: relative;
+    background-color: var(--color-surface-card-alt);
+  }
+
+  .service-card__number {
+    font-family: var(--font-serif);
+    font-size: var(--text-display);
+    line-height: var(--leading-display);
+    font-weight: var(--weight-regular);
+    color: var(--color-accent-soft);
+  }
+
+  .service-card__title {
+    margin-block-start: var(--size-24);
+    font-size: var(--text-h3);
+    line-height: var(--leading-h3);
+    font-weight: var(--weight-regular);
+    color: var(--color-accent);
+  }
+
+  .service-card__claim {
+    margin-block-start: var(--size-24);
+    font-size: var(--text-caption);
+    line-height: var(--leading-tag);
+    font-weight: var(--weight-bold);
+    color: var(--color-ink);
+  }
+
+  .service-card__text {
+    margin-block-start: var(--size-12);
+    font-size: var(--text-caption);
+    line-height: var(--leading-caption);
+    color: var(--color-body);
+  }
+
+  .service-card__list {
+    margin-block-start: var(--size-64);
+  }
+
+  .service-card__list li {
+    display: flex;
+    align-items: center;
+    gap: var(--size-16);
+    padding-block: var(--size-16);
+    border-block-end: 1px solid rgb(255 255 255 / 55%);
+    font-size: var(--text-caption);
+    line-height: var(--leading-caption);
+    color: var(--color-ink);
+  }
+
+  .service-card__list svg {
+    inline-size: 20px;
+    block-size: 20px;
+    flex-shrink: 0;
+    color: var(--color-accent);
+  }
+
+  .service-card__arrow {
+    position: absolute;
+    inset-inline-start: var(--size-48);
+    inset-block-end: var(--size-48);
+    inline-size: 64px;
+    block-size: 64px;
+    color: var(--color-accent);
+  }
+
+  /* ---- Processo -------------------------------------------------------- */
+  .processo__grid {
+    display: grid;
+    grid-template-columns: 560px 664px;
+    justify-content: space-between;
+    margin-block-start: var(--size-40);
+  }
+
+  .processo__grid h2 {
+    font-size: var(--text-h2);
+    line-height: var(--leading-h2);
+  }
+
+  .processo__text {
+    margin-block-start: var(--size-24);
+    font-size: var(--text-caption);
+    line-height: var(--leading-caption);
+    color: var(--color-body);
+  }
+
+  .accordion__item {
+    border-block-end: 1px solid var(--color-line);
+  }
+
+  .accordion__item summary {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: var(--space-4);
-    padding: var(--space-5);
+    gap: var(--size-24);
+    padding-block: var(--size-24);
     font-size: var(--text-h5);
-    font-weight: var(--weight-bold);
-    line-height: var(--leading-snug);
+    line-height: var(--leading-h5);
+    font-weight: var(--weight-regular);
+    color: var(--color-ink);
     cursor: pointer;
     list-style: none;
   }
 
-  .faq__question::-webkit-details-marker {
+  .accordion__item summary::-webkit-details-marker {
     display: none;
   }
 
-  .faq__question::after {
-    content: "";
-    inline-size: 0.75rem;
-    block-size: 0.75rem;
+  /* Plus that becomes a cross when open — two bars, one rotated away. */
+  .accordion__icon {
+    position: relative;
+    inline-size: 16px;
+    block-size: 16px;
     flex-shrink: 0;
-    border-inline-end: 2px solid var(--color-accent);
-    border-block-end: 2px solid var(--color-accent);
+  }
+
+  .accordion__icon::before,
+  .accordion__icon::after {
+    content: "";
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline-start: 0;
+    inline-size: 100%;
+    block-size: 1.5px;
+    background-color: var(--color-ink);
+    transition: rotate var(--transition), opacity var(--transition);
+  }
+
+  .accordion__icon::after {
+    rotate: 90deg;
+  }
+
+  .accordion__item[open] .accordion__icon::before {
     rotate: 45deg;
-    transition: rotate var(--transition);
   }
 
-  .faq__item[open] .faq__question::after {
-    rotate: -135deg;
+  .accordion__item[open] .accordion__icon::after {
+    rotate: -45deg;
   }
 
-  .faq__answer {
-    padding: 0 var(--space-5) var(--space-5);
-    color: var(--color-text-muted);
+  .accordion__panel {
+    padding-block-end: var(--size-24);
+    padding-inline-start: var(--size-16);
     font-size: var(--text-caption);
-    line-height: var(--leading-loose);
-  }
-
-  /* ==================================================================
-     CTA
-     ================================================================== */
-  .cta {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--space-5);
-    padding: var(--space-8) var(--space-5);
-    text-align: center;
-    background-color: var(--color-surface-accent);
-    border-radius: var(--radius-lg);
-  }
-
-  .cta__title {
-    font-size: var(--text-h2);
-  }
-
-  .cta__text {
-    color: var(--color-text-on-accent);
-    max-inline-size: 46ch;
-  }
-
-  /* ==================================================================
-     FOOTER
-     ================================================================== */
-  .site-footer {
-    padding-block: var(--space-7);
-    border-block-start: 1px solid var(--color-border);
-    font-size: var(--text-caption);
-    color: var(--color-text-muted);
-  }
-
-  .site-footer__inner {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-5);
-  }
-
-  .social {
-    display: flex;
-    gap: var(--space-4);
-    padding: 0;
-    list-style: none;
-  }
-
-  .social a {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-2);
-    text-decoration: none;
-    transition: color var(--transition);
-  }
-
-  .social a:hover {
-    color: var(--color-accent-strong);
-  }
-
-  .social svg {
-    inline-size: 1.25rem;
-    block-size: 1.25rem;
+    line-height: var(--leading-caption);
+    color: var(--color-body);
   }
 }
