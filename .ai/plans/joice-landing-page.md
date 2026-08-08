@@ -3,23 +3,19 @@
 ## Context
 
 Joice Sperandio is a financial planner. She needs a single-page landing site,
-designed in Figma (`35gFTPRFgD9FZ0pwIxO3GL`). The repo is currently empty — no
-commits yet.
+designed in Figma (`35gFTPRFgD9FZ0pwIxO3GL`, frame `318:7275` — "Site desktop").
 
-Organic search is a primary acquisition channel, and the page is expected to
-live for years with infrequent edits. Those two facts drive every decision here:
+Two constraints drive every decision:
 
-- **No runtime dependencies, no required build step.** Toolchains rot; the web
-  platform does not. HTML/CSS from a decade ago still renders, while a Node
-  build from 2019 often won't `npm install` today. Tailwind v3→v4 replaced its
-  entire config model in under two years — exactly the churn we're avoiding.
-- **Nothing may compromise SEO.** Static hand-authored HTML is the strongest
-  possible position: all content is in the initial response, nothing waits on
-  JavaScript.
+- **Longevity.** Toolchains rot; the web platform does not. The page is expected
+  to live for years with infrequent edits, so it must not depend on a build step
+  that can break while nobody is looking. Tailwind replaced its entire config
+  model in under two years — exactly the churn being avoided.
+- **SEO.** Organic search is a primary acquisition channel. Hand-authored static
+  HTML puts every word in the initial response, with nothing waiting on JS.
 
-The outcome is a site that is a single standalone `index.html` plus CSS and
-assets — deployable by copying files, editable by anyone who knows HTML, with
-no step between the source and what ships.
+The deliverable is a standalone `index.html` plus CSS and assets — deployable by
+copying files, editable by anyone who knows HTML.
 
 ## Locked decisions
 
@@ -27,225 +23,155 @@ no step between the source and what ships.
 |---|---|
 | Framework | None. Hand-authored HTML. |
 | Build step | None. |
-| CSS | Pure modern CSS, no preprocessor, no utility framework. |
+| CSS | Pure modern CSS, `@layer`, custom properties. No preprocessor, no utility framework. |
 | Markup reuse | Accepted duplication. CSS classes are the reuse layer. |
-| JS | Target zero. Nav is CSS-only. |
+| JS | Zero. Verified by grep — the only `<script>` is JSON-LD. |
+| Scope | **Desktop only.** No breakpoints, no mobile CSS. Body pinned to the 1440px frame. |
 | Lead capture | WhatsApp deep link. No form, no backend, no LGPD surface. |
-| WhatsApp | `+55 47 9193-9397` — **verify, see below** |
-| Fonts | Self-hosted `.woff2`, committed. No Google Fonts CDN. |
-| Images | Pre-optimized AVIF/WebP, committed. Generated locally, once. |
-| Hosting | Cloudflare Pages (BR edge presence). Low-stakes — files port anywhere. |
+| Fonts | Self-hosted woff2, committed. No CDN. |
+| Images | Placeholders at exact mockup footprints until real assets are exported. |
+| Hosting | Cloudflare Pages (BR edge). Low-stakes — static files port anywhere. |
+| Repo layout | `poc/<approach>/` so alternative builds can be compared as siblings. |
 
-## File layout
+## Design access — solved twice
+
+The Figma MCP tools need **edit** rights. For most of this work only view access
+existed, so two routes were built. Both now work and cross-check each other:
+
+1. **`.fig` export → `tools/figextract/`** (preferred fallback). A `.fig` is a
+   ZIP holding a `fig-kiwi` container whose Kiwi schema is embedded, so it
+   decodes offline with **no Figma subscription, no API token, no account**.
+   Verified clean: 10,287,412 of 10,287,412 bytes consumed, 7,781 nodes.
+   Two traps are documented in that tool's README — the schema chunk is deflate
+   while the document chunk is **zstd** (a deflate-only reader yields garbage
+   rather than an error), and Kiwi's 64-bit varints use a ninth byte at shift 56
+   rather than plain LEB128.
+   Tradeoff: a snapshot. Re-export when the design changes.
+2. **Figma MCP** — edit access was granted late and is now confirmed working.
+   Gives `get_variable_defs`, `download_assets`, `get_design_context`.
+
+Keep both. The `.fig` route costs nothing and survives access lapsing again.
+
+## Facts extracted from the file (exact)
+
+**Frame.** `Site desktop` 1440 × 9928.33 · content 1360 · gutters 40 ·
+page padding-block 24 · gap 24 · **background `#f4f7f7`** (not white).
+
+**Fonts.** Primary sans **Allomira** (Light/Regular/Medium/Bold/Black);
+secondary **TP Sans** (ExtraLight/Light/Regular/Medium); serif **Lora** and
+**EB Garamond**. Inter/Manrope appear only in annotation boards, not the page.
+
+**Type scale** (size / line-height %):
+Display 72/92 · H1 56/92 · H2 48/100 · H3 32/100 · H4 28/120 · H5 24/120 ·
+Paragrafo 20/140 · Paragrafo bold 20/100 · Caption 16/150 · Tag 16/100
+
+**Section stack** (y-offset, size, padding):
 
 ```
-index.html            all sections, hand-authored
-styles/
-  tokens.css          @layer tokens  — primitives + semantic aliases
-  base.css            @layer reset, base — reset, type scale, landmarks
-  sections.css        @layer components — .hero, .card, .faq, .testimonial
-assets/
-  fonts/*.woff2       subset to latin + latin-ext (pt-BR diacritics)
-  img/*.avif|.webp    hero portrait, logo
-robots.txt
-sitemap.xml
+Menu          1360x84    @40,24      r=24  padX 24  padY 16  fill #fff
+content(hero) 1358x750   @40,132     inner content inset 48,32 · text col 577
+LOGOS         1360x279   @40,906     padX 24  padY 96 · icons 64x64 · text x=80
+VISAO         1360x1214  @40,1209    gap 56 · title 664 · paragraph 438 @x922
+                                     card 1360x710 · 4 cards 309.5x313 gap 24
+SERVICOS      1360x1402  @40,2447    padY 140 · title 668 · paragraph 548 @x812
+                                     cards 899x874 + 437x874 gap 24 · pad 48
+PROCESSO      1360x810   @40,3873    padY 160 gap 72 · left 553 · accordion 663 @x697
+                                     items 663x77 collapsed, 193 open
+paragrafo(CTA)1360x550   @40,4707    r=24 fill #e5eef4 · avatar 141x141 · text 1232 @64,295.5
+HISTORIAS     1360x1190  @40,5281    padY 140 · left 553 · image 767x511.33 @x593
+big-numbers   1360x580   @40,6495    3 cols 437.33x420
+SOBRE         1360x1055  @40,7099    left 554 · image 782x700 @x602
+                                     5 cards 554x158 · divider x=74 · text x=98
+LOGOS         1360x279   @40,8178
+faq           1360x987   @40,8481    padY 100 · left 553 · FAQ inst 783x820 @x577
+footer        1360x396   @40,9492    r=24 fill #28445e  padX/padY 40  gap 40
 ```
 
-Three CSS files, linked separately. No inlining initially — measure first
-(see Verification).
+Buttons are 217×52 / 218×52 with a 24px gap.
 
-## Phase 1 — Extract the design system from Figma
+**Contact details** (resolved from the footer symbol):
 
-Blocked on edit access to the Figma file. The MCP tools require **edit**
-rights; view-only returns "you don't have edit access". Once granted to
-`guibrancopc@gmail.com`:
+- Domain **joicesperandio.com.br** — confirmed via `oi@joicesperandio.com.br`
+- Phone as drawn: **+55 47 9193-9397**
+- **CVM Consultora de Valores Mobiliários 002276-4**, **CEA**, **CFP®**
+- Footer links: Política de Cookies · Política de Privacidade · © 2026
 
-1. **Resolve canonical frames first.** The `Layouts` page contains `Mobile`,
-   `Finais`, and `Gui` frames plus loose `Cards` / `Testimonial` boards.
-   `Finais` is a handoff/scratch board (8 FAQ instances, arrows, measurement
-   annotations) — *not* the page layout. Ask the designer which frames are
-   canonical for desktop and mobile before building anything.
-2. `get_metadata` on the canonical desktop frame → section tree, exact sizes.
-3. `get_variable_defs` on the `Styles e components` page → the token layers
-   (`Tokens — Colors`, `— Background`, `— Dimension`, `— Typography`) and the
-   `Primitivies` → `Joice Webkit` chain.
-4. `download_assets` → logo and arrow icons as SVG; portrait as source image.
+## Done
 
-Known from the file already:
-- Type scale: Display 72/92, H1 56/92, H2 48/100, H3 32/100, H4 28/120,
-  H5 24/120, Paragrafo 20/140, Paragrafo bold 20/100, Caption 16/150, Tag 16/100
-- Components: numbered service Card (01 Planejamento Financeiro,
-  02 Consultoria em Investimentos), Testimonial, FAQ (~8 items), Logo
+`poc/rawhtml/` — zero dependencies, zero build, zero JS, all copy transcribed
+verbatim from the frame. Ten sections built:
 
-**Open question for the designer:** there is only *one* text-style set — no
-`H1 Mobile` variants. Either the mobile frames override sizes locally, or a
-72px Display is meant to ship on a 375px screen. Confirm before writing type
-CSS. Default to `clamp()` regardless.
+Header · Hero · Credenciais · Visão · Princípios · Serviços · Processo ·
+CTA conversa · Histórias + depoimentos · Números
 
-## Phase 2 — CSS foundation
+Verified: renders at 1440px; JSON-LD (`Person`, `FinancialService`) parses; all
+content present in the raw HTTP response; anchor targets clear the header
+(heading lands 139px against a 136px `scroll-margin-top`).
 
-`tokens.css` mirrors the Figma structure in two layers, so token renames arrive
-as readable diffs:
+Two deliberate choices worth keeping: the FAQ uses native `<details>` so answers
+stay crawlable, and the nav has no hamburger — a `<details>` disclosure cannot be
+closed by CSS when a link inside it is followed, so the menu stayed open covering
+the page. Testimonial names are placeholders **in the mockup itself**
+("Alessandra Sobrenome", "Rafael & [Parceira]") and are reproduced as drawn.
 
-```css
-@layer tokens {
-  :root {
-    /* primitives — straight from Figma Primitivies */
-    --blue-500: #...;
-    --space-4: 1rem;
-    /* semantic aliases — from Tokens — Colors / Background / Dimension */
-    --color-surface: var(--blue-50);
-    --color-text-strong: var(--blue-900);
-  }
-}
-```
+## Missing
 
-Use `color-mix()` to derive hover/active states from base tokens rather than
-defining a token per state — meaningfully smaller token surface.
+**Sections not built:** SOBRE · second LOGOS · faq · footer.
 
-`base.css` establishes `@layer reset, tokens, base, components` up front so
-cascade order is explicit and specificity fights never start.
+**Accuracy gaps in what is built:**
 
-Fluid type via `clamp()` on the scale above — this is what solves 72px Display
-on a 375px viewport without a second set of styles.
+1. **Fonts are substituted.** Allomira/TP Sans/Lora are not yet exported, so a
+   fallback stack is in use. It is wider than the design's face, which is why
+   some headlines wrap one line early. Largest remaining visual difference.
+2. **Colours are sampled**, not read from Figma variables. Close, not exact.
+3. **Geometry was measured by eye** for the built sections and is now known to be
+   wrong in places — see the exact numbers above (hero is 1358×750 not 1360×760;
+   Serviços cards are 899/437 not 1fr/434; Processo is 553/663; page background
+   is `#f4f7f7`).
+4. **Images are placeholders.** 265 real bitmaps sit in the `.fig` export.
 
-## Phase 3 — Sections
+## Next steps
 
-Build mobile-first from the canonical mobile frames, with one breakpoint where
-the desktop layout takes over. Intermediate widths scale the desktop layout
-fluidly rather than getting a third design.
-
-- Container queries for cards that adapt to their column, not the viewport
-- `:has()` for section/nav state
-- `text-wrap: balance` on headlines, `pretty` on body copy
-- `animation-timeline: view()` for scroll reveals, behind `@supports`
-- Anchor nav is entirely CSS: `scroll-behavior: smooth` on `:root` plus
-  `scroll-margin-top` on each `<section id>` to clear the sticky header
-
-Semantic structure is non-negotiable for SEO: `lang="pt-BR"`, exactly one
-`<h1>`, an `<h2>` opening each section, real `<header>`/`<nav>`/`<main>`/
-`<section>`/`<footer>` landmarks.
-
-## Phase 4 — SEO
-
-**Head essentials**
-- `<title>` ~55–60 chars: name + specialty + location
-- `meta description` ~155 chars
-- `<link rel="canonical">`, consistent www/non-www and trailing-slash handling
-- Open Graph + Twitter Card — the link preview when she shares on WhatsApp and
-  Instagram drives real click-through in this market. Treat the OG image as a
-  deliverable, not an afterthought.
-
-**JSON-LD** (hand-written, in `<script type="application/ld+json">`)
-- `Person` for Joice: `jobTitle`, `knowsAbout`, `sameAs` → LinkedIn/Instagram
-- `FinancialService` (a `LocalBusiness` subtype) — see NAP section below. This
-  is the highest-leverage schema for a financial planner and the one that feeds
-  local results.
-- `FAQPage` for the FAQ section: include it for semantic clarity, but do **not**
-  expect rich snippets — Google restricted FAQ rich results to government and
-  health sites in August 2023.
-
-**NAP consistency (Google Business Profile)**
-
-Joice has a verified GBP. Google links that listing to this site by comparing
-Name, Address, Phone and URL — there is no shared ID to join on. When they
-agree, the site becomes eligible for the local pack and gets a knowledge panel
-that links back. When they disagree, Google hedges and the benefit is lost.
-
-Confirmed: **GBP lists the same number as the WhatsApp CTA.** One number
-everywhere — `wa.me` link, JSON-LD `telephone`, and GBP all identical. This also
-makes GBP the fastest way to settle the 9th-digit question above: read the phone
-field off her own listing rather than guessing.
-
-Address: default to **service-area** (no `address` key, use `areaServed`).
-This is the common setup for a solo planner and avoids publishing a home
-address. Verify in GBP and swap in a full `PostalAddress` + `geo` only if she
-has a public office.
-
-```json
-{
-  "@context": "https://schema.org",
-  "@type": "FinancialService",
-  "name": "<exact string from Google Business Profile>",
-  "url": "https://<canonical domain>",
-  "telephone": "<same number as the wa.me link>",
-  "areaServed": { "@type": "City", "name": "<city>" },
-  "sameAs": [
-    "https://www.linkedin.com/in/joice-sperandio/",
-    "https://www.instagram.com/joicesperandio/",
-    "https://maps.app.goo.gl/<GBP short link>"
-  ]
-}
-```
-
-Include the Maps short link in `sameAs` — it points directly at the listing
-instead of relying on a fuzzy name match.
-
-A separate `Person` entity for Joice herself (`jobTitle`, `knowsAbout`,
-`sameAs` with the same two social URLs) sits alongside this.
-
-**To verify in Google Business Profile before launch:**
-- exact business name string (copy verbatim into `name`)
-- phone field (settles the 9th digit)
-- website URL — must match the canonical form, www vs non-www
-- whether the address is shown or hidden
-- Maps short link for `sameAs`
-
-**`robots.txt` + `sitemap.xml`** — trivial to hand-write for one URL.
-
-**Honest limitation:** a single page can rank for one primary intent cluster.
-"planejamento financeiro" and "consultoria em investimentos" would normally
-want separate URLs; anchor sections may surface as sitelinks but will not rank
-independently. This is a real ceiling on organic reach, not a bug in the build.
-The architecture keeps the door open at zero cost — adding
-`planejamento-financeiro.html` later is a new file, not a migration. Flag to
-Joice that a blog or service pages are the growth path if search becomes the
-main channel.
-
-## Phase 5 — Performance (Core Web Vitals are ranking signals)
-
-- **LCP** — likely the hero portrait. `<picture>` with AVIF → WebP → JPEG,
-  `fetchpriority="high"`, `<link rel="preload">`, explicit `width`/`height`.
-- **CLS** — explicit dimensions on *every* image. For fonts, preload the
-  critical `.woff2` and set `size-adjust` / `ascent-override` /
-  `descent-override` on a local fallback `@font-face` so the swap doesn't shift
-  layout. This matters more than `font-display` choice alone.
-- **INP** — free. Zero JS.
-- Compression: let Cloudflare handle Brotli. No minification step.
+1. `get_variable_defs` on the token sets → rewrite `tokens.css` with exact values,
+   replacing every token currently marked *sampled*.
+2. `download_assets` → Allomira, TP Sans, Lora woff2 (subset latin + latin-ext for
+   pt-BR diacritics) plus logo, icons and photos.
+3. `get_design_context` per section → rebuild all 13 against exact geometry.
+4. Resolve the FAQ accordion — `get_design_context` on `331:7305`, or extend the
+   recursive symbol walk in `tools/figextract/`. The designer's Figma comments
+   also carry real question copy.
+5. Add `<link rel="preload">` for the hero portrait and the critical woff2, with
+   metric-override fallbacks so the font swap does not shift layout.
 
 ## Verification
 
-1. Serve locally (`python3 -m http.server`) — confirm the page works with
-   **JavaScript disabled**. Everything must render and all nav must function.
-2. `curl` the deployed URL and read the raw HTML — confirm every piece of
-   content is present in the initial response, not injected.
-3. Lighthouse on mobile emulation, throttled. Target 100 SEO, 100 Accessibility,
-   LCP < 2.5s.
-4. Google Rich Results Test on the deployed URL — validate `Person` and
-   `FinancialService` parse without errors.
-5. Paste the URL into WhatsApp and confirm the OG preview card renders.
-6. Check the rendered page against the Figma frames at 375px, 768px, 1440px.
-7. Submit `sitemap.xml` in Google Search Console; confirm indexing.
+1. `cd poc/rawhtml && python3 -m http.server` — confirm it works with JS disabled.
+2. `curl` the deployed URL — every word must be in the initial response.
+3. Lighthouse, mobile emulation, throttled. Target 100 SEO / 100 A11y, LCP < 2.5s.
+4. Google Rich Results Test — `Person` and `FinancialService` parse.
+5. Paste the URL into WhatsApp; confirm the OG card renders.
+6. Compare against the Figma frame at 1440px.
 
 ## Open questions
 
-1. **Which Figma frames are canonical?** (blocking Phase 1)
-2. **Does mobile have its own type sizes**, or does the single scale apply?
-3. **Confirm the WhatsApp number.** Given as `+55 47 9193-9397` — only 8 digits
-   after the DDD. Brazilian mobiles have been 9 digits since the nationwide
-   9th-digit rollout (`9XXXX-XXXX`), so this is very likely
-   `+55 47 99193-9397`. DDD 47 is Santa Catarina.
+1. **Confirm the WhatsApp number.** The design shows `+55 47 9193-9397` — eight
+   digits after the DDD. Brazilian mobiles have been nine since the national
+   rollout (`9XXXX-XXXX`), so this is likely `+55 47 99193-9397`. Her Google
+   Business Profile lists the same number, so reading it there settles it. Test
+   the final `wa.me` link on a real phone — a wrong number fails silently.
+2. **Read five fields off her Google Business Profile:** exact business name,
+   phone, website URL (www vs non-www — must match the canonical), whether the
+   address is public or the listing is service-area, and the Maps short link for
+   `sameAs`. NAP mismatch costs the local-pack association.
+3. **Font licensing.** Allomira and TP Sans are commercial; confirm a webfont
+   licence covers self-hosting. Lora and EB Garamond are open.
+4. **Mobile.** Out of scope here by decision; the `Mobile` frame is a separate
+   exercise.
 
-   ```html
-   <a href="https://wa.me/5547991939397?text=Ol%C3%A1%20Joice%2C%20vim%20pelo%20site">
-     Falar no WhatsApp
-   </a>
-   ```
+## Known ceiling
 
-   Format notes: digits only, no `+`, no dashes; country code `55` + DDD `47` +
-   number. Prefill `text` with a URL-encoded pt-BR opener so she can see which
-   leads came from the site. Test the final link on a real phone before launch —
-   a bad number fails silently.
-4. **Read the five fields off her Google Business Profile** (list in Phase 4).
-   Settles the 9th digit, the address question, and the canonical URL form.
-5. Custom domain — needed for `url`, canonical, and `sitemap.xml`.
+One URL ranks for one primary intent cluster. "Planejamento financeiro" and
+"consultoria em investimentos" are different searches; anchor sections may
+surface as sitelinks but will not rank independently. That is a limit of the
+single-page decision, not of this build — and the escape hatch is free, since
+adding `planejamento-financeiro.html` is a new file rather than a migration.
