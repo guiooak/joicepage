@@ -1,0 +1,517 @@
+@layer components {
+  /* ==================================================================
+     HEADER + NAV
+     The mobile menu is a native <details> disclosure. No JavaScript, no
+     checkbox hack, and it stays keyboard-accessible for free. On desktop
+     the summary is hidden and the list is forced visible regardless of
+     open state.
+     ================================================================== */
+  .site-header {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: 50;
+    background-color: color-mix(in srgb, var(--color-bg) 88%, transparent);
+    backdrop-filter: blur(12px);
+    border-block-end: 1px solid var(--color-border);
+  }
+
+  .site-header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-5);
+    min-block-size: var(--header-height);
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-size: var(--text-h5);
+    font-weight: var(--weight-bold);
+    line-height: var(--leading-flat);
+    text-decoration: none;
+    letter-spacing: -0.01em;
+  }
+
+  .brand__mark {
+    inline-size: 2rem;
+    block-size: 2rem;
+    flex-shrink: 0;
+  }
+
+  .nav__toggle {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--text-caption);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .nav__toggle::-webkit-details-marker {
+    display: none;
+  }
+
+  .nav__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    padding: var(--space-4);
+    position: absolute;
+    inset-inline: 0;
+    background-color: var(--color-surface);
+    border-block-end: 1px solid var(--color-border);
+    box-shadow: var(--shadow-md);
+  }
+
+  .nav__link {
+    display: block;
+    padding: var(--space-3);
+    font-size: var(--text-caption);
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+    transition: background-color var(--transition), color var(--transition);
+  }
+
+  .nav__link:hover {
+    background-color: var(--color-surface-soft);
+    color: var(--color-accent-strong);
+  }
+
+  @media (width >= 48rem) {
+    .nav__toggle {
+      display: none;
+    }
+
+    /* Overrides the UA's hiding of closed <details> content. The
+       ::details-content rule covers newer Chrome, which hides via
+       content-visibility rather than display. */
+    .nav > details > .nav__list {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: var(--space-2);
+      position: static;
+      padding: 0;
+      background: none;
+      border: 0;
+      box-shadow: none;
+    }
+
+    .nav > details::details-content {
+      content-visibility: visible;
+      block-size: auto;
+    }
+  }
+
+  /* ==================================================================
+     BUTTONS
+     ================================================================== */
+  .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-5);
+    font-size: var(--text-caption);
+    font-weight: var(--weight-bold);
+    line-height: var(--leading-flat);
+    text-decoration: none;
+    border: 1px solid transparent;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    transition: background-color var(--transition), transform var(--transition);
+  }
+
+  .button:hover {
+    transform: translateY(-1px);
+  }
+
+  .button--whatsapp {
+    background-color: var(--color-whatsapp);
+    color: var(--color-whatsapp-ink);
+  }
+
+  .button--whatsapp:hover {
+    background-color: color-mix(in oklab, var(--color-whatsapp) 88%, black);
+  }
+
+  .button--ghost {
+    background-color: transparent;
+    border-color: var(--color-border-soft);
+    color: var(--color-text);
+  }
+
+  .button--ghost:hover {
+    background-color: var(--color-surface-soft);
+  }
+
+  .button__icon {
+    inline-size: 1.25rem;
+    block-size: 1.25rem;
+    flex-shrink: 0;
+  }
+
+  /* ==================================================================
+     SECTION SHELL
+     ================================================================== */
+  .section {
+    padding-block: var(--space-section);
+  }
+
+  .section--soft {
+    background-color: var(--color-surface-muted);
+  }
+
+  .section__header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    margin-block-end: var(--space-7);
+    max-inline-size: var(--measure);
+  }
+
+  .section__eyebrow {
+    font-size: var(--text-tag);
+    line-height: var(--leading-flat);
+    font-weight: var(--weight-bold);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+
+  .section__lead {
+    font-size: var(--text-body);
+    color: var(--color-text-muted);
+  }
+
+  /* ==================================================================
+     HERO
+     ================================================================== */
+  .hero {
+    padding-block: var(--space-section);
+    background:
+      radial-gradient(
+        ellipse 80% 60% at 70% 0%,
+        var(--color-surface-soft),
+        transparent 70%
+      ),
+      var(--color-bg);
+  }
+
+  .hero__grid {
+    display: grid;
+    gap: var(--space-7);
+    align-items: center;
+  }
+
+  @media (width >= 60rem) {
+    .hero__grid {
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: var(--space-8);
+    }
+  }
+
+  .hero__title {
+    font-size: var(--text-display);
+    line-height: var(--leading-tight);
+    letter-spacing: -0.02em;
+  }
+
+  .hero__lead {
+    margin-block-start: var(--space-5);
+    font-size: var(--text-body);
+    color: var(--color-text-muted);
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-block-start: var(--space-6);
+  }
+
+  .hero__credentials {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-block-start: var(--space-6);
+    padding: 0;
+    list-style: none;
+  }
+
+  .tag {
+    display: inline-block;
+    padding: var(--space-2) var(--space-4);
+    font-size: var(--text-tag);
+    line-height: var(--leading-flat);
+    background-color: var(--color-surface-accent);
+    color: var(--color-text-on-accent);
+    border-radius: var(--radius-pill);
+  }
+
+  .hero__portrait {
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    /* Explicit ratio reserves the box before the image decodes, so the
+       hero never shifts. Paired with width/height on the <img>. */
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    inline-size: 100%;
+  }
+
+  /* ==================================================================
+     SERVICE CARDS
+     Container queries, so a card reflows based on the space it actually
+     occupies rather than the viewport width.
+     ================================================================== */
+  .card-grid {
+    display: grid;
+    gap: var(--space-5);
+    grid-template-columns: repeat(auto-fit, minmax(min(20rem, 100%), 1fr));
+  }
+
+  .card {
+    container-type: inline-size;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    padding: var(--space-6);
+    background-color: var(--color-surface-soft);
+    border-radius: var(--radius-lg);
+    transition: background-color var(--transition);
+  }
+
+  .card:hover {
+    background-color: var(--color-surface-hover);
+  }
+
+  .card--accent {
+    background-color: var(--color-surface-accent);
+  }
+
+  .card__number {
+    font-family: var(--font-serif);
+    font-size: var(--text-h2);
+    line-height: var(--leading-flat);
+    font-weight: var(--weight-regular);
+    color: var(--color-accent);
+  }
+
+  .card__title {
+    font-size: var(--text-h4);
+  }
+
+  .card__text {
+    color: var(--color-text-muted);
+    font-size: var(--text-caption);
+    line-height: var(--leading-loose);
+  }
+
+  .card__list {
+    display: grid;
+    gap: var(--space-3);
+    margin-block-start: auto;
+    padding: 0;
+    list-style: none;
+    font-size: var(--text-caption);
+  }
+
+  .card__list li {
+    display: grid;
+    grid-template-columns: 1.25rem 1fr;
+    gap: var(--space-3);
+    align-items: start;
+    line-height: var(--leading-loose);
+  }
+
+  .card__list svg {
+    inline-size: 1.25rem;
+    block-size: 1.25rem;
+    margin-block-start: 0.15em;
+    color: var(--color-accent);
+  }
+
+  @container (width >= 26rem) {
+    .card {
+      padding: var(--space-7);
+    }
+  }
+
+  /* ==================================================================
+     TESTIMONIALS
+     ================================================================== */
+  .testimonial-grid {
+    display: grid;
+    gap: var(--space-5);
+    grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr));
+  }
+
+  .testimonial {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    padding: var(--space-6);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+  }
+
+  .testimonial__quote {
+    margin: 0;
+    font-size: var(--text-caption);
+    line-height: var(--leading-loose);
+    color: var(--color-text-muted);
+    max-inline-size: none;
+  }
+
+  .testimonial__quote::before {
+    content: "\201C";
+    display: block;
+    font-family: var(--font-serif);
+    font-size: var(--text-h2);
+    line-height: 0.6;
+    color: var(--color-accent);
+  }
+
+  .testimonial__author {
+    margin-block-start: auto;
+    font-size: var(--text-caption);
+    font-style: normal;
+    font-weight: var(--weight-bold);
+  }
+
+  .testimonial__role {
+    display: block;
+    font-weight: var(--weight-regular);
+    color: var(--color-text-muted);
+  }
+
+  /* ==================================================================
+     FAQ
+     Native <details>. Content ships in the DOM whether open or closed,
+     so every answer is crawlable — the reason this is not a JS accordion.
+     ================================================================== */
+  .faq {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .faq__item {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+
+  .faq__item[open] {
+    border-color: var(--color-border-soft);
+  }
+
+  .faq__question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding: var(--space-5);
+    font-size: var(--text-h5);
+    font-weight: var(--weight-bold);
+    line-height: var(--leading-snug);
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .faq__question::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq__question::after {
+    content: "";
+    inline-size: 0.75rem;
+    block-size: 0.75rem;
+    flex-shrink: 0;
+    border-inline-end: 2px solid var(--color-accent);
+    border-block-end: 2px solid var(--color-accent);
+    rotate: 45deg;
+    transition: rotate var(--transition);
+  }
+
+  .faq__item[open] .faq__question::after {
+    rotate: -135deg;
+  }
+
+  .faq__answer {
+    padding: 0 var(--space-5) var(--space-5);
+    color: var(--color-text-muted);
+    font-size: var(--text-caption);
+    line-height: var(--leading-loose);
+  }
+
+  /* ==================================================================
+     CTA
+     ================================================================== */
+  .cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-5);
+    padding: var(--space-8) var(--space-5);
+    text-align: center;
+    background-color: var(--color-surface-accent);
+    border-radius: var(--radius-lg);
+  }
+
+  .cta__title {
+    font-size: var(--text-h2);
+  }
+
+  .cta__text {
+    color: var(--color-text-on-accent);
+    max-inline-size: 46ch;
+  }
+
+  /* ==================================================================
+     FOOTER
+     ================================================================== */
+  .site-footer {
+    padding-block: var(--space-7);
+    border-block-start: 1px solid var(--color-border);
+    font-size: var(--text-caption);
+    color: var(--color-text-muted);
+  }
+
+  .site-footer__inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-5);
+  }
+
+  .social {
+    display: flex;
+    gap: var(--space-4);
+    padding: 0;
+    list-style: none;
+  }
+
+  .social a {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    text-decoration: none;
+    transition: color var(--transition);
+  }
+
+  .social a:hover {
+    color: var(--color-accent-strong);
+  }
+
+  .social svg {
+    inline-size: 1.25rem;
+    block-size: 1.25rem;
+  }
+}
