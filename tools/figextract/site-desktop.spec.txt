@@ -1,0 +1,289 @@
+FRAME Site desktop | 1440x9928.3 | @525,792 | fill=#f4f7f7 | gap=24 | padX=40 | padY=24
+  INSTANCE Menu | 1360x84 | @40,24 | fill=#ffffff | gap=17 | padX=24 | padY=16 | r=24
+  FRAME content | 1358x750 | @40,132 | gap=24
+    FRAME Mask group | 1358x750 | @0,0 | r=4
+      ROUNDED_RECTANGLE Rectangle 3 | 1358x750 | @0,0 | fill=#d9d9d9
+      ROUNDED_RECTANGLE IMG_3139 3 | 2343.4x1850.2 | @-681.4,-531 | fill=IMAGE,#000000
+      ELLIPSE Ellipse 1 | 1264.7x988.1 | @338,703 | fill=#50518a
+      ELLIPSE Ellipse 2 | 1809x1414 | @-989,140 | fill=#50518a
+      FRAME Content | 577x670 | @48,32 | gap=40
+        FRAME Content | 577x578 | @0,0 | gap=40
+          FRAME Title | 577x454 | @0,0 | gap=12
+            INSTANCE Eyebrow | 424x44 | @0,0
+            TEXT O futuro que você deseja viver começa pelas decisões que toma hoje. | 577x264 | @0,190 | fill=#f4f7f7 | Allomira Medium 72px/0.92 | TEXT="O futuro que você deseja viver começa pelas decisões que toma hoje."
+          FRAME paragrafo | 577x84 | @0,494 | gap=8
+            TEXT Planejamento financeiro e consultoria em investimentos para quem deseja construir patrimônio com intenção, tomar decisões com mais segurança e usar o dinheiro para sustentar a vida que deseja viver.  | 529x84 | @0,0 | fill=#f4f7f7 | Allomira Regular 20px/1.40 | TEXT="Planejamento financeiro e consultoria em investimentos para quem deseja construir patrimônio com intenção, tomar decisões com mais segurança e usar o dinheiro para sustentar a vida que deseja viver. "
+        FRAME Action | 577x52 | @0,618 | gap=24
+          INSTANCE Button | 217x52 | @0,0 | fill=#28445e | gap=8 | padX=24 | padY=12
+          INSTANCE Button | 218x52 | @241,0
+      TEXT Sou a Joice Sperandio, planejadora financeira e consultora em investimentos. | 263x87 | @1051,595 | fill=#f4f7f7 | Allomira Medium 24px/1.20 | TEXT="Sou a Joice Sperandio,\nplanejadora financeira e consultora em investimentos."
+  FRAME LOGOS | 1360x279 | @40,906 | gap=8 | padX=24 | padY=96
+    FRAME Competences | 1312x87 | @24,96 | gap=32 | padX=24
+      FRAME CMV | 239x87 | @24,0 | gap=16
+        ROUNDED_RECTANGLE image 5 | 64x64 | @0,11.5 | fill=IMAGE
+        TEXT CVM Consultora de Valores Mobiliários | 159x87 | @80,0 | fill=#4c646e | Allomira Medium 24px/1.20 | TEXT="CVM\nConsultora de\nValores Mobiliários"
+      LINE Line 50 | 64x0 | @416.2,11.5
+      FRAME CFP | 230x87 | @569.5,0 | gap=16
+        ROUNDED_RECTANGLE image 5 | 64x64 | @0,11.5 | fill=IMAGE
+        TEXT CFP© Certified Financial Planner | 150x87 | @80,0 | fill=#4c646e | Allomira Medium 24px/1.20 | TEXT="CFP©\nCertified Financial\nPlanner"
+      LINE Line 51 | 64x0 | @952.8,11.5
+      FRAME MBA | 182x87 | @1106,0 | gap=16
+        ROUNDED_RECTANGLE image 5 | 64x64 | @0,11.5 | fill=IMAGE
+        TEXT MBA Mercado de Capitais | 102x87 | @80,0 | fill=#4c646e | Allomira Medium 24px/1.20 | TEXT="MBA\nMercado de\nCapitais"
+    ELLIPSE Ellipse 4 | 532x463 | @1222,-16 | fill=#f7fafc
+  FRAME VISAO | 1360x1214 | @40,1209 | gap=56 | padY=40
+    FRAME content | 1360x408 | @0,40 | gap=40
+      INSTANCE tag | 105x36 | @0,0 | gap=8 | padX=32 | padY=4 | r=999
+      FRAME Content | 1360x332 | @0,76 | gap=260
+        FRAME Title | 664x332 | @0,0 | gap=40
+          TEXT Patrimônio não é apenas aquilo que existe na conta bancária. | 664x332 | @0,0 | fill=#5779aa | Allomira Black 90px/0.92 | TEXT="Patrimônio não é\napenas aquilo que existe na conta bancária."
+        FRAME paragrafo | 438x332 | @922,0 | gap=8
+          TEXT Patrimônio também é tempo, autonomia, possibilidades e tranquilidade para atravessar diferentes fases. O dinheiro é uma ferramenta importante, mas seu papel nunca foi ser o objetivo final. Acredito que o dinheiro funciona melhor quando ocupa o lugar que deveria ocupar: o de sustentar escolhas, proteger projetos e ampliar possibilidades. É essa relação que procuro construir junto dos meus clientes todos os dias. | 438x252 | @0,80 | fill=#151a1d | Allomira Regular 20px/1.40 | TEXT="Patrimônio também é tempo, autonomia, possibilidades e tranquilidade para atravessar diferentes fases. O dinheiro é uma ferramenta importante, mas seu papel nunca foi ser o objetivo final.\n\nAcredito que o dinheiro funciona melhor quando ocupa o lugar que deveria ocupar: o de sustentar escolhas, proteger projetos e ampliar possibilidades. É essa relação que procuro construir junto dos meus clientes todos os dias."
+    FRAME Card | 1360x710 | @0,504 | gap=24
+      FRAME mask | 1360x710 | @0,0 | r=4
+        ROUNDED_RECTANGLE mask | 1360x710 | @0,0 | fill=#d9d9d9
+        FRAME image | 1659x1572 | @-158,-193
+          ROUNDED_RECTANGLE IMG_3124 1 1 | 1414.1x1065 | @142,0 | fill=IMAGE,#000000
+          ELLIPSE Ellipse 2 | 1659x1226 | @0,346 | fill=#5779aa
+        FRAME Card | 1311.9x313 | @26,373 | gap=24
+          FRAME card | 309.5x313 | @1,0 | fill=#ffffff | gap=16 | padX=24 | padY=24 | r=16
+            ROUNDED_RECTANGLE 06_ícone_AzulClaro 1 | 40x40 | @24,24 | fill=IMAGE
+            FRAME Frame 427321412 | 261.5x176 | @24,113 | gap=8
+              TEXT Construção com estratégia | 261.5x28 | @0,0 | fill=#5779aa | Allomira Regular 20px/1.40 | TEXT="Construção com estratégia"
+              TEXT As decisões mais importantes da vida raramente acontecem de repente. Elas começam muito antes, através de pequenas escolhas feitas ao longo do tempo. | 261.5x140 | @0,36 | fill=#151a1d | Allomira Regular 20px/1.40 | TEXT="As decisões mais importantes da vida raramente acontecem de repente. Elas começam muito antes, através de pequenas escolhas feitas ao longo do tempo."
+          FRAME card | 309.5x313 | @334.5,0 | fill=#ffffff | gap=16 | padX=24 | padY=24 | r=16
+            ROUNDED_RECTANGLE 12_ícone_AzulClaro 1 | 40x40 | @24,24 | fill=IMAGE
+            FRAME Frame 427321413 | 261.5x176 | @24,113 | gap=8
+              TEXT Decisões com autonomia | 261.5x28 | @0,0 | fill=#5779aa | Allomira Regular 20px/1.40 | TEXT="Decisões com autonomia"
+              TEXT Entender o suficiente para participar das próprias decisões financeiras é mais importante do que saber tudo sobre investimentos ou mercado financeiro. | 261.5x140 | @0,36 | fill=#151a1d | Allomira Regular 20px/1.40 | TEXT="Entender o suficiente para participar das próprias decisões financeiras é mais importante do que saber tudo sobre investimentos ou mercado financeiro."
+          FRAME card | 309.5x313 | @668,0 | fill=#ffffff | gap=16 | padX=24 | padY=24 | r=16
+            ROUNDED_RECTANGLE 22_ícone_AzulClaro 1 | 32x32 | @24,24 | fill=IMAGE
+            FRAME Frame 427321414 | 261.5x176 | @24,113 | gap=8
+              TEXT Prosperidade com propósito | 261.5x28 | @0,0 | fill=#5779aa | Allomira Regular 20px/1.40 | TEXT="Prosperidade com propósito"
+              TEXT Construir patrimônio não significa acumular recursos sem direção, mas criar mais possibilidades, segurança e liberdade de escolha. | 261.5x140 | @0,36 | fill=#151a1d | Allomira Regular 20px/1.40 | TEXT="Construir patrimônio não significa acumular recursos sem direção, mas criar mais possibilidades, segurança e liberdade de escolha.\n"
+            VECTOR 03 | 356x256 | @-7,0 | fill=#4d3293
+          FRAME card | 309.5x313 | @1001.5,0 | fill=#ffffff | gap=16 | padX=24 | padY=24 | r=16
+            ROUNDED_RECTANGLE 31_ícone_AzulClaro 1 | 40x40 | @24,24 | fill=IMAGE
+            FRAME Frame 427321415 | 261.5x176 | @24,113 | gap=8
+              TEXT Intenção com perspectiva | 261.5x28 | @0,0 | fill=#5779aa | Allomira Regular 20px/1.40 | TEXT="Intenção com perspectiva "
+              TEXT Dinheiro funciona melhor quando existe clareza sobre aquilo que ele precisa sustentar: projetos, prioridades, pessoas e futuros possíveis. | 261.5x140 | @0,36 | fill=#151a1d | Allomira Regular 20px/1.40 | TEXT="Dinheiro funciona melhor quando existe clareza sobre aquilo que ele precisa sustentar: projetos, prioridades, pessoas e futuros possíveis."
+  FRAME SERVICOS | 1360x1402 | @40,2447 | gap=56 | padY=140
+    FRAME content | 1360x332 | @0,140 | gap=144
+      FRAME content | 668x232 | @0,0 | gap=40
+        INSTANCE tag | 128x36 | @0,0 | gap=8 | padX=32 | padY=4 | r=999
+        TEXT Dois serviços principais. Diferentes objetivos. O mesmo cuidado. | 668x156 | @0,76 | fill=#28445e | Allomira Black 72px/0.92 | TEXT="Dois serviços principais.\nDiferentes objetivos.\nO mesmo cuidado. "
+      FRAME paragrafo | 548x332 | @812,0 | gap=8 | padY=80
+        TEXT Algumas pessoas precisam organizar e estruturar a base financeira antes de dar os próximos passos. Outras já possuem patrimônio e buscam mais clareza para investir e tomar decisões. Meu trabalho acontece principalmente nesses dois contextos. Planejamento financeiro e consultoria em investimentos atendem necessidades distintas, mas compartilham o mesmo objetivo: oferecer direção, estratégia e segurança para as escolhas financeiras mais importantes. | 548x252 | @0,80 | fill=#151a1d | Allomira Regular 20px/1.40 | TEXT="Algumas pessoas precisam organizar e estruturar a base financeira antes de dar os próximos passos. Outras já possuem patrimônio e buscam mais clareza para investir e tomar decisões. Meu trabalho acontece principalmente nesses dois contextos.\n\nPlanejamento financeiro e consultoria em investimentos atendem necessidades distintas, mas compartilham o mesmo objetivo: oferecer direção, estratégia e segurança para as escolhas financeiras mais importantes."
+    FRAME Cards | 1360x874 | @0,528 | gap=24
+      FRAME Card-open | 899x874 | @0,0 | fill=#ccdceb | gap=32 | padX=48 | padY=48 | r=24
+        FRAME Title | 803x110 | @48,48
+          TEXT 01 | 119x110 | @0,0 | fill=#5779aa | Lora Regular 120px/0.92 | TEXT="01"
+        FRAME content | 803x636 | @48,190 | gap=24
+          TEXT Planejamento Financeiro | 803x48 | @0,0 | fill=#5779aa | Allomira Bold 48px/1.00 | TEXT="Planejamento Financeiro"
+          FRAME Content | 803x92 | @0,72 | gap=8
+            TEXT Clareza para decidir. Estrutura para construir. | 803x28 | @0,0 | fill=#151a1d | Allomira Regular 20px/1.40 | TEXT="Clareza para decidir. Estrutura para construir. "
+            TEXT Ideal para quem deseja organizar a sua base financeira atual, estruturar metas de vida e construir mais previsibilidade para o futuro. | 803x56 | @0,36 | fill=#151a1d | Allomira Regular 20px/1.40 | TEXT="Ideal para quem deseja organizar a sua base financeira atual, estruturar metas de vida e construir mais previsibilidade para o futuro."
+          FRAME List | 803x448 | @0,188
+            FRAME list-item | 803x64 | @0,0 | gap=24 | padY=16
+              FRAME arrow | 32x32 | @0,16
+                VECTOR Vector | 21.3x21.3 | @5.3,5.3
+              TEXT Compra do imóvel próprio | 747x32 | @56,16 | fill=#151a1d | Allomira Regular 20px/1.40 | TEXT="Compra do imóvel próprio"
+            FRAME list-item | 803x64 | @0,64 | gap=24 | padY=16
+              FRAME arrow | 32x32 | @0,16
+                VECTOR Vector | 21.3x21.3 | @5.3,5.3
+              TEXT Compra do imóvel próprio | 747x32 | @56,16 | fill=#151a1d | Allomira Regular 20px/1.40 | TEXT="Compra do imóvel próprio"
+            FRAME list-item | 803x64 | @0,128 | gap=24 | padY=16
+              FRAME arrow | 32x32 | @0,16
+                VECTOR Vector | 21.3x21.3 | @5.3,5.3
+              TEXT Planejamento para a chegada dos filhos | 747x28 | @56,18 | fill=#151a1d | Allomira Regular 20px/1.40 | TEXT="Planejamento para a chegada dos filhos"
+            FRAME list-item | 803x64 | @0,192 | gap=24 | padY=16
+              FRAME arrow | 32x32 | @0,16
+                VECTOR Vector | 21.3x21.3 | @5.3,5.3
+              TEXT Organização financeira para profissionais autônomos | 747x28 | @56,18 | fill=#151a1d | Allomira Regular 20px/1.40 | TEXT="Organização financeira para profissionais autônomos"
+            FRAME list-item | 803x64 | @0,256 | gap=24 | padY=16
+              FRAME arrow | 32x32 | @0,16
+                VECTOR Vector | 21.3x21.3 | @5.3,5.3
+              TEXT Transições e mudanças de carreira | 747x28 | @56,18 | fill=#151a1d | Allomira Regular 20px/1.40 | TEXT="Transições e mudanças de carreira"
+            FRAME list-item | 803x64 | @0,320 | gap=24 | padY=16
+              FRAME arrow | 32x32 | @0,16
+                VECTOR Vector | 21.3x21.3 | @5.3,5.3
+              TEXT Construção da aposentadoria no longo prazo | 747x28 | @56,18 | fill=#151a1d | Allomira Regular 20px/1.40 | TEXT="Construção da aposentadoria no longo prazo"
+            FRAME list-item | 803x64 | @0,384 | gap=24 | padY=16
+              FRAME arrow | 32x32 | @0,16
+                VECTOR Vector | 21.3x21.3 | @5.3,5.3
+              TEXT Estruturação dos projetos e objetivos de vida | 747x28 | @56,18 | fill=#151a1d | Allomira Regular 20px/1.40 | TEXT="Estruturação dos projetos e objetivos de vida"
+      FRAME Card-open | 437x874 | @923,0 | fill=#e5eef4 | gap=32 | padX=48 | padY=48 | r=24
+        FRAME Title | 341x110 | @48,48
+          TEXT 02 | 139x110 | @0,0 | fill=#5779aa | Lora Regular 120px/0.92 | TEXT="02"
+        FRAME content | 341x96 | @48,190
+          TEXT Consultoria em Investimentos | 341x96 | @0,0 | fill=#5779aa | Allomira Bold 48px/1.00 | TEXT="Consultoria em Investimentos "
+          FRAME Content | 591x88 | @0,72 | gap=8
+            TEXT Clareza para decidir. Estrutura para construir. | 591x29 | @0,0 | fill=#151a1d | Allomira Medium 24px/1.20 | TEXT="Clareza para decidir. Estrutura para construir. "
+            TEXT Ideal para quem deseja organizar a sua base financeira atual, estruturar metas de vida e construir mais previsibilidade para o futuro. | 591x56 | @0,32 | fill=#151a1d | Allomira Regular 20px/1.40 | TEXT="Ideal para quem deseja organizar a sua base financeira atual, estruturar metas de vida e construir mais previsibilidade para o futuro."
+          FRAME List | 793x448 | @0,184
+            FRAME list-item | 793x64 | @0,0 | gap=24 | padY=16
+              FRAME arrow | 32x32 | @0,16
+                VECTOR Vector | 21.3x21.3 | @5.3,5.3
+              TEXT Compra do imóvel próprio | 737x32 | @56,16 | fill=#151a1d | Allomira Regular 20px/1.40 | TEXT="Compra do imóvel próprio"
+            FRAME list-item | 793x64 | @0,64 | gap=24 | padY=16
+              FRAME arrow | 32x32 | @0,16
+                VECTOR Vector | 21.3x21.3 | @5.3,5.3
+              TEXT Compra do imóvel próprio | 737x32 | @56,16 | fill=#151a1d | Allomira Regular 20px/1.40 | TEXT="Compra do imóvel próprio"
+            FRAME list-item | 793x64 | @0,128 | gap=24 | padY=16
+              FRAME arrow | 32x32 | @0,16
+                VECTOR Vector | 21.3x21.3 | @5.3,5.3
+              TEXT Planejamento para a chegada dos filhos | 737x28 | @56,18 | fill=#151a1d | Allomira Regular 20px/1.40 | TEXT="Planejamento para a chegada dos filhos"
+            FRAME list-item | 793x64 | @0,192 | gap=24 | padY=16
+              FRAME arrow | 32x32 | @0,16
+                VECTOR Vector | 21.3x21.3 | @5.3,5.3
+              TEXT Organização financeira para profissionais autônomos | 737x28 | @56,18 | fill=#151a1d | Allomira Regular 20px/1.40 | TEXT="Organização financeira para profissionais autônomos"
+            FRAME list-item | 793x64 | @0,256 | gap=24 | padY=16
+              FRAME arrow | 32x32 | @0,16
+                VECTOR Vector | 21.3x21.3 | @5.3,5.3
+              TEXT Transições e mudanças de carreira | 737x28 | @56,18 | fill=#151a1d | Allomira Regular 20px/1.40 | TEXT="Transições e mudanças de carreira"
+            FRAME list-item | 793x64 | @0,320 | gap=24 | padY=16
+              FRAME arrow | 32x32 | @0,16
+                VECTOR Vector | 21.3x21.3 | @5.3,5.3
+              TEXT Construção da aposentadoria no longo prazo | 737x28 | @56,18 | fill=#151a1d | Allomira Regular 20px/1.40 | TEXT="Construção da aposentadoria no longo prazo"
+            FRAME list-item | 793x64 | @0,384 | gap=24 | padY=16
+              FRAME arrow | 32x32 | @0,16
+                VECTOR Vector | 21.3x21.3 | @5.3,5.3
+              TEXT Estruturação dos projetos e objetivos de vida | 737x28 | @56,18 | fill=#151a1d | Allomira Regular 20px/1.40 | TEXT="Estruturação dos projetos e objetivos de vida"
+        FRAME arrow | 341x508 | @48,318 | gap=8
+          VECTOR Vector | 90x90 | @0,418
+  FRAME PROCESSO | 1360x810 | @40,3873 | gap=72 | padY=160
+    FRAME content | 1360x650 | @0,160 | gap=144
+      FRAME Card | 553x420 | @0,0 | gap=40 | r=24
+        INSTANCE tag | 131x36 | @0,0 | gap=8 | padX=32 | padY=4 | r=999
+        FRAME Frame 2147260044 | 553x344 | @0,76 | gap=24
+          TEXT Um método construído para trazer visibilidade às suas decisões, sem fórmulas prontas e sem atalhos. | 553x208 | @0,0 | fill=#28445e | Allomira Black 72px/0.92 | TEXT="Um método construído para trazer visibilidade às suas decisões, sem fórmulas prontas e sem atalhos."
+          TEXT Mais importante do que encontrar respostas rápidas é construir boas perguntas e boas decisões ao longo do caminho. Cada projeto possui ritmos, prioridades e necessidades diferentes, mas existe um processo pensado para tornar a jornada mais clara e organizada. | 553x112 | @0,232 | fill=#151a1d | Allomira Regular 20px/1.40 | TEXT="Mais importante do que encontrar respostas rápidas é construir boas perguntas e boas decisões ao longo do caminho. Cada projeto possui ritmos, prioridades e necessidades diferentes, mas existe um processo pensado para tornar a jornada mais clara e organizada. "
+      FRAME content | 663x650 | @697,0 | padY=72
+        FRAME accordion | 663x578 | @0,72
+          INSTANCE accordion | 663x193 | @0,0
+          INSTANCE accordion | 663x77 | @0,193
+          INSTANCE accordion | 663x77 | @0,270
+          INSTANCE accordion | 663x77 | @0,347
+          INSTANCE accordion | 663x77 | @0,424
+          INSTANCE accordion | 663x77 | @0,501
+        FRAME paragrafo | 663x140 | @0,676 | gap=24
+          TEXT A conversa inicial é simples, sem compromisso e existe para entendermos se faz sentido seguirmos em frente. | 663x64 | @0,0 | fill=#151a1d | Allomira Bold 32px/1.00 | TEXT="A conversa inicial é simples, sem compromisso e existe para entendermos se faz sentido seguirmos em frente."
+          INSTANCE Button | 217x52 | @0,88 | fill=#28445e | gap=8 | padX=24 | padY=12
+  FRAME paragrafo | 1360x550 | @40,4707 | fill=#e5eef4 | gap=72 | padX=64 | padY=64 | r=24
+    ELLIPSE Ellipse 3 | 141x141 | @609.5,82.5 | fill=#d9d9d9,IMAGE
+    FRAME Frame 2147260039 | 1232x172 | @64,295.5 | gap=24
+      TEXT Tudo começa com uma conversa simples e sem compromisso. Um primeiro encontro para entendermos se faz sentido seguirmos em frente. | 1232x96 | @0,0 | fill=#151a1d | Allomira Bold 48px/1.00 | TEXT="Tudo começa com uma conversa simples e sem compromisso. Um primeiro encontro para entendermos se faz sentido seguirmos em frente."
+      INSTANCE Button | 217x52 | @507.5,120 | fill=#28445e | gap=8 | padX=24 | padY=12
+    INSTANCE tag | 118x28 | @201,125
+    INSTANCE tag | 124x28 | @939,64
+    INSTANCE tag | 84x28 | @789,117
+    INSTANCE tag | 123x28 | @1080,180
+    INSTANCE tag | 124x28 | @401,50
+    INSTANCE tag | 92x28 | @539,180.3
+  FRAME HISTORIAS | 1360x1190.3 | @40,5281 | gap=48 | padY=140
+    FRAME hero | 1360x511.3 | @0,140 | gap=40
+      FRAME Left | 553x392 | @0,59.7 | gap=40
+        INSTANCE tag | 126x36 | @0,0 | gap=8 | padX=32 | padY=4 | r=999
+        FRAME Content | 553x316 | @0,76 | gap=24
+          TEXT Pessoas diferentes. Momentos diferentes. Decisões importantes em comum. | 553x208 | @0,0 | fill=#28445e | Allomira Bold 56px/0.92 | TEXT="Pessoas diferentes.\nMomentos diferentes.\nDecisões importantes\nem comum. "
+          TEXT Nenhuma dessas histórias começou da mesma forma. Mas todas começaram com uma conversa. | 553x84 | @0,232 | fill=#4c646e | Allomira Regular 20px/1.40 | TEXT="Nenhuma dessas histórias começou da mesma forma.\nMas todas começaram com uma conversa.\n"
+      ROUNDED_RECTANGLE Image right | 767x511.3 | @593,0 | fill=IMAGE,#000000 | r=20
+    INSTANCE Alessandra | 1360x491 | @0,699.3 | fill=#ffffff | gap=80 | padX=40 | padY=40
+  FRAME big-numbers | 1360x580 | @40,6495.3 | gap=24 | padY=80
+    FRAME big number | 437.3x420 | @0,80 | gap=8
+      TEXT +130 | 437.3x136 | @0,109 | fill=#5779aa | Lora Regular 136px/1.00 | TEXT="+130"
+      TEXT clientes atendidos no Brasil e exterior | 437.3x58 | @0,253 | fill=#4c646e | Allomira Medium 24px/1.20 | TEXT="clientes atendidos no\nBrasil e exterior"
+    FRAME big number | 437.3x420 | @461.3,80 | gap=8
+      TEXT 100% | 437.3x136 | @0,109 | fill=#5779aa | Lora Regular 136px/1.00 | TEXT="100%"
+      TEXT Online - atendimento para o Brasil e exterior | 437.3x58 | @0,253 | fill=#4c646e | Allomira Medium 24px/1.20 | TEXT="Online - atendimento\npara o Brasil e exterior"
+    FRAME big number | 437.3x420 | @922.7,80 | gap=8
+      TEXT +06 | 437.3x136 | @0,109 | fill=#5779aa | Lora Regular 136px/1.00 | TEXT="+06"
+      TEXT anos de experiência com planejamento financeiro | 437.3x58 | @0,253 | fill=#4c646e | Allomira Medium 24px/1.20 | TEXT="anos de experiência com\nplanejamento financeiro"
+  FRAME SOBRE | 1360x1055 | @40,7099.3 | gap=24
+    FRAME content | 1360x1134 | @0,0 | gap=24 | padY=80
+      FRAME Card | 554x1054 | @0,80 | gap=56 | r=24
+        FRAME right | 554x532 | @0,0 | gap=40
+          INSTANCE Eyebrow | 424x44 | @0,0
+          FRAME content | 554x532 | @0,0 | gap=40
+            INSTANCE tag | 107x36 | @0,0 | gap=8 | padX=32 | padY=4 | r=999
+            FRAME Frame 2147260045 | 554x456 | @0,76 | gap=24
+              TEXT Experiência, conhecimento técnico e um olhar humano para decisões que geram impacto. | 554x208 | @0,0 | fill=#5779aa | Allomira Bold 56px/0.92 | TEXT="Experiência, conhecimento técnico e um olhar humano para decisões que\ngeram impacto. "
+              FRAME paragrafo | 554x224 | @0,232 | gap=8
+                TEXT Trabalhei durante anos no mercado corporativo. Morei fora, viajei por diferentes países e vivi uma transição de carreira até encontrar meu verdadeiro propósito. Hoje, são mais de seis anos de atuação como planejadora financeira e consultora em investimentos. São mais de 130 pessoas acompanhadas e a convicção de que maturidade financeira não significa saber tudo, mas entender o suficiente para decidir com segurança. | 554x224 | @0,0 | fill=#151a1d | Allomira Regular 20px/1.40 | TEXT="Trabalhei durante anos no mercado corporativo. Morei fora, viajei por diferentes países e vivi uma transição de carreira até encontrar meu verdadeiro propósito.\n\nHoje, são mais de seis anos de atuação como planejadora financeira e consultora em investimentos. São mais de 130 pessoas acompanhadas e a convicção de que maturidade financeira não significa saber tudo, mas entender o suficiente para decidir com segurança."
+            FRAME Action | 552x52 | @0,420 | gap=24
+              INSTANCE Button | 217x52 | @0,0 | fill=#5779aa | gap=8 | padX=24 | padY=12
+              INSTANCE Button | 218x52 | @237,0 | fill=#28445e | gap=8 | padX=24 | padY=12
+        FRAME Card | 554x466 | @0,588 | gap=-65
+          FRAME card | 554x158 | @0,0 | fill=#f4f7f7 | gap=8 | padX=32 | padY=32 | r=16
+            FRAME content | 490x94 | @32,32 | gap=24
+              TEXT 01 | 50x94 | @0,0 | fill=#5779aa | Allomira Bold 32px/1.00 | TEXT="01"
+              LINE Line 52 | 94x0 | @74,0
+              TEXT Vivência corporativa Atuei como analista financeira em uma indústria de plásticos por 7 anos | 392x56 | @98,19 | fill=#151a1d | Allomira Regular 20px/1.40 | TEXT="Vivência corporativa Atuei como analista financeira em uma indústria de plásticos por 7 anos"
+          FRAME card | 554x158 | @0,30.3 | fill=#f4f7f7 | gap=8 | padX=32 | padY=32 | r=16
+            FRAME content | 490x94 | @32,32 | gap=24
+              TEXT 02 | 50x94 | @0,0 | fill=#5779aa | Allomira Bold 32px/1.00 | TEXT="02"
+              LINE Line 52 | 94x0 | @74,0
+              TEXT Experiência no exterior Morei em Dublin (Irlanda) por dois anos, trabalhando e estudando inglês. | 392x56 | @98,19 | fill=#151a1d | Allomira Regular 20px/1.40 | TEXT="Experiência no exterior Morei em Dublin (Irlanda) por dois anos, trabalhando e estudando inglês."
+          FRAME card | 554x158 | @0,66.3 | fill=#f4f7f7 | gap=8 | padX=32 | padY=32 | r=16
+            FRAME content | 490x94 | @32,32 | gap=24
+              TEXT 03 | 50x94 | @0,0 | fill=#5779aa | Allomira Bold 32px/1.00 | TEXT="03"
+              LINE Line 52 | 94x0 | @74,0
+              TEXT Paixão por viajar Já conheci +17 países e sigo transformando experiências em aprendizados. | 392x56 | @98,19 | fill=#151a1d | Allomira Regular 20px/1.40 | TEXT="Paixão por viajar Já conheci +17 países e sigo transformando experiências em aprendizados."
+          FRAME card | 554x158 | @0,106.3 | fill=#f4f7f7 | gap=8 | padX=32 | padY=32 | r=16
+            FRAME content | 490x94 | @32,32 | gap=24
+              TEXT 04 | 50x94 | @0,0 | fill=#5779aa | Allomira Bold 32px/1.00 | TEXT="04"
+              LINE Line 52 | 94x0 | @74,0
+              TEXT Transição de carreira Planejei cada passo até me consolidar como consultora e me dedicar 100% a essa atuação. | 392x84 | @98,5 | fill=#151a1d | Allomira Regular 20px/1.40 | TEXT="Transição de carreira Planejei cada passo até me consolidar como consultora e me dedicar 100% a essa atuação."
+      FRAME card | 554x158 | @0,880.3 | fill=#f4f7f7 | gap=8 | padX=32 | padY=32 | r=16
+        FRAME content | 490x94 | @32,32 | gap=24
+          TEXT 05 | 50x94 | @0,0 | fill=#5779aa | Allomira Bold 32px/1.00 | TEXT="05"
+          LINE Line 52 | 94x0 | @74,0
+          TEXT Maternidade & Família Ser mãe da Elisa e parceira do Gui ampliou meu olhar sobre tempo, segurança, autonomia e possibilidades. | 392x84 | @98,5 | fill=#151a1d | Allomira Regular 20px/1.40 | TEXT="Maternidade & Família Ser mãe da Elisa e parceira do Gui ampliou meu olhar sobre tempo, segurança, autonomia e possibilidades."
+      FRAME image | 782x700 | @602,184.7 | gap=24
+        FRAME Mask group | 501x700 | @140.5,0 | r=4
+          ROUNDED_RECTANGLE Rectangle 3 | 501x700 | @0,0 | fill=#73949d
+          ROUNDED_RECTANGLE Rectangle 4 | 572.4x733 | @-35.7,-33 | fill=#5779aa
+          ROUNDED_RECTANGLE IMG_3178 2 | 583x875 | @-60.5,-120.4 | fill=IMAGE,#000000
+          ROUNDED_RECTANGLE IMG_3139 3 | 1720x1358 | @-936.5,-389.7 | fill=IMAGE,#000000
+          ROUNDED_RECTANGLE IMG_5074 1 | 961x781 | @-210.5,-43 | fill=IMAGE,#000000
+          FRAME play-circle | 120x120 | @190.5,289.6
+            VECTOR Vector | 100x100 | @10,10
+            VECTOR Vector | 30x40 | @50,40
+        FRAME Mask group | 209.9x149.9 | @0,386.6 | r=3.808
+          ROUNDED_RECTANGLE Rectangle 3 | 209.9x149.9 | @0,0 | fill=#d9d9d9 | r=15.232
+          ROUNDED_RECTANGLE Rectangle 4 | 209.9x149.9 | @0,0 | fill=#5779aa
+          ROUNDED_RECTANGLE image 17 | 210.3x233.7 | @0,-61.7 | fill=IMAGE
+          ROUNDED_RECTANGLE image 19 | 284x283 | @-6,-44 | fill=IMAGE
+        FRAME Mask group | 209.9x149.9 | @511,-42.7 | r=3.808
+          ROUNDED_RECTANGLE Rectangle 3 | 209.9x149.9 | @0,0 | fill=#d9d9d9 | r=15.232
+          ROUNDED_RECTANGLE Rectangle 4 | 209.9x149.9 | @0,0 | fill=#5779aa
+          ROUNDED_RECTANGLE image 16 | 221.3x227.5 | @-11.5,-21.2 | fill=IMAGE
+        FRAME Mask group | 209.9x149.9 | @381,630.6 | r=3.808
+          ROUNDED_RECTANGLE Rectangle 3 | 209.9x149.9 | @0,0 | fill=#d9d9d9 | r=15.232
+          ROUNDED_RECTANGLE Rectangle 4 | 209.9x149.9 | @0,0 | fill=#5779aa
+          ROUNDED_RECTANGLE image 18 | 237.4x201.9 | @-23.8,-26.5 | fill=IMAGE
+    INSTANCE LOGOS | 1965x398 | @0,1194 | gap=8 | padX=20 | padY=80
+  FRAME LOGOS | 1360x279 | @40,8178.3 | gap=8 | padX=24 | padY=96
+    FRAME Competences | 1312x87 | @24,96 | gap=32 | padX=24
+      FRAME CMV | 239x87 | @24,0 | gap=16
+        ROUNDED_RECTANGLE image 5 | 64x64 | @0,11.5 | fill=IMAGE
+        TEXT CVM Consultora de Valores Mobiliários | 159x87 | @80,0 | fill=#4c646e | Allomira Medium 24px/1.20 | TEXT="CVM\nConsultora de\nValores Mobiliários"
+      LINE Line 50 | 64x0 | @416.2,11.5
+      FRAME CFP | 230x87 | @569.5,0 | gap=16
+        ROUNDED_RECTANGLE image 5 | 64x64 | @0,11.5 | fill=IMAGE
+        TEXT CFP© Certified Financial Planner | 150x87 | @80,0 | fill=#4c646e | Allomira Medium 24px/1.20 | TEXT="CFP©\nCertified Financial\nPlanner"
+      LINE Line 51 | 64x0 | @952.8,11.5
+      FRAME MBA | 182x87 | @1106,0 | gap=16
+        ROUNDED_RECTANGLE image 5 | 64x64 | @0,11.5 | fill=IMAGE
+        TEXT MBA Mercado de Capitais | 102x87 | @80,0 | fill=#4c646e | Allomira Medium 24px/1.20 | TEXT="MBA\nMercado de\nCapitais"
+    ELLIPSE Ellipse 4 | 532x463 | @1222,-16 | fill=#f7fafc
+  FRAME faq | 1360x987 | @40,8481.3 | gap=24 | padY=100
+    FRAME right | 553x340 | @0,100 | gap=40
+      FRAME Title | 553x340 | @0,0 | gap=40
+        FRAME Frame 2147260040 | 513x36 | @0,0 | gap=24
+          INSTANCE tag | 204x36 | @0,0 | gap=8 | padX=32 | padY=4 | r=999
+        FRAME Frame 2147260046 | 437x264 | @0,76 | gap=24
+          TEXT Antes da conversa, algumas perguntas costumam aparecer. | 437x156 | @0,0 | fill=#28445e | Allomira Bold 56px/0.92 | TEXT="Antes da conversa,\nalgumas perguntas costumam aparecer. "
+          TEXT Nem sempre é fácil saber por onde começar. Essas são algumas perguntas que costumo receber antes da conversa inicial. Talvez algumas delas também sejam as suas. | 437x84 | @0,180 | fill=#4c646e | Allomira Regular 20px/1.40 | TEXT="Nem sempre é fácil saber por onde começar. Essas são algumas perguntas que costumo receber antes da conversa inicial. Talvez algumas delas também sejam as suas. "
+    INSTANCE FAQ | 783x820 | @577,100 | gap=16
+  INSTANCE footer | 1360x396 | @40,9492.3 | fill=#28445e | gap=40 | padX=40 | padY=40
