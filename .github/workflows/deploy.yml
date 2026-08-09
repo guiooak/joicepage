@@ -70,41 +70,81 @@ jobs:
           echo "checked $(wc -l < /tmp/refs.txt | tr -d ' ') relative refs"
           echo "site OK — $(du -sh . | cut -f1) across $(find . -type f | wc -l | tr -d ' ') files"
 
-      # The page ships a canonical pointing at https://joicesperandio.com.br/,
-      # which is already a LIVE site on other hosting. Serving this copy on
-      # github.io with that canonical would tell Google the real version of
-      # this page is a different site — and the copy still carries unwritten
-      # FAQ placeholders. So while this is a preview, it is marked noindex.
-      #
-      # The switch is the presence of a CNAME file: add one (i.e. point the
-      # custom domain at Pages) and this step does nothing, because at that
-      # point the deployment IS production and the authored robots.txt and
-      # canonical are already correct.
-      #
-      # This only ever mutates the uploaded artifact. The files in the repo
-      # stay production-correct, so nothing here has to be undone later.
-      - name: Keep the preview out of search engines
-        working-directory: ${{ env.SITE_DIR }}
-        run: |
-          set -euo pipefail
-          if [ -f CNAME ]; then
-            echo "CNAME present — deploying as production, robots left as authored"
-            exit 0
-          fi
-
-          grep -q '</head>' index.html || { echo "::error::no </head> to patch"; exit 1; }
-          sed -i 's|</head>|  <meta name="robots" content="noindex, nofollow" />\n  </head>|' index.html
-          printf 'User-agent: *\nDisallow: /\n' > robots.txt
-
-          grep -q 'name="robots" content="noindex' index.html \
-            || { echo "::error::noindex meta was not applied"; exit 1; }
-          echo "preview marked noindex (no CNAME present)"
-
       - uses: actions/configure-pages@v5
+        id: pages
         with:
           # Turns Pages on the first time this runs, so there is no manual
           # settings step to forget.
           enablement: true
+
+      # This deployment is a REVIEW APP, not production. joicesperandio.com.br
+      # is a live site on other hosting, and the page is authored for it, so
+      # the copy served here has to be neutralised or it will interfere with
+      # the real domain's search presence.
+      #
+      # Three things, and the order of reasoning matters:
+      #
+      # 1. noindex, and crawling left OPEN. A disallow-all robots.txt would be
+      #    counterproductive: Google cannot read a noindex it is not allowed
+      #    to fetch, and a blocked URL can still be indexed URL-only from
+      #    links. To keep a page out, let it be crawled and serve noindex.
+      #
+      # 2. Rewrite the production URLs to this deployment. The authored
+      #    canonical points at joicesperandio.com.br. Serving that here would
+      #    put a cross-domain canonical on a noindex page — a combination
+      #    Google warns against, because the noindex can end up attributed to
+      #    the canonical target, i.e. the real site. Rewriting makes the
+      #    canonical self-referential, which is safe alongside noindex, and
+      #    keeps og:url and the JSON-LD @ids internally consistent.
+      #
+      # 3. Drop sitemap.xml. It lists the production URL, and a review app has
+      #    no business advertising a sitemap at all.
+      #
+      # Gated on a CNAME file: add one (point the custom domain at Pages) and
+      # this step no-ops, because the deployment is then production and the
+      # authored files are already correct.
+      #
+      # Only the artifact is mutated. The repo stays production-correct, so
+      # there is nothing to undo at cutover.
+      - name: Neutralise the review app for search engines
+        working-directory: ${{ env.SITE_DIR }}
+        env:
+          BASE_URL: ${{ steps.pages.outputs.base_url }}
+        run: |
+          set -euo pipefail
+          if [ -f CNAME ]; then
+            echo "CNAME present — deploying as production, files left as authored"
+            exit 0
+          fi
+
+          base="${BASE_URL%/}"
+          [ -n "$base" ] || { echo "::error::configure-pages gave no base_url"; exit 1; }
+
+          grep -q '</head>' index.html || { echo "::error::no </head> to patch"; exit 1; }
+          sed -i 's|</head>|  <meta name="robots" content="noindex, nofollow" />\n  </head>|' index.html
+
+          # Prod → this deployment. The mailto: address must survive, so match
+          # only the https:// origin rather than the bare domain.
+          sed -i "s|https://joicesperandio\.com\.br|${base}|g" index.html
+
+          # Crawlable on purpose — see (1) above.
+          printf 'User-agent: *\nAllow: /\n' > robots.txt
+          rm -f sitemap.xml
+
+          # Assert the outcome rather than trusting the seds.
+          grep -q 'name="robots" content="noindex' index.html \
+            || { echo "::error::noindex meta missing"; exit 1; }
+          if grep -q 'https://joicesperandio\.com\.br' index.html; then
+            echo "::error::a production URL survived the rewrite:"
+            grep -n 'https://joicesperandio\.com\.br' index.html
+            exit 1
+          fi
+          grep -q "rel=\"canonical\" href=\"${base}/\"" index.html \
+            || { echo "::error::canonical is not self-referential"; exit 1; }
+          grep -q 'oi@joicesperandio.com.br' index.html \
+            || { echo "::error::the mailto address was clobbered"; exit 1; }
+
+          echo "review app neutralised — noindex, crawlable, canonical → ${base}/"
 
       - uses: actions/upload-pages-artifact@v3
         with:

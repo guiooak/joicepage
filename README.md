@@ -60,28 +60,54 @@ expected file is missing or if `index.html` references a relative asset that
 does not exist. After deploy, it fetches the live URL and greps for copy that
 has to be in the HTML rather than waiting on JS.
 
-**The preview is deliberately `noindex`.** `joicesperandio.com.br` is already
-a live site on other hosting, and this page's canonical points at it — so
-serving this copy on `github.io` unchanged would tell Google that the real
-version of this page is a different site. The FAQ placeholders are another
-reason it should not be indexed yet. The deploy therefore injects a `noindex`
-meta and a disallow-all `robots.txt` **into the artifact only**; the files in
-the repo stay production-correct.
+### The github.io deployment is a review app
 
-That guard is gated on a `CNAME` file. To go live for real: add
-`poc/rawhtml/CNAME` containing the domain, point DNS at Pages, and the step
-no-ops — at that point the deployment *is* production and the authored
-canonical, `robots.txt` and `sitemap.xml` are already right.
+It is **not** production and must not compete with `joicesperandio.com.br`,
+which is a live site on other hosting. The deploy neutralises the artifact
+three ways. The reasoning matters more than the code, so it is spelled out:
 
-Two things to know before that cutover:
+1. **`noindex`, with crawling left open.** The instinct is to add a
+   disallow-all `robots.txt`; that is counterproductive. Google cannot read a
+   `noindex` it is not allowed to fetch, and a blocked URL can still be
+   indexed URL-only from links. To keep a page out of the index you let it be
+   crawled and serve `noindex`.
+2. **Production URLs rewritten to the deployment URL.** The page is authored
+   with `canonical → joicesperandio.com.br`. Serving that here would put a
+   cross-domain canonical on a `noindex` page — a combination Google warns
+   against, because the `noindex` can end up attributed to the canonical
+   target, which is the real site. Rewriting makes the canonical
+   self-referential, which is safe next to `noindex`, and keeps `og:url` and
+   the JSON-LD `@id`s consistent. The `mailto:` address is deliberately not
+   rewritten, and there is an assertion for that.
+3. **`sitemap.xml` dropped.** It lists the production URL, and a review app
+   should not advertise a sitemap at all.
 
+Every one of those is asserted after the fact, so a silent `sed` failure fails
+the run instead of publishing something that leaks.
+
+Gated on a `CNAME` file. To go live for real: add `poc/rawhtml/CNAME` with the
+domain, point DNS at Pages, and the step no-ops — the deployment is then
+production and the authored canonical, `robots.txt` and `sitemap.xml` are
+already correct.
+
+Two habits that matter more than the config: **don't verify the review app in
+Search Console**, and **don't link to it from anywhere public** — inbound
+links are how Google finds a URL in the first place.
+
+### Before the real cutover
+
+- **`assets/img/og.jpg` does not exist**, so `og:image` 404s and link previews
+  (WhatsApp, LinkedIn) will render without an image. Pre-existing, unrelated to
+  hosting, but it is on the verification list and should be fixed before the
+  domain switch.
 - The footer links `/politica-de-cookies` and `/politica-de-privacidade` are
-  site-absolute. They are correct for a custom domain at the root, but resolve
-  outside the project path on `guiooak.github.io/joicepage/`. Neither page
-  exists yet either way.
+  site-absolute — correct for a root domain, but they resolve outside the
+  project path on `guiooak.github.io/joicepage/`. Neither page exists yet.
+- The domain currently serves a **different site**. Replacing it means its
+  existing URLs start 404ing, so plan redirects for anything already indexed.
 - Pushing changes to `.github/workflows/` needs a token with the `workflow`
   scope. The `gh` login here does not have it, so use SSH for those pushes or
-  re-auth with `gh auth refresh -s workflow`.
+  run `gh auth refresh -s workflow`.
 
 ## Status
 
