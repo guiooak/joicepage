@@ -30,7 +30,7 @@ copying files, editable by anyone who knows HTML.
 | Lead capture | WhatsApp deep link. No form, no backend, no LGPD surface. |
 | Fonts | Self-hosted woff2, committed. No CDN. |
 | Images | Real, exported from the `.fig` and committed to `assets/img/`. |
-| Hosting | Cloudflare Pages (BR edge). Low-stakes — static files port anywhere. |
+| Hosting | **GitHub Pages**, deployed from `main` by Actions. Changed from Cloudflare Pages — same static files, one less account. Low-stakes: they port anywhere. |
 | Repo layout | `poc/<approach>/` so alternative builds can be compared as siblings. |
 
 ## The JS decision, reversed

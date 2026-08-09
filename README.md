@@ -40,7 +40,48 @@ No install, no build:
 cd poc/rawhtml && python3 -m http.server 8000
 ```
 
-Then open <http://localhost:8000>.
+Then open <http://localhost:8000>. Use the server rather than opening
+`index.html` directly — browsers treat `file://` fonts as cross-origin and
+block them, so the type would silently fall back.
+
+## Deploying
+
+`.github/workflows/deploy.yml` publishes `poc/rawhtml/` to GitHub Pages on
+every push to `main`, plus a manual `workflow_dispatch` for redeploying the
+current `main` without an empty commit. Only that folder is uploaded, so the
+plan docs and the `.fig` tooling never reach the public site.
+
+There is still no build step: the artifact is the source directory copied
+verbatim. Delete the workflow and the page is unchanged and still deployable
+by hand.
+
+Two guards, because this is outward facing. Before upload, the run fails if an
+expected file is missing or if `index.html` references a relative asset that
+does not exist. After deploy, it fetches the live URL and greps for copy that
+has to be in the HTML rather than waiting on JS.
+
+**The preview is deliberately `noindex`.** `joicesperandio.com.br` is already
+a live site on other hosting, and this page's canonical points at it — so
+serving this copy on `github.io` unchanged would tell Google that the real
+version of this page is a different site. The FAQ placeholders are another
+reason it should not be indexed yet. The deploy therefore injects a `noindex`
+meta and a disallow-all `robots.txt` **into the artifact only**; the files in
+the repo stay production-correct.
+
+That guard is gated on a `CNAME` file. To go live for real: add
+`poc/rawhtml/CNAME` containing the domain, point DNS at Pages, and the step
+no-ops — at that point the deployment *is* production and the authored
+canonical, `robots.txt` and `sitemap.xml` are already right.
+
+Two things to know before that cutover:
+
+- The footer links `/politica-de-cookies` and `/politica-de-privacidade` are
+  site-absolute. They are correct for a custom domain at the root, but resolve
+  outside the project path on `guiooak.github.io/joicepage/`. Neither page
+  exists yet either way.
+- Pushing changes to `.github/workflows/` needs a token with the `workflow`
+  scope. The `gh` login here does not have it, so use SSH for those pushes or
+  re-auth with `gh auth refresh -s workflow`.
 
 ## Status
 
