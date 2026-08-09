@@ -292,10 +292,21 @@
     font-weight: inherit;
   }
 
-  /* ---- Section shell --------------------------------------------------- */
+  /* ---- Section shell ---------------------------------------------------
+     The vertical rhythm is NOT uniform: each frame carries its own padY in
+     the file, and that padding is what separates one section from the next.
+     A single blanket value ran Visão and Serviços tall against the drawn
+     heights, so the per-section values are transcribed here. */
   .section {
     padding-block-start: var(--section-padding-top);
   }
+
+  #visao     { padding-block-start: var(--size-40); }   /* VISAO      padY 40  */
+  #servicos  { padding-block-start: var(--size-140); }  /* SERVICOS   padY 140 */
+  #processo  { padding-block-start: var(--size-160); }  /* PROCESSO   padY 160 */
+  #historias { padding-block-start: var(--size-140); }  /* HISTORIAS  padY 140 */
+  #sobre     { padding-block-start: var(--size-80); }   /* SOBRE      padY 80  */
+  #duvidas   { padding-block-start: var(--size-100); }  /* faq        padY 100 */
 
   /* ---- Visão -----------------------------------------------------------
      Title 664 · paragraph 438 @x922 → a 258px channel between them. */

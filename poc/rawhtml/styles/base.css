@@ -81,50 +81,30 @@
       U+A720-A7FF;
   }
 
-  /* FONTS — provisional, and deliberately so.
-     ------------------------------------------------------------------------
-     The design uses Allomira (Light→Black). It is a commercial face and
-     CANNOT be exported from Figma: `download_assets` returns renders, bitmap
-     fills and vector SVGs only, and the .fig container stores font *names*,
-     not binaries. So it has to be licensed and dropped into assets/fonts/.
+  /* Allomira — the real face, licensed and self-hosted. This replaces the
+     measured metric-override fallback that stood in for it; there is no
+     size-adjust here and none is wanted.
 
-     Until then this metric-override face stands in for it. The numbers are
-     measured, not guessed: rendering the hero headline
-     ("O futuro que você deseja viver…") at 72px/0.92 in a 577px column must
-     produce 4 lines, which is what the Figma node's 577x264 box holds. The
-     untuned fallback produced 5. Sweeping size-adjust against the resolved
-     face gives a window of 72%–83% where the headline is 4 lines AND the
-     hero caption box lands on its drawn 87px; 83% is the top of that window,
-     i.e. the least distortion that satisfies both.
+     One variable file covers the whole range the design uses (Regular 400,
+     Medium 500, Bold 700, Black 900) in 26KB, against 64KB for the four
+     statics. Checked before choosing: instancing the VF at each of those
+     weights matches the corresponding static font's advance widths to within
+     0.1% — exact at 400 and 900 — so the variable file is not an
+     approximation of the designer's instances, it reproduces them.
 
-     Calibrated against Avenir Next, which is what the local() list below
-     resolves to on macOS. On Windows it resolves to Segoe UI, whose
-     proportions differ — recheck there before deploy.
+     Subset to latin + latin-ext, which covers every pt-BR diacritic plus the
+     ©, → and typographic quotes the page uses. Verified: no glyph the copy
+     needs is missing.
 
-     Known limitation: one uniform scale cannot match every string, because
-     the fallback's proportions differ from Allomira's non-uniformly. The
-     Serviços and Sobre headlines carry explicit <br> from the design, so they
-     are unaffected; the CTA headline still takes 3 lines where Figma draws 2.
-
-     When the real woff2 arrives: add a normal @font-face for "Allomira",
-     subset to latin + latin-ext for pt-BR diacritics, and delete this block.
-     The ascent/descent overrides exist so that swap causes no layout shift. */
+     `font-weight: 100 900` is the range this face answers for. It is load
+     bearing — a @font-face without it matches only 400, and every 500/700/900
+     run would silently fall through to the next family in the stack. */
   @font-face {
-    font-family: "Allomira Fallback";
-    src:
-      local("Avenir Next"),
-      local("Segoe UI"),
-      local("Helvetica Neue"),
-      local("Arial");
-    /* Must span the whole range: a @font-face with no font-weight descriptor
-       only matches 400, so every 500/700/900 run would silently fall past
-       this face to the next family and lose the adjustment. */
+    font-family: "Allomira";
+    src: url("../assets/fonts/allomira-variable.woff2") format("woff2");
     font-weight: 100 900;
     font-style: normal;
-    size-adjust: 83%;
-    ascent-override: 92%;
-    descent-override: 24%;
-    line-gap-override: 0%;
+    font-display: swap;
   }
 
   body {

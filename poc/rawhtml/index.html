@@ -25,6 +25,15 @@
     <meta property="og:image" content="https://joicesperandio.com.br/assets/img/og.jpg" />
     <meta name="twitter:card" content="summary_large_image" />
 
+    <!-- The headline face and the hero photo are both above the fold and both
+         gate the first meaningful paint, so neither should wait on the CSS. -->
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="assets/fonts/allomira-variable.woff2"
+      crossorigin
+    />
     <link rel="preload" as="image" href="assets/img/hero-joice.jpg" fetchpriority="high" />
 
     <link rel="stylesheet" href="styles/tokens.css" />
@@ -248,13 +257,15 @@
       </section>
 
       <section class="shell section" id="servicos">
-        <p class="tag">Serviços</p>
         <div class="servicos__head">
-          <h2>
+          <div>
+            <p class="tag">Serviços</p>
+            <h2>
             Dois serviços principais.<br />
             Diferentes objetivos.<br />
-            O mesmo cuidado.
-          </h2>
+              O mesmo cuidado.
+            </h2>
+          </div>
           <div class="servicos__intro">
             <p>
               Algumas pessoas precisam organizar e estruturar a base financeira
@@ -324,9 +335,9 @@
       </section>
 
       <section class="shell section" id="processo">
-        <p class="tag">Processo</p>
         <div class="processo__grid">
           <div>
+            <p class="tag">Processo</p>
             <h2>
               Um método construído para trazer visibilidade às suas decisões,
               sem fórmulas prontas e sem atalhos.
@@ -422,9 +433,9 @@
       </section>
 
       <section class="shell section" id="historias">
-        <p class="tag">Histórias</p>
         <div class="historias__grid">
           <div>
+            <p class="tag">Histórias</p>
             <h2>
               Pessoas diferentes.<br />
               Momentos diferentes.<br />

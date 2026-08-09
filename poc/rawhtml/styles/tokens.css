@@ -78,12 +78,12 @@
     --hero-veil: rgb(0 0 0 / 8%);
 
     /* ---- Typography ------------------------------------------------------
-       Two families. Allomira is commercial and not yet licensed, so it is
-       declared here but falls back until the woff2 exists — see the
-       metric-override block in base.css. Lora is open (SIL OFL) and is
-       self-hosted for real; it sets the numerals only. */
-    --font-sans: "Allomira", "Allomira Fallback", ui-sans-serif, system-ui,
-      -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+       Two families, both real and self-hosted. Allomira is the licensed
+       commercial face (one variable woff2, 100–900); Lora is open (SIL OFL)
+       and sets the numerals. The generics after them are a safety net for a
+       failed font load, not a design fallback. */
+    --font-sans: "Allomira", ui-sans-serif, system-ui, -apple-system,
+      "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     --font-serif: "Lora", ui-serif, Georgia, "Times New Roman", serif;
 
     /* Size / line-height pairs, read per node from the .fig export. */
@@ -144,8 +144,10 @@
     --size-72: 72px;
     --size-80: 80px;
     --size-96: 96px;
+    --size-100: 100px;
     --size-120: 120px;
     --size-140: 140px;
+    --size-160: 160px;
 
     --radius-sm: 8px;
     --radius-md: 16px;   /* buttons, Princípios cards, Sobre cards */

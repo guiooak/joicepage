@@ -29,7 +29,7 @@ copying files, editable by anyone who knows HTML.
 | Scope | **Desktop only.** No breakpoints, no mobile CSS. Body pinned to the 1440px frame. |
 | Lead capture | WhatsApp deep link. No form, no backend, no LGPD surface. |
 | Fonts | Self-hosted woff2, committed. No CDN. |
-| Images | Placeholders at exact mockup footprints until real assets are exported. |
+| Images | Real, exported from the `.fig` and committed to `assets/img/`. |
 | Hosting | Cloudflare Pages (BR edge). Low-stakes — static files port anywhere. |
 | Repo layout | `poc/<approach>/` so alternative builds can be compared as siblings. |
 
@@ -95,9 +95,11 @@ Keep both. The `.fig` route costs nothing and survives access lapsing again.
 **Frame.** `Site desktop` 1440 × 9928.33 · content 1360 · gutters 40 ·
 page padding-block 24 · gap 24 · **background `#f4f7f7`** (not white).
 
-**Fonts.** Primary sans **Allomira** (Light/Regular/Medium/Bold/Black);
-secondary **TP Sans** (ExtraLight/Light/Regular/Medium); serif **Lora** and
-**EB Garamond**. Inter/Manrope appear only in annotation boards, not the page.
+**Fonts.** The `Site desktop` frame uses exactly two: **Allomira**
+(Regular/Medium/Bold/Black) and **Lora** Regular for the numerals. Both are
+now self-hosted. **TP Sans / Metrisch and EB Garamond appear in the font notes
+but are not referenced by this page**; Inter/Manrope only in annotation
+boards.
 
 **Type scale** (size / line-height %):
 Display 72/92 · H1 56/92 · H2 48/100 · H3 32/100 · H4 28/120 · H5 24/120 ·
@@ -136,11 +138,18 @@ Buttons are 217×52 / 218×52 with a 24px gap.
 
 ## Done
 
-`poc/rawhtml/` — zero dependencies, zero build, zero JS, all copy transcribed
-verbatim from the frame. Ten sections built:
+`poc/rawhtml/` — zero dependencies, zero build, one small additive script.
+All thirteen sections built, copy transcribed verbatim from the frame:
 
 Header · Hero · Credenciais · Visão · Princípios · Serviços · Processo ·
-CTA conversa · Histórias + depoimentos · Números
+CTA conversa · Histórias + depoimentos · Números · Sobre · Credenciais (2) ·
+Dúvidas · Footer
+
+With the real Allomira in, every text block lands on its drawn geometry — hero
+headline 4 lines in 577px, hero caption 86px against a drawn 87, CTA headline
+2 lines, Visão 4. Section heights match the file to within 1px except Serviços
+at +36, which is the file's own stale text box (stored 156px from when that
+headline was 56px; it is 72px now and correctly renders 199).
 
 Verified: renders at 1440px; JSON-LD (`Person`, `FinancialService`) parses; all
 content present in the raw HTTP response; anchor targets clear the header
@@ -167,7 +176,17 @@ All thirteen sections are now built. What remains is blocked, not unfinished.
 3. **Serviços list arrow** is still the one hand-drawn vector in the build —
    it is a VECTOR node, not an image fill, so it did not come out with the
    bitmaps. Export it and delete the inline `<symbol>`.
-4. **Fonts.** Allomira and TP Sans substituted until licensed. Lora is done.
+4. ~~**Fonts.**~~ **Done.** Allomira was supplied and is self-hosted as a single
+   variable woff2 (26KB, wght 100–900); Lora as latin + latin-ext subsets.
+   64KB total. The metric-override fallback is deleted.
+
+   The variable file was chosen over four statics after checking it, not on
+   faith: instanced at 400/500/700/900 it matches the corresponding static
+   font's advance widths to within 0.1%, exact at 400 and 900 — so it
+   reproduces the designer's instances rather than approximating them.
+
+   **Metrisch (the "TP Sans" in the font notes) is not used by this page.**
+   The only families `Site desktop` references are Allomira and Lora.
 
 **Images are all resolved.** The MCP Starter plan ran out of tool calls
 mid-build, so they came from the `.fig` route instead — which is exactly what
@@ -201,13 +220,10 @@ to Avenir Next — **recheck on Windows**, where it resolves to Segoe UI.
 1. **Get the FAQ copy from Joice** — eight questions and answers, plus three
    Processo panel texts. Nothing technical unblocks this; it is unwritten.
 2. Export the Serviços list arrow vector and drop the last inline `<symbol>`.
-3. License Allomira and TP Sans, add real `@font-face` blocks subset to
-   latin + latin-ext for pt-BR diacritics, and delete the override block.
-   Recheck the fallback on Windows in the meantime.
-4. Confirm the WhatsApp number before deploy (open question 1) — it is wired
+3. Confirm the WhatsApp number before deploy (open question 1) — it is wired
    into both the footer link and the JSON-LD `telephone`. The mobile frame
    draws the same eight-digit number, so the file does not settle it.
-5. Optional: extend `tools/figextract/` to expand INSTANCE nodes via
+4. Optional: extend `tools/figextract/` to expand INSTANCE nodes via
    `symbolData` / `overrides`. Less urgent now that the mobile frame turned out
    to carry the expanded content, but it would make the dump self-sufficient.
 
@@ -231,8 +247,9 @@ to Avenir Next — **recheck on Windows**, where it resolves to Segoe UI.
    phone, website URL (www vs non-www — must match the canonical), whether the
    address is public or the listing is service-area, and the Maps short link for
    `sameAs`. NAP mismatch costs the local-pack association.
-3. **Font licensing.** Allomira and TP Sans are commercial; confirm a webfont
-   licence covers self-hosting. Lora and EB Garamond are open.
+3. **Font licensing — still worth confirming.** The Allomira files are in hand
+   and self-hosted, which is a *webfont* use; check the licence purchased
+   covers web embedding, not only desktop. Lora and EB Garamond are open.
 4. **Mobile.** Still out of scope by decision. Note that the frame now exists
    and is complete: `392:8099`, "MOBILE 360px", 360×11477.7, in canvas section
    `393:9365`, with five annotated section callouts. So the separate exercise

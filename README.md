@@ -70,13 +70,29 @@ elsewhere in the same file (the detached `Card` 392:8746 and `MOBILE 360px`)
 and is what the build uses. If you re-derive anything from `Site desktop`,
 check it against those two.
 
-**Fonts, split two ways.** **Lora is done** — it is open (SIL OFL), so it is
-self-hosted and committed in `assets/fonts/` as latin + latin-ext woff2 (33 KB
-together). It sets every numeral on the page. **Allomira and TP Sans cannot
-arrive from Figma at all**: `download_assets` returns renders, bitmaps and
-vector SVGs, and the `.fig` stores font *names*, not binaries. They have to be
-licensed. Until then `styles/base.css` carries a measured metric-override
-fallback; the calibration and its limits are documented in that file.
+**Fonts are done.** Both families are real, self-hosted and committed in
+`assets/fonts/` (64 KB total) — no CDN, no metric-override fallback left.
+
+- **Allomira** — the licensed commercial face. One variable woff2 covers the
+  whole range the design uses (Regular 400, Medium 500, Bold 700, Black 900) in
+  26 KB, against 64 KB for the four statics. Verified before choosing:
+  instancing the variable font at each weight matches the corresponding static
+  to within 0.1% advance width, exact at 400 and 900.
+- **Lora** — open (SIL OFL), latin + latin-ext subsets. Sets every numeral.
+
+Neither could come from Figma: `download_assets` returns renders, bitmaps and
+vector SVGs, and the `.fig` stores font *names*, not binaries. They were
+supplied separately.
+
+With the real face in, every text block lands on its drawn geometry: the hero
+headline is 4 lines in its 577px column, the hero caption box is 86px against a
+drawn 87, the CTA headline is 2 lines, and Visão is 4. Section heights match
+the file to within 1px, except Serviços at +36 — which is the file's own stale
+metadata, not the build (that headline's stored box is 156px from when it was
+56px; it is 72px now and correctly renders 199).
+
+The Metrisch family is **not used** by the desktop page — the only faces the
+`Site desktop` frame references are Allomira and Lora.
 
 There is now one small script, `scripts/motion.js`, implementing the designer's
 interaction spec. The page is complete and readable without it — that is a
