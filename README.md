@@ -44,7 +44,41 @@ Then open <http://localhost:8000>.
 
 ## Status
 
-The design tokens currently in `poc/rawhtml/styles/tokens.css` are **provisional**
-— read off design screenshots, not extracted from Figma. Figma MCP access
-requires *edit* rights on the file, which are pending. Once granted, the token
-values get replaced from source. See the open questions at the end of the plan.
+All thirteen sections are built. `styles/tokens.css` now holds **exact** values
+pulled from the Figma variables, cross-checked against the decoded `.fig`
+export — the earlier provisional/sampled tokens are gone, and so is the note
+here that said Figma access was pending. It isn't.
+
+**Images are all real.** Every asset is exported from the `.fig` and committed
+under `assets/img/` (1.2 MB total). There are no placeholders left — the Figma
+MCP plan ran out of tool calls partway through, so the images came from the
+`.fig` route instead, which needs no subscription and no quota. That route is
+the reason it kept working; keep it.
+
+One thing is genuinely outstanding, and it is a **writing** task, not an
+extraction one:
+
+- **FAQ copy does not exist in the Figma file.** Checked rather than assumed:
+  `SYMBOL FAQ` (115:2224) and every one of its instances contain zero text
+  nodes. The eight cards are drawn empty. Three of the six Processo accordion
+  panels are likewise unwritten. `grep -n "A capturar" index.html` — 11 spots.
+  This copy has to come from Joice.
+
+Worth knowing: the `Site desktop` frame is **stale in one place**. It draws
+service card 02 with card 01's list duplicated. The intended copy exists
+elsewhere in the same file (the detached `Card` 392:8746 and `MOBILE 360px`)
+and is what the build uses. If you re-derive anything from `Site desktop`,
+check it against those two.
+
+**Fonts, split two ways.** **Lora is done** — it is open (SIL OFL), so it is
+self-hosted and committed in `assets/fonts/` as latin + latin-ext woff2 (33 KB
+together). It sets every numeral on the page. **Allomira and TP Sans cannot
+arrive from Figma at all**: `download_assets` returns renders, bitmaps and
+vector SVGs, and the `.fig` stores font *names*, not binaries. They have to be
+licensed. Until then `styles/base.css` carries a measured metric-override
+fallback; the calibration and its limits are documented in that file.
+
+There is now one small script, `scripts/motion.js`, implementing the designer's
+interaction spec. The page is complete and readable without it — that is a
+hard constraint, not a nicety, and it is worth re-checking with JS disabled
+after any change.

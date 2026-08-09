@@ -3,124 +3,133 @@
 
 /* ============================================================================
    DESIGN TOKENS — Joice Sperandio
-   Extracted from the Figma frame "Site desktop" (Layouts › Finais).
 
-   PROVENANCE, so future edits know what to trust:
+   PROVENANCE: every value below is EXACT, taken from the Figma file rather
+   than sampled. Two independent sources agree on them:
 
-   EXACT — read off Figma's properties panel:
-     · type scale (all ten text styles, size/line-height-%)
-     · content width 1360px, frame 1440px
-     · section padding-top 160px, section gap token Sizes/72px
+     · Figma MCP `get_variable_defs` on frame 318:7275 — the named variables
+       (Background/Color/primary-base, Elements/Text/Body/neutral, …).
+     · `tools/figextract/site-desktop.spec.txt` — the decoded .fig export,
+       which carries the same fills and type stack per node.
 
-   SAMPLED — measured from the rendered canvas, not from Figma variables.
-   The MCP tools that read variables require *edit* access on the file, which
-   is still pending. Every sampled value is a token below, so replacing them
-   from source is a one-line change each and touches no component CSS:
-     · all colour values
-     · corner radii
-     · the font family
+   Where the two are quoted below, the Figma variable name is in the comment
+   so a future edit can be traced back to source.
 
    Desktop only. There are deliberately no breakpoints in this stylesheet.
    ========================================================================= */
 
 @layer tokens {
   :root {
-    /* ---- Primitives ---------------------------------------------------- */
-    --navy-900: #16233d;
-    --navy-800: #1c2c4c;
-    --navy-700: #24365a;
+    /* ---- Primitives ------------------------------------------------------
+       Named for what they are. The semantic layer below is what components
+       should reference — these exist so a palette change happens once. */
+    --c-navy: #28445e;        /* Background/Color/secondary-base   */
+    --c-blue: #5779aa;        /* Background/Color/primary-base     */
+    --c-blue-tint: #ccdceb;   /* Background/Color/secondary-subtle */
+    --c-blue-pale: #e5eef4;   /* Background/Color/primary-subtle   */
+    --c-violet: #50518a;      /* Elements/Text/Title/Color/quaternary-base */
+    --c-violet-pale: #d3d8ea; /* Background/Color/quaternary-subtle */
 
-    --blue-600: #3e5c93;
-    --blue-500: #5d7fa9;
-    --blue-400: #7b96bd;
-    --blue-300: #a9bedc;
-    --blue-200: #c4d6ea;
-    --blue-100: #d8e4f2;
-    --blue-050: #eef4fa;
+    --c-ink: #151a1d;         /* Elements/Text/Title/Neutral/default */
+    --c-muted: #4c646e;       /* Elements/Text/Body/neutral          */
+    --c-steel: #73949d;       /* Background/Neutral/neutral-strong   */
 
-    --lilac-400: #a79ecb;
-    --lilac-300: #b3abd1;
-    --lilac-200: #cfcbdd;
+    --c-line: #e2e9eb;        /* Elements/Border/neutral-subtle */
+    --c-line-strong: #587882; /* Elements/Border/neutral-strong */
 
-    --slate-600: #4a5468;
-    --slate-500: #667085;
-    --slate-300: #c3cfe4;
-    --slate-200: #e2e6ec;
+    --c-paper: #f4f7f7;       /* Background/Neutral/default — the page ground */
+    --c-white: #ffffff;       /* Background/Neutral/white */
+    --c-mist: #f7fafc;        /* decorative ellipse behind the LOGOS bars */
 
-    --white: #ffffff;
+    /* ---- Semantic -------------------------------------------------------- */
+    /* The page ground is #f4f7f7, NOT white. White is a surface (menu bar,
+       Princípios cards, the testimonial block) that sits on top of it. */
+    --color-page: var(--c-paper);
+    --color-surface: var(--c-white);
 
-    /* ---- Semantic ------------------------------------------------------ */
-    --color-page: var(--white);
-    --color-ink: var(--navy-800);
-    --color-ink-strong: var(--navy-900);
-    --color-body: var(--slate-600);
-    --color-body-soft: var(--slate-500);
+    --color-ink: var(--c-ink);
+    /* Body copy is #151a1d almost everywhere; #4c646e is the deliberately
+       quieter variant used under the big numbers and in the credential bars. */
+    --color-body: var(--c-ink);
+    --color-body-soft: var(--c-muted);
 
-    --color-accent: var(--blue-500);
-    --color-accent-deep: var(--blue-600);
-    --color-accent-soft: var(--blue-400);
-    --color-ghost-ink: var(--slate-300);
+    --color-accent: var(--c-blue);
+    --color-accent-deep: var(--c-navy);
+    --color-accent-soft: var(--c-blue);
+    /* Unrevealed state of the two-tone Visão headline — see the scroll reveal
+       in the designer's Interactions spec. */
+    --color-ghost-ink: var(--c-blue-tint);
 
-    --color-surface-card: var(--blue-200);
-    --color-surface-card-alt: var(--blue-100);
-    --color-surface-tint: var(--blue-050);
-    --color-line: var(--slate-200);
-    --color-line-strong: var(--blue-300);
+    --color-surface-card: var(--c-blue-tint);
+    --color-surface-card-alt: var(--c-blue-pale);
+    --color-surface-tint: var(--c-blue-pale);
+    --color-line: var(--c-line);
+    --color-line-strong: var(--c-blue);
 
-    --color-button: var(--navy-900);
-    --color-button-ink: var(--white);
-    --color-button-hover: color-mix(in oklab, var(--navy-900) 86%, white);
+    --color-button: var(--c-navy);
+    --color-button-primary: var(--c-blue);
+    --color-button-ink: var(--c-paper);
+    --color-button-hover: color-mix(in oklab, var(--c-navy) 86%, white);
 
-    /* Hero gradient — sampled from the canvas render. */
-    --gradient-hero: linear-gradient(
-      158deg,
-      var(--lilac-200) 0%,
-      var(--lilac-300) 46%,
-      var(--lilac-400) 100%
-    );
+    /* The hero is a photograph with two large #50518a ellipses blended over
+       it in hard-light — not a gradient. Kept as tokens so the blend colour
+       and the wash under it stay editable in one place. */
+    --hero-blend: var(--c-violet);
+    --hero-veil: rgb(0 0 0 / 8%);
 
-    /* ---- Typography ---------------------------------------------------- */
-    /* SAMPLED. The Figma variable name was truncated in the view-only panel
-       ("Typography/Font …"), so the real family is still unknown. The design
-       is a geometric humanist sans; this stack approximates it until the
-       woff2 files can be exported. */
-    --font-sans: "Joice Sans", Figtree, Poppins, ui-sans-serif, system-ui,
+    /* ---- Typography ------------------------------------------------------
+       Two families. Allomira is commercial and not yet licensed, so it is
+       declared here but falls back until the woff2 exists — see the
+       metric-override block in base.css. Lora is open (SIL OFL) and is
+       self-hosted for real; it sets the numerals only. */
+    --font-sans: "Allomira", "Allomira Fallback", ui-sans-serif, system-ui,
       -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    --font-serif: "Joice Serif", ui-serif, Georgia, "Times New Roman", serif;
+    --font-serif: "Lora", ui-serif, Georgia, "Times New Roman", serif;
 
-    /* EXACT — the ten Figma text styles. Second number is line-height %. */
-    --text-display: 72px;
+    /* Size / line-height pairs, read per node from the .fig export. */
+    --text-display-lg: 90px;      /* Visão headline, Allomira Black       */
+    --leading-display-lg: 0.92;
+    --text-display: 72px;         /* Hero, Serviços, Processo headlines   */
     --leading-display: 0.92;
-    --text-h1: 56px;
+    --text-h1: 56px;              /* Histórias, Sobre, FAQ headlines      */
     --leading-h1: 0.92;
-    --text-h2: 48px;
+    --text-h2: 48px;              /* service card titles, CTA paragraph   */
     --leading-h2: 1;
-    --text-h3: 32px;
+    --text-h3: 32px;              /* Processo closing, Sobre card numbers */
     --leading-h3: 1;
     --text-h4: 28px;
     --leading-h4: 1.2;
-    --text-h5: 24px;
+    --text-h5: 24px;              /* credential text, big-number labels   */
     --leading-h5: 1.2;
-    --text-paragraph: 20px;
+    --text-paragraph: 20px;       /* ALL body copy. Not 16px.             */
     --leading-paragraph: 1.4;
-    --leading-paragraph-bold: 1;
     --text-caption: 16px;
     --leading-caption: 1.5;
     --text-tag: 16px;
     --leading-tag: 1;
 
+    /* Lora numerals. */
+    --text-numeral: 136px;        /* big-numbers      */
+    --leading-numeral: 1;
+    --text-numeral-sm: 120px;     /* service card 01 / 02 */
+    --leading-numeral-sm: 0.92;
+
     --weight-regular: 400;
     --weight-medium: 500;
     --weight-semibold: 600;
     --weight-bold: 700;
+    --weight-black: 900;
 
-    /* ---- Dimension ----------------------------------------------------- */
-    /* EXACT */
+    /* Figma sets letterSpacing 1% on the 20px paragraph style and -1% on the
+       big numerals; every heading style is 0. */
+    --tracking-paragraph: 0.01em;
+    --tracking-numeral: -0.01em;
+
+    /* ---- Dimension ------------------------------------------------------- */
     --frame-width: 1440px;
     --content-width: 1360px;
     --page-gutter: 40px;
     --section-padding-top: 160px;
-    --size-72: 72px;
 
     --size-4: 4px;
     --size-8: 8px;
@@ -132,17 +141,18 @@
     --size-48: 48px;
     --size-56: 56px;
     --size-64: 64px;
+    --size-72: 72px;
     --size-80: 80px;
     --size-96: 96px;
     --size-120: 120px;
+    --size-140: 140px;
 
-    /* SAMPLED */
     --radius-sm: 8px;
-    --radius-md: 16px;
-    --radius-lg: 24px;
+    --radius-md: 16px;   /* buttons, Princípios cards, Sobre cards */
+    --radius-lg: 24px;   /* menu bar, hero, service cards, CTA, footer */
     --radius-pill: 999px;
 
-    --header-height: 76px;
+    --header-height: 84px;
 
     --transition: 160ms ease;
   }

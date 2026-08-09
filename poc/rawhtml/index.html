@@ -25,9 +25,15 @@
     <meta property="og:image" content="https://joicesperandio.com.br/assets/img/og.jpg" />
     <meta name="twitter:card" content="summary_large_image" />
 
+    <link rel="preload" as="image" href="assets/img/hero-joice.jpg" fetchpriority="high" />
+
     <link rel="stylesheet" href="styles/tokens.css" />
     <link rel="stylesheet" href="styles/base.css" />
     <link rel="stylesheet" href="styles/sections.css" />
+    <link rel="stylesheet" href="styles/motion.css" />
+
+    <!-- Deferred and entirely additive: the page is complete without it. -->
+    <script src="scripts/motion.js" defer></script>
 
     <script type="application/ld+json">
       {
@@ -68,28 +74,16 @@
   </head>
 
   <body>
+    <!-- The credential badges and Princípios icons are real image assets in
+         Figma; the five hand-drawn symbols that used to live here were
+         invented and have been removed. Only the list arrow remains as a
+         stand-in, because the Serviços list collapses without it.
+         TODO: export vector `arrow` (Serviços list-item) and the four
+         Princípios icons, then delete this block entirely. -->
     <svg aria-hidden="true" style="position: absolute; width: 0; height: 0">
       <defs>
         <symbol id="i-arrow" viewBox="0 0 24 24">
           <path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M4 12h16m-7-7 7 7-7 7" />
-        </symbol>
-        <symbol id="i-cap" viewBox="0 0 40 40">
-          <path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" d="M20 9 4 16l16 7 16-7z" />
-          <path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" d="M10 19v7c0 2 4.5 4 10 4s10-2 10-4v-7M36 16v9" />
-        </symbol>
-        <symbol id="i-chart" viewBox="0 0 28 28">
-          <path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" d="M4 24V12m6 12V4m6 20v-8m6 8V9" />
-        </symbol>
-        <symbol id="i-autonomy" viewBox="0 0 28 28">
-          <circle cx="14" cy="14" r="5" fill="none" stroke="currentColor" stroke-width="1.5" />
-          <path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" d="M14 3v4m0 14v4M3 14h4m14 0h4" />
-        </symbol>
-        <symbol id="i-growth" viewBox="0 0 28 28">
-          <path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M4 22 12 13l5 5 7-9m0 0h-6m6 0v6" />
-        </symbol>
-        <symbol id="i-compass" viewBox="0 0 28 28">
-          <circle cx="14" cy="14" r="10" fill="none" stroke="currentColor" stroke-width="1.5" />
-          <path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" d="m18 10-2.2 6L10 18l2.2-6z" />
         </symbol>
       </defs>
     </svg>
@@ -116,15 +110,26 @@
     </header>
 
     <main>
-      <section class="shell hero" id="inicio">
-        <!-- Placeholder at the portrait's exact footprint in the mockup:
-             the right 700px of the 1360x760 hero. -->
-        <div class="hero__portrait">Retrato — 700 × 760</div>
+      <!-- Hero: photograph with two #50518a ellipses blended over it in
+           hard-light, clipped to the rounded rect. Drawn 1358x750. -->
+      <section class="hero" id="inicio">
+        <img
+          class="hero__photo"
+          src="assets/img/hero-joice.jpg"
+          alt="Joice Sperandio, planejadora financeira"
+          width="1358"
+          height="750"
+          fetchpriority="high"
+        />
+        <span class="hero__blob hero__blob--1" aria-hidden="true"></span>
+        <span class="hero__blob hero__blob--2" aria-hidden="true"></span>
 
         <div class="hero__content">
-          <h1 class="hero__title">
-            O futuro que você deseja viver começa pelas decisões que toma hoje.
-          </h1>
+          <div class="hero__titleblock">
+            <h1 class="hero__title">
+              O futuro que você deseja viver começa pelas decisões que toma hoje.
+            </h1>
+          </div>
           <p class="hero__lead">
             Planejamento financeiro e consultoria em investimentos para quem
             deseja construir patrimônio com intenção, tomar decisões com mais
@@ -137,29 +142,33 @@
         </div>
 
         <p class="hero__caption">
-          Sou a Joice Sperandio, planejadora financeira e consultora em
+          Sou a Joice Sperandio, <br />planejadora financeira e consultora em
           investimentos.
         </p>
       </section>
 
       <ul class="shell credentials">
         <li>
+          <img src="assets/img/cred-cvm.png" alt="" width="64" height="64" />
           <span>
             <strong>CVM</strong>
-            Consultora de<br />Valores Mobiliários
+            Consultora de <br />Valores Mobiliários
           </span>
         </li>
+        <li class="credentials__rule" aria-hidden="true"></li>
         <li>
+          <img src="assets/img/cred-cfp.png" alt="" width="64" height="64" />
           <span>
             <strong>CFP©</strong>
-            Certified Financial<br />Planner
+            Certified Financial <br />Planner
           </span>
         </li>
+        <li class="credentials__rule" aria-hidden="true"></li>
         <li>
-          <svg aria-hidden="true"><use href="#i-cap" /></svg>
+          <img src="assets/img/cred-mba.png" alt="" width="64" height="64" />
           <span>
             <strong>MBA</strong>
-            Mercado de<br />Capitais
+            Mercado de <br />Capitais
           </span>
         </li>
       </ul>
@@ -188,12 +197,18 @@
         </div>
 
         <div class="shell principios">
-          <!-- Placeholder at the exact footprint of the mockup's photo. -->
-          <div class="principios__image">Imagem — 1360 × 710</div>
+          <img
+            class="principios__image"
+            src="assets/img/principios.jpg"
+            alt=""
+            width="1360"
+            height="710"
+            loading="lazy"
+          />
 
           <div class="principios__cards">
             <article class="principio">
-              <svg aria-hidden="true"><use href="#i-chart" /></svg>
+              <img class="principio__icon" src="assets/img/icon-01.png" alt="" width="40" height="40" loading="lazy" />
               <h3>Construção com estratégia</h3>
               <p>
                 As decisões mais importantes da vida raramente acontecem de
@@ -202,7 +217,7 @@
               </p>
             </article>
             <article class="principio">
-              <svg aria-hidden="true"><use href="#i-autonomy" /></svg>
+              <img class="principio__icon" src="assets/img/icon-02.png" alt="" width="40" height="40" loading="lazy" />
               <h3>Decisões com autonomia</h3>
               <p>
                 Entender o suficiente para participar das próprias decisões
@@ -211,7 +226,7 @@
               </p>
             </article>
             <article class="principio">
-              <svg aria-hidden="true"><use href="#i-growth" /></svg>
+              <img class="principio__icon" src="assets/img/icon-03.png" alt="" width="40" height="40" loading="lazy" />
               <h3>Prosperidade com propósito</h3>
               <p>
                 Construir patrimônio não significa acumular recursos sem
@@ -220,7 +235,7 @@
               </p>
             </article>
             <article class="principio">
-              <svg aria-hidden="true"><use href="#i-compass" /></svg>
+              <img class="principio__icon" src="assets/img/icon-04.png" alt="" width="40" height="40" loading="lazy" />
               <h3>Intenção com perspectiva</h3>
               <p>
                 Dinheiro funciona melhor quando existe clareza sobre aquilo que
@@ -257,7 +272,7 @@
         </div>
 
         <div class="servicos__grid">
-          <article class="service-card">
+          <article class="service-card" data-open>
             <p class="service-card__number">01</p>
             <h3 class="service-card__title">Planejamento Financeiro</h3>
             <p class="service-card__claim">
@@ -278,10 +293,31 @@
             </ul>
           </article>
 
-          <!-- Collapsed state, as drawn in the mockup: number, title, arrow. -->
+          <!-- Card 02's real copy. The "Site desktop" frame is stale here —
+               it draws card 02 with card 01's list duplicated. The intended
+               content exists in the file, in the detached updated Card
+               (392:8746) and in MOBILE 360px, and is used instead. As on card
+               01, one list item is repeated in the mockup ("Gestão de
+               heranças…"); reproduced once. -->
           <article class="service-card service-card--muted">
             <p class="service-card__number">02</p>
-            <h3 class="service-card__title">Consultoria em<br />Investimentos</h3>
+            <h3 class="service-card__title">Consultoria em <br />Investimentos</h3>
+            <p class="service-card__claim">
+              Segurança para investir. Autonomia para evoluir.
+            </p>
+            <p class="service-card__text">
+              Ideal para quem já construiu patrimônio e busca otimizar, validar
+              ou receber uma segunda opinião independente sobre a sua carteira
+              de investimentos.
+            </p>
+            <ul class="service-card__list">
+              <li><svg aria-hidden="true"><use href="#i-arrow" /></svg>Análise técnica e reorganização dos seus investimentos</li>
+              <li><svg aria-hidden="true"><use href="#i-arrow" /></svg>Gestão de heranças e recursos recebidos</li>
+              <li><svg aria-hidden="true"><use href="#i-arrow" /></svg>Recomendação e elaboração de carteiras de investimentos</li>
+              <li><svg aria-hidden="true"><use href="#i-arrow" /></svg>Planejamento sucessório e proteção patrimonial</li>
+              <li><svg aria-hidden="true"><use href="#i-arrow" /></svg>Estratégias de construção de patrimônio e independência financeira</li>
+              <li><svg aria-hidden="true"><use href="#i-arrow" /></svg>Planejamento da transição para aposentadoria</li>
+            </ul>
             <svg class="service-card__arrow" aria-hidden="true"><use href="#i-arrow" /></svg>
           </article>
         </div>
@@ -304,7 +340,8 @@
             </p>
           </div>
 
-          <div class="accordion">
+          <div class="processo__col">
+            <div class="accordion">
             <details class="accordion__item" open>
               <summary>Conversa inicial<span class="accordion__icon"></span></summary>
               <div class="accordion__panel">
@@ -314,9 +351,10 @@
               </div>
             </details>
 
-            <!-- TODO: panel copy for the five items below is collapsed in the
-                 mockup and could not be read from the canvas. Capture each
-                 open state in Figma, or take the text from the designer. -->
+            <!-- Two of the five panels below are resolved: their copy exists
+                 in the MOBILE 360px frame, which carries the expanded states
+                 the desktop frame draws collapsed. The remaining three are
+                 not written anywhere in the file yet. -->
             <details class="accordion__item">
               <summary>Proposta personalizada<span class="accordion__icon"></span></summary>
               <div class="accordion__panel">A capturar no Figma.</div>
@@ -331,30 +369,55 @@
             </details>
             <details class="accordion__item">
               <summary>Atendimento personalizado<span class="accordion__icon"></span></summary>
-              <div class="accordion__panel">A capturar no Figma.</div>
+              <div class="accordion__panel">
+                Encontros individuais e um trabalho adaptado à sua realidade,
+                com suporte durante todo o processo.
+              </div>
             </details>
             <details class="accordion__item">
               <summary>Recomendações independentes<span class="accordion__icon"></span></summary>
-              <div class="accordion__panel">A capturar no Figma.</div>
+              <div class="accordion__panel">
+                Orientações sem vínculo com instituições financeiras,
+                garantindo total independência nas recomendações.
+              </div>
             </details>
+            </div>
+
+            <div class="processo__close">
+              <p>
+                A conversa inicial é simples, sem compromisso e existe para
+                entendermos se faz sentido seguirmos em frente.
+              </p>
+              <a class="btn btn--solid" href="#contato">Agendar uma conversa</a>
+            </div>
           </div>
         </div>
 
-        <div class="conversa">
-          <div class="conversa__orbit">
-            <div class="conversa__avatar">Retrato<br />148 × 148</div>
-            <span class="tag">Aposentadoria</span>
-            <span class="tag">Possibilidades</span>
-            <span class="tag">Patrimônio</span>
-            <span class="tag">Objetivos</span>
-            <span class="tag">Independência</span>
-            <span class="tag">Imparcialidade</span>
+        <!-- CTA 1360x550 · fill #e5eef4 · pad 64 · r 24. The six tags sit at
+             the exact offsets drawn in the file; source order matches them. -->
+        <div class="conversa" id="contato">
+          <img
+            class="conversa__avatar"
+            src="assets/img/cta-avatar.jpg"
+            alt="Joice Sperandio"
+            width="141"
+            height="141"
+            loading="lazy"
+          />
+          <span class="tag">Aposentadoria</span>
+          <span class="tag">Possibilidades</span>
+          <span class="tag">Patrimônio</span>
+          <span class="tag">Objetivos</span>
+          <span class="tag">Independência</span>
+          <span class="tag">Imparcialidade</span>
+          <div class="conversa__body">
+            <p class="conversa__text">
+              Tudo começa com uma conversa simples e sem compromisso. Um
+              primeiro encontro para entendermos se faz sentido seguirmos em
+              frente.
+            </p>
+            <a class="btn btn--solid" href="#contato">Agendar uma conversa</a>
           </div>
-          <p class="conversa__text">
-            Tudo começa com uma conversa simples e sem compromisso. Um primeiro
-            encontro para entendermos se faz sentido seguirmos em frente.
-          </p>
-          <a class="btn btn--solid" href="#contato">Agendar uma conversa</a>
         </div>
       </section>
 
@@ -372,8 +435,14 @@
               Mas todas começaram com uma conversa.
             </p>
           </div>
-          <!-- Placeholder at the exact footprint of the mockup's call mockup. -->
-          <div class="historias__media">Imagem — 700 × 470</div>
+          <img
+            class="historias__media"
+            src="assets/img/historias.jpg"
+            alt="Atendimento online com Joice Sperandio"
+            width="767"
+            height="511"
+            loading="lazy"
+          />
         </div>
 
         <div class="depoimento">
@@ -395,7 +464,10 @@
           <!-- Names are placeholders in the mockup itself ("Sobrenome",
                "[Parceira]"), reproduced verbatim rather than invented. -->
           <ul class="depoimento__people">
-            <li aria-current="true">
+            <li
+              aria-current="true"
+              data-quote="Durante muitos anos, por questões de saúde, eu simplesmente não pensava no futuro. Pós transplante, quando ganhei o “longo prazo”, precisei aprender a construir esse futuro pela primeira vez. A Joice me ajudou a transformar insegurança em planejamento: organizamos aposentadoria, investimentos, orçamento mensal e até o sonho da casa própria. O que mais marcou foi a forma acolhedora, prática e personalizada com que ela conduziu tudo. Hoje eu entendo meus números e consigo tomar decisões com muito mais tranquilidade."
+            >
               Alessandra Sobrenome
               <span class="depoimento__tags">
                 <span>Organização financeira</span>
@@ -413,18 +485,223 @@
         <dl class="numeros">
           <div>
             <dt>+130</dt>
-            <dd>clientes atendidos no<br />Brasil e exterior</dd>
+            <dd>clientes atendidos no <br />Brasil e exterior</dd>
           </div>
           <div>
             <dt>100%</dt>
-            <dd>Online - atendimento<br />para o Brasil e exterior</dd>
+            <dd>Online - atendimento <br />para o Brasil e exterior</dd>
           </div>
           <div>
             <dt>+06</dt>
-            <dd>anos de experiência com<br />planejamento financeiro</dd>
+            <dd>anos de experiência com <br />planejamento financeiro</dd>
           </div>
         </dl>
       </section>
+
+      <!-- SOBRE 1360x1055 · left card 554 · image 782x700 @x602 -->
+      <section class="shell section" id="sobre">
+        <div class="sobre__grid">
+          <div class="sobre__col">
+            <p class="tag">Sobre</p>
+            <h2 class="sobre__title">
+              Experiência, conhecimento técnico e um olhar humano para decisões
+              que <br />geram impacto.
+            </h2>
+            <div class="sobre__body">
+              <p>
+                Trabalhei durante anos no mercado corporativo. Morei fora,
+                viajei por diferentes países e vivi uma transição de carreira
+                até encontrar meu verdadeiro propósito.
+              </p>
+              <p>
+                Hoje, são mais de seis anos de atuação como planejadora
+                financeira e consultora em investimentos. São mais de 130
+                pessoas acompanhadas e a convicção de que maturidade financeira
+                não significa saber tudo, mas entender o suficiente para
+                decidir com segurança.
+              </p>
+            </div>
+            <!-- Two buttons, 217px and 218px — the same widths as the hero
+                 pair, so the labels are taken to be the same. The instances
+                 carry no text in the export. -->
+            <div class="sobre__actions">
+              <a class="btn btn--primary" href="#contato">Agendar uma conversa</a>
+              <a class="btn btn--solid" href="#servicos">Conhecer meu trabalho</a>
+            </div>
+
+            <!-- The file draws these five as an overlapping deck (auto-layout
+                 gap -65) because they are the "Stack" scroll interaction in
+                 the designer's spec. Rendered as a readable list here; the
+                 stack behaviour applies the drawn offsets. -->
+            <ol class="sobre__cards">
+              <li>
+                <span class="sobre__num">01</span>
+                <p><strong>Vivência corporativa</strong> Atuei como analista financeira em uma indústria de plásticos por 7 anos</p>
+              </li>
+              <li>
+                <span class="sobre__num">02</span>
+                <p><strong>Experiência no exterior</strong> Morei em Dublin (Irlanda) por dois anos, trabalhando e estudando inglês.</p>
+              </li>
+              <li>
+                <span class="sobre__num">03</span>
+                <p><strong>Paixão por viajar</strong> Já conheci +17 países e sigo transformando experiências em aprendizados.</p>
+              </li>
+              <li>
+                <span class="sobre__num">04</span>
+                <p><strong>Transição de carreira</strong> Planejei cada passo até me consolidar como consultora e me dedicar 100% a essa atuação.</p>
+              </li>
+              <li>
+                <span class="sobre__num">05</span>
+                <p><strong>Maternidade &amp; Família</strong> Ser mãe da Elisa e parceira do Gui ampliou meu olhar sobre tempo, segurança, autonomia e possibilidades.</p>
+              </li>
+            </ol>
+          </div>
+
+          <!-- Collage: the 501x700 panel plus the three 209.9x149.9 cards,
+               at the offsets drawn in the file. -->
+          <div class="sobre__media">
+            <img class="sobre__panel" src="assets/img/sobre-main.jpg" alt="Joice Sperandio em atendimento" width="501" height="700" loading="lazy" />
+            <img class="sobre__thumb sobre__thumb--1" src="assets/img/sobre-thumb-1.jpg" alt="" width="210" height="150" loading="lazy" />
+            <img class="sobre__thumb sobre__thumb--2" src="assets/img/sobre-thumb-2.jpg" alt="" width="210" height="150" loading="lazy" />
+            <img class="sobre__thumb sobre__thumb--3" src="assets/img/sobre-thumb-3.jpg" alt="" width="210" height="150" loading="lazy" />
+          </div>
+        </div>
+      </section>
+
+      <ul class="shell credentials">
+        <li>
+          <img src="assets/img/cred-cvm.png" alt="" width="64" height="64" />
+          <span>
+            <strong>CVM</strong>
+            Consultora de <br />Valores Mobiliários
+          </span>
+        </li>
+        <li class="credentials__rule" aria-hidden="true"></li>
+        <li>
+          <img src="assets/img/cred-cfp.png" alt="" width="64" height="64" />
+          <span>
+            <strong>CFP©</strong>
+            Certified Financial <br />Planner
+          </span>
+        </li>
+        <li class="credentials__rule" aria-hidden="true"></li>
+        <li>
+          <img src="assets/img/cred-mba.png" alt="" width="64" height="64" />
+          <span>
+            <strong>MBA</strong>
+            Mercado de <br />Capitais
+          </span>
+        </li>
+      </ul>
+
+      <!-- faq 1360x987 · left 553 · items 783x820 @x577 -->
+      <section class="shell section" id="duvidas">
+        <div class="faq__grid">
+          <div>
+            <p class="tag">Dúvidas frequentes</p>
+            <h2 class="faq__title">
+              Antes da conversa, <br />algumas perguntas costumam aparecer.
+            </h2>
+            <p class="faq__lead">
+              Nem sempre é fácil saber por onde começar. Essas são algumas
+              perguntas que costumo receber antes da conversa inicial. Talvez
+              algumas delas também sejam as suas.
+            </p>
+          </div>
+
+          <!-- Native <details> so every answer stays in the HTML and remains
+               crawlable — a deliberate choice, not a fallback.
+
+               TODO(copy): the questions DO NOT EXIST in the Figma file. This
+               was checked, not assumed: `SYMBOL FAQ` (115:2224) and every one
+               of its instances contain zero text nodes in the decoded export.
+               The eight cards are drawn empty. So this copy has to come from
+               Joice — it is a writing task, not an extraction one. -->
+          <div class="faq__list">
+            <details class="accordion__item">
+              <summary>Pergunta 1 — a capturar no Figma<span class="accordion__icon"></span></summary>
+              <div class="accordion__panel">A capturar no Figma.</div>
+            </details>
+            <details class="accordion__item">
+              <summary>Pergunta 2 — a capturar no Figma<span class="accordion__icon"></span></summary>
+              <div class="accordion__panel">A capturar no Figma.</div>
+            </details>
+            <details class="accordion__item">
+              <summary>Pergunta 3 — a capturar no Figma<span class="accordion__icon"></span></summary>
+              <div class="accordion__panel">A capturar no Figma.</div>
+            </details>
+            <details class="accordion__item">
+              <summary>Pergunta 4 — a capturar no Figma<span class="accordion__icon"></span></summary>
+              <div class="accordion__panel">A capturar no Figma.</div>
+            </details>
+            <details class="accordion__item">
+              <summary>Pergunta 5 — a capturar no Figma<span class="accordion__icon"></span></summary>
+              <div class="accordion__panel">A capturar no Figma.</div>
+            </details>
+            <details class="accordion__item">
+              <summary>Pergunta 6 — a capturar no Figma<span class="accordion__icon"></span></summary>
+              <div class="accordion__panel">A capturar no Figma.</div>
+            </details>
+            <details class="accordion__item">
+              <summary>Pergunta 7 — a capturar no Figma<span class="accordion__icon"></span></summary>
+              <div class="accordion__panel">A capturar no Figma.</div>
+            </details>
+            <details class="accordion__item">
+              <summary>Pergunta 8 — a capturar no Figma<span class="accordion__icon"></span></summary>
+              <div class="accordion__panel">A capturar no Figma.</div>
+            </details>
+          </div>
+        </div>
+      </section>
     </main>
+
+    <!-- footer 1360x396 · fill #28445e · pad 40 · r 24. Contact details are
+         the ones resolved from the footer symbol and recorded in
+         .ai/plans/joice-landing-page.md. -->
+    <footer class="shell site-footer">
+      <div class="site-footer__top">
+        <div class="site-footer__brand">
+          <a class="brand brand--inverse" href="#inicio">
+            <span>joice</span>
+            <span>sperandio</span>
+          </a>
+          <p>
+            Planejadora financeira e consultora em investimentos. Atendimento
+            online para todo o Brasil e exterior.
+          </p>
+        </div>
+
+        <nav class="site-footer__nav" aria-label="Navegação do rodapé">
+          <a href="#visao">Visão</a>
+          <a href="#servicos">Serviços</a>
+          <a href="#processo">Processo</a>
+          <a href="#historias">Histórias</a>
+          <a href="#sobre">Sobre</a>
+          <a href="#duvidas">Dúvidas</a>
+        </nav>
+
+        <div class="site-footer__contact">
+          <a href="mailto:oi@joicesperandio.com.br">oi@joicesperandio.com.br</a>
+          <!-- TODO: confirm the mobile number before deploy. The design draws
+               "+55 47 9193-9397" — eight digits after the DDD, where Brazilian
+               mobiles have had nine since the national rollout. -->
+          <a href="https://wa.me/5547991939397">+55 47 99193-9397</a>
+        </div>
+      </div>
+
+      <p class="site-footer__creds">
+        → CEA Especialista em Investimentos<br />
+        → CVM Consultora de Valores Mobiliários 002276-4<br />
+        → CFP® Certified Financial Planner
+      </p>
+
+      <div class="site-footer__bottom">
+        <small>© 2026 Joice Sperandio</small>
+        <nav aria-label="Políticas">
+          <a href="/politica-de-cookies">Política de Cookies</a>
+          <a href="/politica-de-privacidade">Política de Privacidade</a>
+        </nav>
+      </div>
+    </footer>
   </body>
 </html>

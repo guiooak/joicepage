@@ -53,19 +53,79 @@
 }
 
 @layer base {
-  /* Self-hosted fonts, committed to assets/fonts/. No CDN — that is a
-     third-party dependency that can change under us.
-
-     TODO: uncomment once the family is identified in Figma and exported,
-     subset to latin + latin-ext for pt-BR diacritics.
+  /* Lora — the real face, self-hosted and committed. It is open (SIL OFL), so
+     unlike Allomira it needs no licence. It sets every numeral on the page:
+     the 01/02 service card figures (120px) and the big numbers (136px), plus
+     the wordmark and the quote mark. Two subsets, latin-ext first so pt-BR
+     diacritics resolve without pulling the larger file when unused. */
+  @font-face {
+    font-family: "Lora";
+    src: url("../assets/fonts/lora-latin.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
+      U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
+      U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
 
   @font-face {
-    font-family: "Joice Sans";
-    src: url("../assets/fonts/joice-sans.woff2") format("woff2");
-    font-weight: 400 700;
+    font-family: "Lora";
+    src: url("../assets/fonts/lora-latin-ext.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
     font-display: swap;
+    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7,
+      U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F,
+      U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F,
+      U+A720-A7FF;
   }
-  */
+
+  /* FONTS — provisional, and deliberately so.
+     ------------------------------------------------------------------------
+     The design uses Allomira (Light→Black). It is a commercial face and
+     CANNOT be exported from Figma: `download_assets` returns renders, bitmap
+     fills and vector SVGs only, and the .fig container stores font *names*,
+     not binaries. So it has to be licensed and dropped into assets/fonts/.
+
+     Until then this metric-override face stands in for it. The numbers are
+     measured, not guessed: rendering the hero headline
+     ("O futuro que você deseja viver…") at 72px/0.92 in a 577px column must
+     produce 4 lines, which is what the Figma node's 577x264 box holds. The
+     untuned fallback produced 5. Sweeping size-adjust against the resolved
+     face gives a window of 72%–83% where the headline is 4 lines AND the
+     hero caption box lands on its drawn 87px; 83% is the top of that window,
+     i.e. the least distortion that satisfies both.
+
+     Calibrated against Avenir Next, which is what the local() list below
+     resolves to on macOS. On Windows it resolves to Segoe UI, whose
+     proportions differ — recheck there before deploy.
+
+     Known limitation: one uniform scale cannot match every string, because
+     the fallback's proportions differ from Allomira's non-uniformly. The
+     Serviços and Sobre headlines carry explicit <br> from the design, so they
+     are unaffected; the CTA headline still takes 3 lines where Figma draws 2.
+
+     When the real woff2 arrives: add a normal @font-face for "Allomira",
+     subset to latin + latin-ext for pt-BR diacritics, and delete this block.
+     The ascent/descent overrides exist so that swap causes no layout shift. */
+  @font-face {
+    font-family: "Allomira Fallback";
+    src:
+      local("Avenir Next"),
+      local("Segoe UI"),
+      local("Helvetica Neue"),
+      local("Arial");
+    /* Must span the whole range: a @font-face with no font-weight descriptor
+       only matches 400, so every 500/700/900 run would silently fall past
+       this face to the next family and lose the adjustment. */
+    font-weight: 100 900;
+    font-style: normal;
+    size-adjust: 83%;
+    ascent-override: 92%;
+    descent-override: 24%;
+    line-gap-override: 0%;
+  }
 
   body {
     background-color: var(--color-page);
@@ -73,44 +133,52 @@
     font-family: var(--font-sans);
     font-size: var(--text-paragraph);
     line-height: var(--leading-paragraph);
+    letter-spacing: var(--tracking-paragraph);
     /* Desktop-only implementation: the page holds the 1440px frame width and
        does not reflow below it. */
     min-inline-size: var(--frame-width);
   }
 
+  /* Weights are per-level, not shared: Figma's text styles set H1/H2/H3 Bold,
+     H4 ExtraBold and H5 Medium. Headline tracking is 0 in every style — the
+     earlier blanket -0.01em was invented. */
   h1,
   h2,
   h3,
   h4,
   h5 {
     color: var(--color-ink);
-    font-weight: var(--weight-semibold);
-    letter-spacing: -0.01em;
+    letter-spacing: 0;
   }
 
   h1 {
     font-size: var(--text-h1);
     line-height: var(--leading-h1);
+    font-weight: var(--weight-bold);
   }
 
   h2 {
     font-size: var(--text-h2);
     line-height: var(--leading-h2);
+    font-weight: var(--weight-bold);
   }
 
   h3 {
     font-size: var(--text-h3);
     line-height: var(--leading-h3);
+    font-weight: var(--weight-bold);
   }
 
   h4 {
     font-size: var(--text-h4);
     line-height: var(--leading-h4);
+    font-weight: 800;
   }
 
   h5 {
     font-size: var(--text-h5);
     line-height: var(--leading-h5);
+    font-weight: var(--weight-medium);
   }
 
   [id] {

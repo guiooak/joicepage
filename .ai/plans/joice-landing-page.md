@@ -25,13 +25,51 @@ copying files, editable by anyone who knows HTML.
 | Build step | None. |
 | CSS | Pure modern CSS, `@layer`, custom properties. No preprocessor, no utility framework. |
 | Markup reuse | Accepted duplication. CSS classes are the reuse layer. |
-| JS | Zero. Verified by grep — the only `<script>` is JSON-LD. |
+| JS | **One file, additive only** (`scripts/motion.js`, deferred). Changed from "zero" — see below. |
 | Scope | **Desktop only.** No breakpoints, no mobile CSS. Body pinned to the 1440px frame. |
 | Lead capture | WhatsApp deep link. No form, no backend, no LGPD surface. |
 | Fonts | Self-hosted woff2, committed. No CDN. |
 | Images | Placeholders at exact mockup footprints until real assets are exported. |
 | Hosting | Cloudflare Pages (BR edge). Low-stakes — static files port anywhere. |
 | Repo layout | `poc/<approach>/` so alternative builds can be compared as siblings. |
+
+## The JS decision, reversed
+
+"Zero JS" was locked before the designer added an **Interactions** board to the
+file — canvas section `293:6393`, a section literally named "Gui", specifying
+six scroll-driven behaviours with reference sites:
+
+| Behaviour | Node | Reference |
+|---|---|---|
+| Text scroll | `293:7705` | reveal-text-on-scroll.framer.website |
+| Cards (Serviços 899/437) | `293:6685` | biggest-delivers-516518.framer.app |
+| Testimonial | `293:6690` | minimal-testimonials.framer.website |
+| Stack (Sobre 01–05) | `293:6695` | zupstudio.framer.website · scroll-stack-component.framer.website |
+| Counter (Números) | `293:6711` | final-intend-665098.framer.app |
+| Parallax | `293:6762` | none — "nao achei nenhuma ref" |
+
+None of this is reachable with zero JS. The decision taken was **one small
+vanilla file, progressive enhancement**, on these terms:
+
+- Text scroll, stack and parallax are CSS (`animation-timeline: view()`,
+  sticky offsets) and live in `styles/motion.css`.
+- Serviços expand, the testimonial carousel and the counter are in
+  `scripts/motion.js`.
+- The counter is deliberately JS rather than a CSS counter: `content:` would
+  move "+130" out of the document text and out of the crawlable response,
+  which is the one thing this build exists to protect.
+- The file creates no content. Every string it touches is already in the HTML.
+
+The longevity constraint survives: delete both files and the page is exactly
+the static build again.
+
+Two things worth knowing for anyone editing the motion:
+
+- Chrome will not run a `grid-template-columns` transition to completion — it
+  parks on the start value, so the Serviços columns silently never swap. The
+  card widths animate via `flex-basis` instead.
+- A `@font-face` with no `font-weight` descriptor only matches weight 400, so
+  every 500/700/900 run falls straight past it and loses the metric override.
 
 ## Design access — solved twice
 
@@ -116,32 +154,62 @@ the page. Testimonial names are placeholders **in the mockup itself**
 
 ## Missing
 
-**Sections not built:** SOBRE · second LOGOS · faq · footer.
+All thirteen sections are now built. What remains is blocked, not unfinished.
 
-**Accuracy gaps in what is built:**
+1. **FAQ copy does not exist in the file.** Not an extraction limit — verified:
+   `SYMBOL FAQ` (`115:2224`) and every instance of it contain **zero** text
+   nodes. The eight cards are drawn empty. Three of the six Processo panels are
+   likewise unwritten (the other three were recovered — see below). 11 spots
+   marked `A capturar`. This is a writing task for Joice.
+2. **Sobre card deck.** The file draws the five cards as an overlapping deck
+   (auto-layout gap −65). Rendered as a readable list plus a sticky stack;
+   the exact drawn offsets are not reproduced.
+3. **Serviços list arrow** is still the one hand-drawn vector in the build —
+   it is a VECTOR node, not an image fill, so it did not come out with the
+   bitmaps. Export it and delete the inline `<symbol>`.
+4. **Fonts.** Allomira and TP Sans substituted until licensed. Lora is done.
 
-1. **Fonts are substituted.** Allomira/TP Sans/Lora are not yet exported, so a
-   fallback stack is in use. It is wider than the design's face, which is why
-   some headlines wrap one line early. Largest remaining visual difference.
-2. **Colours are sampled**, not read from Figma variables. Close, not exact.
-3. **Geometry was measured by eye** for the built sections and is now known to be
-   wrong in places — see the exact numbers above (hero is 1358×750 not 1360×760;
-   Serviços cards are 899/437 not 1fr/434; Processo is 553/663; page background
-   is `#f4f7f7`).
-4. **Images are placeholders.** 265 real bitmaps sit in the `.fig` export.
+**Images are all resolved.** The MCP Starter plan ran out of tool calls
+mid-build, so they came from the `.fig` route instead — which is exactly what
+it was built for. All committed under `assets/img/`, 1.2 MB total.
+
+**`Site desktop` is stale in one place.** It draws service card 02 with card
+01's list duplicated. The intended copy exists in the same file, in the
+detached `Card` (`392:8746`) and in `MOBILE 360px`, and is what the build uses.
+`MOBILE 360px` also carries expanded states the desktop frame draws collapsed —
+it is where three Processo panel texts and the full footer content came from.
+**Treat the mobile frame as the more current content source.**
+
+Note for the tool: `figkiwi.py` takes the **inner `canvas.fig`**, not the outer
+`.fig` ZIP — unzip first. The decode verifies at 10,287,412/10,287,412 bytes.
+
+**Fonts cannot come from Figma.** This was recorded as a next step and is not
+achievable: `download_assets` returns exported renders, raw bitmap fills and
+vector SVGs only, and the `.fig` container stores font *names* — grepping the
+spec dump finds 64 `Allomira` and 5 `Lora` references and zero `woff/ttf/otf`.
+Allomira and TP Sans must be licensed. **Lora is open (SIL OFL)** and can be
+self-hosted immediately — it sets the 01/02 card numerals and the big numbers.
+
+Meanwhile `base.css` carries a measured metric-override fallback. Sweeping
+`size-adjust` against the resolved face gives a 72–83% window where the hero
+headline is 4 lines (its drawn 577×264 box) and the hero caption lands on its
+drawn 87px; 83% is used. Calibrated on macOS, where the `local()` list resolves
+to Avenir Next — **recheck on Windows**, where it resolves to Segoe UI.
 
 ## Next steps
 
-1. `get_variable_defs` on the token sets → rewrite `tokens.css` with exact values,
-   replacing every token currently marked *sampled*.
-2. `download_assets` → Allomira, TP Sans, Lora woff2 (subset latin + latin-ext for
-   pt-BR diacritics) plus logo, icons and photos.
-3. `get_design_context` per section → rebuild all 13 against exact geometry.
-4. Resolve the FAQ accordion — `get_design_context` on `331:7305`, or extend the
-   recursive symbol walk in `tools/figextract/`. The designer's Figma comments
-   also carry real question copy.
-5. Add `<link rel="preload">` for the hero portrait and the critical woff2, with
-   metric-override fallbacks so the font swap does not shift layout.
+1. **Get the FAQ copy from Joice** — eight questions and answers, plus three
+   Processo panel texts. Nothing technical unblocks this; it is unwritten.
+2. Export the Serviços list arrow vector and drop the last inline `<symbol>`.
+3. License Allomira and TP Sans, add real `@font-face` blocks subset to
+   latin + latin-ext for pt-BR diacritics, and delete the override block.
+   Recheck the fallback on Windows in the meantime.
+4. Confirm the WhatsApp number before deploy (open question 1) — it is wired
+   into both the footer link and the JSON-LD `telephone`. The mobile frame
+   draws the same eight-digit number, so the file does not settle it.
+5. Optional: extend `tools/figextract/` to expand INSTANCE nodes via
+   `symbolData` / `overrides`. Less urgent now that the mobile frame turned out
+   to carry the expanded content, but it would make the dump self-sufficient.
 
 ## Verification
 
@@ -165,8 +233,10 @@ the page. Testimonial names are placeholders **in the mockup itself**
    `sameAs`. NAP mismatch costs the local-pack association.
 3. **Font licensing.** Allomira and TP Sans are commercial; confirm a webfont
    licence covers self-hosting. Lora and EB Garamond are open.
-4. **Mobile.** Out of scope here by decision; the `Mobile` frame is a separate
-   exercise.
+4. **Mobile.** Still out of scope by decision. Note that the frame now exists
+   and is complete: `392:8099`, "MOBILE 360px", 360×11477.7, in canvas section
+   `393:9365`, with five annotated section callouts. So the separate exercise
+   is ready to start whenever it is wanted.
 
 ## Known ceiling
 
