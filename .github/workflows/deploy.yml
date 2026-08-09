@@ -70,6 +70,36 @@ jobs:
           echo "checked $(wc -l < /tmp/refs.txt | tr -d ' ') relative refs"
           echo "site OK — $(du -sh . | cut -f1) across $(find . -type f | wc -l | tr -d ' ') files"
 
+      # The page ships a canonical pointing at https://joicesperandio.com.br/,
+      # which is already a LIVE site on other hosting. Serving this copy on
+      # github.io with that canonical would tell Google the real version of
+      # this page is a different site — and the copy still carries unwritten
+      # FAQ placeholders. So while this is a preview, it is marked noindex.
+      #
+      # The switch is the presence of a CNAME file: add one (i.e. point the
+      # custom domain at Pages) and this step does nothing, because at that
+      # point the deployment IS production and the authored robots.txt and
+      # canonical are already correct.
+      #
+      # This only ever mutates the uploaded artifact. The files in the repo
+      # stay production-correct, so nothing here has to be undone later.
+      - name: Keep the preview out of search engines
+        working-directory: ${{ env.SITE_DIR }}
+        run: |
+          set -euo pipefail
+          if [ -f CNAME ]; then
+            echo "CNAME present — deploying as production, robots left as authored"
+            exit 0
+          fi
+
+          grep -q '</head>' index.html || { echo "::error::no </head> to patch"; exit 1; }
+          sed -i 's|</head>|  <meta name="robots" content="noindex, nofollow" />\n  </head>|' index.html
+          printf 'User-agent: *\nDisallow: /\n' > robots.txt
+
+          grep -q 'name="robots" content="noindex' index.html \
+            || { echo "::error::noindex meta was not applied"; exit 1; }
+          echo "preview marked noindex (no CNAME present)"
+
       - uses: actions/configure-pages@v5
         with:
           # Turns Pages on the first time this runs, so there is no manual
