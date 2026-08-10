@@ -73,8 +73,16 @@ jobs:
       - uses: actions/configure-pages@v5
         id: pages
         with:
-          # Turns Pages on the first time this runs, so there is no manual
-          # settings step to forget.
+          # NOTE: this does NOT reliably enable Pages by itself. The first run
+          # failed here with "Resource not accessible by integration" — the
+          # workflow's GITHUB_TOKEN can deploy to Pages but cannot create the
+          # site. It was enabled once, out of band, with:
+          #
+          #   gh api -X POST repos/guiooak/joicepage/pages -f build_type=workflow
+          #
+          # Kept at true so a repo that starts from this workflow gets it for
+          # free where permissions allow; treat the manual command as the
+          # fallback, not the exception.
           enablement: true
 
       # This deployment is a REVIEW APP, not production. joicesperandio.com.br
