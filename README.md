@@ -2,6 +2,14 @@
 
 Single-page landing site for Joice Sperandio, financial planner.
 
+**Review app:** <https://guiooak.github.io/joicepage/> — redeployed on every
+push to `main`.
+
+That URL is for review only. It is served `noindex` and its canonical points at
+itself, deliberately, so it cannot compete with the real domain — see
+[Deploying](#deploying). The production home will be
+`joicesperandio.com.br`, which today still serves a different site.
+
 ## Repository layout
 
 ```
@@ -46,10 +54,20 @@ block them, so the type would silently fall back.
 
 ## Deploying
 
-`.github/workflows/deploy.yml` publishes `poc/rawhtml/` to GitHub Pages on
-every push to `main`, plus a manual `workflow_dispatch` for redeploying the
-current `main` without an empty commit. Only that folder is uploaded, so the
-plan docs and the `.fig` tooling never reach the public site.
+`.github/workflows/deploy.yml` publishes `poc/rawhtml/` to
+<https://guiooak.github.io/joicepage/> on every push to `main`, plus a manual
+`workflow_dispatch` for redeploying the current `main` without an empty
+commit. Only that folder is uploaded, so the plan docs and the `.fig` tooling
+never reach the public site.
+
+Pages had to be enabled once by hand. `configure-pages` is set to
+`enablement: true`, but the workflow's `GITHUB_TOKEN` can deploy to Pages
+without being able to create the site, so the first run failed with
+`Resource not accessible by integration`. The fix, needed only once per repo:
+
+```sh
+gh api -X POST repos/guiooak/joicepage/pages -f build_type=workflow
+```
 
 There is still no build step: the artifact is the source directory copied
 verbatim. Delete the workflow and the page is unchanged and still deployable
