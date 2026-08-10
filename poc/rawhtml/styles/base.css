@@ -53,19 +53,59 @@
 }
 
 @layer base {
-  /* Self-hosted fonts, committed to assets/fonts/. No CDN — that is a
-     third-party dependency that can change under us.
-
-     TODO: uncomment once the family is identified in Figma and exported,
-     subset to latin + latin-ext for pt-BR diacritics.
+  /* Lora — the real face, self-hosted and committed. It is open (SIL OFL), so
+     unlike Allomira it needs no licence. It sets every numeral on the page:
+     the 01/02 service card figures (120px) and the big numbers (136px), plus
+     the wordmark and the quote mark. Two subsets, latin-ext first so pt-BR
+     diacritics resolve without pulling the larger file when unused. */
+  @font-face {
+    font-family: "Lora";
+    src: url("../assets/fonts/lora-latin.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
+      U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
+      U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
 
   @font-face {
-    font-family: "Joice Sans";
-    src: url("../assets/fonts/joice-sans.woff2") format("woff2");
-    font-weight: 400 700;
+    font-family: "Lora";
+    src: url("../assets/fonts/lora-latin-ext.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7,
+      U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F,
+      U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F,
+      U+A720-A7FF;
+  }
+
+  /* Allomira — the real face, licensed and self-hosted. This replaces the
+     measured metric-override fallback that stood in for it; there is no
+     size-adjust here and none is wanted.
+
+     One variable file covers the whole range the design uses (Regular 400,
+     Medium 500, Bold 700, Black 900) in 26KB, against 64KB for the four
+     statics. Checked before choosing: instancing the VF at each of those
+     weights matches the corresponding static font's advance widths to within
+     0.1% — exact at 400 and 900 — so the variable file is not an
+     approximation of the designer's instances, it reproduces them.
+
+     Subset to latin + latin-ext, which covers every pt-BR diacritic plus the
+     ©, → and typographic quotes the page uses. Verified: no glyph the copy
+     needs is missing.
+
+     `font-weight: 100 900` is the range this face answers for. It is load
+     bearing — a @font-face without it matches only 400, and every 500/700/900
+     run would silently fall through to the next family in the stack. */
+  @font-face {
+    font-family: "Allomira";
+    src: url("../assets/fonts/allomira-variable.woff2") format("woff2");
+    font-weight: 100 900;
+    font-style: normal;
     font-display: swap;
   }
-  */
 
   body {
     background-color: var(--color-page);
@@ -73,44 +113,52 @@
     font-family: var(--font-sans);
     font-size: var(--text-paragraph);
     line-height: var(--leading-paragraph);
+    letter-spacing: var(--tracking-paragraph);
     /* Desktop-only implementation: the page holds the 1440px frame width and
        does not reflow below it. */
     min-inline-size: var(--frame-width);
   }
 
+  /* Weights are per-level, not shared: Figma's text styles set H1/H2/H3 Bold,
+     H4 ExtraBold and H5 Medium. Headline tracking is 0 in every style — the
+     earlier blanket -0.01em was invented. */
   h1,
   h2,
   h3,
   h4,
   h5 {
     color: var(--color-ink);
-    font-weight: var(--weight-semibold);
-    letter-spacing: -0.01em;
+    letter-spacing: 0;
   }
 
   h1 {
     font-size: var(--text-h1);
     line-height: var(--leading-h1);
+    font-weight: var(--weight-bold);
   }
 
   h2 {
     font-size: var(--text-h2);
     line-height: var(--leading-h2);
+    font-weight: var(--weight-bold);
   }
 
   h3 {
     font-size: var(--text-h3);
     line-height: var(--leading-h3);
+    font-weight: var(--weight-bold);
   }
 
   h4 {
     font-size: var(--text-h4);
     line-height: var(--leading-h4);
+    font-weight: 800;
   }
 
   h5 {
     font-size: var(--text-h5);
     line-height: var(--leading-h5);
+    font-weight: var(--weight-medium);
   }
 
   [id] {

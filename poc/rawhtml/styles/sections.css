@@ -1,7 +1,10 @@
 /* ============================================================================
    COMPONENTS — desktop only, no breakpoints by design.
-   Geometry measured from the Figma frame "Site desktop" (1440px frame,
-   1360px content, 40px gutters).
+
+   Every dimension, fill and type stack here is transcribed from
+   `tools/figextract/site-desktop.spec.txt`, the decoded .fig export. Node
+   sizes are quoted in comments where a number looks arbitrary, so the next
+   editor can tell "as drawn" from "invented".
    ========================================================================= */
 
 @layer components {
@@ -18,14 +21,15 @@
     padding-block-start: var(--size-24);
   }
 
+  /* Menu 1360x84 · fill #ffffff · padX 24 · padY 16 · r 24 */
   .site-header__bar {
     display: flex;
     align-items: center;
     justify-content: space-between;
     block-size: var(--header-height);
-    padding-inline: var(--size-32);
-    background-color: var(--color-page);
-    border-radius: var(--radius-md);
+    padding-inline: var(--size-24);
+    background-color: var(--color-surface);
+    border-radius: var(--radius-lg);
   }
 
   .brand {
@@ -33,7 +37,6 @@
     font-size: var(--text-h5);
     line-height: 1.05;
     color: var(--color-ink);
-    letter-spacing: -0.01em;
   }
 
   .brand span {
@@ -57,193 +60,273 @@
     color: var(--color-accent);
   }
 
-  /* ---- Buttons --------------------------------------------------------- */
+  /* ---- Buttons ---------------------------------------------------------
+     217x52 / 218x52 · padX 24 · padY 12 · r 16 · label 20px. */
   .btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: var(--text-caption);
-    line-height: var(--leading-tag);
-    font-weight: var(--weight-medium);
+    gap: var(--size-8);
+    padding: var(--size-12) var(--size-24);
+    font-size: var(--text-paragraph);
+    line-height: var(--leading-paragraph);
+    letter-spacing: var(--tracking-paragraph);
+    border-radius: var(--radius-md);
     cursor: pointer;
     transition: background-color var(--transition), color var(--transition);
   }
 
-  .btn--pill {
-    block-size: 54px;
-    padding-inline: var(--size-32);
-    background-color: var(--color-button);
-    color: var(--color-button-ink);
-    border-radius: var(--radius-pill);
-  }
-
-  .btn--pill:hover {
-    background-color: var(--color-button-hover);
-  }
-
   .btn--solid {
-    block-size: 48px;
-    padding-inline: var(--size-24);
     background-color: var(--color-button);
     color: var(--color-button-ink);
-    border-radius: var(--radius-sm);
   }
 
   .btn--solid:hover {
     background-color: var(--color-button-hover);
   }
 
+  /* Sobre uses a blue-filled variant of the same button. */
+  .btn--primary {
+    background-color: var(--color-button-primary);
+    color: var(--color-button-ink);
+  }
+
+  .btn--primary:hover {
+    background-color: color-mix(in oklab, var(--color-button-primary) 86%, white);
+  }
+
   .btn--ghost {
-    block-size: 48px;
-    padding-inline: var(--size-24);
-    color: var(--white);
-    border: 1px solid rgb(255 255 255 / 55%);
-    border-radius: var(--radius-sm);
+    color: var(--color-button-ink);
+    border: 1px solid var(--color-button-ink);
   }
 
   .btn--ghost:hover {
-    background-color: rgb(255 255 255 / 14%);
+    background-color: rgb(244 247 247 / 14%);
   }
 
-  /* ---- Hero ------------------------------------------------------------ */
+  /* The header CTA is the one pill in the design. */
+  .btn--pill {
+    background-color: var(--color-button);
+    color: var(--color-button-ink);
+    border-radius: var(--radius-pill);
+    font-size: var(--text-caption);
+    line-height: var(--leading-tag);
+  }
+
+  .btn--pill:hover {
+    background-color: var(--color-button-hover);
+  }
+
+  /* ---- Tag / eyebrow ---------------------------------------------------
+     36px tall · padX 32 · padY 4 · r 999. */
+  .tag {
+    display: inline-block;
+    padding: var(--size-4) var(--size-32);
+    font-size: var(--text-paragraph);
+    line-height: var(--leading-paragraph);
+    letter-spacing: var(--tracking-paragraph);
+    color: var(--color-accent);
+    border: 1px solid var(--color-line-strong);
+    border-radius: var(--radius-pill);
+  }
+
+  /* ---- Hero ------------------------------------------------------------
+     Drawn 1358x750 — two pixels narrower than every other section, which is
+     how it sits in the file. Reproduced as drawn rather than snapped to 1360.
+
+     The lilac cast is NOT a gradient: it is a photograph with two large
+     #50518a ellipses composited over it in hard-light, the whole group
+     clipped to the rounded rect. */
   .hero {
     position: relative;
-    block-size: 760px;
-    margin-block-start: var(--size-16);
-    padding: var(--size-48);
-    background-image: var(--gradient-hero);
+    inline-size: 1358px;
+    block-size: 750px;
+    margin-inline: auto;
+    margin-block-start: var(--size-24);
     border-radius: var(--radius-lg);
     overflow: hidden;
+    isolation: isolate;
+  }
+
+  .hero__photo {
+    position: absolute;
+    inset: 0;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+    /* Rectangle over the photo at 8% black in the file. */
+    background-color: var(--hero-veil);
+  }
+
+  /* Ellipse 1 1264.7x988.1 @338,703 · Ellipse 2 1809x1414 @-989,140 */
+  .hero__blob {
+    position: absolute;
+    background-color: var(--hero-blend);
+    border-radius: 50%;
+    mix-blend-mode: hard-light;
+    pointer-events: none;
+  }
+
+  .hero__blob--1 {
+    inline-size: 1264.7px;
+    block-size: 988.1px;
+    inset-inline-start: 338px;
+    inset-block-start: 703px;
+  }
+
+  .hero__blob--2 {
+    inline-size: 1809px;
+    block-size: 1414px;
+    inset-inline-start: -989px;
+    inset-block-start: 140px;
+  }
+
+  /* Content 577x670 @48,32 */
+  .hero__content {
+    position: absolute;
+    inset-inline-start: var(--size-48);
+    inset-block-start: var(--size-32);
+    z-index: 1;
+    inline-size: 577px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    gap: var(--size-40);
   }
 
-  /* Placeholder occupies the exact footprint the portrait has in the mockup:
-     it is masked into the right side of the 1360x760 hero. */
-  .hero__portrait {
-    position: absolute;
-    inset-block: 0;
-    inset-inline-end: 0;
-    inline-size: 700px;
-    display: grid;
-    place-items: center;
-    background-color: rgb(255 255 255 / 22%);
-    color: var(--white);
-    font-size: var(--text-caption);
-    text-align: center;
-  }
-
-  .hero__content {
-    position: relative;
-    z-index: 1;
-    inline-size: 560px;
+  /* Title block is 454px tall with the headline bottom-aligned inside it. */
+  .hero__titleblock {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    block-size: 454px;
   }
 
   .hero__title {
     font-size: var(--text-display);
     line-height: var(--leading-display);
-    font-weight: var(--weight-semibold);
-    color: var(--white);
-    letter-spacing: -0.02em;
+    font-weight: var(--weight-medium);
+    letter-spacing: 0;
+    color: var(--color-button-ink);
   }
 
+  /* Spacing comes from .hero__content's 40px gap: 454 + 40 + 84 + 40 + 52. */
   .hero__lead {
-    inline-size: 480px;
-    margin-block-start: var(--size-32);
-    font-size: var(--text-caption);
-    line-height: var(--leading-caption);
-    color: rgb(255 255 255 / 88%);
+    inline-size: 529px;
+    color: var(--color-button-ink);
   }
 
   .hero__actions {
     display: flex;
-    gap: var(--size-16);
-    margin-block-start: var(--size-32);
+    gap: var(--size-24);
   }
 
+  /* Caption 263x87 @1051,595 */
   .hero__caption {
     position: absolute;
-    inset-inline-end: 64px;
-    inset-block-end: 72px;
+    inset-inline-start: 1051px;
+    inset-block-start: 595px;
     z-index: 1;
-    inline-size: 250px;
-    font-size: var(--text-caption);
-    line-height: var(--leading-caption);
-    color: var(--white);
+    inline-size: 263px;
+    font-size: var(--text-h5);
+    line-height: var(--leading-h5);
+    font-weight: var(--weight-medium);
+    letter-spacing: 0;
+    color: var(--color-button-ink);
   }
 
-  /* ---- Credentials bar ------------------------------------------------- */
+  /* ---- Credentials bar -------------------------------------------------
+     LOGOS 1360x279 · padX 24 · padY 96. A space-between row with 64px
+     vertical rules between the three groups, not a 3-column grid. */
   .credentials {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     padding-block: var(--size-96);
-    padding-inline: var(--size-80);
+    padding-inline: var(--size-48);
+    overflow: hidden;
+  }
+
+  /* Ellipse 4 532x463 @1222,-16, sitting behind the row. */
+  .credentials::after {
+    content: "";
+    position: absolute;
+    inline-size: 532px;
+    block-size: 463px;
+    inset-inline-start: 1222px;
+    inset-block-start: -16px;
+    background-color: var(--c-mist);
+    border-radius: 50%;
+    z-index: -1;
   }
 
   .credentials li {
     display: flex;
     align-items: flex-start;
     gap: var(--size-16);
-    font-size: var(--text-caption);
-    line-height: var(--leading-caption);
-    color: var(--color-ink);
+    font-size: var(--text-h5);
+    line-height: var(--leading-h5);
+    font-weight: var(--weight-medium);
+    letter-spacing: 0;
+    color: var(--color-body-soft);
   }
 
-  .credentials li + li {
-    border-inline-start: 1px solid var(--color-line);
-    padding-inline-start: var(--size-48);
+  /* Line 50 / Line 51 are siblings of the three groups in the file, not
+     borders on them — so they are real elements here too. */
+  .credentials__rule {
+    inline-size: 1px;
+    block-size: 64px;
+    background-color: var(--color-line);
+    align-self: center;
+  }
+
+  .credentials img {
+    inline-size: 64px;
+    block-size: 64px;
+    flex-shrink: 0;
+    object-fit: contain;
   }
 
   .credentials strong {
     display: block;
-    font-weight: var(--weight-regular);
+    font-weight: inherit;
   }
 
-  .credentials svg {
-    inline-size: 40px;
-    block-size: 40px;
-    flex-shrink: 0;
-    color: var(--color-ink);
-  }
-
-  /* ---- Section shell --------------------------------------------------- */
+  /* ---- Section shell ---------------------------------------------------
+     The vertical rhythm is NOT uniform: each frame carries its own padY in
+     the file, and that padding is what separates one section from the next.
+     A single blanket value ran Visão and Serviços tall against the drawn
+     heights, so the per-section values are transcribed here. */
   .section {
     padding-block-start: var(--section-padding-top);
   }
 
-  .tag {
-    display: inline-block;
-    padding: 10px var(--size-24);
-    font-size: var(--text-tag);
-    line-height: var(--leading-tag);
-    color: var(--color-accent);
-    border: 1px solid var(--color-line-strong);
-    border-radius: var(--radius-pill);
-  }
+  #visao     { padding-block-start: var(--size-40); }   /* VISAO      padY 40  */
+  #servicos  { padding-block-start: var(--size-140); }  /* SERVICOS   padY 140 */
+  #processo  { padding-block-start: var(--size-160); }  /* PROCESSO   padY 160 */
+  #historias { padding-block-start: var(--size-140); }  /* HISTORIAS  padY 140 */
+  #sobre     { padding-block-start: var(--size-80); }   /* SOBRE      padY 80  */
+  #duvidas   { padding-block-start: var(--size-100); }  /* faq        padY 100 */
 
-  .section__head {
-    margin-block-start: var(--size-40);
-  }
-
-  /* ---- Visão ----------------------------------------------------------- */
+  /* ---- Visão -----------------------------------------------------------
+     Title 664 · paragraph 438 @x922 → a 258px channel between them. */
   .visao__grid {
     display: grid;
-    grid-template-columns: 570px 440px;
+    grid-template-columns: 664px 438px;
     justify-content: space-between;
     margin-block-start: var(--size-40);
   }
 
   .visao__title {
-    font-size: var(--text-display);
-    line-height: var(--leading-display);
-    font-weight: var(--weight-semibold);
-    color: var(--color-accent-deep);
-    letter-spacing: -0.02em;
+    font-size: var(--text-display-lg);
+    line-height: var(--leading-display-lg);
+    font-weight: var(--weight-black);
+    letter-spacing: 0;
+    color: var(--color-accent);
   }
 
-  /* Second half of the headline drops to a tint — a two-tone headline, not
-     two separate elements. */
+  /* Second half of the headline sits in the tint until the scroll reveal
+     brings it up to full colour — see scripts/motion.js. */
   .visao__title em {
     font-style: normal;
     color: var(--color-ghost-ink);
@@ -252,103 +335,131 @@
   .visao__body {
     display: grid;
     gap: var(--size-24);
-    align-content: center;
-    font-size: var(--text-caption);
-    line-height: var(--leading-caption);
-    color: var(--color-body);
+    align-content: start;
+    padding-block-start: var(--size-80);
   }
 
-  /* ---- Princípios ------------------------------------------------------ */
+  /* ---- Princípios ------------------------------------------------------
+     Card 1360x710, photo bleeding under a #5779aa ellipse, four white cards
+     pinned 24px from the bottom edge. */
   .principios {
     position: relative;
     block-size: 710px;
-    margin-block-start: var(--size-72);
+    margin-block-start: var(--size-56);
     border-radius: var(--radius-lg);
     overflow: hidden;
+    isolation: isolate;
   }
 
-  /* Placeholder at the exact footprint of the mockup's background photo. */
   .principios__image {
     position: absolute;
     inset: 0;
-    display: grid;
-    place-items: center;
-    background-color: var(--color-surface-card);
-    color: var(--color-accent-deep);
-    font-size: var(--text-caption);
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+  }
+
+  /* Ellipse 2 1659x1226 @0,346 within a frame offset -158,-193. */
+  .principios::after {
+    content: "";
+    position: absolute;
+    inline-size: 1659px;
+    block-size: 1226px;
+    inset-inline-start: -158px;
+    inset-block-start: 153px;
+    background-color: var(--c-blue);
+    border-radius: 50%;
+    mix-blend-mode: hard-light;
+    pointer-events: none;
   }
 
   .principios__cards {
     position: absolute;
     inset-inline: var(--size-24);
     inset-block-end: var(--size-24);
+    z-index: 1;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: var(--size-24);
   }
 
+  /* card 309.5x313 · fill #ffffff · pad 24 · r 16 · gap 16.
+     A floor rather than a fixed height: the fallback face wraps the body copy
+     one line longer than Allomira, and a hard 313px clips it. */
   .principio {
+    min-block-size: 313px;
     padding: var(--size-24);
-    background-color: rgb(255 255 255 / 82%);
-    backdrop-filter: blur(10px);
+    background-color: var(--color-surface);
     border-radius: var(--radius-md);
   }
 
-  .principio svg {
-    inline-size: 28px;
-    block-size: 28px;
-    color: var(--color-accent);
+  .principio img,
+  .principio__icon {
+    display: block;
+    inline-size: 40px;
+    block-size: 40px;
+    object-fit: contain;
+    border-radius: var(--radius-sm);
   }
 
   .principio h3 {
-    margin-block-start: var(--size-40);
-    font-size: var(--text-caption);
-    line-height: var(--leading-tag);
-    font-weight: var(--weight-semibold);
+    margin-block-start: 49px; /* icon 40 @24 → text frame @113 */
+    font-size: var(--text-paragraph);
+    line-height: var(--leading-paragraph);
+    font-weight: var(--weight-regular);
+    letter-spacing: var(--tracking-paragraph);
     color: var(--color-accent);
   }
 
   .principio p {
-    margin-block-start: var(--size-12);
-    font-size: var(--text-caption);
-    line-height: var(--leading-caption);
+    margin-block-start: var(--size-8);
     color: var(--color-body);
   }
 
-  /* ---- Serviços -------------------------------------------------------- */
+  /* ---- Serviços --------------------------------------------------------
+     Head: 668 title · 548 paragraph @x812 (144px channel). */
   .servicos__head {
     display: grid;
-    grid-template-columns: 570px 550px;
+    grid-template-columns: 668px 548px;
     justify-content: space-between;
     margin-block-start: var(--size-40);
   }
 
   .servicos__head h2 {
-    font-size: var(--text-h2);
-    line-height: var(--leading-h2);
+    font-size: var(--text-display);
+    line-height: var(--leading-display);
+    font-weight: var(--weight-black);
+    color: var(--color-accent-deep);
   }
 
   .servicos__intro {
     display: grid;
     gap: var(--size-24);
-    font-size: var(--text-caption);
-    line-height: var(--leading-caption);
-    color: var(--color-body);
+    align-content: start;
+    padding-block-start: var(--size-80);
   }
 
+  /* Cards 899 + 437 with a 24px gap = 1360. Flex rather than grid because
+     the open/collapsed swap animates flex-basis; Chrome will not run a
+     grid-template-columns transition to completion. */
   .servicos__grid {
-    display: grid;
-    grid-template-columns: 1fr 434px;
+    display: flex;
     gap: var(--size-24);
-    margin-block-start: var(--size-72);
+    margin-block-start: var(--size-56);
   }
 
   .service-card {
     display: flex;
     flex-direction: column;
+    flex: 0 0 437px;
+    block-size: 874px;
     padding: var(--size-48);
     background-color: var(--color-surface-card);
     border-radius: var(--radius-lg);
+  }
+
+  .service-card[data-open] {
+    flex-basis: 899px;
   }
 
   .service-card--muted {
@@ -358,53 +469,48 @@
 
   .service-card__number {
     font-family: var(--font-serif);
-    font-size: var(--text-display);
-    line-height: var(--leading-display);
+    font-size: var(--text-numeral-sm);
+    line-height: var(--leading-numeral-sm);
     font-weight: var(--weight-regular);
-    color: var(--color-accent-soft);
+    letter-spacing: 0;
+    color: var(--color-accent);
   }
 
   .service-card__title {
-    margin-block-start: var(--size-24);
-    font-size: var(--text-h3);
-    line-height: var(--leading-h3);
-    font-weight: var(--weight-regular);
+    margin-block-start: var(--size-32);
+    font-size: var(--text-h2);
+    line-height: var(--leading-h2);
+    font-weight: var(--weight-bold);
     color: var(--color-accent);
   }
 
   .service-card__claim {
     margin-block-start: var(--size-24);
-    font-size: var(--text-caption);
-    line-height: var(--leading-tag);
-    font-weight: var(--weight-bold);
-    color: var(--color-ink);
+    color: var(--color-body);
   }
 
   .service-card__text {
-    margin-block-start: var(--size-12);
-    font-size: var(--text-caption);
-    line-height: var(--leading-caption);
+    margin-block-start: var(--size-8);
     color: var(--color-body);
   }
 
   .service-card__list {
-    margin-block-start: var(--size-64);
+    margin-block-start: var(--size-96);
   }
 
+  /* list-item 803x64 · padY 16 · arrow 32 · text at x=56 */
   .service-card__list li {
     display: flex;
     align-items: center;
-    gap: var(--size-16);
-    padding-block: var(--size-16);
-    border-block-end: 1px solid rgb(255 255 255 / 55%);
-    font-size: var(--text-caption);
-    line-height: var(--leading-caption);
-    color: var(--color-ink);
+    gap: var(--size-24);
+    block-size: 64px;
+    color: var(--color-body);
   }
 
+  .service-card__list img,
   .service-card__list svg {
-    inline-size: 20px;
-    block-size: 20px;
+    inline-size: 32px;
+    block-size: 32px;
     flex-shrink: 0;
     color: var(--color-accent);
   }
@@ -413,29 +519,35 @@
     position: absolute;
     inset-inline-start: var(--size-48);
     inset-block-end: var(--size-48);
-    inline-size: 64px;
-    block-size: 64px;
+    inline-size: 90px;
+    block-size: 90px;
     color: var(--color-accent);
   }
 
-  /* ---- Processo -------------------------------------------------------- */
+  /* ---- Processo --------------------------------------------------------
+     Left 553 · accordion column 663 @x697 (144px channel). */
   .processo__grid {
     display: grid;
-    grid-template-columns: 560px 664px;
+    grid-template-columns: 553px 663px;
     justify-content: space-between;
     margin-block-start: var(--size-40);
   }
 
   .processo__grid h2 {
-    font-size: var(--text-h2);
-    line-height: var(--leading-h2);
+    font-size: var(--text-display);
+    line-height: var(--leading-display);
+    font-weight: var(--weight-black);
+    color: var(--color-accent-deep);
   }
 
   .processo__text {
     margin-block-start: var(--size-24);
-    font-size: var(--text-caption);
-    line-height: var(--leading-caption);
     color: var(--color-body);
+  }
+
+  /* The accordion column is inset 72px from the top of the row. */
+  .processo__col {
+    padding-block-start: var(--size-72);
   }
 
   .accordion__item {
@@ -447,10 +559,11 @@
     align-items: center;
     justify-content: space-between;
     gap: var(--size-24);
-    padding-block: var(--size-24);
+    block-size: 77px;
     font-size: var(--text-h5);
     line-height: var(--leading-h5);
-    font-weight: var(--weight-regular);
+    font-weight: var(--weight-medium);
+    letter-spacing: 0;
     color: var(--color-ink);
     cursor: pointer;
     list-style: none;
@@ -494,109 +607,126 @@
 
   .accordion__panel {
     padding-block-end: var(--size-24);
-    padding-inline-start: var(--size-16);
-    font-size: var(--text-caption);
-    line-height: var(--leading-caption);
     color: var(--color-body);
   }
 
-  /* ---- CTA "conversa" -------------------------------------------------- */
+  /* Closing line + button under the accordion. */
+  .processo__close {
+    margin-block-start: 26px;
+  }
+
+  .processo__close p {
+    font-size: var(--text-h3);
+    line-height: var(--leading-h3);
+    font-weight: var(--weight-bold);
+    letter-spacing: 0;
+    color: var(--color-body);
+  }
+
+  .processo__close .btn {
+    margin-block-start: var(--size-24);
+  }
+
+  /* ---- CTA "conversa" --------------------------------------------------
+     1360x550 · fill #e5eef4 · pad 64 · r 24. Avatar 141px @609.5,82.5;
+     the six tags sit at the exact offsets drawn in the file. */
   .conversa {
     position: relative;
+    block-size: 550px;
     margin-block-start: var(--size-120);
-    padding-block: var(--size-64) var(--size-80);
+    padding: var(--size-64);
     background-color: var(--color-surface-tint);
     border-radius: var(--radius-lg);
     text-align: center;
   }
 
-  /* Circular portrait with the six labels scattered around it, as drawn. */
-  .conversa__orbit {
-    position: relative;
-    block-size: 220px;
-    margin-block-end: var(--size-56);
-  }
-
   .conversa__avatar {
     position: absolute;
-    inset-inline-start: 50%;
-    inset-block-start: 0;
-    translate: -50% 0;
-    inline-size: 148px;
-    block-size: 148px;
-    display: grid;
-    place-items: center;
-    background-color: var(--color-surface-card);
-    color: var(--color-accent-deep);
+    inset-inline-start: 609.5px;
+    inset-block-start: 82.5px;
+    inline-size: 141px;
+    block-size: 141px;
     border-radius: 50%;
-    font-size: 12px;
-    text-align: center;
+    object-fit: cover;
   }
 
-  .conversa__orbit .tag {
+  /* Frame 1232x172 @64,295.5 — headline (96) + 24 gap + button (52). Stacked
+     in flow rather than absolutely placed, so a headline that wraps to three
+     lines pushes the button down instead of colliding with it. */
+  .conversa__body {
+    position: absolute;
+    inset-inline-start: var(--size-64);
+    inset-block-start: 295.5px;
+    inline-size: 1232px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--size-24);
+  }
+
+  .conversa__text {
+    font-size: var(--text-h2);
+    line-height: var(--leading-h2);
+    font-weight: var(--weight-bold);
+    letter-spacing: 0;
+    color: var(--color-body);
+  }
+
+  .conversa .tag {
     position: absolute;
     padding: 6px var(--size-16);
+    font-size: var(--text-caption);
+    line-height: var(--leading-tag);
     background-color: var(--color-surface-card-alt);
     border-color: transparent;
   }
 
-  .conversa__orbit .tag:nth-of-type(1) { inset-block-start: 8px;   inset-inline-start: 268px; }
-  .conversa__orbit .tag:nth-of-type(2) { inset-block-start: 82px;  inset-inline-start: 128px; }
-  .conversa__orbit .tag:nth-of-type(3) { inset-block-start: 152px; inset-inline-start: 366px; }
-  .conversa__orbit .tag:nth-of-type(4) { inset-block-start: 100px; inset-inline-end: 470px; }
-  .conversa__orbit .tag:nth-of-type(5) { inset-block-start: 22px;  inset-inline-end: 290px; }
-  .conversa__orbit .tag:nth-of-type(6) { inset-block-start: 160px; inset-inline-end: 190px; }
+  /* Offsets transcribed from the file, in source order. */
+  .conversa .tag:nth-of-type(1) { inset-inline-start: 201px;  inset-block-start: 125px; }
+  .conversa .tag:nth-of-type(2) { inset-inline-start: 939px;  inset-block-start: 64px; }
+  .conversa .tag:nth-of-type(3) { inset-inline-start: 789px;  inset-block-start: 117px; }
+  .conversa .tag:nth-of-type(4) { inset-inline-start: 1080px; inset-block-start: 180px; }
+  .conversa .tag:nth-of-type(5) { inset-inline-start: 401px;  inset-block-start: 50px; }
+  .conversa .tag:nth-of-type(6) { inset-inline-start: 539px;  inset-block-start: 180.3px; }
 
-  .conversa__text {
-    inline-size: 880px;
-    margin-inline: auto;
-    font-size: var(--text-h3);
-    line-height: var(--leading-h4);
-    font-weight: var(--weight-medium);
-    color: var(--color-ink);
-  }
-
-  .conversa .btn {
-    margin-block-start: var(--size-40);
-  }
-
-  /* ---- Histórias ------------------------------------------------------- */
+  /* ---- Histórias -------------------------------------------------------
+     Left 553 · image 767x511.3 @x593 · r 20. */
   .historias__grid {
     display: grid;
-    grid-template-columns: 570px 700px;
+    grid-template-columns: 553px 767px;
     justify-content: space-between;
-    align-items: center;
     margin-block-start: var(--size-40);
   }
 
   .historias__grid h2 {
-    font-size: var(--text-h2);
-    line-height: var(--leading-h2);
+    font-size: var(--text-h1);
+    line-height: var(--leading-h1);
+    font-weight: var(--weight-bold);
+    color: var(--color-accent-deep);
   }
 
   .historias__lead {
     margin-block-start: var(--size-24);
-    font-size: var(--text-caption);
-    line-height: var(--leading-caption);
-    color: var(--color-body);
+    color: var(--color-body-soft);
   }
 
   .historias__media {
-    block-size: 470px;
-    display: grid;
-    place-items: center;
-    background-color: var(--navy-900);
-    color: var(--white);
-    border-radius: var(--radius-md);
-    font-size: var(--text-caption);
+    block-size: 511.3px;
+    inline-size: 767px;
+    border-radius: 20px;
+    object-fit: cover;
   }
 
+  /* Testimonial block 1360x491 · fill #ffffff · pad 40 · gap 80 */
   .depoimento {
     display: grid;
     grid-template-columns: 640px 480px;
     justify-content: space-between;
     gap: var(--size-80);
-    margin-block-start: var(--size-96);
+    margin-block-start: var(--size-48);
+    padding: var(--size-40);
+    background-color: var(--color-surface);
+    border-radius: var(--radius-lg);
   }
 
   .depoimento__mark {
@@ -607,17 +737,13 @@
   }
 
   .depoimento__quote {
-    margin-block-start: var(--size-48);
-    font-size: var(--text-paragraph);
-    line-height: var(--leading-paragraph);
-    color: var(--color-ink);
+    margin-block-start: var(--size-32);
+    color: var(--color-body);
   }
 
   .depoimento__people li {
-    padding-block: var(--size-24);
+    padding-block: var(--size-16);
     border-block-start: 1px solid var(--color-line);
-    font-size: var(--text-caption);
-    line-height: var(--leading-caption);
     color: var(--color-body-soft);
     cursor: pointer;
   }
@@ -637,31 +763,274 @@
     padding: 6px var(--size-12);
     background-color: var(--color-surface-card-alt);
     border-radius: var(--radius-pill);
-    font-size: 14px;
+    font-size: var(--text-caption);
     line-height: var(--leading-tag);
     color: var(--color-accent);
   }
 
-  /* ---- Números --------------------------------------------------------- */
+  /* ---- Números ---------------------------------------------------------
+     3 columns 437.3 wide · padY 80 · Lora 136px numerals. */
+  /* big-numbers 1360x580 · padY 80 → each column is 437.3x420. */
   .numeros {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    gap: var(--size-24);
+    padding-block: var(--size-80);
     margin-block-start: var(--size-120);
     text-align: center;
   }
 
+  .numeros > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--size-8);
+    block-size: 420px;
+  }
+
   .numeros dt {
     font-family: var(--font-serif);
-    font-size: 96px;
-    line-height: 1;
+    font-size: var(--text-numeral);
+    line-height: var(--leading-numeral);
     font-weight: var(--weight-regular);
-    color: var(--color-accent-soft);
+    letter-spacing: var(--tracking-numeral);
+    color: var(--color-accent);
   }
 
   .numeros dd {
-    margin: var(--size-16) 0 0;
+    margin: var(--size-8) 0 0;
+    font-size: var(--text-h5);
+    line-height: var(--leading-h5);
+    font-weight: var(--weight-medium);
+    letter-spacing: 0;
+    color: var(--color-body-soft);
+  }
+
+  /* ---- Sobre -----------------------------------------------------------
+     Left card 554 · collage 782 @x602, so a 48px channel. The collage runs
+     24px past the 1360 content width in the file; reproduced as drawn, which
+     spends part of the 40px page gutter rather than causing page scroll. */
+  .sobre__grid {
+    display: grid;
+    grid-template-columns: 554px 782px;
+    gap: var(--size-48);
+    margin-block-start: var(--size-40);
+  }
+
+  .sobre__title {
+    margin-block-start: var(--size-40);
+    font-size: var(--text-h1);
+    line-height: var(--leading-h1);
+    font-weight: var(--weight-bold);
+    color: var(--color-accent);
+  }
+
+  .sobre__body {
+    display: grid;
+    gap: var(--size-24);
+    margin-block-start: var(--size-24);
+    color: var(--color-body);
+  }
+
+  .sobre__actions {
+    display: flex;
+    gap: var(--size-24);
+    margin-block-start: var(--size-40);
+  }
+
+  .sobre__cards {
+    display: grid;
+    gap: var(--size-8);
+    margin-block-start: var(--size-56);
+  }
+
+  /* card 554x158 · fill #f4f7f7 · pad 32 · r 16 */
+  .sobre__cards li {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--size-24);
+    min-block-size: 158px;
+    padding: var(--size-32);
+    background-color: var(--color-page);
+    border-radius: var(--radius-md);
+  }
+
+  .sobre__num {
+    inline-size: 50px;
+    flex-shrink: 0;
+    font-size: var(--text-h3);
+    line-height: var(--leading-h3);
+    font-weight: var(--weight-bold);
+    color: var(--color-accent);
+  }
+
+  /* Line 52 — a 94px rule between the number and the copy. */
+  .sobre__cards li::before {
+    content: "";
+    order: 1;
+    inline-size: 1px;
+    block-size: 94px;
+    background-color: var(--color-line);
+    flex-shrink: 0;
+  }
+
+  .sobre__num { order: 0; }
+  .sobre__cards li p { order: 2; color: var(--color-body); }
+
+  .sobre__cards strong {
+    font-weight: var(--weight-bold);
+  }
+
+  /* Collage frame 782x700. The three cards sit at the offsets drawn in the
+     file, two of which fall outside the frame box — hence overflow visible. */
+  .sobre__media {
+    position: relative;
+    block-size: 700px;
+  }
+
+  .sobre__panel {
+    position: absolute;
+    inset-inline-start: 140.5px;
+    inset-block-start: 0;
+    inline-size: 501px;
+    block-size: 700px;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+  }
+
+  .sobre__thumb {
+    position: absolute;
+    inline-size: 209.9px;
+    block-size: 149.9px;
+    object-fit: cover;
+    border-radius: 15px;
+  }
+
+  /* image 16 @511,-42.7 · image 17 @0,386.6 · image 18 @381,630.6 */
+  .sobre__thumb--1 { inset-inline-start: 511px; inset-block-start: -42.7px; }
+  .sobre__thumb--2 { inset-inline-start: 0;     inset-block-start: 386.6px; }
+  .sobre__thumb--3 { inset-inline-start: 381px; inset-block-start: 630.6px; }
+
+  /* ---- FAQ -------------------------------------------------------------
+     Left 553 · list 783 @x577 (24px channel). */
+  .faq__grid {
+    display: grid;
+    grid-template-columns: 553px 783px;
+    gap: var(--size-24);
+    margin-block-start: var(--size-40);
+  }
+
+  .faq__title {
+    margin-block-start: var(--size-40);
+    font-size: var(--text-h1);
+    line-height: var(--leading-h1);
+    font-weight: var(--weight-bold);
+    color: var(--color-accent-deep);
+  }
+
+  .faq__lead {
+    margin-block-start: var(--size-24);
+    color: var(--color-body-soft);
+  }
+
+  .faq__list {
+    display: grid;
+    align-content: start;
+    gap: var(--size-16);
+  }
+
+  /* ---- Footer ----------------------------------------------------------
+     1360x396 · fill #28445e · pad 40 · gap 40 · r 24. */
+  .site-footer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-40);
+    margin-block: var(--size-120) var(--size-24);
+    padding: var(--size-40);
+    background-color: var(--color-accent-deep);
+    border-radius: var(--radius-lg);
+    color: var(--color-button-ink);
+  }
+
+  .site-footer__top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--size-40);
+  }
+
+  .brand--inverse {
+    color: var(--color-button-ink);
+  }
+
+  .site-footer__brand {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-24);
+    inline-size: 360px;
+  }
+
+  .site-footer__brand p {
     font-size: var(--text-caption);
     line-height: var(--leading-caption);
-    color: var(--color-body);
+    opacity: 0.8;
+  }
+
+  .site-footer__nav,
+  .site-footer__contact {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-8);
+  }
+
+  .site-footer__nav a,
+  .site-footer__contact a {
+    color: var(--color-button-ink);
+    transition: opacity var(--transition);
+  }
+
+  .site-footer__nav a:hover,
+  .site-footer__contact a:hover,
+  .site-footer__bottom a:hover {
+    opacity: 0.7;
+  }
+
+  .site-footer__creds {
+    font-size: var(--text-caption);
+    line-height: var(--leading-caption);
+    color: var(--color-button-ink);
+    opacity: 0.8;
+  }
+
+  .site-footer__bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--size-24);
+    padding-block-start: var(--size-24);
+    border-block-start: 1px solid rgb(244 247 247 / 24%);
+    font-size: var(--text-caption);
+    line-height: var(--leading-caption);
+  }
+
+  .site-footer__bottom nav {
+    display: flex;
+    gap: var(--size-24);
+  }
+
+  /* ---- Placeholders ----------------------------------------------------
+     Each of these holds the exact footprint of an asset not yet exported —
+     the Figma MCP plan hit its tool-call limit mid-build. They are meant to
+     look provisional. `grep -rn is-placeholder` lists everything outstanding. */
+  .is-placeholder {
+    display: grid;
+    place-items: center;
+    background-color: var(--c-blue-tint);
+    color: var(--color-accent-deep);
+    font-size: var(--text-caption);
+    line-height: var(--leading-caption);
+    letter-spacing: 0;
+    text-align: center;
   }
 }

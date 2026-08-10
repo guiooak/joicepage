@@ -1,0 +1,142 @@
+/* ============================================================================
+   MOTION — the six behaviours from the designer's "Interactions" board
+   (Figma canvas section 293:6393, addressed to Gui).
+
+   Split from sections.css so the page's layout and its motion stay separable:
+   delete this file and scripts/motion.js and the page is exactly the static
+   build again.
+
+   Everything here is additive. Nothing in this file may be required to read
+   the page — see the reduced-motion and @supports guards below.
+   ========================================================================= */
+
+@layer components {
+  /* ---- 1 · Text scroll -------------------------------------------------
+     ref: reveal-text-on-scroll.framer.website
+     The Visão headline is drawn as one colour; the two-tone split exists so
+     the second half can come up from the tint as the line scrolls in. */
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .visao__title em {
+        animation: ink-in linear both;
+        animation-timeline: view();
+        animation-range: entry 25% cover 45%;
+      }
+    }
+  }
+
+  @keyframes ink-in {
+    to {
+      color: var(--color-accent);
+    }
+  }
+
+  /* ---- 4 · Stack -------------------------------------------------------
+     ref: zupstudio.framer.website + scroll-stack-component.framer.website
+     The file draws these five cards as an overlapping deck (auto-layout gap
+     -65). Sticky offsets rebuild that deck on scroll while keeping each card
+     independently readable when it is the active one. */
+  @media (prefers-reduced-motion: no-preference) {
+    .sobre__cards li {
+      position: sticky;
+      top: calc(var(--header-height) + var(--size-40) + var(--i, 0) * 14px);
+    }
+
+    .sobre__cards li:nth-child(1) { --i: 0; }
+    .sobre__cards li:nth-child(2) { --i: 1; }
+    .sobre__cards li:nth-child(3) { --i: 2; }
+    .sobre__cards li:nth-child(4) { --i: 3; }
+    .sobre__cards li:nth-child(5) { --i: 4; }
+  }
+
+  /* ---- 6 · Parallax ----------------------------------------------------
+     No reference was supplied: "pensei em colocar um paralax de leve nas
+     fotos, subindo levemente no scroll, bem pouquinho." Deliberately small —
+     28px of travel across the whole viewport pass. */
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .hero__photo,
+      .principios__image,
+      .historias__media,
+      .sobre__media {
+        animation: drift linear both;
+        animation-timeline: view();
+        animation-range: cover;
+        will-change: transform;
+      }
+    }
+  }
+
+  @keyframes drift {
+    from {
+      translate: 0 14px;
+    }
+    to {
+      translate: 0 -14px;
+    }
+  }
+
+  /* ---- 2 · Serviços cards ---------------------------------------------
+     ref: biggest-delivers-516518.framer.app
+     Sizes are the drawn ones: 899 open, 437 collapsed. The grid is driven by
+     which card carries [data-open]; scripts/motion.js only moves that
+     attribute, so the whole transition lives here. */
+     The open/collapsed widths themselves live in sections.css, since they
+     are the drawn layout rather than motion. All this adds is the tween.
+     Note: flex-basis, not grid-template-columns — Chrome leaves a
+     grid-template-columns transition parked on its start value, so the
+     columns silently never swapped. */
+  @media (prefers-reduced-motion: no-preference) {
+    .service-card {
+      transition: flex-basis 420ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+  }
+
+  /* Collapsed cards clip their copy rather than dropping it — the text stays
+     in the DOM for crawlers and for anyone without JS. */
+  .service-card {
+    overflow: hidden;
+  }
+
+  .service-card:not([data-open]) .service-card__claim,
+  .service-card:not([data-open]) .service-card__text,
+  .service-card:not([data-open]) .service-card__list {
+    visibility: hidden;
+  }
+
+  .service-card[data-open] .service-card__arrow {
+    display: none;
+  }
+
+  /* Only interactive once the script has taken over. */
+  .js .service-card:not([data-open]) {
+    cursor: pointer;
+  }
+
+  /* ---- 3 · Testimonial -------------------------------------------------
+     ref: minimal-testimonials.framer.website */
+  .js .depoimento__people li[data-quote] {
+    transition: color var(--transition);
+  }
+
+  .js .depoimento__people li:not([data-quote]) {
+    cursor: default;
+    opacity: 0.55;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .depoimento__quote {
+      transition: opacity 220ms ease;
+    }
+
+    .depoimento__quote[data-swapping] {
+      opacity: 0;
+    }
+  }
+
+  /* ---- 5 · Counter -----------------------------------------------------
+     ref: final-intend-665098.framer.app
+     Driven from JS so the real figures stay in the HTML — a CSS counter
+     would move "+130" out of the document text and out of the crawlable
+     response, which the whole build exists to avoid. */
+}

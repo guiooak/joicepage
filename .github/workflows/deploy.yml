@@ -1,0 +1,187 @@
+# Publish the landing page to GitHub Pages on every push to main.
+#
+# The site is NOT at the repo root — `poc/` holds one folder per build
+# approach, and `poc/rawhtml/` is the one that ships. Only that folder is
+# uploaded, so the plan docs, the .fig tooling and any other POC never reach
+# the public site.
+#
+# There is no build step, by design: the artifact is the source directory,
+# copied verbatim. If this workflow disappears, the page is still deployable
+# by dragging that folder onto any static host.
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  # Lets you redeploy the current main without an empty commit.
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deploy at a time. Deliberately does NOT cancel a run already in
+# progress — cancelling mid-deploy can leave the live site half-updated.
+# Queued runs supersede each other instead.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+env:
+  SITE_DIR: poc/rawhtml
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Cheap guard against publishing a broken site. This is outward facing,
+      # so it is worth failing the run rather than deploying a page whose
+      # fonts or images 404.
+      - name: Check the site directory is intact
+        working-directory: ${{ env.SITE_DIR }}
+        run: |
+          set -euo pipefail
+
+          for f in index.html robots.txt sitemap.xml \
+                   styles/tokens.css styles/base.css styles/sections.css \
+                   styles/motion.css scripts/motion.js \
+                   assets/fonts/allomira-variable.woff2 \
+                   assets/fonts/lora-latin.woff2; do
+            [ -f "$f" ] || { echo "::error::missing $f"; exit 1; }
+          done
+
+          # Every relative asset the HTML references must exist. Written to a
+          # file first: a `while read` inside a pipeline runs in a subshell,
+          # so failures set there would not propagate out.
+          grep -oE '(src|href)="[^":#]+"' index.html \
+            | sed -E 's/^(src|href)="//; s/"$//' \
+            | grep -vE '^(https?:|mailto:|//|/)' \
+            | sort -u > /tmp/refs.txt
+
+          rc=0
+          while read -r ref; do
+            [ -e "$ref" ] || { echo "::error::index.html references missing $ref"; rc=1; }
+          done < /tmp/refs.txt
+          [ "$rc" -eq 0 ]
+
+          echo "checked $(wc -l < /tmp/refs.txt | tr -d ' ') relative refs"
+          echo "site OK — $(du -sh . | cut -f1) across $(find . -type f | wc -l | tr -d ' ') files"
+
+      - uses: actions/configure-pages@v5
+        id: pages
+        with:
+          # Turns Pages on the first time this runs, so there is no manual
+          # settings step to forget.
+          enablement: true
+
+      # This deployment is a REVIEW APP, not production. joicesperandio.com.br
+      # is a live site on other hosting, and the page is authored for it, so
+      # the copy served here has to be neutralised or it will interfere with
+      # the real domain's search presence.
+      #
+      # Three things, and the order of reasoning matters:
+      #
+      # 1. noindex, and crawling left OPEN. A disallow-all robots.txt would be
+      #    counterproductive: Google cannot read a noindex it is not allowed
+      #    to fetch, and a blocked URL can still be indexed URL-only from
+      #    links. To keep a page out, let it be crawled and serve noindex.
+      #
+      # 2. Rewrite the production URLs to this deployment. The authored
+      #    canonical points at joicesperandio.com.br. Serving that here would
+      #    put a cross-domain canonical on a noindex page — a combination
+      #    Google warns against, because the noindex can end up attributed to
+      #    the canonical target, i.e. the real site. Rewriting makes the
+      #    canonical self-referential, which is safe alongside noindex, and
+      #    keeps og:url and the JSON-LD @ids internally consistent.
+      #
+      # 3. Drop sitemap.xml. It lists the production URL, and a review app has
+      #    no business advertising a sitemap at all.
+      #
+      # Gated on a CNAME file: add one (point the custom domain at Pages) and
+      # this step no-ops, because the deployment is then production and the
+      # authored files are already correct.
+      #
+      # Only the artifact is mutated. The repo stays production-correct, so
+      # there is nothing to undo at cutover.
+      - name: Neutralise the review app for search engines
+        working-directory: ${{ env.SITE_DIR }}
+        env:
+          BASE_URL: ${{ steps.pages.outputs.base_url }}
+        run: |
+          set -euo pipefail
+          if [ -f CNAME ]; then
+            echo "CNAME present — deploying as production, files left as authored"
+            exit 0
+          fi
+
+          base="${BASE_URL%/}"
+          [ -n "$base" ] || { echo "::error::configure-pages gave no base_url"; exit 1; }
+
+          grep -q '</head>' index.html || { echo "::error::no </head> to patch"; exit 1; }
+          sed -i 's|</head>|  <meta name="robots" content="noindex, nofollow" />\n  </head>|' index.html
+
+          # Prod → this deployment. The mailto: address must survive, so match
+          # only the https:// origin rather than the bare domain.
+          sed -i "s|https://joicesperandio\.com\.br|${base}|g" index.html
+
+          # Crawlable on purpose — see (1) above.
+          printf 'User-agent: *\nAllow: /\n' > robots.txt
+          rm -f sitemap.xml
+
+          # Assert the outcome rather than trusting the seds.
+          grep -q 'name="robots" content="noindex' index.html \
+            || { echo "::error::noindex meta missing"; exit 1; }
+          if grep -q 'https://joicesperandio\.com\.br' index.html; then
+            echo "::error::a production URL survived the rewrite:"
+            grep -n 'https://joicesperandio\.com\.br' index.html
+            exit 1
+          fi
+          grep -q "rel=\"canonical\" href=\"${base}/\"" index.html \
+            || { echo "::error::canonical is not self-referential"; exit 1; }
+          grep -q 'oi@joicesperandio.com.br' index.html \
+            || { echo "::error::the mailto address was clobbered"; exit 1; }
+
+          echo "review app neutralised — noindex, crawlable, canonical → ${base}/"
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: ${{ env.SITE_DIR }}
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
+
+      - name: Smoke-test the deployed page
+        run: |
+          set -euo pipefail
+          url="${{ steps.deployment.outputs.page_url }}"
+          echo "deployed to $url"
+
+          code=000
+          for i in $(seq 1 10); do
+            code=$(curl -sS -o /tmp/live.html -w '%{http_code}' -L "$url" || echo 000)
+            [ "$code" = "200" ] && break
+            echo "attempt $i: HTTP $code — retrying"
+            sleep 6
+          done
+          [ "$code" = "200" ] || { echo "::error::site returned $code"; exit 1; }
+
+          # The whole point of this build is that the copy ships in the HTML
+          # rather than waiting on JS, so assert that instead of assuming it.
+          for phrase in "Joice Sperandio" \
+                        "Planejamento Financeiro" \
+                        "Antes da conversa"; do
+            grep -qF "$phrase" /tmp/live.html \
+              || { echo "::error::\"$phrase\" missing from the served HTML"; exit 1; }
+          done
+
+          echo "smoke test passed"
