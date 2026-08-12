@@ -37,7 +37,17 @@ re-pulling the tree (one MCP call) after any significant design change.
 
 ---
 
-## 1 · Fix the broken comment in `motion.css` — bug, do this first
+> **Status, 2026-08-12.** Items 1 and 4 are done (`cfc4f04`). Mobile was
+> built against `MOBILE 360px` and then reverted (`d750c35`) — it moves to a
+> separate project, and this page is desktop-only again. The eight commits
+> are still in history if that project wants a starting point; they were
+> measured pixel-exact against the frame wherever the copy matched.
+>
+> Mobile did leave three things behind that belong to desktop, all kept:
+> the two testimonials below, the `motion.css` fix, and the finding that the
+> footer carries a social row and `Telefone:`/`Email:` labels — see §8.
+
+## 1 · ~~Fix the broken comment in `motion.css`~~ — DONE (`cfc4f04`)
 
 `poc/rawhtml/styles/motion.css` has **nine `/*` against ten `*/`**. The comment
 opened at line 79 closes at line 83, and lines 84–88 are prose sitting in the
@@ -65,12 +75,13 @@ Effect: **the Serviços card open/collapse tween does not run.** The widths in
 cards do swap — instantly, with no animation. It fails silently and looks like
 a design choice, which is why it survived review.
 
-Fix: delete the stray `*/` on line 88 and merge the prose back into the comment
-that starts on line 79. Nothing else changes.
+Fixed by deleting the stray `*/` and merging the prose back into the comment.
+Confirmed by measurement, not by eye: the computed transition on
+`.service-card` is now `flex-basis 0.42s cubic-bezier(0.4, 0, 0.2, 1)`, where
+it was previously absent.
 
-Guard against the class of bug rather than the instance — add a comment-balance
-check to the deploy workflow's pre-upload assertions, next to the existing
-missing-asset and broken-reference checks:
+The class of bug is now guarded rather than just the instance — the deploy
+workflow asserts comment balance across `styles/*.css` before upload:
 
 ```sh
 for f in poc/rawhtml/styles/*.css; do
@@ -127,7 +138,7 @@ Two paths:
 
 Blocked on Joice either way. Do not draw a decorative play button.
 
-## 4 · Two more testimonials are recoverable — and attributable
+## 4 · ~~Two more testimonials are recoverable~~ — DONE (`cfc4f04`)
 
 The decision record says one testimonial exists and the rest are placeholders.
 That is true of the desktop frame, where `Depoimentos` (`318:8414`) holds five
@@ -149,10 +160,9 @@ Matching each quote to the name sitting in the active (`y=0`) slot of its
 > prioridades, aposentadoria e construção de patrimônio. Tudo de forma simples
 > e aplicável ao nosso dia a dia.
 
-Work: add both as `data-quote` attributes on their `<li>` in
-`.depoimento__people`. `scripts/motion.js` already switches on any element
-carrying `data-quote` and greys out those without one, so the carousel goes
-from one live entry to three with no code change.
+Both are now `data-quote` attributes on their `<li>` in `.depoimento__people`.
+`scripts/motion.js` already switched on any element carrying `data-quote`, so
+the carousel went from one live entry to three with no change to the script.
 
 Still unwritten: **Frances [Sobrenome]** and **Rafael & [Parceira]** — their
 name frames are `hidden` in every state drawn anywhere in the file, so no
@@ -211,23 +221,52 @@ around today:
 With both, the `.fig` route becomes fully self-sufficient and the six-call
 monthly quota stops being on the critical path.
 
+## 8 · The desktop footer is missing content the mobile frame revealed
+
+Found while building mobile, and worth keeping now that mobile is gone.
+
+The desktop footer (`318:7401`) is an **unexpanded instance** — the `.fig`
+export cannot resolve it, which is why its contents were originally recovered
+by reading the design rather than the file. The mobile footer (`392:8392`) is
+the same component drawn expanded, and it carries two things the desktop
+build does not have:
+
+- **`Telefone:` and `Email:` labels** (`392:8402`, `392:8405`) above each
+  value, where the desktop build lists the contacts bare.
+- **A social row** (`392:8409`): Instagram, TikTok, LinkedIn and YouTube, with
+  Facebook and X drawn hidden.
+
+Whether the *desktop* footer carries them is genuinely unknown — the instance
+will not expand, and the desktop build is verified against a drawn 396px
+footer that has no room for an extra row. So this is blocked on the same
+INSTANCE-override work as §7, not on a decision.
+
+Two of the four social URLs are known and already in the JSON-LD `sameAs`
+(Instagram, LinkedIn). **TikTok and YouTube are not** — get the handles from
+Joice rather than guessing, since a wrong one ships a 404 in the footer.
+
 ## Suggested order
 
 | # | Task | Blocked on | Size |
 |---|---|---|---|
-| 1 | Fix `motion.css` comment + add the balance assertion | — | minutes |
-| 2 | Wire the two recovered testimonials (§4) | — | minutes |
+| ~~1~~ | ~~Fix `motion.css` comment + balance assertion~~ | done `cfc4f04` | — |
+| ~~2~~ | ~~Wire the two recovered testimonials (§4)~~ | done `cfc4f04` | — |
 | 3 | Export the Serviços arrow, delete the inline symbol | — | small |
 | 4 | Create `og.jpg` | — | small |
 | 5 | Ask about hidden CTAs (§2) and `play-circle` (§3) | Joice / designer | — |
 | 6 | Confirm the WhatsApp number, test `wa.me` on a phone | Joice | small |
 | 7 | FAQ + Processo copy (§5) | **Joice — writing** | large |
 | 8 | Policy pages, GBP fields | Joice | medium |
-| 9 | `figextract` visibility + overrides (§7) | — | medium |
+| 9 | `figextract` visibility + overrides (§7) — also unblocks §8 | — | medium |
+| 10 | TikTok and YouTube handles for the footer (§8) | Joice | small |
 
-Items 1–4 are unblocked and self-contained; 1 and 2 are the whole of the
-newly-found actionable work. Everything after 5 needs input from Joice, and
-item 7 remains the launch blocker it has been throughout.
+Items 3 and 4 are what is left that is unblocked and self-contained.
+Everything from 5 on needs input from Joice, and item 7 remains the launch
+blocker it has been throughout.
+
+Both remaining unblocked items need a Figma asset export, so mind the quota:
+the Starter plan allows **six MCP tool calls a month** and they are spent for
+August 2026.
 
 ## Re-verification after any of this
 
@@ -236,8 +275,8 @@ and the last:
 
 1. `cd poc/rawhtml && python3 -m http.server` — confirm it still works with JS
    disabled. Non-negotiable.
-2. Confirm the Serviços cards now *animate* rather than snap (this is the
-   observable that §1 restores).
+2. Confirm the Serviços cards *animate* rather than snap (the observable §1
+   restored; regression-guarded by the workflow's comment-balance assertion).
 3. Lighthouse throttled: 100 SEO / 100 A11y, LCP < 2.5s.
 4. Rich Results Test — `Person` and `FinancialService` parse.
 5. `curl` the deployed URL: every word present in the initial response.
