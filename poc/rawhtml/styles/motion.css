@@ -13,14 +13,34 @@
 @layer components {
   /* ---- 1 · Text scroll -------------------------------------------------
      ref: reveal-text-on-scroll.framer.website
-     The Visão headline is drawn as one colour; the two-tone split exists so
-     the second half can come up from the tint as the line scrolls in. */
+
+     The reference reveals a headline progressively as it crosses the
+     viewport — the words ahead of the scroll position sit dimmed and resolve
+     one after another, rather than the whole block changing at once. Checked
+     by loading it: its "Blur Reveal" panel shows the trailing words still
+     soft while the earlier ones have landed.
+
+     So the Visão headline inks in word by word, from the tint it is drawn in
+     (#ccdceb, which is how the mobile frame draws the second half) to the
+     accent. scripts/motion.js wraps each word and hands it an index; the
+     stagger is the only thing that needs those indices.
+
+     Each word's range is offset by its position through the block, so the
+     reveal sweeps left to right rather than firing together. */
   @supports (animation-timeline: view()) {
     @media (prefers-reduced-motion: no-preference) {
-      .visao__title em {
+      .visao__title .word {
+        color: var(--color-ghost-ink);
         animation: ink-in linear both;
         animation-timeline: view();
-        animation-range: entry 25% cover 45%;
+        /* Spread over `cover` rather than `entry`. The entry phase of a block
+           this tall is only a few hundred pixels of scroll, so a stagger
+           inside it resolves faster than the eye reads it — measured going
+           0 to 10 words inked between two samples 170px apart. Across
+           `cover` the sweep takes the whole pass and is legible. */
+        animation-range:
+          cover calc(6% + (var(--i) / var(--n)) * 30%)
+          cover calc(20% + (var(--i) / var(--n)) * 30%);
       }
     }
   }
@@ -30,6 +50,9 @@
       color: var(--color-accent);
     }
   }
+
+  /* Without the scroll timeline — or without script, where no words exist —
+     the headline keeps the static two-tone split sections.css gives it. */
 
   /* ---- 4 · Stack -------------------------------------------------------
      ref: zupstudio.framer.website + scroll-stack-component.framer.website
@@ -47,6 +70,31 @@
     .sobre__cards li:nth-child(3) { --i: 2; }
     .sobre__cards li:nth-child(4) { --i: 3; }
     .sobre__cards li:nth-child(5) { --i: 4; }
+  }
+
+  /* Sticky offsets alone rebuild the deck but give it no depth — every card
+     stays the same size, so the pile reads as a list that happens to overlap.
+     In the reference the covered cards sit back: smaller and slightly dimmer
+     under the one that has settled over them.
+
+     The depth is per card rather than scroll-driven, and that is deliberate.
+     A `view()` timeline was tried first and is wrong here: these five cards
+     are sticky inside one container, so they leave the scrollport together —
+     measured, all five went 1 -> 0.93 within the same 300px of scroll, which
+     reads as the whole block flinching rather than as a stack.
+
+     So the recede is spatial. Card 1 sticks first and ends up deepest under
+     the pile, so it is the smallest; each card below it sits progressively
+     more forward, and the last one is at full size. Origin is the top edge so
+     a card shrinks away from the viewer instead of drifting out of the
+     position its sticky offset just put it in. */
+  @media (prefers-reduced-motion: no-preference) {
+    .sobre__cards li {
+      transform-origin: top center;
+      scale: calc(1 - (4 - var(--i, 0)) * 0.015);
+      filter: brightness(calc(1 - (4 - var(--i, 0)) * 0.012));
+      transition: scale var(--transition), filter var(--transition);
+    }
   }
 
   /* ---- 6 · Parallax ----------------------------------------------------
@@ -109,20 +157,99 @@
     display: none;
   }
 
+  /* Hover is how the reference actually drives this — its panels open under
+     the pointer, they are not clicked. Loading it confirms that: one panel
+     sits wide with the rest collapsed beside it.
+
+     Hover therefore previews whichever card is under the pointer and the
+     click state is what it falls back to when the pointer leaves. Gated on a
+     real hover-capable pointer so a touch device, where :hover sticks after a
+     tap, keeps the click behaviour alone. Click and keyboard are untouched —
+     this is additive, and the card is still a button. */
+  @media (hover: hover) and (pointer: fine) {
+    .js .servicos__grid:hover .service-card {
+      flex-basis: 437px;
+    }
+
+    .js .servicos__grid .service-card:hover {
+      flex-basis: 899px;
+    }
+
+    .js .servicos__grid .service-card:hover .service-card__claim,
+    .js .servicos__grid .service-card:hover .service-card__text,
+    .js .servicos__grid .service-card:hover .service-card__list {
+      visibility: visible;
+    }
+
+    .js .servicos__grid .service-card:hover .service-card__arrow {
+      display: none;
+    }
+
+    .js .servicos__grid .service-card {
+      cursor: pointer;
+    }
+  }
+
   /* Only interactive once the script has taken over. */
   .js .service-card:not([data-open]) {
     cursor: pointer;
   }
 
   /* ---- 3 · Testimonial -------------------------------------------------
-     ref: minimal-testimonials.framer.website */
+     ref: minimal-testimonials.framer.website
+
+     The reference does not wait to be clicked: it advances on its own, with
+     a rule filling under the active name to show how long is left, and the
+     inactive names greyed back. Loading it confirms the progress rule under
+     the current entry.
+
+     So the list auto-advances and this draws the countdown. The bar is a
+     pseudo-element scaling from 0 to 1 over the same interval motion.js
+     uses, restarted each time the active entry changes — no timer state in
+     CSS, it simply re-runs when aria-current moves. */
   .js .depoimento__people li[data-quote] {
-    transition: color var(--transition);
+    position: relative;
+    transition: color var(--transition), opacity var(--transition);
   }
 
   .js .depoimento__people li:not([data-quote]) {
     cursor: default;
     opacity: 0.55;
+  }
+
+  /* Non-active entries that DO have a quote read back, but not as far back
+     as the ones with nothing to show. */
+  .js .depoimento__people li[data-quote]:not([aria-current="true"]) {
+    opacity: 0.7;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .js .depoimento__people li[data-quote][aria-current="true"]::after {
+      content: "";
+      position: absolute;
+      inset-inline: 0;
+      inset-block-end: 0;
+      block-size: 2px;
+      background-color: var(--color-accent);
+      transform-origin: left center;
+      animation: tick var(--testimonial-interval, 7s) linear both;
+    }
+
+    /* Reading the quote should not race a timer. motion.js stops the clock
+       on hover and focus; this stops the bar with it. */
+    .js .depoimento:hover .depoimento__people li[aria-current="true"]::after,
+    .js .depoimento:focus-within .depoimento__people li[aria-current="true"]::after {
+      animation-play-state: paused;
+    }
+  }
+
+  @keyframes tick {
+    from {
+      scale: 0 1;
+    }
+    to {
+      scale: 1 1;
+    }
   }
 
   @media (prefers-reduced-motion: no-preference) {

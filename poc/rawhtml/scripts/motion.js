@@ -19,9 +19,65 @@
   // (pointer cursors, hover states) that would lie without it.
   document.documentElement.classList.add("js");
 
+  /* ---- 1 · Text scroll -------------------------------------------------
+     ref: reveal-text-on-scroll.framer.website
+     Wraps each word of the Visão headline so styles/motion.css can stagger
+     the ink-in across the block. The reveal itself is a CSS scroll timeline;
+     nothing here runs on scroll.
+
+     Text is only ever re-parented, never rewritten: the words that come out
+     are the words that went in, and the <em> that carries the drawn two-tone
+     split keeps its children. Collapsing whitespace would change the copy,
+     so the split keeps its separators and re-inserts them verbatim. */
+  const headline = document.querySelector(".visao__title");
+
+  if (headline) {
+    const words = [];
+
+    const wrap = (node) => {
+      // Walk a copy: the loop reparents nodes as it goes.
+      [...node.childNodes].forEach((child) => {
+        if (child.nodeType === Node.ELEMENT_NODE) {
+          wrap(child);
+          return;
+        }
+        if (child.nodeType !== Node.TEXT_NODE) return;
+
+        const parts = child.textContent.split(/(\s+)/);
+        if (parts.length === 1 && !parts[0].trim()) return;
+
+        const frag = document.createDocumentFragment();
+        parts.forEach((part) => {
+          if (!part) return;
+          if (!part.trim()) {
+            frag.append(part); // whitespace stays as-is
+            return;
+          }
+          const span = document.createElement("span");
+          span.className = "word";
+          span.textContent = part;
+          words.push(span);
+          frag.append(span);
+        });
+        child.replaceWith(frag);
+      });
+    };
+
+    wrap(headline);
+
+    // Indices drive the stagger; the total lets the range stay proportional
+    // however long the headline gets.
+    words.forEach((span, i) => {
+      span.style.setProperty("--i", i);
+      span.style.setProperty("--n", words.length);
+    });
+  }
+
   /* ---- 2 · Serviços cards ---------------------------------------------
      ref: biggest-delivers-516518.framer.app
-     Only moves the [data-open] attribute; the 899/437 transition is CSS. */
+     Only moves the [data-open] attribute; the 899/437 transition is CSS, and
+     so is the hover preview — the reference opens its panels under the
+     pointer, and that needs no script at all. */
   const grid = document.querySelector(".servicos__grid");
   if (grid) {
     const cards = [...grid.querySelectorAll(".service-card")];
@@ -57,44 +113,100 @@
 
   /* ---- 3 · Testimonial -------------------------------------------------
      ref: minimal-testimonials.framer.website
-     Only the people carrying data-quote are selectable. The mockup ships one
-     real testimonial; the other four names are placeholders in the design
-     itself, so there is nothing to switch to and this refuses to invent it. */
+
+     Only the people carrying data-quote are selectable. Three of the five
+     are real; the other two are placeholders in the design itself, so there
+     is nothing to switch to and this refuses to invent it.
+
+     The reference advances on its own rather than waiting to be clicked, so
+     this does too — with the countdown drawn in CSS, paused on hover and
+     focus, and stopped for good the moment someone picks an entry by hand.
+     Auto-advance that fights the reader is worse than none. */
   const quote = document.querySelector(".depoimento__quote");
   const people = document.querySelectorAll(".depoimento__people li");
+  const selectable = [...people].filter((p) => p.hasAttribute("data-quote"));
 
-  if (quote && people.length) {
-    people.forEach((person) => {
-      if (!person.hasAttribute("data-quote")) return;
+  if (quote && selectable.length) {
+    const INTERVAL = 7000;
+    let timer = null;
+    let stopped = reduced || selectable.length < 2;
 
+    const show = (person) => {
+      if (person.getAttribute("aria-current") === "true") return;
+      people.forEach((p) => p.removeAttribute("aria-current"));
+      person.setAttribute("aria-current", "true");
+
+      const next = person.getAttribute("data-quote");
+      if (reduced) {
+        quote.textContent = next;
+        return;
+      }
+      quote.setAttribute("data-swapping", "");
+      setTimeout(() => {
+        quote.textContent = next;
+        quote.removeAttribute("data-swapping");
+      }, 220);
+    };
+
+    const advance = () => {
+      const i = selectable.findIndex(
+        (p) => p.getAttribute("aria-current") === "true"
+      );
+      show(selectable[(i + 1) % selectable.length]);
+    };
+
+    const start = () => {
+      if (stopped || timer) return;
+      timer = setInterval(advance, INTERVAL);
+    };
+
+    const pause = () => {
+      clearInterval(timer);
+      timer = null;
+    };
+
+    selectable.forEach((person) => {
       person.setAttribute("role", "button");
       person.setAttribute("tabindex", "0");
 
-      const select = () => {
-        if (person.getAttribute("aria-current") === "true") return;
-        people.forEach((p) => p.removeAttribute("aria-current"));
-        person.setAttribute("aria-current", "true");
-
-        const next = person.getAttribute("data-quote");
-        if (reduced) {
-          quote.textContent = next;
-          return;
-        }
-        quote.setAttribute("data-swapping", "");
-        setTimeout(() => {
-          quote.textContent = next;
-          quote.removeAttribute("data-swapping");
-        }, 220);
+      const pick = () => {
+        stopped = true; // a deliberate choice ends the rotation
+        pause();
+        show(person);
       };
 
-      person.addEventListener("click", select);
+      person.addEventListener("click", pick);
       person.addEventListener("keydown", (e) => {
         if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
-          select();
+          pick();
         }
       });
     });
+
+    // Reading should not race the clock.
+    const block = document.querySelector(".depoimento");
+    if (block) {
+      block.addEventListener("pointerenter", pause);
+      block.addEventListener("pointerleave", start);
+      block.addEventListener("focusin", pause);
+      block.addEventListener("focusout", start);
+    }
+
+    // Nothing rotates while the section is off screen.
+    if ("IntersectionObserver" in window && block) {
+      new IntersectionObserver(
+        (entries) => entries.forEach((e) => (e.isIntersecting ? start() : pause())),
+        { threshold: 0.25 }
+      ).observe(block);
+    } else {
+      start();
+    }
+
+    document.documentElement.style.setProperty(
+      "--testimonial-interval",
+      `${INTERVAL}ms`
+    );
   }
 
   /* ---- 5 · Counter -----------------------------------------------------
