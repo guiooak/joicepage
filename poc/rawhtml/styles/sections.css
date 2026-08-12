@@ -43,6 +43,19 @@
     display: block;
   }
 
+  /* The nav and the header CTA live inside a <details> so the mobile frame's
+     hamburger has something to toggle. At desktop widths the disclosure is
+     dissolved — `display: contents` removes its box, leaving the nav and the
+     button as direct flex children of the bar, exactly as before. */
+  .nav-disclosure,
+  .nav-disclosure__panel {
+    display: contents;
+  }
+
+  .nav-toggle {
+    display: none;
+  }
+
   .nav {
     display: flex;
     align-items: center;

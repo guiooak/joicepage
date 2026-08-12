@@ -95,5 +95,202 @@
     body {
       overflow-x: hidden;
     }
+
+    /* ---- Header · Menu 328x88 (392:8100) ---------------------------------
+       White surface, 1px #f4f7f7 border, r24, padX 24 padY 16, and a drop
+       shadow the desktop bar does not have: 0 16px 10px rgba(87,121,170,.08). */
+    .site-header {
+      padding-block-start: var(--size-16);
+    }
+
+    .site-header__bar {
+      block-size: var(--header-height);
+      padding-inline: var(--size-24);
+      border: 1px solid var(--c-paper);
+      filter: drop-shadow(0 16px 10px rgb(87 121 170 / 8%));
+    }
+
+    /* Logo 120x48 — the wordmark stacks to two lines at the drawn size. */
+    .brand {
+      font-size: var(--text-h5);
+    }
+
+    /* The disclosure becomes a real box again so the panel can be positioned
+       against the bar. */
+    .nav-disclosure {
+      display: block;
+      position: relative;
+    }
+
+    /* Hamburger 24x24 in a 56px hit area (the frame draws `Icons` with p-16
+       around a 24px glyph). Drawn as three 1.5px rules rather than shipping
+       an icon file for something this small. */
+    .nav-toggle {
+      display: flex;
+      align-items: center;
+      gap: var(--size-8);
+      inline-size: 56px;
+      block-size: 56px;
+      margin-inline-end: calc(var(--size-16) * -1);
+      justify-content: center;
+      cursor: pointer;
+      list-style: none;
+    }
+
+    .nav-toggle::-webkit-details-marker {
+      display: none;
+    }
+
+    /* Accessible name for the control without drawing a label the frame
+       does not have. */
+    .nav-toggle__label {
+      position: absolute;
+      inline-size: 1px;
+      block-size: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+
+    .nav-toggle__bars,
+    .nav-toggle__bars::before,
+    .nav-toggle__bars::after {
+      display: block;
+      inline-size: 24px;
+      block-size: 1.5px;
+      background-color: var(--color-ink);
+      border-radius: 2px;
+    }
+
+    .nav-toggle__bars {
+      position: relative;
+    }
+
+    .nav-toggle__bars::before,
+    .nav-toggle__bars::after {
+      content: "";
+      position: absolute;
+      inset-inline-start: 0;
+    }
+
+    .nav-toggle__bars::before {
+      inset-block-start: -7px;
+    }
+
+    .nav-toggle__bars::after {
+      inset-block-start: 7px;
+    }
+
+    /* The panel drops out of the bar. It is a surface in its own right, so it
+       reuses the bar's radius and border rather than inventing a style. */
+    .nav-disclosure__panel {
+      display: flex;
+      flex-direction: column;
+      gap: var(--size-24);
+      position: absolute;
+      inset-inline: auto 0;
+      inset-block-start: calc(100% + var(--size-16));
+      z-index: 20;
+      inline-size: max-content;
+      min-inline-size: 220px;
+      padding: var(--size-24);
+      background-color: var(--color-surface);
+      border: 1px solid var(--c-paper);
+      border-radius: var(--radius-lg);
+      filter: drop-shadow(0 16px 10px rgb(87 121 170 / 8%));
+    }
+
+    .nav {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--size-16);
+    }
+
+    .nav a {
+      font-size: var(--text-paragraph);
+      line-height: var(--leading-paragraph);
+    }
+
+    .nav-disclosure__panel .btn--pill {
+      justify-content: center;
+    }
+
+    /* ---- Hero · content 328x724 (392:8110) -------------------------------
+       Same construction as desktop — photograph, two #50518a ellipses in
+       hard-light, clipped to the rounded rect — at the mobile geometry. The
+       ellipse offsets are the desktop ones scaled by 328/1358, which is how
+       the frame draws them: the same composite, not a new one. */
+    .hero {
+      inline-size: 100%;
+      block-size: 724px;
+      margin-block-start: var(--size-16);
+    }
+
+    .hero__blob--1 {
+      inline-size: 305px;
+      block-size: 239px;
+      inset-inline-start: 82px;
+      inset-block-start: 170px;
+    }
+
+    .hero__blob--2 {
+      inline-size: 437px;
+      block-size: 341px;
+      inset-inline-start: -239px;
+      inset-block-start: 34px;
+    }
+
+    /* Content 305.3 wide at 3.52% / 30.89 from the top, gap 24 (392:8116). */
+    .hero__content {
+      inset-inline: 3.52% 3.39%;
+      inset-block-start: 30.89px;
+      inline-size: auto;
+      gap: var(--size-24);
+      text-align: center;
+    }
+
+    /* Title box 454 tall with the headline bottom-aligned in it, so the
+       photograph reads clear above the type. */
+    .hero__titleblock {
+      block-size: 454px;
+    }
+
+    .hero__title {
+      font-size: var(--text-display-lg);
+      line-height: var(--leading-display-lg);
+      font-weight: var(--weight-bold);
+    }
+
+    .hero__lead {
+      inline-size: auto;
+    }
+
+    /* The frame draws one full-width button in primary blue (392:8124),
+       where desktop draws a solid + ghost pair. The ghost duplicates the
+       "Serviços" nav link, so hiding it below the breakpoint costs no
+       content that is not already reachable. */
+    .hero__actions {
+      flex-direction: column;
+      gap: var(--size-8);
+      align-self: stretch;
+    }
+
+    .hero__actions .btn {
+      inline-size: 100%;
+    }
+
+    .hero__actions .btn--solid {
+      background-color: var(--color-button-primary);
+    }
+
+    .hero__actions .btn--ghost {
+      display: none;
+    }
+
+    /* The mobile frame has no hero caption — 392:8116 holds the title, the
+       paragraph and the action, and nothing else. */
+    .hero__caption {
+      display: none;
+    }
   }
 }

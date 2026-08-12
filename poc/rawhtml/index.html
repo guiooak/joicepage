@@ -110,17 +110,39 @@
           <span>sperandio</span>
         </a>
 
-        <nav class="nav" aria-label="Navegação principal">
-          <a href="#inicio">Início</a>
-          <a href="#visao">Visão</a>
-          <a href="#servicos">Serviços</a>
-          <a href="#processo">Processo</a>
-          <a href="#historias">Histórias</a>
-          <a href="#sobre">Sobre</a>
-          <a href="#duvidas">Dúvidas</a>
-        </nav>
+        <!-- The mobile frame draws a hamburger (392:8108); the desktop frame
+             draws the links inline. Both are this one disclosure.
 
-        <a class="btn btn--pill" href="#contato">Agendar uma conversa</a>
+             It ships `open` on purpose. Without JS the menu is simply
+             expanded — tall, but every link works and every word is in the
+             HTML, which is the constraint that matters. scripts/motion.js
+             collapses it at mobile widths and closes it when a link is
+             followed; that close-on-follow is why the earlier desktop build
+             rejected a hamburger, and it is script, not CSS, that fixes it.
+
+             On desktop the whole disclosure is `display: contents`, so the
+             nav and the CTA stay direct children of the bar and render
+             exactly as they did before this element existed. -->
+        <details class="nav-disclosure" open>
+          <summary class="nav-toggle">
+            <span class="nav-toggle__bars" aria-hidden="true"></span>
+            <span class="nav-toggle__label">Menu</span>
+          </summary>
+
+          <div class="nav-disclosure__panel">
+            <nav class="nav" aria-label="Navegação principal">
+              <a href="#inicio">Início</a>
+              <a href="#visao">Visão</a>
+              <a href="#servicos">Serviços</a>
+              <a href="#processo">Processo</a>
+              <a href="#historias">Histórias</a>
+              <a href="#sobre">Sobre</a>
+              <a href="#duvidas">Dúvidas</a>
+            </nav>
+
+            <a class="btn btn--pill" href="#contato">Agendar uma conversa</a>
+          </div>
+        </details>
       </div>
     </header>
 

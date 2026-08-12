@@ -19,6 +19,41 @@
   // (pointer cursors, hover states) that would lie without it.
   document.documentElement.classList.add("js");
 
+  /* ---- 0 · Mobile menu -------------------------------------------------
+     The nav ships inside a <details open>, so with no JS at all the menu is
+     simply expanded and every link works. All this does is collapse it at
+     mobile widths and close it again once a link has been followed.
+
+     That second behaviour is the whole reason a hamburger was rejected the
+     first time round: a <details> cannot be closed by CSS when a link inside
+     it is followed, so the panel stayed open covering the page. It is a
+     three-line fix in script, and the no-JS path stays correct because open
+     is the default rather than the enhancement. */
+  const disclosure = document.querySelector(".nav-disclosure");
+
+  if (disclosure) {
+    const mobile = window.matchMedia("(max-width: 767px)");
+    const summary = disclosure.querySelector("summary");
+
+    const sync = () => {
+      disclosure.open = !mobile.matches;
+      if (summary) summary.setAttribute("aria-expanded", String(disclosure.open));
+    };
+
+    sync();
+    mobile.addEventListener("change", sync);
+
+    disclosure.addEventListener("toggle", () => {
+      if (summary) summary.setAttribute("aria-expanded", String(disclosure.open));
+    });
+
+    disclosure.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        if (mobile.matches) disclosure.open = false;
+      });
+    });
+  }
+
   /* ---- 2 · Serviços cards ---------------------------------------------
      ref: biggest-delivers-516518.framer.app
      Only moves the [data-open] attribute; the 899/437 transition is CSS. */
