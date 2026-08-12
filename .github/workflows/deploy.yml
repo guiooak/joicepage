@@ -67,6 +67,19 @@ jobs:
           done < /tmp/refs.txt
           [ "$rc" -eq 0 ]
 
+          # Every CSS comment must be closed exactly once. An unbalanced pair
+          # does not fail loudly: the prose after a stray `*/` is parsed as a
+          # selector, and it swallows the next rule's whole block. That is how
+          # the Serviços transition was silently dead — the page rendered fine
+          # and the animation just never ran.
+          for f in styles/*.css; do
+            o=$(grep -o '/\*' "$f" | wc -l | tr -d ' ')
+            c=$(grep -o '\*/' "$f" | wc -l | tr -d ' ')
+            [ "$o" = "$c" ] \
+              || { echo "::error::$f has $o '/*' against $c '*/' — a rule is being swallowed"; rc=1; }
+          done
+          [ "$rc" -eq 0 ]
+
           echo "checked $(wc -l < /tmp/refs.txt | tr -d ' ') relative refs"
           echo "site OK — $(du -sh . | cut -f1) across $(find . -type f | wc -l | tr -d ' ') files"
 

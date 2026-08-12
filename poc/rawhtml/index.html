@@ -522,7 +522,22 @@
           </div>
 
           <!-- Names are placeholders in the mockup itself ("Sobrenome",
-               "[Parceira]"), reproduced verbatim rather than invented. -->
+               "[Parceira]"), reproduced verbatim rather than invented.
+
+               Three of the five quotes are now real. The desktop Depoimentos
+               frame (318:8414) holds five instances all named "Alessandra"
+               whose text lives in overrides the export cannot expand — which
+               is why only one was recoverable before. The mobile annotation
+               frames draw the same component in different active states, and
+               the text is plain there.
+
+               Each quote is matched to whichever name sits in the active
+               (y=0) slot of that state's Names list: 393:10527 -> Simone,
+               393:10575 -> Luiz & Lívia.
+
+               Frances and Rafael & [Parceira] stay unquoted: their name
+               frames are hidden in every state drawn anywhere in the file, so
+               no state exposes their text. -->
           <ul class="depoimento__people">
             <li
               aria-current="true"
@@ -536,9 +551,17 @@
               </span>
             </li>
             <li>Frances [Sobrenome]</li>
-            <li>Simone [Sobrenome]</li>
+            <li
+              data-quote="Desde 2023, conto com o acompanhamento da Joice para organizar minha vida financeira e tomar decisões com mais segurança. O que mais valorizo é o cuidado e a personalização em cada etapa."
+            >
+              Simone [Sobrenome]
+            </li>
             <li>Rafael &amp; [Parceira]</li>
-            <li>Luiz &amp; Lívia</li>
+            <li
+              data-quote="A Joice transformou números espalhados em decisões mais conscientes. A organização financeira e dos investimentos trouxe clareza sobre nossas prioridades, aposentadoria e construção de patrimônio. Tudo de forma simples e aplicável ao nosso dia a dia."
+            >
+              Luiz &amp; Lívia
+            </li>
           </ul>
         </div>
 

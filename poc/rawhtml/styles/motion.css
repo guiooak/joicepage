@@ -80,7 +80,8 @@
      ref: biggest-delivers-516518.framer.app
      Sizes are the drawn ones: 899 open, 437 collapsed. The grid is driven by
      which card carries [data-open]; scripts/motion.js only moves that
-     attribute, so the whole transition lives here. */
+     attribute, so the whole transition lives here.
+
      The open/collapsed widths themselves live in sections.css, since they
      are the drawn layout rather than motion. All this adds is the tween.
      Note: flex-basis, not grid-template-columns — Chrome leaves a
