@@ -2,10 +2,14 @@
 <html lang="pt-BR">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=1440" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <!-- Desktop-only implementation, per scope. No mobile styles exist in this
-         build; the viewport is pinned to the 1440px Figma frame. -->
+    <!-- Two frames are implemented, both drawn in the Figma file: `Site
+         desktop` (318:7275, 1440px) and `MOBILE 360px` (392:8099, 360px).
+         The cut between them is 767px — see styles/mobile.css. Between 768px
+         and 1440px the desktop layout applies and the page scrolls
+         horizontally, exactly as it did when this was desktop-only: the file
+         draws nothing for that range. -->
 
     <title>Joice Sperandio — Planejamento Financeiro e Investimentos</title>
     <meta
@@ -40,6 +44,8 @@
     <link rel="stylesheet" href="styles/base.css" />
     <link rel="stylesheet" href="styles/sections.css" />
     <link rel="stylesheet" href="styles/motion.css" />
+    <!-- Last, so its @layer components rules win on source order. -->
+    <link rel="stylesheet" href="styles/mobile.css" />
 
     <!-- Deferred and entirely additive: the page is complete without it. -->
     <script src="scripts/motion.js" defer></script>

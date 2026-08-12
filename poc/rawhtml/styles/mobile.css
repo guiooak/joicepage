@@ -1,0 +1,99 @@
+/* ============================================================================
+   MOBILE — the `MOBILE 360px` frame (Figma 392:8099, 360 x 11477.67).
+
+   PROVENANCE: every number in this file is read from that frame, via
+   `get_design_context` on 392:8099. The reference it returned is archived
+   alongside the desktop dump so these values can be re-checked without
+   spending Figma MCP quota — see tools/figextract/README.md.
+
+   Structure of the frame, which drives everything below:
+
+     · Page ground #f4f7f7, padding 16, gap 16 between sections.
+     · Content column 328 at the drawn 360 width. Built fluid rather than
+       fixed, so a 390 or 412 device fills its width instead of leaving a
+       gutter — the frame is a 360 instance of a fluid layout, not a canvas.
+     · The type scale steps down wholesale: the 72/56 desktop display sizes
+       become 40/32, and 20px body copy stays 20px.
+
+   WHY A SEPARATE FILE, LOADED LAST: the desktop build is verified against
+   `Site desktop` to within 1px, and nothing here may put that at risk. This
+   file only ever adds rules inside `@media (max-width: 767px)`, so above the
+   breakpoint it contributes exactly nothing. Delete it and the page is the
+   desktop-only build again, unchanged.
+
+   The single cut is 767px. The file draws no intermediate frame, so 768-1440
+   keeps the desktop layout and its horizontal scroll, which is the behaviour
+   that already shipped.
+   ========================================================================= */
+
+@layer components {
+  @media (max-width: 767px) {
+    /* ---- Token overrides -------------------------------------------------
+       Most of sections.css is written against these custom properties, so
+       redefining them here re-tunes the shared components (shell, buttons,
+       tags, cards) before a single component rule is touched. */
+    :root {
+      --content-width: 100%;
+      --page-gutter: var(--size-16);
+      --header-height: 88px;
+
+      /* Mobile display scale, per node in the frame. The desktop 90/72/56
+         steps collapse to 48/40/32 — the hero is the one 40px outlier and it
+         is deliberate: the designer left a note on it (413:20597, addressed
+         to @GUI) recording that Joice asked for a smaller headline, so it was
+         taken off the 48px style and set to 40px by hand. */
+      --text-display-lg: 40px;   /* hero headline           392:8120 */
+      --leading-display-lg: 1;
+      --text-display: 32px;      /* section headlines       392:8180 */
+      --leading-display: 1;
+      --text-h1: 48px;           /* Sobre headline          392:8338 */
+      --leading-h1: 1;
+      --text-h2: 32px;           /* service card titles     392:8187 */
+      --leading-h2: 1;
+      --text-h3: 32px;
+      --leading-h3: 1;
+
+      /* Lora numerals: 136 -> 72 on the big numbers, 120 -> 72 on the
+         service cards. Both land on the same size at this width. */
+      --text-numeral: 72px;
+      --text-numeral-sm: 72px;
+      --leading-numeral-sm: 0.92;
+
+      --section-padding-top: var(--size-80);
+    }
+
+    /* The desktop build pins the body to the 1440 frame. Unpin it — this is
+       the one line that lets the page reflow at all. */
+    body {
+      min-inline-size: 0;
+    }
+
+    /* Frame padding 16, section gap 16. `.shell` carries the page gutter on
+       mobile rather than a fixed measure. */
+    .shell {
+      inline-size: 100%;
+      padding-inline: var(--page-gutter);
+      margin-inline: 0;
+    }
+
+    /* The drawn frame is a flex column with gap 16. Reproduced as margin on
+       the section boxes so the existing source order needs no wrapper. */
+    main > *,
+    body > footer.shell {
+      margin-block-start: var(--size-16);
+    }
+
+    /* Anchor targets clear the taller mobile bar. */
+    [id] {
+      scroll-margin-top: calc(var(--header-height) + var(--size-16));
+    }
+
+    /* Nothing in the mobile frame may cause a sideways scroll. Sections that
+       deliberately overflow (the credential rail, the Princípios row) do it
+       inside their own scroll container, never on the page. */
+    html,
+    body {
+      overflow-x: hidden;
+    }
+  }
+}

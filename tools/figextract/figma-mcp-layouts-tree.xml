@@ -1,0 +1,1614 @@
+<canvas id="157:1111" name="Layouts" x="0" y="0" width="0" height="0">
+  <section id="293:6393" name="Gui" x="27205" y="-1472" width="5554" height="13865">
+    <frame id="293:7714" name="Group 2085664481" x="335" y="2981" width="4923" height="1938">
+      <rounded-rectangle id="293:6767" name="Rectangle 11" x="335" y="2981" width="4923" height="1938" />
+      <frame id="293:6443" name="Cards" x="1131" y="3513" width="1360" height="874">
+        <frame id="293:6444" name="Card-open" x="0" y="0" width="899" height="874">
+          <frame id="293:6445" name="Title" x="48" y="48" width="803" height="110">
+            <text id="293:6446" name="01" x="0" y="0" width="119" height="110" />
+          </frame>
+          <frame id="293:6447" name="content" x="48" y="190" width="803" height="636">
+            <text id="293:6448" name="Planejamento Financeiro" x="0" y="0" width="803" height="48" />
+            <frame id="293:6449" name="Content" x="0" y="72" width="591" height="92">
+              <text id="293:6450" name="Clareza para decidir. Estrutura para construir." x="0" y="0" width="591" height="28" />
+              <text id="293:6451" name="Ideal para quem deseja organizar a sua base financeira atual, estruturar metas de vida e construir mais previsibilidade para o futuro." x="0" y="36" width="591" height="56" />
+            </frame>
+            <frame id="293:6452" name="List" x="0" y="188" width="803" height="448">
+              <frame id="293:6453" name="list-item" x="0" y="0" width="803" height="64">
+                <frame id="293:6454" name="arrow" x="0" y="16" width="32" height="32" />
+                <text id="293:6456" name="Compra do imóvel próprio" x="56" y="16" width="747" height="32" />
+              </frame>
+              <frame id="293:6457" name="list-item" x="0" y="64" width="803" height="64">
+                <frame id="293:6458" name="arrow" x="0" y="16" width="32" height="32" />
+                <text id="293:6460" name="Compra do imóvel próprio" x="56" y="16" width="747" height="32" />
+              </frame>
+              <frame id="293:6461" name="list-item" x="0" y="128" width="803" height="64">
+                <frame id="293:6462" name="arrow" x="0" y="16" width="32" height="32" />
+                <text id="293:6464" name="Planejamento para a chegada dos filhos" x="56" y="18" width="747" height="28" />
+              </frame>
+              <frame id="293:6465" name="list-item" x="0" y="192" width="803" height="64">
+                <frame id="293:6466" name="arrow" x="0" y="16" width="32" height="32" />
+                <text id="293:6468" name="Organização financeira para profissionais autônomos" x="56" y="18" width="747" height="28" />
+              </frame>
+              <frame id="293:6469" name="list-item" x="0" y="256" width="803" height="64">
+                <frame id="293:6470" name="arrow" x="0" y="16" width="32" height="32" />
+                <text id="293:6472" name="Transições e mudanças de carreira" x="56" y="18" width="747" height="28" />
+              </frame>
+              <frame id="293:6473" name="list-item" x="0" y="320" width="803" height="64">
+                <frame id="293:6474" name="arrow" x="0" y="16" width="32" height="32" />
+                <text id="293:6476" name="Construção da aposentadoria no longo prazo" x="56" y="18" width="747" height="28" />
+              </frame>
+              <frame id="293:6477" name="list-item" x="0" y="384" width="803" height="64">
+                <frame id="293:6478" name="arrow" x="0" y="16" width="32" height="32" />
+                <text id="293:6480" name="Estruturação dos projetos e objetivos de vida" x="56" y="18" width="747" height="28" />
+              </frame>
+            </frame>
+          </frame>
+        </frame>
+        <frame id="293:6481" name="Card-open" x="923" y="0" width="437" height="874">
+          <frame id="293:6482" name="Title" x="48" y="48" width="341" height="110">
+            <text id="293:6483" name="02" x="0" y="0" width="139" height="110" />
+          </frame>
+          <frame id="293:6484" name="content" x="48" y="190" width="341" height="96">
+            <text id="293:6485" name="Consultoria em Investimentos" x="0" y="0" width="341" height="96" />
+            <frame id="293:6486" name="Content" x="0" y="72" width="591" height="88" hidden="true">
+              <text id="293:6487" name="Clareza para decidir. Estrutura para construir." x="0" y="0" width="591" height="29" />
+              <text id="293:6488" name="Ideal para quem deseja organizar a sua base financeira atual, estruturar metas de vida e construir mais previsibilidade para o futuro." x="0" y="32" width="591" height="56" />
+            </frame>
+            <frame id="293:6489" name="List" x="0" y="184" width="793" height="448" hidden="true">
+              <frame id="293:6490" name="list-item" x="0" y="0" width="793" height="64">
+                <frame id="293:6491" name="arrow" x="0" y="16" width="32" height="32" />
+                <text id="293:6493" name="Compra do imóvel próprio" x="56" y="16" width="737" height="32" />
+              </frame>
+              <frame id="293:6494" name="list-item" x="0" y="64" width="793" height="64">
+                <frame id="293:6495" name="arrow" x="0" y="16" width="32" height="32" />
+                <text id="293:6497" name="Compra do imóvel próprio" x="56" y="16" width="737" height="32" />
+              </frame>
+              <frame id="293:6498" name="list-item" x="0" y="128" width="793" height="64">
+                <frame id="293:6499" name="arrow" x="0" y="16" width="32" height="32" />
+                <text id="293:6501" name="Planejamento para a chegada dos filhos" x="56" y="18" width="737" height="28" />
+              </frame>
+              <frame id="293:6502" name="list-item" x="0" y="192" width="793" height="64">
+                <frame id="293:6503" name="arrow" x="0" y="16" width="32" height="32" />
+                <text id="293:6505" name="Organização financeira para profissionais autônomos" x="56" y="18" width="737" height="28" />
+              </frame>
+              <frame id="293:6506" name="list-item" x="0" y="256" width="793" height="64">
+                <frame id="293:6507" name="arrow" x="0" y="16" width="32" height="32" />
+                <text id="293:6509" name="Transições e mudanças de carreira" x="56" y="18" width="737" height="28" />
+              </frame>
+              <frame id="293:6510" name="list-item" x="0" y="320" width="793" height="64">
+                <frame id="293:6511" name="arrow" x="0" y="16" width="32" height="32" />
+                <text id="293:6513" name="Construção da aposentadoria no longo prazo" x="56" y="18" width="737" height="28" />
+              </frame>
+              <frame id="293:6514" name="list-item" x="0" y="384" width="793" height="64">
+                <frame id="293:6515" name="arrow" x="0" y="16" width="32" height="32" />
+                <text id="293:6517" name="Estruturação dos projetos e objetivos de vida" x="56" y="18" width="737" height="28" />
+              </frame>
+            </frame>
+          </frame>
+          <frame id="293:6518" name="arrow" x="48" y="318" width="341" height="508">
+            <vector id="293:6519" name="Vector" x="27" y="389" width="90.00007629394531" height="90.00007629394531" />
+          </frame>
+        </frame>
+      </frame>
+      <frame id="293:6685" name="Group 2085664474" x="2849" y="3681" width="913" height="538">
+        <frame id="293:6686" name="Frame 13" x="2849" y="3681" width="913" height="538">
+          <frame id="293:6687" name="Frame 2147260039" x="80" y="80" width="753" height="378">
+            <text id="293:6688" name="Cards  Link" x="0" y="0" width="753" height="378" />
+            <text id="293:6689" name="Link" x="0" y="549" width="753" height="126" hidden="true" />
+          </frame>
+        </frame>
+      </frame>
+    </frame>
+    <frame id="293:7715" name="Group 2085664482" x="335" y="5119" width="4923" height="1938">
+      <rounded-rectangle id="293:6768" name="Rectangle 12" x="335" y="5119" width="4923" height="1938" />
+      <frame id="293:6521" name="testimonial" x="1131" y="5843" width="1360" height="491">
+        <frame id="293:6522" name="Testimonials" x="0" y="0" width="1360" height="482">
+          <frame id="293:6523" name="testimonial" x="0" y="0" width="668" height="482">
+            <frame id="293:6524" name="depoimento" x="0" y="0" width="668" height="482">
+              <vector id="293:6525" name="quote" x="0" y="0" width="72" height="48" />
+              <frame id="293:6526" name="content" x="0" y="88" width="668" height="306">
+                <text id="293:6527" name="Durante muitos anos, por questões de saúde, eu simplesmente não pensava no futuro. Pós transplante, quando ganhei o “longo prazo”, precisei aprender a construir esse futuro pela primeira vez. A Joice me ajudou a transformar insegurança em planejamento: organizamos aposentadoria, investimentos, orçamento mensal e até o sonho da casa própria. O que mais marcou foi a forma acolhedora, prática e personalizada com que ela conduziu tudo. Hoje eu entendo meus números e consigo tomar decisões com muito mais tranquilidade." x="0" y="0" width="668" height="306" />
+              </frame>
+              <frame id="293:6528" name="quote" x="0" y="434" width="668" height="48">
+                <vector id="293:6529" name="“" x="668" y="48" width="72" height="48" />
+              </frame>
+            </frame>
+            <frame id="293:6530" name="Group 2085664466" x="0" y="384" width="0" height="0" />
+          </frame>
+          <frame id="293:6532" name="Frame 2147260041" x="812" y="45" width="548" height="392">
+            <frame id="293:6533" name="testimonial closed" x="0" y="0" width="548" height="164">
+              <vector id="293:6534" name="divider" x="0" y="0" width="548" height="0" />
+              <frame id="293:6535" name="Nome e tags" x="0" y="32" width="548" height="100">
+                <text id="293:6536" name="Alessandra Sobrenome" x="0" y="0" width="548" height="28" />
+                <frame id="293:6537" name="Tags" x="0" y="36" width="548" height="64">
+                  <instance id="293:6538" name="tag" x="0" y="0" width="183" height="28" />
+                  <instance id="293:6539" name="tag" x="191" y="0" width="124" height="28" />
+                  <instance id="293:6540" name="tag" x="0" y="36" width="233" height="28" />
+                </frame>
+              </frame>
+              <vector id="293:6541" name="divider" x="0" y="164" width="548" height="0" />
+            </frame>
+            <frame id="293:6542" name="testimonial closed" x="0" y="164" width="548" height="76">
+              <vector id="293:6543" name="divider" x="0" y="0" width="548" height="0" />
+              <frame id="293:6544" name="Nome e tags" x="0" y="24" width="548" height="28">
+                <text id="293:6545" name="Nome Sobrenome" x="0" y="0" width="548" height="28" />
+                <frame id="293:6546" name="Tags" x="0" y="36" width="508" height="28" hidden="true">
+                  <instance id="293:6547" name="tag" x="0" y="0" width="228" height="28" />
+                  <instance id="293:6548" name="tag" x="236" y="0" width="201" height="28" />
+                  <instance id="293:6549" name="tag" x="445" y="0" width="233" height="28" />
+                </frame>
+              </frame>
+              <vector id="293:6550" name="divider" x="0" y="76" width="548" height="0" />
+            </frame>
+            <frame id="293:6551" name="testimonial closed" x="0" y="240" width="548" height="76">
+              <vector id="293:6552" name="divider" x="0" y="0" width="548" height="0" />
+              <frame id="293:6553" name="Nome e tags" x="0" y="24" width="548" height="28">
+                <text id="293:6554" name="Nome Sobrenome" x="0" y="0" width="548" height="28" />
+                <frame id="293:6555" name="Tags" x="0" y="36" width="508" height="28" hidden="true">
+                  <instance id="293:6556" name="tag" x="0" y="0" width="228" height="28" />
+                  <instance id="293:6557" name="tag" x="236" y="0" width="201" height="28" />
+                  <instance id="293:6558" name="tag" x="445" y="0" width="233" height="28" />
+                </frame>
+              </frame>
+              <vector id="293:6559" name="divider" x="0" y="76" width="548" height="0" />
+            </frame>
+            <frame id="293:6560" name="testimonial closed" x="0" y="316" width="548" height="76">
+              <vector id="293:6561" name="divider" x="0" y="0" width="548" height="0" />
+              <frame id="293:6562" name="Nome e tags" x="0" y="24" width="548" height="28">
+                <text id="293:6563" name="Nome Sobrenome" x="0" y="0" width="548" height="28" />
+                <frame id="293:6564" name="Tags" x="0" y="36" width="508" height="28" hidden="true">
+                  <instance id="293:6565" name="tag" x="0" y="0" width="228" height="28" />
+                  <instance id="293:6566" name="tag" x="236" y="0" width="201" height="28" />
+                  <instance id="293:6567" name="tag" x="445" y="0" width="233" height="28" />
+                </frame>
+              </frame>
+              <vector id="293:6568" name="divider" x="0" y="76" width="548" height="0" />
+            </frame>
+          </frame>
+        </frame>
+      </frame>
+      <frame id="293:6690" name="Group 2085664475" x="2849" y="5819" width="913" height="538">
+        <frame id="293:6691" name="Frame 13" x="2849" y="5819" width="913" height="538">
+          <frame id="293:6692" name="Frame 2147260039" x="80" y="80" width="753" height="378">
+            <text id="293:6693" name="Testimonial  Link" x="0" y="0" width="753" height="378" />
+            <text id="293:6694" name="Link" x="0" y="549" width="753" height="126" hidden="true" />
+          </frame>
+        </frame>
+      </frame>
+    </frame>
+    <frame id="293:7721" name="Group 2085664483" x="335" y="7257" width="4923" height="1938">
+      <rounded-rectangle id="293:6769" name="Rectangle 13" x="335" y="7257" width="4923" height="1938" />
+      <frame id="293:6771" name="Card" x="1768" y="7880" width="554" height="466">
+        <frame id="293:6772" name="Card" x="0" y="0" width="554" height="466">
+          <frame id="293:6773" name="card" x="0" y="0" width="554" height="158">
+            <frame id="293:6774" name="content" x="32" y="32" width="490" height="94">
+              <text id="293:6775" name="01" x="0" y="0" width="50" height="94" />
+              <line id="293:6776" name="Line 52" x="74.00000762939453" y="0" width="0.00000410887150792405" height="94" />
+              <text id="293:6777" name="Vivência corporativa Atuei como analista financeira em uma indústria de plásticos por 7 anos" x="98" y="19" width="392" height="56" />
+            </frame>
+          </frame>
+          <frame id="293:6778" name="card" x="0" y="93" width="554" height="158">
+            <frame id="293:6779" name="content" x="32" y="32" width="490" height="94">
+              <text id="293:6780" name="02" x="0" y="0" width="50" height="94" />
+              <line id="293:6781" name="Line 52" x="74.00000762939453" y="0" width="0.00000410887150792405" height="94" />
+              <text id="293:6782" name="Experiência no exterior Morei em Dublin (Irlanda) por dois anos, trabalhando e estudando inglês." x="98" y="19" width="392" height="56" />
+            </frame>
+          </frame>
+          <frame id="293:6783" name="card" x="0" y="186" width="554" height="158">
+            <frame id="293:6784" name="content" x="32" y="32" width="490" height="94">
+              <text id="293:6785" name="03" x="0" y="0" width="50" height="94" />
+              <line id="293:6786" name="Line 52" x="74.00000762939453" y="0" width="0.00000410887150792405" height="94" />
+              <text id="293:6787" name="Paixão por viajar Já conheci +17 países e sigo transformando experiências em aprendizados." x="98" y="19" width="392" height="56" />
+            </frame>
+          </frame>
+          <frame id="293:6788" name="card" x="0" y="279" width="554" height="158">
+            <frame id="293:6789" name="content" x="32" y="32" width="490" height="94">
+              <text id="293:6790" name="04" x="0" y="0" width="50" height="94" />
+              <line id="293:6791" name="Line 52" x="74.00000762939453" y="0" width="0.00000410887150792405" height="94" />
+              <text id="293:6792" name="Transição de carreira Planejei cada passo até me consolidar como consultora e me dedicar 100% a essa atuação." x="98" y="5" width="392" height="84" />
+            </frame>
+          </frame>
+          <frame id="293:6793" name="card" x="0" y="372" width="554" height="158">
+            <frame id="293:6794" name="content" x="32" y="32" width="490" height="94">
+              <text id="293:6795" name="05" x="0" y="0" width="50" height="94" />
+              <line id="293:6796" name="Line 52" x="74.00000762939453" y="0" width="0.00000410887150792405" height="94" />
+              <text id="293:6797" name="Maternidade &amp; Família Ser mãe da Elisa e parceira do Gui ampliou meu olhar sobre tempo, segurança, autonomia e possibilidades." x="98" y="5" width="392" height="84" />
+            </frame>
+          </frame>
+        </frame>
+      </frame>
+      <frame id="293:6798" name="Card" x="1029" y="7880" width="554" height="956">
+        <frame id="293:6799" name="Card" x="0" y="0" width="554" height="466">
+          <frame id="293:6800" name="card" x="0" y="0" width="554" height="158">
+            <frame id="293:6801" name="content" x="32" y="32" width="490" height="94">
+              <text id="293:6802" name="01" x="0" y="0" width="50" height="94" />
+              <line id="293:6803" name="Line 52" x="74.00000762939453" y="0" width="0.00000410887150792405" height="94" />
+              <text id="293:6804" name="Vivência corporativa Atuei como analista financeira em uma indústria de plásticos por 7 anos" x="98" y="19" width="392" height="56" />
+            </frame>
+          </frame>
+          <frame id="293:6805" name="card" x="0" y="182" width="554" height="158">
+            <frame id="293:6806" name="content" x="32" y="32" width="490" height="94">
+              <text id="293:6807" name="02" x="0" y="0" width="50" height="94" />
+              <line id="293:6808" name="Line 52" x="74.00000762939453" y="0" width="0.00000410887150792405" height="94" />
+              <text id="293:6809" name="Experiência no exterior Morei em Dublin (Irlanda) por dois anos, trabalhando e estudando inglês." x="98" y="19" width="392" height="56" />
+            </frame>
+          </frame>
+          <frame id="293:6810" name="card" x="0" y="364" width="554" height="158">
+            <frame id="293:6811" name="content" x="32" y="32" width="490" height="94">
+              <text id="293:6812" name="03" x="0" y="0" width="50" height="94" />
+              <line id="293:6813" name="Line 52" x="74.00000762939453" y="0" width="0.00000410887150792405" height="94" />
+              <text id="293:6814" name="Paixão por viajar Já conheci +17 países e sigo transformando experiências em aprendizados." x="98" y="19" width="392" height="56" />
+            </frame>
+          </frame>
+          <frame id="293:6815" name="card" x="0" y="546" width="554" height="158">
+            <frame id="293:6816" name="content" x="32" y="32" width="490" height="94">
+              <text id="293:6817" name="04" x="0" y="0" width="50" height="94" />
+              <line id="293:6818" name="Line 52" x="74.00000762939453" y="0" width="0.00000410887150792405" height="94" />
+              <text id="293:6819" name="Transição de carreira Planejei cada passo até me consolidar como consultora e me dedicar 100% a essa atuação." x="98" y="5" width="392" height="84" />
+            </frame>
+          </frame>
+          <frame id="293:6820" name="card" x="0" y="728" width="554" height="158">
+            <frame id="293:6821" name="content" x="32" y="32" width="490" height="94">
+              <text id="293:6822" name="05" x="0" y="0" width="50" height="94" />
+              <line id="293:6823" name="Line 52" x="74.00000762939453" y="0" width="0.00000410887150792405" height="94" />
+              <text id="293:6824" name="Maternidade &amp; Família Ser mãe da Elisa e parceira do Gui ampliou meu olhar sobre tempo, segurança, autonomia e possibilidades." x="98" y="5" width="392" height="84" />
+            </frame>
+          </frame>
+        </frame>
+      </frame>
+      <frame id="293:6695" name="Group 2085664476" x="2849" y="7831" width="913" height="790">
+        <frame id="293:6696" name="Frame 13" x="2849" y="7831" width="913" height="790">
+          <frame id="293:6697" name="Frame 2147260039" x="80" y="80" width="753" height="630">
+            <text id="293:6698" name="Stack  Link 1  Link 2" x="0" y="0" width="753" height="630" />
+            <text id="293:6699" name="Link" x="0" y="549" width="753" height="126" hidden="true" />
+          </frame>
+        </frame>
+      </frame>
+    </frame>
+    <frame id="293:7722" name="Group 2085664484" x="335" y="9395" width="4923" height="1938">
+      <rounded-rectangle id="293:6770" name="Rectangle 14" x="335" y="9395" width="4923" height="1938" />
+      <frame id="293:6711" name="Group 2085664477" x="2849" y="10095" width="913" height="538">
+        <frame id="293:6712" name="Frame 13" x="2849" y="10095" width="913" height="538">
+          <frame id="293:6713" name="Frame 2147260039" x="80" y="80" width="753" height="378">
+            <text id="293:6714" name="Counter  Link 1" x="0" y="0" width="753" height="378" />
+            <text id="293:6715" name="Link" x="0" y="549" width="753" height="126" hidden="true" />
+          </frame>
+        </frame>
+      </frame>
+      <instance id="293:6700" name="big-numbers" x="1131" y="10074" width="1360" height="580" />
+    </frame>
+    <frame id="293:7723" name="Group 2085664485" x="335" y="11533" width="4923" height="1938">
+      <rounded-rectangle id="293:6826" name="Rectangle 15" x="335" y="11533" width="4923" height="1938" />
+      <frame id="293:6762" name="Group 2085664478" x="2849" y="11918" width="913" height="1168">
+        <frame id="293:6763" name="Frame 13" x="2849" y="11918" width="913" height="1168">
+          <frame id="293:6764" name="Frame 2147260039" x="80" y="80" width="753" height="1008">
+            <text id="293:6765" name="Paralax  Aqui pensei em colocar um paralax de leve nas fotos, subindo levemente no scroll, bem pouquinho. Mas nao achei nenhuma ref" x="0" y="0" width="753" height="1008" />
+            <text id="293:6766" name="Link" x="0" y="549" width="753" height="126" hidden="true" />
+          </frame>
+        </frame>
+      </frame>
+      <frame id="293:6739" name="image" x="1391" y="12152" width="782" height="700">
+        <frame id="293:6740" name="Mask group" x="140.5" y="0" width="501" height="700">
+          <rounded-rectangle id="293:6741" name="Rectangle 3" x="140.5" y="0" width="501" height="700" />
+          <rounded-rectangle id="293:6742" name="Rectangle 4" x="104.80839157104492" y="-33" width="572.382568359375" height="733" />
+          <rounded-rectangle id="293:6743" name="IMG_3178 2" x="80" y="-120.431640625" width="583" height="875" />
+          <rounded-rectangle id="293:6744" name="IMG_3139 3" x="-795.97216796875" y="-389.666015625" width="1813.5039553331153" height="1478.611908416704" />
+          <frame id="293:6745" name="play-circle" x="331" y="289.568359375" width="120" height="120" />
+        </frame>
+        <frame id="293:6748" name="Mask group" x="0" y="386.568359375" width="209.87759399414062" height="149.91256713867188">
+          <rounded-rectangle id="293:6749" name="Rectangle 3" x="0" y="386.56845639478706" width="209.87759399414062" height="149.91256713867188" />
+          <rounded-rectangle id="293:6750" name="Rectangle 4" x="0" y="386.56845639478706" width="209.87759399414062" height="149.91256713867188" />
+          <rounded-rectangle id="293:6751" name="image 17" x="0" y="324.8398857116699" width="210.2873077392578" height="233.68722534179688" />
+          <rounded-rectangle id="293:6752" name="image 19" x="-6" y="342.568359375" width="284" height="283" />
+        </frame>
+        <frame id="293:6753" name="Mask group" x="511" y="-42.666015625" width="209.87759399414062" height="149.91256713867188">
+          <rounded-rectangle id="293:6754" name="Rectangle 3" x="511" y="-42.666015625" width="209.87759399414062" height="149.91256713867188" />
+          <rounded-rectangle id="293:6755" name="Rectangle 4" x="511" y="-42.666015625" width="209.87759399414062" height="149.91256713867188" />
+          <rounded-rectangle id="293:6756" name="image 16" x="499.53515625" y="-63.830078125" width="221.3414764404297" height="227.5143585205078" />
+        </frame>
+        <frame id="293:6757" name="Mask group" x="381" y="630.568359375" width="209.87759399414062" height="149.91256713867188">
+          <rounded-rectangle id="293:6758" name="Rectangle 3" x="381" y="630.568359375" width="209.87759399414062" height="149.91256713867188" />
+          <rounded-rectangle id="293:6759" name="Rectangle 4" x="381" y="630.568359375" width="209.87759399414062" height="149.91256713867188" />
+          <rounded-rectangle id="293:6760" name="image 18" x="357.19140625" y="604.1123046875" width="237.3778076171875" height="201.9410400390625" />
+        </frame>
+      </frame>
+    </frame>
+    <text id="293:6827" name="Interactions" x="1888" y="156" width="1779" height="595" />
+    <frame id="293:7713" name="Group 2085664480" x="335" y="827" width="4923" height="1938">
+      <rounded-rectangle id="293:7627" name="Rectangle 16" x="335" y="827" width="4923" height="1938" />
+      <frame id="293:7705" name="Group 2085664479" x="2849" y="1527" width="913" height="538">
+        <frame id="293:7706" name="Frame 13" x="2849" y="1527" width="913" height="538">
+          <frame id="293:7707" name="Frame 2147260039" x="80" y="80" width="753" height="378">
+            <text id="293:7708" name="Text scroll  Link" x="0" y="0" width="753" height="378" />
+            <text id="293:7709" name="Link" x="0" y="549" width="753" height="126" hidden="true" />
+          </frame>
+        </frame>
+      </frame>
+      <frame id="293:7710" name="Title" x="1386" y="1630" width="664" height="332">
+        <text id="293:7711" name="Patrimônio não é apenas aquilo que existe na conta bancária." x="0" y="0" width="664" height="332" />
+      </frame>
+    </frame>
+  </section>
+  <text id="293:6395" name="Gui" x="27205" y="-2463" width="732" height="460" />
+  <text id="318:8223" name="Desktop" x="33778" y="-2463" width="1598" height="460" />
+  <text id="417:2451" name="Mobile" x="43073" y="-2463" width="1328" height="460" />
+  <section id="318:7274" name="Finais" x="33778" y="-1472" width="8766" height="13865">
+    <frame id="318:7275" name="Site desktop" x="525" y="792" width="1440" height="9928.3330078125">
+      <instance id="318:7276" name="Menu" x="40" y="24" width="1360" height="84" />
+      <frame id="318:7277" name="content" x="40" y="132" width="1358" height="750">
+        <frame id="318:7278" name="Mask group" x="0" y="0" width="1358" height="750">
+          <rounded-rectangle id="318:7279" name="Rectangle 3" x="0" y="0" width="1358" height="750" />
+          <rounded-rectangle id="318:7281" name="IMG_3139 3" x="-681.441162109375" y="-531" width="2470.82390674363" height="2014.5474028109966" />
+          <ellipse id="318:7283" name="Ellipse 1" x="338" y="703.0326538085938" width="1489.7874720225373" height="1301.085972784058" />
+          <ellipse id="318:7284" name="Ellipse 2" x="-989" y="140" width="1809" height="1414" />
+          <frame id="318:7285" name="Content" x="48" y="32" width="577" height="670">
+            <frame id="318:7286" name="Content" x="0" y="0" width="577" height="578">
+              <frame id="318:7287" name="Title" x="0" y="0" width="577" height="454">
+                <instance id="318:7288" name="Eyebrow" x="0" y="0" width="424" height="44" hidden="true" />
+                <text id="318:7289" name="O futuro que você deseja viver começa pelas decisões que toma hoje." x="0" y="190" width="577" height="264" />
+              </frame>
+              <frame id="318:7290" name="paragrafo" x="0" y="494" width="577" height="84">
+                <text id="318:7291" name="Planejamento financeiro e consultoria em investimentos para quem deseja construir patrimônio com intenção, tomar decisões com mais segurança e usar o dinheiro para sustentar a vida que deseja viver. " x="0" y="0" width="529" height="84" />
+              </frame>
+            </frame>
+            <frame id="318:7292" name="Action" x="0" y="618" width="577" height="52">
+              <instance id="318:7293" name="Button" x="0" y="0" width="217" height="52" />
+              <instance id="318:7294" name="Button" x="241" y="0" width="218" height="52" />
+            </frame>
+          </frame>
+          <text id="318:7295" name="Sou a Joice Sperandio, planejadora financeira e consultora em investimentos." x="1051" y="595" width="263" height="87" />
+        </frame>
+      </frame>
+      <frame id="318:9780" name="LOGOS" x="40" y="906" width="1360" height="279">
+        <frame id="318:9781" name="Competences" x="24" y="96" width="1312" height="87">
+          <frame id="318:9782" name="CMV" x="24" y="0" width="239" height="87">
+            <rounded-rectangle id="318:9783" name="image 5" x="0" y="11.5" width="64" height="64" />
+            <text id="318:9784" name="CVM Consultora de Valores Mobiliários" x="80" y="0" width="159" height="87" />
+          </frame>
+          <line id="318:9785" name="Line 50" x="416.25" y="11.5" width="0.0000027975256671197712" height="64" />
+          <frame id="318:9786" name="CFP" x="569.5" y="0" width="230" height="87">
+            <rounded-rectangle id="318:9787" name="image 5" x="0" y="11.5" width="64" height="64" />
+            <text id="318:9788" name="CFP© Certified Financial Planner" x="80" y="0" width="150" height="87" />
+          </frame>
+          <line id="318:9789" name="Line 51" x="952.75" y="11.5" width="0.0000027975256671197712" height="64" />
+          <frame id="318:9790" name="MBA" x="1106" y="0" width="182" height="87">
+            <rounded-rectangle id="318:9791" name="image 5" x="0" y="11.5" width="64" height="64" />
+            <text id="318:9792" name="MBA Mercado de Capitais" x="80" y="0" width="102" height="87" />
+          </frame>
+        </frame>
+        <ellipse id="318:9793" name="Ellipse 4" x="1222" y="-16" width="532" height="463" hidden="true" />
+      </frame>
+      <frame id="318:9624" name="VISAO" x="40" y="1209" width="1360" height="1214">
+        <frame id="318:9625" name="content" x="0" y="40" width="1360" height="408">
+          <instance id="318:9626" name="tag" x="0" y="0" width="105" height="36" />
+          <frame id="318:9627" name="Content" x="0" y="76" width="1360" height="332">
+            <frame id="318:9628" name="Title" x="0" y="0" width="664" height="332">
+              <text id="318:9629" name="Patrimônio não é apenas aquilo que existe na conta bancária." x="0" y="0" width="664" height="332" />
+            </frame>
+            <frame id="318:9630" name="paragrafo" x="922" y="0" width="438" height="332">
+              <text id="318:9631" name="Patrimônio também é tempo, autonomia, possibilidades e tranquilidade para atravessar diferentes fases. O dinheiro é uma ferramenta importante, mas seu papel nunca foi ser o objetivo final. Acredito que o dinheiro funciona melhor quando ocupa o lugar que deveria ocupar: o de sustentar escolhas, proteger projetos e ampliar possibilidades. É essa relação que procuro construir junto dos meus clientes todos os dias." x="0" y="80" width="438" height="252" />
+            </frame>
+          </frame>
+        </frame>
+        <frame id="318:9632" name="Card" x="0" y="504" width="1360" height="710">
+          <frame id="318:9633" name="mask" x="0" y="0" width="1360" height="710">
+            <rounded-rectangle id="318:9634" name="mask" x="0" y="0" width="1360" height="710" />
+            <frame id="318:9635" name="image" x="-157.99984741210938" y="-193" width="1659" height="1572">
+              <rounded-rectangle id="318:9636" name="IMG_3124 1 1" x="-16.023284912109375" y="-193" width="1414.0794677734375" height="1065" />
+              <ellipse id="318:9638" name="Ellipse 2" x="-157.99984741210938" y="153" width="1659" height="1226" />
+            </frame>
+            <frame id="318:9639" name="Card" x="26.038291931152344" y="373" width="1311.9293212890625" height="313">
+              <frame id="318:9640" name="card" x="0.96466064453125" y="0" width="309.5" height="313">
+                <rounded-rectangle id="318:9641" name="06_ícone_AzulClaro 1" x="24" y="24" width="40" height="40" />
+                <frame id="318:9642" name="Frame 427321412" x="24" y="113" width="261.5" height="176">
+                  <text id="318:9643" name="Construção com estratégia" x="0" y="0" width="261.5" height="28" />
+                  <text id="318:9644" name="As decisões mais importantes da vida raramente acontecem de repente. Elas começam muito antes, através de pequenas escolhas feitas ao longo do tempo." x="0" y="36" width="261.5" height="140" />
+                </frame>
+              </frame>
+              <frame id="318:9646" name="card" x="334.46466064453125" y="0" width="309.5" height="313">
+                <rounded-rectangle id="318:9647" name="12_ícone_AzulClaro 1" x="24" y="24" width="40" height="40" />
+                <frame id="318:9648" name="Frame 427321413" x="24" y="113" width="261.5" height="176">
+                  <text id="318:9649" name="Decisões com autonomia" x="0" y="0" width="261.5" height="28" />
+                  <text id="318:9650" name="Entender o suficiente para participar das próprias decisões financeiras é mais importante do que saber tudo sobre investimentos ou mercado financeiro." x="0" y="36" width="261.5" height="140" />
+                </frame>
+              </frame>
+              <frame id="318:9652" name="card" x="667.9646606445312" y="0" width="309.5" height="313">
+                <rounded-rectangle id="318:9653" name="22_ícone_AzulClaro 1" x="24" y="24" width="32" height="32" />
+                <frame id="318:9654" name="Frame 427321414" x="24" y="113" width="261.5" height="176">
+                  <text id="318:9655" name="Prosperidade com propósito" x="0" y="0" width="261.5" height="28" />
+                  <text id="318:9656" name="Construir patrimônio não significa acumular recursos sem direção, mas criar mais possibilidades, segurança e liberdade de escolha." x="0" y="36" width="261.5" height="140" />
+                </frame>
+                <vector id="318:9657" name="03" x="-7" y="0" width="356" height="256" hidden="true" />
+              </frame>
+              <frame id="318:9658" name="card" x="1001.4646606445312" y="0" width="309.5" height="313">
+                <rounded-rectangle id="318:9659" name="31_ícone_AzulClaro 1" x="24" y="24" width="40" height="40" />
+                <frame id="318:9660" name="Frame 427321415" x="24" y="113" width="261.5" height="176">
+                  <text id="318:9661" name="Intenção com perspectiva" x="0" y="0" width="261.5" height="28" />
+                  <text id="318:9662" name="Dinheiro funciona melhor quando existe clareza sobre aquilo que ele precisa sustentar: projetos, prioridades, pessoas e futuros possíveis." x="0" y="36" width="261.5" height="140" />
+                </frame>
+              </frame>
+            </frame>
+          </frame>
+        </frame>
+      </frame>
+      <frame id="318:9695" name="SERVICOS" x="40" y="2447" width="1360" height="1402">
+        <frame id="318:9696" name="content" x="0" y="140" width="1360" height="332">
+          <frame id="318:9697" name="content" x="0" y="0" width="668" height="232">
+            <instance id="318:9698" name="tag" x="0" y="0" width="128" height="36" />
+            <text id="318:9699" name="Dois serviços principais. Diferentes objetivos. O mesmo cuidado." x="0" y="76" width="668" height="156" />
+          </frame>
+          <frame id="318:9700" name="paragrafo" x="812" y="0" width="548" height="332">
+            <text id="318:9701" name="Algumas pessoas precisam organizar e estruturar a base financeira antes de dar os próximos passos. Outras já possuem patrimônio e buscam mais clareza para investir e tomar decisões. Meu trabalho acontece principalmente nesses dois contextos. Planejamento financeiro e consultoria em investimentos atendem necessidades distintas, mas compartilham o mesmo objetivo: oferecer direção, estratégia e segurança para as escolhas financeiras mais importantes." x="0" y="80" width="548" height="252" />
+          </frame>
+        </frame>
+        <frame id="318:9702" name="Cards" x="0" y="528" width="1360" height="874">
+          <frame id="318:9703" name="Card-open" x="0" y="0" width="899" height="874">
+            <frame id="318:9704" name="Title" x="48" y="48" width="803" height="110">
+              <text id="318:9705" name="01" x="0" y="0" width="119" height="110" />
+            </frame>
+            <frame id="318:9706" name="content" x="48" y="190" width="803" height="636">
+              <text id="318:9707" name="Planejamento Financeiro" x="0" y="0" width="803" height="48" />
+              <frame id="318:9708" name="Content" x="0" y="72" width="803" height="92">
+                <text id="318:9709" name="Clareza para decidir. Estrutura para construir." x="0" y="0" width="803" height="28" />
+                <text id="318:9710" name="Ideal para quem deseja organizar a sua base financeira atual, estruturar metas de vida e construir mais previsibilidade para o futuro." x="0" y="36" width="803" height="56" />
+              </frame>
+              <frame id="318:9711" name="List" x="0" y="188" width="803" height="448">
+                <frame id="318:9712" name="list-item" x="0" y="0" width="803" height="64">
+                  <frame id="318:9713" name="arrow" x="0" y="16" width="32" height="32" />
+                  <text id="318:9715" name="Compra do imóvel próprio" x="56" y="16" width="747" height="32" />
+                </frame>
+                <frame id="318:9716" name="list-item" x="0" y="64" width="803" height="64">
+                  <frame id="318:9717" name="arrow" x="0" y="16" width="32" height="32" />
+                  <text id="318:9719" name="Compra do imóvel próprio" x="56" y="16" width="747" height="32" />
+                </frame>
+                <frame id="318:9720" name="list-item" x="0" y="128" width="803" height="64">
+                  <frame id="318:9721" name="arrow" x="0" y="16" width="32" height="32" />
+                  <text id="318:9723" name="Planejamento para a chegada dos filhos" x="56" y="18" width="747" height="28" />
+                </frame>
+                <frame id="318:9724" name="list-item" x="0" y="192" width="803" height="64">
+                  <frame id="318:9725" name="arrow" x="0" y="16" width="32" height="32" />
+                  <text id="318:9727" name="Organização financeira para profissionais autônomos" x="56" y="18" width="747" height="28" />
+                </frame>
+                <frame id="318:9728" name="list-item" x="0" y="256" width="803" height="64">
+                  <frame id="318:9729" name="arrow" x="0" y="16" width="32" height="32" />
+                  <text id="318:9731" name="Transições e mudanças de carreira" x="56" y="18" width="747" height="28" />
+                </frame>
+                <frame id="318:9732" name="list-item" x="0" y="320" width="803" height="64">
+                  <frame id="318:9733" name="arrow" x="0" y="16" width="32" height="32" />
+                  <text id="318:9735" name="Construção da aposentadoria no longo prazo" x="56" y="18" width="747" height="28" />
+                </frame>
+                <frame id="318:9736" name="list-item" x="0" y="384" width="803" height="64">
+                  <frame id="318:9737" name="arrow" x="0" y="16" width="32" height="32" />
+                  <text id="318:9739" name="Estruturação dos projetos e objetivos de vida" x="56" y="18" width="747" height="28" />
+                </frame>
+              </frame>
+            </frame>
+          </frame>
+          <frame id="318:9740" name="Card-open" x="923" y="0" width="437" height="874">
+            <frame id="318:9741" name="Title" x="48" y="48" width="341" height="110">
+              <text id="318:9742" name="02" x="0" y="0" width="139" height="110" />
+            </frame>
+            <frame id="318:9743" name="content" x="48" y="190" width="341" height="96">
+              <text id="318:9744" name="Consultoria em Investimentos" x="0" y="0" width="341" height="96" />
+              <frame id="318:9745" name="Content" x="0" y="72" width="591" height="88" hidden="true">
+                <text id="318:9746" name="Clareza para decidir. Estrutura para construir." x="0" y="0" width="591" height="29" />
+                <text id="318:9747" name="Ideal para quem deseja organizar a sua base financeira atual, estruturar metas de vida e construir mais previsibilidade para o futuro." x="0" y="32" width="591" height="56" />
+              </frame>
+              <frame id="318:9748" name="List" x="0" y="184" width="793" height="448" hidden="true">
+                <frame id="318:9749" name="list-item" x="0" y="0" width="793" height="64">
+                  <frame id="318:9750" name="arrow" x="0" y="16" width="32" height="32" />
+                  <text id="318:9752" name="Compra do imóvel próprio" x="56" y="16" width="737" height="32" />
+                </frame>
+                <frame id="318:9753" name="list-item" x="0" y="64" width="793" height="64">
+                  <frame id="318:9754" name="arrow" x="0" y="16" width="32" height="32" />
+                  <text id="318:9756" name="Compra do imóvel próprio" x="56" y="16" width="737" height="32" />
+                </frame>
+                <frame id="318:9757" name="list-item" x="0" y="128" width="793" height="64">
+                  <frame id="318:9758" name="arrow" x="0" y="16" width="32" height="32" />
+                  <text id="318:9760" name="Planejamento para a chegada dos filhos" x="56" y="18" width="737" height="28" />
+                </frame>
+                <frame id="318:9761" name="list-item" x="0" y="192" width="793" height="64">
+                  <frame id="318:9762" name="arrow" x="0" y="16" width="32" height="32" />
+                  <text id="318:9764" name="Organização financeira para profissionais autônomos" x="56" y="18" width="737" height="28" />
+                </frame>
+                <frame id="318:9765" name="list-item" x="0" y="256" width="793" height="64">
+                  <frame id="318:9766" name="arrow" x="0" y="16" width="32" height="32" />
+                  <text id="318:9768" name="Transições e mudanças de carreira" x="56" y="18" width="737" height="28" />
+                </frame>
+                <frame id="318:9769" name="list-item" x="0" y="320" width="793" height="64">
+                  <frame id="318:9770" name="arrow" x="0" y="16" width="32" height="32" />
+                  <text id="318:9772" name="Construção da aposentadoria no longo prazo" x="56" y="18" width="737" height="28" />
+                </frame>
+                <frame id="318:9773" name="list-item" x="0" y="384" width="793" height="64">
+                  <frame id="318:9774" name="arrow" x="0" y="16" width="32" height="32" />
+                  <text id="318:9776" name="Estruturação dos projetos e objetivos de vida" x="56" y="18" width="737" height="28" />
+                </frame>
+              </frame>
+            </frame>
+            <frame id="318:9777" name="arrow" x="48" y="318" width="341" height="508">
+              <vector id="318:9778" name="Vector" x="0" y="417.99993896484375" width="90.00007629394531" height="90.00007629394531" />
+            </frame>
+          </frame>
+        </frame>
+      </frame>
+      <frame id="318:7299" name="PROCESSO" x="40" y="3873" width="1360" height="810">
+        <frame id="318:7300" name="content" x="0" y="160" width="1360" height="650">
+          <frame id="318:7301" name="Card" x="0" y="0" width="553" height="420">
+            <instance id="318:7302" name="tag" x="0" y="0" width="131" height="36" />
+            <frame id="318:9801" name="Frame 2147260044" x="0" y="76" width="553" height="344">
+              <text id="318:7303" name="Um método construído para trazer visibilidade às suas decisões, sem fórmulas prontas e sem atalhos." x="0" y="0" width="553" height="208" />
+              <text id="318:7304" name="Mais importante do que encontrar respostas rápidas é construir boas perguntas e boas decisões ao longo do caminho. Cada projeto possui ritmos, prioridades e necessidades diferentes, mas existe um processo pensado para tornar a jornada mais clara e organizada." x="0" y="232" width="553" height="112" />
+            </frame>
+          </frame>
+          <frame id="318:7305" name="content" x="697" y="0" width="663" height="650">
+            <frame id="318:7306" name="accordion" x="0" y="72" width="663" height="578">
+              <instance id="318:7307" name="accordion" x="0" y="0" width="663" height="193" />
+              <instance id="318:7308" name="accordion" x="0" y="193" width="663" height="77" />
+              <instance id="318:7309" name="accordion" x="0" y="270" width="663" height="77" />
+              <instance id="318:7310" name="accordion" x="0" y="347" width="663" height="77" />
+              <instance id="318:7311" name="accordion" x="0" y="424" width="663" height="77" />
+              <instance id="318:7312" name="accordion" x="0" y="501" width="663" height="77" />
+            </frame>
+            <frame id="318:7313" name="paragrafo" x="0" y="676" width="663" height="140" hidden="true">
+              <text id="318:7314" name="A conversa inicial é simples, sem compromisso e existe para entendermos se faz sentido seguirmos em frente." x="0" y="0" width="663" height="64" />
+              <instance id="318:7315" name="Button" x="0" y="88" width="217" height="52" />
+            </frame>
+          </frame>
+        </frame>
+      </frame>
+      <frame id="345:7214" name="paragrafo" x="40" y="4707" width="1360" height="550">
+        <ellipse id="345:7215" name="Ellipse 3" x="609.5" y="82.5" width="141" height="141" />
+        <frame id="345:7216" name="Frame 2147260039" x="64" y="295.5" width="1232" height="172">
+          <text id="345:7217" name="Tudo começa com uma conversa simples e sem compromisso. Um primeiro encontro para entendermos se faz sentido seguirmos em frente." x="0" y="0" width="1232" height="96" />
+          <instance id="345:7218" name="Button" x="507.5" y="120" width="217" height="52" />
+        </frame>
+        <instance id="345:7219" name="tag" x="201" y="125" width="118" height="28" />
+        <instance id="345:7242" name="tag" x="939" y="64" width="124" height="28" />
+        <instance id="345:7220" name="tag" x="789" y="117" width="84" height="28" />
+        <instance id="345:7245" name="tag" x="1080" y="180" width="123" height="28" />
+        <instance id="345:7239" name="tag" x="401" y="50" width="124" height="28" />
+        <instance id="345:7224" name="tag" x="539" y="180.333984375" width="92" height="28" />
+      </frame>
+      <frame id="318:7327" name="HISTORIAS" x="40" y="5281" width="1360" height="1190.3333740234375">
+        <frame id="318:7328" name="hero" x="0" y="140" width="1360" height="511.3333435058594">
+          <frame id="318:7329" name="Left" x="0" y="59.66667175292969" width="553" height="392">
+            <instance id="318:7330" name="tag" x="0" y="0" width="126" height="36" />
+            <frame id="318:7331" name="Content" x="0" y="76" width="553" height="316">
+              <text id="318:7332" name="Pessoas diferentes. Momentos diferentes. Decisões importantes em comum." x="0" y="0" width="553" height="208" />
+              <text id="318:7333" name="Nenhuma dessas histórias começou da mesma forma. Mas todas começaram com uma conversa." x="0" y="232" width="553" height="84" />
+            </frame>
+          </frame>
+          <rounded-rectangle id="318:7334" name="Image right" x="593" y="0" width="767" height="511.3333435058594" />
+        </frame>
+        <instance id="318:7335" name="Alessandra" x="0" y="699.3333740234375" width="1360" height="491" />
+      </frame>
+      <frame id="331:7229" name="big-numbers" x="40" y="6495.33349609375" width="1360" height="580">
+        <frame id="331:7230" name="big number" x="0" y="80" width="437.3333435058594" height="420">
+          <text id="331:7231" name="+130" x="0" y="109" width="437.3333435058594" height="136" />
+          <text id="331:7232" name="clientes atendidos no Brasil e exterior" x="0" y="253" width="437.3333435058594" height="58" />
+        </frame>
+        <frame id="331:7233" name="big number" x="461.3333435058594" y="80" width="437.33331298828125" height="420">
+          <text id="331:7234" name="100%" x="0" y="109" width="437.33331298828125" height="136" />
+          <text id="331:7235" name="Online - atendimento para o Brasil e exterior" x="0" y="253" width="437.33331298828125" height="58" />
+        </frame>
+        <frame id="331:7236" name="big number" x="922.6666259765625" y="80" width="437.33331298828125" height="420">
+          <text id="331:7237" name="+06" x="0" y="109" width="437.33331298828125" height="136" />
+          <text id="331:7238" name="anos de experiência com planejamento financeiro" x="0" y="253" width="437.33331298828125" height="58" />
+        </frame>
+      </frame>
+      <frame id="318:7337" name="SOBRE" x="40" y="7099.33349609375" width="1360" height="1055">
+        <frame id="318:7338" name="content" x="0" y="0" width="1360" height="1134">
+          <frame id="318:7339" name="Card" x="0" y="80" width="554" height="1054">
+            <frame id="318:7340" name="right" x="0" y="0" width="554" height="532">
+              <instance id="318:7341" name="Eyebrow" x="0" y="0" width="424" height="44" hidden="true" />
+              <frame id="318:7342" name="content" x="0" y="0" width="554" height="532">
+                <instance id="318:7343" name="tag" x="0" y="0" width="107" height="36" />
+                <frame id="331:7239" name="Frame 2147260045" x="0" y="76" width="554" height="456">
+                  <text id="318:7344" name="Experiência, conhecimento técnico e um olhar humano para decisões que geram impacto." x="0" y="0" width="554" height="208" />
+                  <frame id="318:7345" name="paragrafo" x="0" y="232" width="554" height="224">
+                    <text id="318:7346" name="Trabalhei durante anos no mercado corporativo. Morei fora, viajei por diferentes países e vivi uma transição de carreira até encontrar meu verdadeiro propósito. Hoje, são mais de seis anos de atuação como planejadora financeira e consultora em investimentos. São mais de 130 pessoas acompanhadas e a convicção de que maturidade financeira não significa saber tudo, mas entender o suficiente para decidir com segurança." x="0" y="0" width="554" height="224" />
+                  </frame>
+                </frame>
+                <frame id="318:7347" name="Action" x="0" y="420" width="552" height="52" hidden="true">
+                  <instance id="318:7348" name="Button" x="0" y="0" width="217" height="52" />
+                  <instance id="318:7349" name="Button" x="237" y="0" width="218" height="52" />
+                </frame>
+              </frame>
+            </frame>
+            <frame id="318:7350" name="Card" x="0" y="588" width="554" height="466">
+              <frame id="318:7351" name="card" x="0" y="0" width="554" height="158">
+                <frame id="318:7352" name="content" x="32" y="32" width="490" height="94">
+                  <text id="318:7353" name="01" x="0" y="0" width="50" height="94" />
+                  <line id="318:7354" name="Line 52" x="74.00000762939453" y="0" width="0.00000410887150792405" height="94" />
+                  <text id="318:7355" name="Vivência corporativa Atuei como analista financeira em uma indústria de plásticos por 7 anos" x="98" y="19" width="392" height="56" />
+                </frame>
+              </frame>
+              <frame id="318:7356" name="card" x="0" y="30.333984375" width="554" height="158">
+                <frame id="318:7357" name="content" x="32" y="32" width="490" height="94">
+                  <text id="318:7358" name="02" x="0" y="0" width="50" height="94" />
+                  <line id="318:7359" name="Line 52" x="74.00000762939453" y="0" width="0.00000410887150792405" height="94" />
+                  <text id="318:7360" name="Experiência no exterior Morei em Dublin (Irlanda) por dois anos, trabalhando e estudando inglês." x="98" y="19" width="392" height="56" />
+                </frame>
+              </frame>
+              <frame id="318:7361" name="card" x="0" y="66.333984375" width="554" height="158">
+                <frame id="318:7362" name="content" x="32" y="32" width="490" height="94">
+                  <text id="318:7363" name="03" x="0" y="0" width="50" height="94" />
+                  <line id="318:7364" name="Line 52" x="74.00000762939453" y="0" width="0.00000410887150792405" height="94" />
+                  <text id="318:7365" name="Paixão por viajar Já conheci +17 países e sigo transformando experiências em aprendizados." x="98" y="19" width="392" height="56" />
+                </frame>
+              </frame>
+              <frame id="318:7366" name="card" x="0" y="106.333984375" width="554" height="158">
+                <frame id="318:7367" name="content" x="32" y="32" width="490" height="94">
+                  <text id="318:7368" name="04" x="0" y="0" width="50" height="94" />
+                  <line id="318:7369" name="Line 52" x="74.00000762939453" y="0" width="0.00000410887150792405" height="94" />
+                  <text id="318:7370" name="Transição de carreira Planejei cada passo até me consolidar como consultora e me dedicar 100% a essa atuação." x="98" y="5" width="392" height="84" />
+                </frame>
+              </frame>
+            </frame>
+          </frame>
+          <frame id="318:7371" name="card" x="0" y="880.33447265625" width="554" height="158">
+            <frame id="318:7372" name="content" x="32" y="32" width="490" height="94">
+              <text id="318:7373" name="05" x="0" y="0" width="50" height="94" />
+              <line id="318:7374" name="Line 52" x="74.00000762939453" y="0" width="0.00000410887150792405" height="94" />
+              <text id="318:7375" name="Maternidade &amp; Família Ser mãe da Elisa e parceira do Gui ampliou meu olhar sobre tempo, segurança, autonomia e possibilidades." x="98" y="5" width="392" height="84" />
+            </frame>
+          </frame>
+          <frame id="318:7376" name="image" x="602" y="184.66650390625" width="782" height="700">
+            <frame id="318:7377" name="Mask group" x="140.5" y="0" width="501" height="700">
+              <rounded-rectangle id="318:7378" name="Rectangle 3" x="140.5" y="0" width="501" height="700" />
+              <rounded-rectangle id="318:7379" name="Rectangle 4" x="104.80839157104492" y="-33" width="572.382568359375" height="733" />
+              <rounded-rectangle id="318:7380" name="IMG_3178 2" x="80" y="-120.431640625" width="583" height="875" />
+              <rounded-rectangle id="318:7381" name="IMG_3139 3" x="-795.97216796875" y="-389.666015625" width="1813.5039553331153" height="1478.611908416704" />
+              <rounded-rectangle id="413:20572" name="IMG_5074 1" x="-70" y="-43" width="961" height="781" />
+              <frame id="318:7382" name="play-circle" x="331" y="289.568359375" width="120" height="120" />
+            </frame>
+            <frame id="318:7385" name="Mask group" x="0" y="386.568359375" width="209.87759399414062" height="149.91256713867188">
+              <rounded-rectangle id="318:7386" name="Rectangle 3" x="0" y="386.56845639478706" width="209.87759399414062" height="149.91256713867188" />
+              <rounded-rectangle id="318:7387" name="Rectangle 4" x="0" y="386.56845639478706" width="209.87759399414062" height="149.91256713867188" />
+              <rounded-rectangle id="318:7388" name="image 17" x="0" y="324.8398857116699" width="210.2873077392578" height="233.68722534179688" />
+              <rounded-rectangle id="318:7389" name="image 19" x="-6" y="342.568359375" width="284" height="283" />
+            </frame>
+            <frame id="318:7390" name="Mask group" x="511" y="-42.666015625" width="209.87759399414062" height="149.91256713867188">
+              <rounded-rectangle id="318:7391" name="Rectangle 3" x="511" y="-42.666015625" width="209.87759399414062" height="149.91256713867188" />
+              <rounded-rectangle id="318:7392" name="Rectangle 4" x="511" y="-42.666015625" width="209.87759399414062" height="149.91256713867188" />
+              <rounded-rectangle id="318:7393" name="image 16" x="499.53515625" y="-63.830078125" width="221.3414764404297" height="227.5143585205078" />
+            </frame>
+            <frame id="318:7394" name="Mask group" x="381" y="630.568359375" width="209.87759399414062" height="149.91256713867188">
+              <rounded-rectangle id="318:7395" name="Rectangle 3" x="381" y="630.568359375" width="209.87759399414062" height="149.91256713867188" />
+              <rounded-rectangle id="318:7396" name="Rectangle 4" x="381" y="630.568359375" width="209.87759399414062" height="149.91256713867188" />
+              <rounded-rectangle id="318:7397" name="image 18" x="357.19140625" y="604.1123046875" width="237.3778076171875" height="201.9410400390625" />
+            </frame>
+          </frame>
+        </frame>
+        <instance id="318:7398" name="LOGOS" x="0" y="1194" width="1965" height="398" hidden="true" />
+      </frame>
+      <frame id="331:7283" name="LOGOS" x="40" y="8178.33349609375" width="1360" height="279">
+        <frame id="331:7284" name="Competences" x="24" y="96" width="1312" height="87">
+          <frame id="331:7285" name="CMV" x="24" y="0" width="239" height="87">
+            <rounded-rectangle id="331:7286" name="image 5" x="0" y="11.5" width="64" height="64" />
+            <text id="331:7287" name="CVM Consultora de Valores Mobiliários" x="80" y="0" width="159" height="87" />
+          </frame>
+          <line id="331:7288" name="Line 50" x="416.25" y="11.5" width="0.0000027975256671197712" height="64" />
+          <frame id="331:7289" name="CFP" x="569.5" y="0" width="230" height="87">
+            <rounded-rectangle id="331:7290" name="image 5" x="0" y="11.5" width="64" height="64" />
+            <text id="331:7291" name="CFP© Certified Financial Planner" x="80" y="0" width="150" height="87" />
+          </frame>
+          <line id="331:7292" name="Line 51" x="952.75" y="11.5" width="0.0000027975256671197712" height="64" />
+          <frame id="331:7293" name="MBA" x="1106" y="0" width="182" height="87">
+            <rounded-rectangle id="331:7294" name="image 5" x="0" y="11.5" width="64" height="64" />
+            <text id="331:7295" name="MBA Mercado de Capitais" x="80" y="0" width="102" height="87" />
+          </frame>
+        </frame>
+        <ellipse id="331:7296" name="Ellipse 4" x="1222" y="-16" width="532" height="463" hidden="true" />
+      </frame>
+      <frame id="331:7298" name="faq" x="40" y="8481.333984375" width="1360" height="987">
+        <frame id="331:7299" name="right" x="0" y="100" width="553" height="340">
+          <frame id="331:7300" name="Title" x="0" y="0" width="553" height="340">
+            <frame id="331:7301" name="Frame 2147260040" x="0" y="0" width="513" height="36">
+              <instance id="331:7302" name="tag" x="0" y="0" width="204" height="36" />
+            </frame>
+            <frame id="331:7415" name="Frame 2147260046" x="0" y="76" width="437" height="264">
+              <text id="331:7303" name="Antes da conversa, algumas perguntas costumam aparecer." x="0" y="0" width="437" height="156" />
+              <text id="331:7304" name="Nem sempre é fácil saber por onde começar. Essas são algumas perguntas que costumo receber antes da conversa inicial. Talvez algumas delas também sejam as suas." x="0" y="180" width="437" height="84" />
+            </frame>
+          </frame>
+        </frame>
+        <instance id="331:7305" name="FAQ" x="577" y="100" width="783" height="820" />
+      </frame>
+      <instance id="318:7401" name="footer" x="40" y="9492.333984375" width="1360" height="396" />
+    </frame>
+    <frame id="318:7402" name="Accordion PROCESSO" x="4471" y="3953" width="524" height="1412">
+      <frame id="318:7403" name="accordion" x="40" y="40" width="444" height="1242">
+        <instance id="318:7404" name="accordion" x="0" y="0" width="444" height="221" />
+        <instance id="318:7405" name="accordion" x="0" y="221" width="444" height="221" />
+        <instance id="318:7406" name="accordion" x="0" y="442" width="444" height="221" />
+        <instance id="318:7407" name="accordion" x="0" y="663" width="444" height="193" />
+        <instance id="318:7408" name="accordion" x="0" y="856" width="444" height="193" />
+        <instance id="318:7409" name="accordion" x="0" y="1049" width="444" height="193" />
+      </frame>
+      <frame id="318:7410" name="paragrafo" x="0" y="676" width="663" height="140" hidden="true">
+        <text id="318:7411" name="A conversa inicial é simples, sem compromisso e existe para entendermos se faz sentido seguirmos em frente." x="0" y="0" width="663" height="64" />
+        <instance id="318:7412" name="Button" x="0" y="88" width="217" height="52" />
+      </frame>
+    </frame>
+    <frame id="318:7420" name="Card" x="4461" y="8843" width="554" height="1014">
+      <frame id="318:7422" name="card" x="0" y="0" width="554" height="158">
+        <frame id="318:7423" name="content" x="32" y="32" width="490" height="94">
+          <text id="318:7424" name="01" x="0" y="0" width="50" height="94" />
+          <line id="318:7425" name="Line 52" x="74.00000762939453" y="0" width="0.00000410887150792405" height="94" />
+          <text id="318:7426" name="Vivência corporativa Atuei como analista financeira em uma indústria de plásticos por 7 anos" x="98" y="19" width="392" height="56" />
+        </frame>
+      </frame>
+      <frame id="318:7427" name="card" x="0" y="214" width="554" height="158">
+        <frame id="318:7428" name="content" x="32" y="32" width="490" height="94">
+          <text id="318:7429" name="02" x="0" y="0" width="50" height="94" />
+          <line id="318:7430" name="Line 52" x="74.00000762939453" y="0" width="0.00000410887150792405" height="94" />
+          <text id="318:7431" name="Experiência no exterior Morei em Dublin (Irlanda) por dois anos, trabalhando e estudando inglês." x="98" y="19" width="392" height="56" />
+        </frame>
+      </frame>
+      <frame id="318:7432" name="card" x="0" y="428" width="554" height="158">
+        <frame id="318:7433" name="content" x="32" y="32" width="490" height="94">
+          <text id="318:7434" name="03" x="0" y="0" width="50" height="94" />
+          <line id="318:7435" name="Line 52" x="74.00000762939453" y="0" width="0.00000410887150792405" height="94" />
+          <text id="318:7436" name="Paixão por viajar Já conheci +17 países e sigo transformando experiências em aprendizados." x="98" y="19" width="392" height="56" />
+        </frame>
+      </frame>
+      <frame id="318:7437" name="card" x="0" y="642" width="554" height="158">
+        <frame id="318:7438" name="content" x="32" y="32" width="490" height="94">
+          <text id="318:7439" name="04" x="0" y="0" width="50" height="94" />
+          <line id="318:7440" name="Line 52" x="74.00000762939453" y="0" width="0.00000410887150792405" height="94" />
+          <text id="318:7441" name="Transição de carreira Planejei cada passo até me consolidar como consultora e me dedicar 100% a essa atuação." x="98" y="5" width="392" height="84" />
+        </frame>
+      </frame>
+      <frame id="318:7442" name="card" x="0" y="856" width="554" height="158">
+        <frame id="318:7443" name="content" x="32" y="32" width="490" height="94">
+          <text id="318:7444" name="05" x="0" y="0" width="50" height="94" />
+          <line id="318:7445" name="Line 52" x="74.00000762939453" y="0" width="0.00000410887150792405" height="94" />
+          <text id="318:7446" name="Maternidade &amp; Família Ser mãe da Elisa e parceira do Gui ampliou meu olhar sobre tempo, segurança, autonomia e possibilidades." x="98" y="5" width="392" height="84" />
+        </frame>
+      </frame>
+    </frame>
+    <frame id="318:8414" name="Depoimentos" x="4461" y="5846" width="1360" height="2615">
+      <instance id="318:7447" name="Alessandra" x="0" y="0" width="1360" height="491" />
+      <instance id="318:7451" name="Alessandra" x="0" y="531" width="1360" height="491" />
+      <instance id="318:7448" name="Alessandra" x="0" y="1062" width="1360" height="491" />
+      <instance id="318:7449" name="Alessandra" x="0" y="1593" width="1360" height="491" />
+      <instance id="318:7450" name="Alessandra" x="0" y="2124" width="1360" height="491" />
+    </frame>
+    <text id="318:8442" name="Hero" x="2072" y="792" width="177" height="109" />
+    <text id="318:8450" name="Certificações" x="2072" y="1730" width="500" height="80" />
+    <text id="318:8458" name="Visão" x="2072" y="1992" width="200" height="80" />
+    <text id="318:8464" name="Serviços" x="2072" y="3249" width="317" height="80" />
+    <text id="318:8470" name="Processo" x="2072" y="4552" width="345" height="80" />
+    <text id="318:8476" name="Histórias" x="2072" y="6020" width="328" height="80" />
+    <text id="318:8482" name="Big numbers" x="2072" y="7488" width="458" height="80" />
+    <text id="318:8488" name="Sobre" x="2072" y="7988" width="219" height="80" />
+    <text id="318:8494" name="Faq" x="2072" y="9400" width="131" height="80" />
+    <text id="318:8500" name="Footer" x="2072" y="10408" width="240" height="80" />
+    <instance id="318:8444" name="Handoff — Element Measure" x="2008" y="792" width="24" height="890" />
+    <instance id="318:8451" name="Handoff — Element Measure" x="2008" y="1730" width="24" height="214" />
+    <instance id="318:8459" name="Handoff — Element Measure" x="2008" y="1992" width="24" height="1232" />
+    <instance id="318:8465" name="Handoff — Element Measure" x="2008" y="3249" width="24" height="1232" />
+    <instance id="318:8471" name="Handoff — Element Measure" x="2008" y="4552" width="24" height="1418" />
+    <instance id="318:8477" name="Handoff — Element Measure" x="2008" y="6020" width="24" height="1418" />
+    <instance id="318:8483" name="Handoff — Element Measure" x="2008" y="7488" width="24" height="315" />
+    <instance id="318:8489" name="Handoff — Element Measure" x="2008" y="7988" width="24" height="1362" />
+    <instance id="318:8495" name="Handoff — Element Measure" x="2008" y="9400" width="24" height="804" />
+    <instance id="318:8501" name="Handoff — Element Measure" x="2008" y="10290" width="24" height="431" />
+    <vector id="327:7220" name="Arrow 12" x="2689" y="4587" width="1483" height="0" />
+    <vector id="327:7221" name="Arrow 13" x="2689" y="6060" width="1483" height="0" />
+    <vector id="327:7222" name="Arrow 14" x="2453" y="8059" width="1843.0000097328157" height="1015.9999813737013" />
+    <vector id="327:7223" name="Arrow 15" x="2301" y="9480" width="1995.0000286276918" height="1101.9999284833902" />
+    <text id="351:10352" name="Desktop" x="525" y="338" width="623" height="184" />
+    <frame id="392:8746" name="Card" x="2127" y="3600" width="672" height="867">
+      <frame id="392:8747" name="Title" x="48" y="48" width="576" height="174">
+        <text id="392:8748" name="02" x="0" y="0" width="111" height="110" />
+        <text id="392:8749" name="Consultoria em Investimentos" x="0" y="126" width="576" height="48" />
+      </frame>
+      <frame id="392:8750" name="content" x="48" y="254" width="576" height="565">
+        <frame id="392:8751" name="Content" x="0" y="0" width="576" height="93">
+          <text id="392:8752" name="Segurança para investir. Autonomia para evoluir." x="0" y="0" width="576" height="29" />
+          <text id="392:8753" name="Ideal para quem já construiu patrimônio e busca otimizar, validar ou receber uma segunda opinião independente sobre a sua carteira de investimentos." x="0" y="37" width="576" height="56" />
+        </frame>
+        <frame id="392:8754" name="List" x="0" y="117" width="576" height="448">
+          <frame id="392:8755" name="list-item" x="0" y="0" width="576" height="64">
+            <frame id="392:8756" name="arrow" x="0" y="16" width="32" height="32" />
+            <text id="392:8758" name="Análise técnica e reorganização dos seus investimentos" x="56" y="16" width="520" height="32" />
+          </frame>
+          <frame id="392:8759" name="list-item" x="0" y="64" width="576" height="64">
+            <frame id="392:8760" name="arrow" x="0" y="16" width="32" height="32" />
+            <text id="392:8762" name="Gestão de heranças e recursos recebidos" x="56" y="18" width="520" height="28" />
+          </frame>
+          <frame id="392:8763" name="list-item" x="0" y="128" width="576" height="64">
+            <frame id="392:8764" name="arrow" x="0" y="16" width="32" height="32" />
+            <text id="392:8766" name="Recomendação e elaboração de carteiras de investimentos" x="56" y="18" width="520" height="28" />
+          </frame>
+          <frame id="392:8767" name="list-item" x="0" y="192" width="576" height="64">
+            <frame id="392:8768" name="arrow" x="0" y="16" width="32" height="32" />
+            <text id="392:8770" name="Planejamento sucessório e proteção patrimonial" x="56" y="18" width="520" height="28" />
+          </frame>
+          <frame id="392:8771" name="list-item" x="0" y="256" width="576" height="64">
+            <frame id="392:8772" name="arrow" x="0" y="16" width="32" height="32" />
+            <text id="392:8774" name="Gestão de heranças e recursos recebidos" x="56" y="18" width="520" height="28" />
+          </frame>
+          <frame id="392:8775" name="list-item" x="0" y="320" width="576" height="64">
+            <frame id="392:8776" name="arrow" x="0" y="16" width="32" height="32" />
+            <text id="392:8778" name="Estratégias de construção de patrimônio e independência financeira" x="56" y="18" width="520" height="28" />
+          </frame>
+          <frame id="392:8779" name="list-item" x="0" y="384" width="576" height="64">
+            <frame id="392:8780" name="arrow" x="0" y="16" width="32" height="32" />
+            <text id="392:8782" name="Planejamento da transição para aposentadoria" x="56" y="18" width="520" height="28" />
+          </frame>
+        </frame>
+      </frame>
+    </frame>
+    <instance id="413:8970" name="FAQ" x="4403" y="10239" width="783" height="820" />
+    <instance id="413:19942" name="FAQ" x="5293" y="10239" width="783" height="813" />
+    <instance id="413:20032" name="FAQ" x="6199" y="10239" width="783" height="838" />
+    <instance id="413:20122" name="FAQ" x="7089" y="10239" width="783" height="938" />
+    <instance id="413:20212" name="FAQ" x="4383" y="11155" width="783" height="838" />
+    <instance id="413:20302" name="FAQ" x="5293" y="11155" width="783" height="813" />
+    <instance id="413:20392" name="FAQ" x="6199" y="11155" width="783" height="788" />
+    <instance id="413:20482" name="FAQ" x="7089" y="11155" width="783" height="838" />
+  </section>
+  <section id="393:9365" name="Mobile" x="43073" y="-1472" width="4280" height="13865">
+    <frame id="392:8099" name="MOBILE 360px" x="681" y="563" width="360" height="11477.6669921875">
+      <frame id="392:8100" name="Menu" x="16" y="16" width="328" height="88">
+        <instance id="392:8101" name="Logo" x="24" y="20" width="120" height="48" />
+        <instance id="392:8102" name="Menu-links" x="325" y="27.5" width="613" height="29" hidden="true" />
+        <instance id="392:8103" name="Button" x="55.5" y="18" width="217" height="52" hidden="true" />
+        <frame id="392:8104" name="Action]" x="248" y="16" width="56" height="56">
+          <frame id="392:8105" name="Icons" x="0" y="0" width="56" height="56">
+            <instance id="392:8106" name="Globe" x="16" y="16" width="24" height="24" hidden="true" />
+            <instance id="392:8107" name="MagnifyingGlass" x="16" y="16" width="24" height="24" hidden="true" />
+            <instance id="392:8108" name="List" x="16" y="16" width="24" height="24" />
+          </frame>
+          <instance id="392:8109" name="button" x="120" y="0" width="126" height="56" hidden="true" />
+        </frame>
+      </frame>
+      <frame id="392:8110" name="content" x="16" y="120" width="328" height="724">
+        <frame id="392:8111" name="Mask group" x="0" y="0" width="328" height="724">
+          <rounded-rectangle id="392:8112" name="Rectangle 3" x="0" y="0" width="328" height="724" />
+          <rounded-rectangle id="392:8113" name="IMG_3139 5" x="-817.477294921875" y="-346.6062316894531" width="1434.6573673204111" height="1185.9951844553398" />
+          <ellipse id="392:8114" name="Ellipse 2" x="-233" y="291.0372314453125" width="794" height="281.1563415527344" />
+          <ellipse id="392:8115" name="Ellipse 3" x="-233" y="503.02728271484375" width="794" height="281.1563415527344" />
+          <frame id="392:8116" name="Content" x="11.53125" y="30.890676498413086" width="305.3645935058594" height="598.2431640625">
+            <frame id="392:8117" name="Content" x="0" y="0" width="305.3645935058594" height="590">
+              <frame id="392:8118" name="Title" x="0" y="0" width="305.3645935058594" height="454">
+                <instance id="392:8119" name="Eyebrow" x="0" y="0" width="424" height="44" hidden="true" />
+                <text id="392:8120" name="O futuro que você deseja viver começa pelas decisões que toma hoje." x="0" y="254" width="305.3645935058594" height="200" />
+              </frame>
+              <frame id="392:8121" name="paragrafo" x="0" y="478" width="305.3645935058594" height="112">
+                <text id="392:8122" name="Planejamento financeiro e consultoria em investimentos para quem deseja construir uma vida com mais intenção, usando o dinheiro como ferramenta de sustentação" x="0" y="0" width="305.3645935058594" height="112" />
+              </frame>
+            </frame>
+            <frame id="392:8123" name="Action" x="0" y="614" width="305.3645935058594" height="52">
+              <instance id="392:8124" name="Button" x="0" y="0" width="305.3645935058594" height="52" />
+              <instance id="392:8125" name="Button" x="0" y="60" width="305.3645935058594" height="52" hidden="true" />
+            </frame>
+          </frame>
+        </frame>
+      </frame>
+      <frame id="392:8126" name="LOGOS" x="16" y="860" width="720" height="228">
+        <frame id="392:8127" name="Competences" x="0" y="72" width="720" height="84">
+          <frame id="392:8128" name="CMV" x="0" y="0" width="208" height="84">
+            <rounded-rectangle id="392:8129" name="image 5" x="0" y="10" width="64" height="64" />
+            <text id="392:8130" name="CVM Consultora de Valores Mobiliários" x="72" y="0" width="136" height="84" />
+          </frame>
+          <line id="392:8131" name="Line 50" x="246" y="10" width="0.0000027975256671197712" height="64" />
+          <frame id="392:8132" name="CFP" x="284" y="0" width="201" height="84">
+            <rounded-rectangle id="392:8133" name="image 5" x="0" y="10" width="64" height="64" />
+            <text id="392:8134" name="CFP© Certified Financial Planner" x="72" y="0" width="129" height="84" />
+          </frame>
+          <line id="392:8135" name="Line 51" x="523" y="10" width="0.0000027975256671197712" height="64" />
+          <frame id="392:8136" name="MBA" x="561" y="0" width="159" height="84">
+            <rounded-rectangle id="392:8137" name="image 5" x="0" y="10" width="64" height="64" />
+            <text id="392:8138" name="MBA Mercado de Capitais" x="72" y="0" width="87" height="84" />
+          </frame>
+        </frame>
+        <ellipse id="392:8139" name="Ellipse 4" x="1222" y="-16" width="532" height="463" hidden="true" />
+      </frame>
+      <frame id="392:8140" name="VISAO" x="16" y="1104" width="328" height="1092">
+        <frame id="392:8141" name="content" x="0" y="40" width="328" height="412">
+          <instance id="392:8142" name="tag" x="0" y="0" width="105" height="36" />
+          <frame id="392:8143" name="Content" x="0" y="76" width="328" height="336">
+            <frame id="392:8144" name="Title" x="0" y="0" width="328" height="156">
+              <text id="392:8145" name="Patrimônio vai muito além da conta bancária" x="0" y="0" width="328" height="156" />
+            </frame>
+            <frame id="392:8146" name="paragrafo" x="0" y="196" width="328" height="140">
+              <text id="392:8147" name="Patrimônio também é tempo, autonomia e possibilidades. O dinheiro existe para sustentar a vida que faz sentido para você. É essa relação que procuro construir com meus clientes." x="0" y="0" width="328" height="140" />
+            </frame>
+          </frame>
+        </frame>
+        <frame id="392:8148" name="Card" x="0" y="508" width="328" height="584">
+          <frame id="392:8149" name="mask" x="0" y="0" width="328" height="584">
+            <rounded-rectangle id="392:8150" name="mask" x="0" y="0" width="328" height="584" />
+            <frame id="392:8151" name="image" x="-58.00190734863281" y="0" width="466" height="1068.535888671875">
+              <rounded-rectangle id="392:8152" name="IMG_3124 1 1" x="-58.00190734863281" y="0" width="466" height="768" />
+              <ellipse id="392:8153" name="Ellipse 2" x="-16.818618774414062" y="52.579376220703125" width="214.00746154785156" height="1015.9564819335938" />
+            </frame>
+            <frame id="392:8154" name="Card" x="0" y="0" width="1120" height="582.2645263671875">
+              <frame id="392:8155" name="card" x="24" y="278.2645263671875" width="256" height="280">
+                <rounded-rectangle id="392:8156" name="06_ícone_AzulClaro 1" x="24" y="24" width="40" height="40" />
+                <frame id="392:8157" name="Frame 427321412" x="24" y="80" width="208" height="176">
+                  <text id="392:8158" name="Construção com estratégia" x="0" y="0" width="208" height="28" />
+                  <text id="392:8159" name="As decisões mais importantes começam antes de acontecer. Elas são construídas pelas escolhas feitas ao longo do tempo." x="0" y="36" width="208" height="140" />
+                </frame>
+              </frame>
+              <frame id="392:8160" name="card" x="296" y="285.2645263671875" width="256" height="273">
+                <rounded-rectangle id="392:8161" name="12_ícone_AzulClaro 1" x="24" y="24" width="40" height="40" />
+                <frame id="392:8162" name="Frame 427321413" x="24" y="80" width="208" height="204">
+                  <text id="392:8163" name="Decisões com autonomia" x="0" y="0" width="208" height="28" />
+                  <text id="392:8164" name="Entender o suficiente para participar das próprias decisões financeiras é mais importante do que saber tudo sobre investimentos ou mercado financeiro." x="0" y="36" width="208" height="168" />
+                </frame>
+              </frame>
+              <frame id="392:8165" name="card" x="568" y="258.2645263671875" width="256" height="300">
+                <rounded-rectangle id="392:8166" name="22_ícone_AzulClaro 1" x="24" y="24" width="32" height="32" />
+                <frame id="392:8167" name="Frame 427321414" x="24" y="72" width="208" height="204">
+                  <text id="392:8168" name="Prosperidade com propósito" x="0" y="0" width="208" height="28" />
+                  <text id="392:8169" name="Construir patrimônio não significa acumular recursos sem direção, mas criar mais possibilidades, segurança e liberdade de escolha." x="0" y="36" width="208" height="168" />
+                </frame>
+                <vector id="392:8170" name="03" x="-61" y="0" width="356" height="256" hidden="true" />
+              </frame>
+              <frame id="392:8171" name="card" x="840" y="250.2645263671875" width="256" height="308">
+                <rounded-rectangle id="392:8172" name="31_ícone_AzulClaro 1" x="24" y="24" width="40" height="40" />
+                <frame id="392:8173" name="Frame 427321415" x="24" y="80" width="208" height="204">
+                  <text id="392:8174" name="Intenção com perspectiva" x="0" y="0" width="208" height="28" />
+                  <text id="392:8175" name="Dinheiro funciona melhor quando existe clareza sobre aquilo que ele precisa sustentar: projetos, prioridades, pessoas e futuros possíveis." x="0" y="36" width="208" height="168" />
+                </frame>
+              </frame>
+            </frame>
+          </frame>
+        </frame>
+      </frame>
+      <frame id="392:8176" name="SERVICOS" x="16" y="2212" width="328" height="1226">
+        <frame id="392:8177" name="content" x="0" y="80" width="328" height="324">
+          <frame id="392:8178" name="content" x="0" y="0" width="328" height="172">
+            <instance id="392:8179" name="tag" x="0" y="0" width="128" height="36" />
+            <text id="392:8180" name="Dois serviços principais. Diferentes objetivos. O mesmo cuidado." x="0" y="76" width="328" height="96" />
+          </frame>
+          <frame id="392:8181" name="paragrafo" x="0" y="212" width="328" height="112">
+            <text id="392:8182" name="Cada pessoa chega com uma necessidade diferente. Independentemente do ponto de partida, o objetivo é o mesmo: construir decisões mais conscientes." x="0" y="0" width="328" height="112" />
+          </frame>
+        </frame>
+        <frame id="392:8183" name="Card-open" x="0" y="460" width="329.5" height="654">
+          <frame id="392:8184" name="Title" x="16" y="24" width="297.5" height="66">
+            <text id="392:8185" name="01" x="0" y="0" width="71" height="66" />
+          </frame>
+          <frame id="392:8186" name="content" x="16" y="106" width="297.5" height="524">
+            <text id="392:8187" name="Planejamento Financeiro" x="0" y="0" width="297.5" height="32" />
+            <frame id="392:8188" name="Content" x="0" y="48" width="297.5" height="148">
+              <text id="392:8189" name="Clareza para decidir. Estrutura para construir." x="0" y="0" width="297.5" height="56" />
+              <text id="392:8190" name="Para quem deseja organizar a vida financeira e construir um futuro com mais previsibilidade." x="0" y="64" width="297.5" height="84" />
+            </frame>
+            <frame id="392:8191" name="List" x="0" y="212" width="297.5" height="312">
+              <frame id="392:8192" name="list-item" x="0" y="0" width="297.5" height="48">
+                <frame id="392:8193" name="arrow" x="0" y="8" width="32" height="32" />
+                <text id="392:8195" name="Compra de imóvel" x="56" y="8" width="241.5" height="32" />
+              </frame>
+              <frame id="392:8196" name="list-item" x="0" y="48" width="297.5" height="48">
+                <frame id="392:8197" name="arrow" x="0" y="8" width="32" height="32" />
+                <text id="392:8199" name="Chegada dos filhos" x="56" y="10" width="241.5" height="28" />
+              </frame>
+              <frame id="392:8200" name="list-item" x="0" y="96" width="297.5" height="72">
+                <frame id="392:8201" name="arrow" x="0" y="20" width="32" height="32" />
+                <text id="392:8203" name="Organização financeira para autônomos" x="56" y="8" width="241.5" height="56" />
+              </frame>
+              <frame id="392:8204" name="list-item" x="0" y="168" width="297.5" height="48">
+                <frame id="392:8205" name="arrow" x="0" y="8" width="32" height="32" />
+                <text id="392:8207" name="Mudanças de carreira" x="56" y="10" width="241.5" height="28" />
+              </frame>
+              <frame id="392:8208" name="list-item" x="0" y="216" width="297.5" height="48">
+                <frame id="392:8209" name="arrow" x="0" y="8" width="32" height="32" />
+                <text id="392:8211" name="Planejamento da aposentadoria" x="56" y="10" width="241.5" height="28" />
+              </frame>
+              <frame id="392:8212" name="list-item" x="0" y="264" width="297.5" height="48">
+                <frame id="392:8213" name="arrow" x="0" y="8" width="32" height="32" />
+                <text id="392:8215" name="Projetos e objetivos de vida" x="56" y="10" width="241.5" height="28" />
+              </frame>
+            </frame>
+          </frame>
+        </frame>
+        <frame id="392:8216" name="Slide" x="0" y="1170" width="328" height="56">
+          <instance id="392:8217" name="Scroll" x="104" y="0.0000019073486328125" width="56.000003814697266" height="55.999996185302734" />
+          <instance id="392:8218" name="Scroll" x="168" y="7.105427357601002e-15" width="56" height="56" />
+        </frame>
+      </frame>
+      <frame id="392:8219" name="PROCESSO" x="16" y="3454" width="328" height="868">
+        <frame id="392:8220" name="content" x="0" y="80" width="328" height="748">
+          <frame id="392:8221" name="Card" x="0" y="0" width="328" height="284">
+            <instance id="392:8222" name="tag" x="0" y="0" width="131" height="36" />
+            <frame id="392:8223" name="Frame 2147260044" x="0" y="76" width="328" height="208">
+              <text id="392:8224" name="Um método sem fórmulas prontas. Construído para gerar mais visibilidade às suas decisões" x="0" y="0" width="328" height="128" />
+              <text id="392:8225" name="O processo se adapta ao seu momento para trazer mais clareza e direção." x="0" y="152" width="328" height="56" />
+            </frame>
+          </frame>
+          <frame id="392:8226" name="content" x="0" y="324" width="328" height="424">
+            <frame id="392:8227" name="accordion" x="0" y="0" width="328" height="424">
+              <instance id="392:8228" name="accordion" x="0" y="0" width="328" height="193" />
+              <instance id="392:8229" name="accordion" x="0" y="193" width="328" height="77" />
+              <instance id="392:8230" name="accordion" x="0" y="270" width="328" height="77" />
+              <instance id="392:8231" name="accordion" x="0" y="347" width="328" height="77" />
+              <instance id="392:8232" name="accordion" x="0" y="424" width="328" height="77" hidden="true" />
+              <instance id="392:8233" name="accordion" x="0" y="501" width="328" height="77" hidden="true" />
+            </frame>
+            <frame id="392:8234" name="paragrafo" x="0" y="676" width="663" height="140" hidden="true">
+              <text id="392:8235" name="A conversa inicial é simples, sem compromisso e existe para entendermos se faz sentido seguirmos em frente." x="0" y="0" width="663" height="64" />
+              <instance id="392:8236" name="Button" x="0" y="88" width="217" height="52" />
+            </frame>
+          </frame>
+        </frame>
+      </frame>
+      <frame id="393:9244" name="Frame 2147260048" x="16" y="4338" width="328" height="360">
+        <frame id="393:9237" name="Frame 2147260045" x="0" y="0" width="328" height="124">
+          <text id="393:9238" name="Atendimento personalizado" x="0" y="0" width="328" height="32" />
+          <text id="393:9239" name="Encontros individuais e um trabalho adaptado à sua realidade, com suporte durante todo o processo." x="0" y="40" width="328" height="84" />
+        </frame>
+        <frame id="393:9241" name="Frame 2147260046" x="0" y="164" width="328" height="156">
+          <text id="393:9242" name="Recomendações independentes" x="0" y="0" width="328" height="64" />
+          <text id="393:9243" name="Orientações sem vínculo com instituições financeiras, garantindo total independência nas recomendações" x="0" y="72" width="328" height="84" />
+        </frame>
+      </frame>
+      <frame id="392:8237" name="paragrafo" x="16" y="4714" width="328" height="641">
+        <ellipse id="392:8238" name="Ellipse 3" x="93.5" y="64" width="141" height="141" />
+        <frame id="392:8239" name="Frame 2147260039" x="24" y="277" width="280" height="300">
+          <text id="392:8240" name="Tudo começa com uma conversa simples e sem compromisso. Um primeiro encontro para entendermos se faz sentido seguirmos em frente." x="0" y="0" width="280" height="224" />
+          <instance id="392:8241" name="Button" x="31.5" y="248" width="217" height="52" />
+        </frame>
+        <instance id="392:8242" name="tag" x="14" y="146" width="118" height="28" />
+        <instance id="392:8243" name="tag" x="187" y="71" width="124" height="28" />
+        <instance id="392:8244" name="tag" x="204" y="199" width="84" height="28" />
+        <instance id="392:8245" name="tag" x="45" y="23" width="124" height="28" />
+        <instance id="392:8246" name="tag" x="489" y="164" width="92" height="28" />
+        <instance id="392:8247" name="tag" x="569" y="99" width="123" height="28" />
+      </frame>
+      <frame id="392:8298" name="big-numbers" x="16" y="5371" width="328" height="622">
+        <frame id="392:8299" name="big number" x="0" y="48" width="328" height="138">
+          <text id="392:8300" name="+130" x="0" y="0" width="328" height="72" />
+          <text id="392:8301" name="clientes atendidos no Brasil e exterior" x="0" y="80" width="328" height="58" />
+        </frame>
+        <frame id="392:8302" name="big number" x="0" y="242" width="328" height="138">
+          <text id="392:8303" name="100%" x="0" y="0" width="328" height="72" />
+          <text id="392:8304" name="Online - atendimento para o Brasil e exterior" x="0" y="80" width="328" height="58" />
+        </frame>
+        <frame id="392:8305" name="big number" x="0" y="436" width="328" height="138">
+          <text id="392:8306" name="+06" x="0" y="0" width="328" height="72" />
+          <text id="392:8307" name="anos de experiência com planejamento financeiro" x="0" y="80" width="328" height="58" />
+        </frame>
+      </frame>
+      <frame id="392:8248" name="HISTORIAS" x="16" y="6009" width="328" height="1346.666748046875">
+        <frame id="392:8249" name="hero" x="0" y="60" width="328" height="570.6666870117188">
+          <rounded-rectangle id="392:8250" name="Image right" x="0" y="0" width="328" height="218.6666717529297" />
+          <frame id="392:8251" name="Left" x="0" y="258.66668701171875" width="328" height="312">
+            <instance id="392:8252" name="tag" x="0" y="0" width="126" height="36" />
+            <frame id="392:8253" name="Content" x="0" y="76" width="328" height="236">
+              <text id="392:8254" name="Pessoas diferentes. Momentos diferentes. Decisões importantes em comum." x="0" y="0" width="328" height="128" />
+              <text id="392:8255" name="Nenhuma dessas histórias começou da mesma forma. Mas todas começaram com uma conversa." x="0" y="152" width="328" height="84" />
+            </frame>
+          </frame>
+        </frame>
+        <frame id="392:8256" name="Alessandra" x="0" y="678.66650390625" width="328" height="668">
+          <frame id="392:8257" name="Testimonials" x="0" y="0" width="328" height="668">
+            <frame id="392:8258" name="testimonial" x="0" y="0" width="328" height="344">
+              <frame id="392:8259" name="depoimento" x="0" y="0" width="328" height="344">
+                <vector id="392:8260" name="quote" x="0" y="0" width="72" height="48" />
+                <frame id="392:8261" name="content" x="0" y="112" width="328" height="232">
+                  <text id="392:8262" name="Durante muitos anos, por questões de saúde, eu não pensava no futuro. Depois do transplante, precisei aprender a construí-lo. A Joice transformou minha insegurança em planejamento. Hoje entendo meus números e tomo decisões com muito mais tranquilidade." x="0" y="0" width="328" height="232" />
+                </frame>
+                <frame id="392:8263" name="quote" x="0" y="371" width="668" height="48" hidden="true">
+                  <vector id="392:8264" name="“" x="668" y="48" width="72" height="48" />
+                </frame>
+              </frame>
+              <frame id="392:8265" name="Group 2085664466" x="0" y="384" width="0" height="0" />
+            </frame>
+            <frame id="392:8267" name="Names" x="0" y="368" width="328" height="300">
+              <frame id="392:8268" name="Nome e tags" x="0" y="0" width="328" height="148">
+                <text id="392:8269" name="Alessandra Sobrenome" x="0" y="24" width="328" height="28" />
+                <frame id="392:8270" name="Tags" x="0" y="60" width="328" height="64">
+                  <instance id="392:8271" name="tag" x="0" y="0" width="183" height="28" />
+                  <instance id="392:8272" name="tag" x="191" y="0" width="124" height="28" />
+                  <instance id="392:8273" name="tag" x="0" y="36" width="233" height="28" />
+                </frame>
+              </frame>
+              <frame id="392:8274" name="Nome e tags" x="0" y="148" width="328" height="76" hidden="true">
+                <text id="392:8275" name=" Frances [Sobrenome]" x="0" y="24" width="328" height="28" />
+                <frame id="392:8276" name="Tags" x="0" y="36" width="508" height="28" hidden="true">
+                  <instance id="392:8277" name="tag" x="0" y="0" width="228" height="28" />
+                  <instance id="392:8278" name="tag" x="236" y="0" width="201" height="28" />
+                  <instance id="392:8279" name="tag" x="445" y="0" width="233" height="28" />
+                </frame>
+              </frame>
+              <frame id="392:8280" name="Nome e tags" x="0" y="148" width="328" height="76">
+                <text id="392:8281" name="Simone [Sobrenome]" x="0" y="24" width="328" height="28" />
+                <frame id="392:8282" name="Tags" x="0" y="36" width="508" height="28" hidden="true">
+                  <instance id="392:8283" name="tag" x="0" y="0" width="228" height="28" />
+                  <instance id="392:8284" name="tag" x="236" y="0" width="201" height="28" />
+                  <instance id="392:8285" name="tag" x="445" y="0" width="233" height="28" />
+                </frame>
+              </frame>
+              <frame id="392:8286" name="Nome e tags" x="0" y="300" width="328" height="76" hidden="true">
+                <text id="392:8287" name="Rafael &amp; [Parceira]" x="0" y="24" width="328" height="28" />
+                <frame id="392:8288" name="Tags" x="0" y="36" width="508" height="28" hidden="true">
+                  <instance id="392:8289" name="tag" x="0" y="0" width="228" height="28" />
+                  <instance id="392:8290" name="tag" x="236" y="0" width="201" height="28" />
+                  <instance id="392:8291" name="tag" x="445" y="0" width="233" height="28" />
+                </frame>
+              </frame>
+              <frame id="392:8292" name="Nome e tags" x="0" y="224" width="328" height="76">
+                <text id="392:8293" name=" Luiz &amp; Lívia" x="0" y="24" width="328" height="28" />
+                <frame id="392:8294" name="Tags" x="0" y="36" width="548" height="28" hidden="true">
+                  <instance id="392:8295" name="tag" x="0" y="0" width="228" height="28" />
+                  <instance id="392:8296" name="tag" x="236" y="0" width="201" height="28" />
+                  <instance id="392:8297" name="tag" x="445" y="0" width="233" height="28" />
+                </frame>
+              </frame>
+            </frame>
+          </frame>
+        </frame>
+      </frame>
+      <frame id="392:8308" name="SOBRE" x="16" y="7371.6669921875" width="328" height="1733">
+        <frame id="392:8309" name="image" x="0" y="40" width="324" height="331">
+          <frame id="392:8310" name="Mask group" x="58.102264404296875" y="20.33349609375" width="207.79547119140625" height="290.3330078125">
+            <rounded-rectangle id="392:8311" name="Rectangle 3" x="58.10221127251498" y="20.333496093749545" width="207.79547119140625" height="290.3330078125" />
+            <rounded-rectangle id="392:8312" name="Rectangle 4" x="43.29940319061279" y="6.646583557128906" width="237.40220642089844" height="304.0201416015625" />
+            <rounded-rectangle id="392:8313" name="IMG_3178 2" x="33.009538650512695" y="-29.616943359375" width="241.8898162841797" height="362.7904357910156" />
+            <rounded-rectangle id="392:8314" name="IMG_3139 3" x="-330.3106384277344" y="-141.28497314453125" width="752.1715821080288" height="613.2712940041592" />
+            <rounded-rectangle id="413:20576" name="IMG_5074 1" x="-32.999298095703125" y="-7.6669921875" width="416" height="339" />
+            <frame id="392:8315" name="play-circle" x="137.11398315429688" y="140.43509674072266" width="49.77137756347656" height="49.77137756347656" />
+          </frame>
+          <frame id="392:8318" name="Mask group" x="0" y="51.3330078125" width="106.64913177490234" height="76.1779556274414">
+            <rounded-rectangle id="392:8319" name="Rectangle 3" x="0" y="51.3330078125" width="106.64913177490234" height="76.1779556274414" />
+            <rounded-rectangle id="392:8320" name="Rectangle 4" x="0" y="51.3330078125" width="106.64913177490234" height="76.1779556274414" />
+            <rounded-rectangle id="392:8321" name="image 17" x="7.275957614183426e-12" y="19.96579360961914" width="106.85733795166016" height="118.74797058105469" />
+            <rounded-rectangle id="392:8322" name="image 19" x="-3.046875" y="28.97509765625" width="144.14739990234375" height="143.80621337890625" />
+          </frame>
+          <frame id="392:8323" name="Mask group" x="220.44921875" y="-11.6669921875" width="103.60000610351562" height="74.00000762939453">
+            <rounded-rectangle id="392:8324" name="Rectangle 3" x="220.44912603497505" y="-11.6669921875" width="103.60000610351562" height="74.00000762939453" />
+            <rounded-rectangle id="392:8325" name="Rectangle 4" x="220.44912603497505" y="-11.6669921875" width="103.60000610351562" height="74.00000762939453" />
+            <rounded-rectangle id="392:8326" name="image 16" x="214.79296875" y="-22.1142578125" width="109.25881958007812" height="112.3058853149414" />
+          </frame>
+          <frame id="392:8327" name="Mask group" x="202" y="214.3330078125" width="112" height="80">
+            <rounded-rectangle id="392:8328" name="Rectangle 3" x="202" y="214.3330078125" width="112" height="80" />
+            <rounded-rectangle id="392:8329" name="Rectangle 4" x="202" y="214.3330078125" width="112" height="80" />
+            <rounded-rectangle id="392:8330" name="image 18" x="189.29296875" y="200.21533203125" width="126.67533874511719" height="107.76468658447266" />
+          </frame>
+        </frame>
+        <frame id="392:8331" name="content" x="0" y="371" width="328" height="1118">
+          <frame id="392:8332" name="Card" x="0" y="40" width="328" height="1078">
+            <frame id="392:8333" name="right" x="0" y="0" width="328" height="556">
+              <instance id="392:8334" name="Eyebrow" x="0" y="0" width="424" height="44" hidden="true" />
+              <frame id="392:8335" name="content" x="0" y="0" width="328" height="556">
+                <instance id="392:8336" name="tag" x="0" y="0" width="107" height="36" />
+                <frame id="392:8337" name="Frame 2147260045" x="0" y="76" width="328" height="480">
+                  <text id="392:8338" name="Experiência, conhecimento técnico e um olhar humano para decisões que geram impacto." x="0" y="0" width="328" height="288" />
+                  <frame id="392:8339" name="paragrafo" x="0" y="312" width="328" height="168">
+                    <text id="392:8340" name="Depois de uma transição de carreira, encontrei no planejamento financeiro a forma de unir propósito e profissão. Hoje, são mais de seis anos de atuação ajudando a transformar informação financeira em decisões mais conscientes" x="0" y="0" width="328" height="168" />
+                  </frame>
+                </frame>
+                <frame id="392:8341" name="Action" x="0" y="420" width="552" height="52" hidden="true">
+                  <instance id="392:8342" name="Button" x="0" y="0" width="217" height="52" />
+                  <instance id="392:8343" name="Button" x="237" y="0" width="218" height="52" />
+                </frame>
+              </frame>
+            </frame>
+            <frame id="392:8344" name="Card" x="0" y="612" width="328" height="466">
+              <frame id="392:8345" name="card" x="0" y="0" width="328" height="204">
+                <frame id="392:8346" name="content" x="32" y="32" width="264" height="140">
+                  <text id="392:8347" name="01" x="0" y="0" width="50" height="140" />
+                  <line id="392:8348" name="Line 52" x="74.00000762939453" y="23" width="0.00000410887150792405" height="94" />
+                  <text id="392:8349" name="Vivência corporativa Atuei como analista financeira em uma indústria de plásticos por 7 anos" x="98" y="0" width="166" height="140" />
+                </frame>
+              </frame>
+              <frame id="392:8350" name="card" x="0" y="71" width="328" height="204">
+                <frame id="392:8351" name="content" x="32" y="32" width="264" height="140">
+                  <text id="392:8352" name="02" x="0" y="0" width="50" height="140" />
+                  <line id="392:8353" name="Line 52" x="74.00000762939453" y="23" width="0.00000410887150792405" height="94" />
+                  <text id="392:8354" name="Experiência no exterior Morei em Dublin (Irlanda) por dois anos, trabalhando e estudando inglês." x="98" y="0" width="166" height="140" />
+                </frame>
+              </frame>
+              <frame id="392:8355" name="card" x="0" y="142" width="328" height="204">
+                <frame id="392:8356" name="content" x="32" y="32" width="264" height="140">
+                  <text id="392:8357" name="03" x="0" y="0" width="50" height="140" />
+                  <line id="392:8358" name="Line 52" x="74.00000762939453" y="23" width="0.00000410887150792405" height="94" />
+                  <text id="392:8359" name="Paixão por viajar Já conheci +17 países e sigo transformando experiências em aprendizados." x="98" y="0" width="166" height="140" />
+                </frame>
+              </frame>
+              <frame id="392:8360" name="card" x="0" y="213" width="328" height="232">
+                <frame id="392:8361" name="content" x="32" y="32" width="264" height="168">
+                  <text id="392:8362" name="04" x="0" y="0" width="50" height="168" />
+                  <line id="392:8363" name="Line 52" x="74.00000762939453" y="37" width="0.00000410887150792405" height="94" />
+                  <text id="392:8364" name="Transição de carreira Planejei cada passo até me consolidar como consultora e me dedicar 100% a essa atuação." x="98" y="0" width="166" height="168" />
+                </frame>
+              </frame>
+            </frame>
+          </frame>
+        </frame>
+        <frame id="392:8365" name="card" x="0" y="1473.3330078125" width="328" height="260">
+          <frame id="392:8366" name="content" x="32" y="32" width="264" height="196">
+            <text id="392:8367" name="05" x="0" y="0" width="50" height="196" />
+            <line id="392:8368" name="Line 52" x="74.00000762939453" y="51" width="0.00000410887150792405" height="94" />
+            <text id="392:8369" name="Maternidade &amp; Família Ser mãe da Elisa e parceira do Gui ampliou meu olhar sobre tempo, segurança, autonomia e possibilidades." x="98" y="0" width="166" height="196" />
+          </frame>
+        </frame>
+      </frame>
+      <frame id="392:8370" name="LOGOS" x="16" y="9120.6669921875" width="720" height="228">
+        <frame id="392:8371" name="Competences" x="0" y="72" width="720" height="84">
+          <frame id="392:8372" name="CMV" x="0" y="0" width="208" height="84">
+            <rounded-rectangle id="392:8373" name="image 5" x="0" y="10" width="64" height="64" />
+            <text id="392:8374" name="CVM Consultora de Valores Mobiliários" x="72" y="0" width="136" height="84" />
+          </frame>
+          <line id="392:8375" name="Line 50" x="246" y="10" width="0.0000027975256671197712" height="64" />
+          <frame id="392:8376" name="CFP" x="284" y="0" width="201" height="84">
+            <rounded-rectangle id="392:8377" name="image 5" x="0" y="10" width="64" height="64" />
+            <text id="392:8378" name="CFP© Certified Financial Planner" x="72" y="0" width="129" height="84" />
+          </frame>
+          <line id="392:8379" name="Line 51" x="523" y="10" width="0.0000027975256671197712" height="64" />
+          <frame id="392:8380" name="MBA" x="561" y="0" width="159" height="84">
+            <rounded-rectangle id="392:8381" name="image 5" x="0" y="10" width="64" height="64" />
+            <text id="392:8382" name="MBA Mercado de Capitais" x="72" y="0" width="87" height="84" />
+          </frame>
+        </frame>
+        <ellipse id="392:8383" name="Ellipse 4" x="1222" y="-16" width="532" height="463" hidden="true" />
+      </frame>
+      <frame id="392:8384" name="faq" x="16" y="9364.6669921875" width="328" height="1476">
+        <frame id="392:8385" name="right" x="0" y="40" width="328" height="272">
+          <frame id="392:8386" name="Frame 2147260040" x="0" y="0" width="328" height="36">
+            <instance id="392:8387" name="tag" x="0" y="0" width="204" height="36" />
+          </frame>
+          <frame id="392:8388" name="Frame 2147260047" x="0" y="76" width="328" height="196">
+            <text id="392:8389" name="Antes da conversa, algumas perguntas costumam aparecer." x="0" y="0" width="328" height="96" />
+            <text id="392:8390" name="Essas são algumas das dúvidas mais comuns antes da conversa inicial. Talvez uma delas também seja a sua." x="0" y="112" width="328" height="84" />
+          </frame>
+        </frame>
+        <instance id="392:8391" name="FAQ" x="0" y="336" width="328" height="1100" />
+      </frame>
+      <frame id="392:8392" name="footer" x="16" y="10856.6669921875" width="328" height="605">
+        <frame id="392:8393" name="col" x="16" y="24" width="296" height="276">
+          <frame id="392:8394" name="content" x="0" y="0" width="296" height="156">
+            <frame id="392:8395" name="block" x="0" y="0" width="120" height="48">
+              <instance id="392:8396" name="Logo" x="0" y="0" width="120" height="48" />
+            </frame>
+            <text id="392:8397" name="Planejadora financeira e consultora em investimentos. Atendimento online para todo o Brasil e exterior." x="0" y="72" width="268" height="84" />
+          </frame>
+          <text id="392:8398" name="→ CEA Especialista em Investimentos → CVM Consultora de Valores Mobiliários 002276-4 → CFP® Certified Financial Planner" x="0" y="180" width="296" height="96" />
+        </frame>
+        <frame id="392:8399" name="col" x="16" y="324" width="296" height="257">
+          <frame id="392:8400" name="Frame 2147260037" x="0" y="0" width="296" height="153">
+            <frame id="392:8401" name="block" x="0" y="0" width="296" height="61">
+              <text id="392:8402" name="Telefone;" x="0" y="0" width="296" height="24" />
+              <text id="392:8403" name="+55 47 9193-9397" x="0" y="32" width="296" height="29" />
+            </frame>
+            <frame id="392:8404" name="block" x="0" y="93" width="296" height="60">
+              <text id="392:8405" name="Email:" x="0" y="0" width="296" height="24" />
+              <text id="392:8406" name="oi@joicesperandio.com.br" x="0" y="32" width="296" height="28" />
+            </frame>
+          </frame>
+          <frame id="392:8407" name="block" x="0" y="185" width="296" height="72">
+            <text id="392:8408" name="Acompanhe pelas redes sociais:" x="0" y="0" width="296" height="24" />
+            <frame id="392:8409" name="Frame 150" x="0" y="32" width="296" height="40">
+              <frame id="392:8410" name="Frame 148" x="0" y="0" width="40" height="40">
+                <frame id="392:8411" name="InstagramLogo" x="8" y="8" width="24" height="24" />
+              </frame>
+              <frame id="392:8413" name="Frame 149" x="48" y="2" width="36" height="36">
+                <instance id="392:8414" name="TiktokLogo" x="8" y="8" width="20" height="20" />
+              </frame>
+              <frame id="392:8415" name="Frame 150" x="92" y="2" width="36" height="36">
+                <instance id="392:8416" name="LinkedinLogo" x="8" y="8" width="20" height="20" />
+              </frame>
+              <frame id="392:8417" name="Frame 151" x="136" y="2" width="36" height="36" hidden="true">
+                <instance id="392:8418" name="FacebookLogo" x="8" y="8" width="20" height="20" />
+              </frame>
+              <frame id="392:8419" name="Frame 152" x="136" y="2" width="36" height="36">
+                <instance id="392:8420" name="YoutubeLogo" x="8" y="8" width="20" height="20" />
+              </frame>
+              <frame id="392:8421" name="Frame 153" x="180" y="2" width="36" height="36" hidden="true">
+                <instance id="392:8422" name="XLogo" x="8" y="8" width="20" height="20" />
+              </frame>
+            </frame>
+          </frame>
+        </frame>
+        <frame id="392:8423" name="col" x="855.3333740234375" y="40" width="367.66668701171875" height="316" hidden="true">
+          <frame id="392:8424" name="block" x="0" y="0" width="367.66668701171875" height="316">
+            <frame id="392:8425" name="block" x="0" y="0" width="367.66668701171875" height="316">
+              <frame id="392:8426" name="row" x="0" y="0" width="367.66668701171875" height="316">
+                <instance id="392:8427" name="link" x="0" y="0" width="42" height="28" />
+                <instance id="392:8428" name="link" x="0" y="36" width="41" height="28" />
+                <instance id="392:8429" name="link" x="0" y="72" width="64" height="28" />
+                <instance id="392:8430" name="link" x="0" y="108" width="67" height="28" />
+                <instance id="392:8431" name="link" x="0" y="144" width="62" height="28" />
+                <instance id="392:8432" name="link" x="0" y="180" width="43" height="28" />
+                <instance id="392:8433" name="link" x="0" y="216" width="58" height="28" />
+                <instance id="392:8434" name="link" x="0" y="252" width="137" height="28" />
+                <instance id="392:8435" name="link" x="0" y="288" width="164" height="28" />
+                <text id="392:8436" name="/" x="0" y="44" width="9" height="28" hidden="true" />
+                <text id="392:8437" name="/" x="0" y="88" width="9" height="28" hidden="true" />
+                <text id="392:8438" name="/" x="0" y="132" width="9" height="28" hidden="true" />
+                <text id="392:8439" name="/" x="0" y="176" width="9" height="28" hidden="true" />
+                <text id="392:8440" name="/" x="0" y="220" width="9" height="28" hidden="true" />
+                <text id="392:8441" name="/" x="0" y="264" width="9" height="28" hidden="true" />
+                <text id="392:8442" name="/" x="0" y="308" width="9" height="28" hidden="true" />
+                <text id="392:8443" name="Política de Cookies" x="0" y="333" width="137" height="28" hidden="true" />
+                <text id="392:8444" name="Política de Privacidade" x="0" y="333" width="164" height="28" hidden="true" />
+                <text id="392:8445" name="/" x="0" y="396" width="9" height="28" hidden="true" />
+              </frame>
+            </frame>
+          </frame>
+        </frame>
+      </frame>
+    </frame>
+    <section id="393:10514" name="Section 1" x="1353" y="2247" width="1079" height="577">
+      <frame id="392:8695" name="card" x="114" y="152" width="256" height="280">
+        <rounded-rectangle id="392:8696" name="12_ícone_AzulClaro 1" x="24" y="24" width="40" height="40" />
+        <frame id="392:8697" name="Frame 427321413" x="24" y="80" width="208" height="176">
+          <text id="392:8698" name="Decisões com autonomia" x="0" y="0" width="208" height="28" />
+          <text id="392:8699" name="Entender o suficiente para participar das próprias decisões é mais importante do que saber tudo sobre finanças." x="0" y="36" width="208" height="140" />
+        </frame>
+      </frame>
+      <frame id="392:8700" name="card" x="386" y="152" width="256" height="272">
+        <rounded-rectangle id="392:8701" name="22_ícone_AzulClaro 1" x="24" y="24" width="32" height="32" />
+        <frame id="392:8702" name="Frame 427321414" x="24" y="72" width="208" height="176">
+          <text id="392:8703" name="Prosperidade com propósito" x="0" y="0" width="208" height="28" />
+          <text id="392:8704" name="Construir patrimônio não é acumular recursos. É ampliar possibilidades, segurança e liberdade de escolha." x="0" y="36" width="208" height="140" />
+        </frame>
+        <vector id="392:8705" name="03" x="-61" y="0" width="356" height="256" hidden="true" />
+      </frame>
+      <frame id="392:8706" name="card" x="658" y="152" width="256" height="280">
+        <rounded-rectangle id="392:8707" name="31_ícone_AzulClaro 1" x="24" y="24" width="40" height="40" />
+        <frame id="392:8708" name="Frame 427321415" x="24" y="80" width="208" height="176">
+          <text id="392:8709" name="Intenção com perspectiva" x="0" y="0" width="208" height="28" />
+          <text id="392:8710" name="O dinheiro funciona melhor quando sustenta aquilo que importa: projetos, prioridades e a vida que você deseja construir." x="0" y="36" width="208" height="140" />
+        </frame>
+      </frame>
+    </section>
+    <section id="413:20578" name="Section 6" x="1353" y="744" width="1079" height="577">
+      <text id="413:20596" name="@GUI" x="81" y="157" width="79" height="40" />
+      <text id="413:20597" name="Aqui foi o unico lugar que nao apliquei style. A Joice tinha pedido para diminuir um pouco o tamanho da fonte, Entao, sai de 48px que era um style e apliquei 40px, que por sua vez não tem um style dentro do Figma" x="95" y="231" width="903" height="160" />
+    </section>
+    <section id="393:10515" name="Section 2" x="1353" y="3124" width="1083" height="882">
+      <frame id="392:8712" name="Card-open" x="143" y="153" width="329.5" height="662">
+        <frame id="392:8713" name="Title" x="16" y="24" width="297.5" height="66">
+          <text id="392:8714" name="02" x="0" y="0" width="83" height="66" />
+        </frame>
+        <frame id="392:8715" name="content" x="16" y="106" width="297.5" height="532">
+          <text id="392:8716" name="Consultoria em Investimentos" x="0" y="0" width="297.5" height="64" />
+          <frame id="392:8717" name="Content" x="0" y="80" width="297.5" height="148">
+            <text id="392:8718" name="Segurança para investir. Autonomia para evoluir." x="0" y="0" width="297.5" height="56" />
+            <text id="392:8719" name="Para quem deseja investir com mais estratégia ou receber orientação independente sobre sua carteira." x="0" y="64" width="297.5" height="84" />
+          </frame>
+          <frame id="392:8720" name="List" x="0" y="244" width="297.5" height="288">
+            <frame id="392:8721" name="list-item" x="0" y="0" width="297.5" height="48">
+              <frame id="392:8722" name="arrow" x="0" y="8" width="32" height="32" />
+              <text id="392:8724" name="Reorganização de investimentos" x="56" y="8" width="241.5" height="32" />
+            </frame>
+            <frame id="392:8725" name="list-item" x="0" y="48" width="297.5" height="48">
+              <frame id="392:8726" name="arrow" x="0" y="8" width="32" height="32" />
+              <text id="392:8728" name="Gestão de heranças" x="56" y="10" width="241.5" height="28" />
+            </frame>
+            <frame id="392:8729" name="list-item" x="0" y="96" width="297.5" height="48">
+              <frame id="392:8730" name="arrow" x="0" y="8" width="32" height="32" />
+              <text id="392:8732" name="Estratégia da carteira" x="56" y="10" width="241.5" height="28" />
+            </frame>
+            <frame id="392:8733" name="list-item" x="0" y="144" width="297.5" height="48">
+              <frame id="392:8734" name="arrow" x="0" y="8" width="32" height="32" />
+              <text id="392:8736" name="Proteção patrimonial" x="56" y="10" width="241.5" height="28" />
+            </frame>
+            <frame id="392:8737" name="list-item" x="0" y="192" width="297.5" height="48">
+              <frame id="392:8738" name="arrow" x="0" y="8" width="32" height="32" />
+              <text id="392:8740" name="Construção de patrimônio" x="56" y="10" width="241.5" height="28" />
+            </frame>
+            <frame id="392:8741" name="list-item" x="0" y="240" width="297.5" height="48">
+              <frame id="392:8742" name="arrow" x="0" y="8" width="32" height="32" />
+              <text id="392:8744" name="Planejamento da aposentadoria" x="56" y="10" width="241.5" height="28" />
+            </frame>
+          </frame>
+        </frame>
+      </frame>
+    </section>
+    <section id="393:10516" name="Section 3" x="1353" y="4176" width="2017" height="774">
+      <frame id="393:8822" name="content" x="177" y="145" width="328" height="424">
+        <frame id="393:8823" name="accordion" x="16" y="0" width="296" height="424">
+          <instance id="393:8824" name="accordion" x="0" y="0" width="296" height="77" />
+          <instance id="393:8825" name="accordion" x="0" y="77" width="296" height="193" />
+          <instance id="393:8826" name="accordion" x="0" y="270" width="296" height="77" />
+          <instance id="393:8827" name="accordion" x="0" y="347" width="296" height="77" />
+          <instance id="393:8828" name="accordion" x="0" y="424" width="328" height="77" hidden="true" />
+          <instance id="393:8829" name="accordion" x="0" y="424" width="328" height="77" hidden="true" />
+        </frame>
+        <frame id="393:8830" name="paragrafo" x="0" y="676" width="663" height="140" hidden="true">
+          <text id="393:8831" name="A conversa inicial é simples, sem compromisso e existe para entendermos se faz sentido seguirmos em frente." x="0" y="0" width="663" height="64" />
+          <instance id="393:8832" name="Button" x="0" y="88" width="217" height="52" />
+        </frame>
+      </frame>
+      <frame id="393:8939" name="content" x="594" y="145" width="328" height="424">
+        <frame id="393:8940" name="accordion" x="16" y="0" width="296" height="424">
+          <instance id="393:8941" name="accordion" x="0" y="0" width="296" height="77" />
+          <instance id="393:8942" name="accordion" x="0" y="77" width="296" height="77" />
+          <instance id="393:8943" name="accordion" x="0" y="154" width="296" height="193" />
+          <instance id="393:8944" name="accordion" x="0" y="347" width="296" height="77" />
+          <instance id="393:8945" name="accordion" x="0" y="424" width="328" height="77" hidden="true" />
+          <instance id="393:8946" name="accordion" x="0" y="424" width="328" height="77" hidden="true" />
+        </frame>
+        <frame id="393:8947" name="paragrafo" x="0" y="676" width="663" height="140" hidden="true">
+          <text id="393:8948" name="A conversa inicial é simples, sem compromisso e existe para entendermos se faz sentido seguirmos em frente." x="0" y="0" width="663" height="64" />
+          <instance id="393:8949" name="Button" x="0" y="88" width="217" height="52" />
+        </frame>
+      </frame>
+      <frame id="393:9046" name="content" x="1011" y="145" width="328" height="424">
+        <frame id="393:9047" name="accordion" x="16" y="0" width="296" height="424">
+          <instance id="393:9048" name="accordion" x="0" y="0" width="296" height="77" />
+          <instance id="393:9049" name="accordion" x="0" y="77" width="296" height="77" />
+          <instance id="393:9050" name="accordion" x="0" y="154" width="296" height="77" />
+          <instance id="393:9051" name="accordion" x="0" y="231" width="296" height="193" />
+          <instance id="393:9052" name="accordion" x="0" y="396" width="328" height="77" hidden="true" />
+          <instance id="393:9053" name="accordion" x="0" y="396" width="328" height="77" hidden="true" />
+        </frame>
+        <frame id="393:9054" name="paragrafo" x="0" y="676" width="663" height="140" hidden="true">
+          <text id="393:9055" name="A conversa inicial é simples, sem compromisso e existe para entendermos se faz sentido seguirmos em frente." x="0" y="0" width="663" height="64" />
+          <instance id="393:9056" name="Button" x="0" y="88" width="217" height="52" />
+        </frame>
+      </frame>
+      <frame id="393:9153" name="content" x="1428" y="145" width="328" height="424">
+        <frame id="393:9154" name="accordion" x="16" y="0" width="296" height="424">
+          <instance id="393:9155" name="accordion" x="0" y="0" width="296" height="77" />
+          <instance id="393:9156" name="accordion" x="0" y="77" width="296" height="77" />
+          <instance id="393:9157" name="accordion" x="0" y="154" width="296" height="77" />
+          <instance id="393:9158" name="accordion" x="0" y="231" width="296" height="193" />
+          <instance id="393:9159" name="accordion" x="0" y="396" width="328" height="77" hidden="true" />
+          <instance id="393:9160" name="accordion" x="0" y="396" width="328" height="77" hidden="true" />
+        </frame>
+        <frame id="393:9161" name="paragrafo" x="0" y="676" width="663" height="140" hidden="true">
+          <text id="393:9162" name="A conversa inicial é simples, sem compromisso e existe para entendermos se faz sentido seguirmos em frente." x="0" y="0" width="663" height="64" />
+          <instance id="393:9163" name="Button" x="0" y="88" width="217" height="52" />
+        </frame>
+      </frame>
+    </section>
+    <vector id="393:10518" name="Arrow 16" x="1043" y="2536" width="310" height="0" />
+    <vector id="413:20595" name="Arrow 21" x="1043" y="1033" width="310" height="0" />
+    <vector id="393:10519" name="Arrow 17" x="1025" y="3479" width="329" height="0" />
+    <vector id="393:10520" name="Arrow 18" x="1043" y="4479" width="310" height="0" />
+    <section id="393:10611" name="Section 4" x="1427" y="7089" width="1096" height="862">
+      <frame id="393:10521" name="Simone" x="125" y="149" width="328" height="615">
+        <frame id="393:10522" name="Testimonials" x="24" y="24" width="280" height="567">
+          <frame id="393:10523" name="testimonial" x="0" y="0" width="280" height="315">
+            <frame id="393:10524" name="depoimento" x="0" y="0" width="280" height="315">
+              <vector id="393:10525" name="quote" x="0" y="0" width="72" height="48" />
+              <frame id="393:10526" name="content" x="0" y="112" width="280" height="203">
+                <text id="393:10527" name="Desde 2023, conto com o acompanhamento da Joice para organizar minha vida financeira e tomar decisões com mais segurança. O que mais valorizo é o cuidado e a personalização em cada etapa." x="0" y="0" width="280" height="203" />
+              </frame>
+              <frame id="393:10528" name="quote" x="0" y="371" width="668" height="48" hidden="true">
+                <vector id="393:10529" name="“" x="668" y="48" width="72" height="48" />
+              </frame>
+            </frame>
+            <frame id="393:10530" name="Group 2085664466" x="0" y="384" width="0" height="0" />
+          </frame>
+          <frame id="393:10532" name="Names" x="0" y="339" width="280" height="228">
+            <frame id="393:10539" name="Nome e tags" x="0" y="148" width="328" height="76" hidden="true">
+              <text id="393:10540" name=" Frances [Sobrenome]" x="0" y="24" width="328" height="28" />
+              <frame id="393:10541" name="Tags" x="0" y="36" width="508" height="28" hidden="true">
+                <instance id="393:10542" name="tag" x="0" y="0" width="228" height="28" />
+                <instance id="393:10543" name="tag" x="236" y="0" width="201" height="28" />
+                <instance id="393:10544" name="tag" x="445" y="0" width="233" height="28" />
+              </frame>
+            </frame>
+            <frame id="393:10545" name="Nome e tags" x="0" y="0" width="280" height="76">
+              <text id="393:10546" name="Simone [Sobrenome]" x="0" y="24" width="280" height="28" />
+              <frame id="393:10547" name="Tags" x="0" y="36" width="508" height="28" hidden="true">
+                <instance id="393:10548" name="tag" x="0" y="0" width="228" height="28" />
+                <instance id="393:10549" name="tag" x="236" y="0" width="201" height="28" />
+                <instance id="393:10550" name="tag" x="445" y="0" width="233" height="28" />
+              </frame>
+            </frame>
+            <frame id="393:10551" name="Nome e tags" x="0" y="300" width="328" height="76" hidden="true">
+              <text id="393:10552" name="Rafael &amp; [Parceira]" x="0" y="24" width="328" height="28" />
+              <frame id="393:10553" name="Tags" x="0" y="36" width="508" height="28" hidden="true">
+                <instance id="393:10554" name="tag" x="0" y="0" width="228" height="28" />
+                <instance id="393:10555" name="tag" x="236" y="0" width="201" height="28" />
+                <instance id="393:10556" name="tag" x="445" y="0" width="233" height="28" />
+              </frame>
+            </frame>
+            <frame id="393:10557" name="Nome e tags" x="0" y="76" width="280" height="76">
+              <text id="393:10558" name=" Luiz &amp; Lívia" x="0" y="24" width="280" height="28" />
+              <frame id="393:10559" name="Tags" x="0" y="36" width="548" height="28" hidden="true">
+                <instance id="393:10560" name="tag" x="0" y="0" width="228" height="28" />
+                <instance id="393:10561" name="tag" x="236" y="0" width="201" height="28" />
+                <instance id="393:10562" name="tag" x="445" y="0" width="233" height="28" />
+              </frame>
+            </frame>
+            <frame id="393:10533" name="Nome e tags" x="0" y="152" width="280" height="76">
+              <text id="393:10534" name="Alessandra Sobrenome" x="0" y="24" width="280" height="28" />
+              <frame id="393:10535" name="Tags" x="0" y="60" width="328" height="64" hidden="true">
+                <instance id="393:10536" name="tag" x="0" y="0" width="183" height="28" />
+                <instance id="393:10537" name="tag" x="191" y="0" width="124" height="28" />
+                <instance id="393:10538" name="tag" x="0" y="36" width="233" height="28" />
+              </frame>
+            </frame>
+          </frame>
+        </frame>
+      </frame>
+      <frame id="393:10569" name="Simone" x="622" y="149" width="328" height="673">
+        <frame id="393:10570" name="Testimonials" x="24" y="24" width="280" height="625">
+          <frame id="393:10571" name="testimonial" x="0" y="0" width="280" height="373">
+            <frame id="393:10572" name="depoimento" x="0" y="0" width="280" height="373">
+              <vector id="393:10573" name="quote" x="0" y="0" width="72" height="48" />
+              <frame id="393:10574" name="content" x="0" y="112" width="280" height="261">
+                <text id="393:10575" name="A Joice transformou números espalhados em decisões mais conscientes. A organização financeira e dos investimentos trouxe clareza sobre nossas prioridades, aposentadoria e construção de patrimônio. Tudo de forma simples e aplicável ao nosso dia a dia." x="0" y="0" width="280" height="261" />
+              </frame>
+              <frame id="393:10576" name="quote" x="0" y="371" width="668" height="48" hidden="true">
+                <vector id="393:10577" name="“" x="668" y="48" width="72" height="48" />
+              </frame>
+            </frame>
+            <frame id="393:10578" name="Group 2085664466" x="0" y="384" width="0" height="0" />
+          </frame>
+          <frame id="393:10580" name="Names" x="0" y="397" width="280" height="228">
+            <frame id="393:10581" name="Nome e tags" x="0" y="148" width="328" height="76" hidden="true">
+              <text id="393:10582" name=" Frances [Sobrenome]" x="0" y="24" width="328" height="28" />
+              <frame id="393:10583" name="Tags" x="0" y="36" width="508" height="28" hidden="true">
+                <instance id="393:10584" name="tag" x="0" y="0" width="228" height="28" />
+                <instance id="393:10585" name="tag" x="236" y="0" width="201" height="28" />
+                <instance id="393:10586" name="tag" x="445" y="0" width="233" height="28" />
+              </frame>
+            </frame>
+            <frame id="393:10599" name="Nome e tags" x="0" y="0" width="280" height="76">
+              <text id="393:10600" name=" Luiz &amp; Lívia" x="0" y="24" width="280" height="28" />
+              <frame id="393:10601" name="Tags" x="0" y="36" width="548" height="28" hidden="true">
+                <instance id="393:10602" name="tag" x="0" y="0" width="228" height="28" />
+                <instance id="393:10603" name="tag" x="236" y="0" width="201" height="28" />
+                <instance id="393:10604" name="tag" x="445" y="0" width="233" height="28" />
+              </frame>
+            </frame>
+            <frame id="393:10587" name="Nome e tags" x="0" y="76" width="280" height="76">
+              <text id="393:10588" name="Simone [Sobrenome]" x="0" y="24" width="280" height="28" />
+              <frame id="393:10589" name="Tags" x="0" y="36" width="508" height="28" hidden="true">
+                <instance id="393:10590" name="tag" x="0" y="0" width="228" height="28" />
+                <instance id="393:10591" name="tag" x="236" y="0" width="201" height="28" />
+                <instance id="393:10592" name="tag" x="445" y="0" width="233" height="28" />
+              </frame>
+            </frame>
+            <frame id="393:10593" name="Nome e tags" x="0" y="300" width="328" height="76" hidden="true">
+              <text id="393:10594" name="Rafael &amp; [Parceira]" x="0" y="24" width="328" height="28" />
+              <frame id="393:10595" name="Tags" x="0" y="36" width="508" height="28" hidden="true">
+                <instance id="393:10596" name="tag" x="0" y="0" width="228" height="28" />
+                <instance id="393:10597" name="tag" x="236" y="0" width="201" height="28" />
+                <instance id="393:10598" name="tag" x="445" y="0" width="233" height="28" />
+              </frame>
+            </frame>
+            <frame id="393:10605" name="Nome e tags" x="0" y="152" width="280" height="76">
+              <text id="393:10606" name="Alessandra Sobrenome" x="0" y="24" width="280" height="28" />
+              <frame id="393:10607" name="Tags" x="0" y="60" width="328" height="64" hidden="true">
+                <instance id="393:10608" name="tag" x="0" y="0" width="183" height="28" />
+                <instance id="393:10609" name="tag" x="191" y="0" width="124" height="28" />
+                <instance id="393:10610" name="tag" x="0" y="36" width="233" height="28" />
+              </frame>
+            </frame>
+          </frame>
+        </frame>
+      </frame>
+    </section>
+    <vector id="393:10612" name="Arrow 19" x="1036" y="7444" width="392" height="0" />
+    <section id="393:11337" name="Section 5" x="1186" y="9756" width="3015" height="1836">
+      <frame id="393:10613" name="faq" x="113" y="357" width="328" height="1182">
+        <instance id="393:10620" name="FAQ" x="0" y="40" width="328" height="1102" />
+      </frame>
+      <frame id="393:10711" name="faq" x="515" y="357" width="328" height="1182">
+        <instance id="393:10718" name="FAQ" x="0" y="40" width="328" height="1102" />
+      </frame>
+      <frame id="393:10810" name="faq" x="917" y="357" width="328" height="1210">
+        <instance id="393:10817" name="FAQ" x="0" y="40" width="328" height="1130" />
+      </frame>
+      <frame id="393:10908" name="faq" x="1319" y="357" width="328" height="1154">
+        <instance id="393:10915" name="FAQ" x="0" y="40" width="328" height="1074" />
+      </frame>
+      <frame id="393:11006" name="faq" x="1721" y="357" width="328" height="1154">
+        <instance id="393:11013" name="FAQ" x="0" y="40" width="328" height="1074" />
+      </frame>
+      <frame id="393:11104" name="faq" x="2123" y="357" width="328" height="1126">
+        <instance id="393:11111" name="FAQ" x="0" y="40" width="328" height="1046" />
+      </frame>
+      <frame id="393:11202" name="faq" x="2525" y="357" width="328" height="1154">
+        <instance id="393:11209" name="FAQ" x="0" y="40" width="328" height="1074" />
+      </frame>
+    </section>
+    <vector id="393:11338" name="Arrow 20" x="1045" y="10615" width="141" height="0" />
+  </section>
+</canvas>
