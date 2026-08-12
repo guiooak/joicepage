@@ -107,6 +107,19 @@
     font-display: swap;
   }
 
+  /* Makes `cqw` below resolve against the root's CONTENT box. That is the
+     whole point of using a container unit here rather than `vw`: `100vw`
+     includes the classic scrollbar gutter on Windows and Linux, so a zoom
+     derived from it would scale the page ~15px wider than the space it has
+     and reintroduce the very scrollbar this removes. `100cqw` excludes it.
+
+     Safe here because a container is also the containing block for fixed
+     descendants — and this page has no `position: fixed` at all. Check that
+     before adding any. */
+  html {
+    container-type: inline-size;
+  }
+
   body {
     background-color: var(--color-page);
     color: var(--color-body);
@@ -117,6 +130,20 @@
     /* Desktop-only implementation: the page holds the 1440px frame width and
        does not reflow below it. */
     min-inline-size: var(--frame-width);
+
+    /* The design is a fixed 1440 canvas, so on a narrower window it used to
+       run off the side and the page scrolled horizontally. It now scales to
+       fit instead: the whole canvas shrinks proportionally, so the layout is
+       never cut off and never reflows — every proportion the .fig specifies
+       is preserved at any width.
+
+       Capped at 1 by the min(), so above 1440 the page stops growing and
+       sits centred at its drawn size rather than being blown up.
+
+       Degrades to exactly the previous behaviour: a browser that cannot
+       compute this drops the declaration, leaving the 1440 pin and its
+       horizontal scroll. Nothing else depends on it. */
+    zoom: min(1, calc(100cqw / var(--frame-width)));
   }
 
   /* Weights are per-level, not shared: Figma's text styles set H1/H2/H3 Bold,
