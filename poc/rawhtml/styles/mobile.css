@@ -37,16 +37,22 @@
       --page-gutter: var(--size-16);
       --header-height: 88px;
 
-      /* Mobile display scale, per node in the frame. The desktop 90/72/56
-         steps collapse to 48/40/32 — the hero is the one 40px outlier and it
-         is deliberate: the designer left a note on it (413:20597, addressed
-         to @GUI) recording that Joice asked for a smaller headline, so it was
-         taken off the 48px style and set to 40px by hand. */
-      --text-display-lg: 40px;   /* hero headline           392:8120 */
-      --leading-display-lg: 1;
-      --text-display: 32px;      /* section headlines       392:8180 */
+      /* Mobile display scale, read per node. Most section headlines land on
+         32px; three nodes do not, and rather than bend the scale to fit them
+         the tokens carry the common value and the three are pinned on their
+         own rules below:
+
+           hero   392:8120  40px   Visão  392:8145  56px
+           Sobre  392:8338  48px
+
+         The hero's 40 is not a scale step at all — the designer's note at
+         413:20597 records that Joice asked for a smaller headline, so it
+         came off the 48px style and was set by hand. */
+      --text-display-lg: 56px;   /* Visão headline          392:8145 */
+      --leading-display-lg: 0.92;
+      --text-display: 32px;      /* Serviços, Processo      392:8180 */
       --leading-display: 1;
-      --text-h1: 48px;           /* Sobre headline          392:8338 */
+      --text-h1: 32px;           /* Histórias, FAQ          392:8254 */
       --leading-h1: 1;
       --text-h2: 32px;           /* service card titles     392:8187 */
       --leading-h2: 1;
@@ -255,9 +261,10 @@
       block-size: 454px;
     }
 
+    /* Pinned rather than tokenised — see the scale note above. */
     .hero__title {
-      font-size: var(--text-display-lg);
-      line-height: var(--leading-display-lg);
+      font-size: 40px;
+      line-height: 1;
       font-weight: var(--weight-bold);
     }
 
@@ -291,6 +298,133 @@
        paragraph and the action, and nothing else. */
     .hero__caption {
       display: none;
+    }
+
+    /* ---- Credenciais · LOGOS 720 wide (392:8126, 392:8370) ---------------
+       The frame draws this row 720px wide inside a 360px page. That is not a
+       mistake to correct — it is a rail that runs off the edge, and the three
+       credentials keep their drawn 64px marks and 20px text instead of being
+       squeezed. Reproduced as a scroll container so the overflow stays inside
+       the section and never reaches the page.
+
+       padY 72 (desktop draws 96), text steps 24 -> 20. */
+    .credentials {
+      justify-content: flex-start;
+      gap: var(--size-32);
+      inline-size: 720px;
+      max-inline-size: none;
+      padding-block: var(--size-72);
+      padding-inline: 0;
+    }
+
+    /* The scroll lives on the shell so the rail can bleed to both page edges
+       rather than starting inset by the gutter. */
+    .credentials-rail {
+      padding-inline: 0;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .credentials-rail::-webkit-scrollbar {
+      display: none;
+    }
+
+    .credentials > li:first-child {
+      padding-inline-start: var(--page-gutter);
+    }
+
+    .credentials > li:last-child {
+      padding-inline-end: var(--page-gutter);
+    }
+
+    .credentials li {
+      font-size: var(--text-paragraph);
+      line-height: var(--leading-paragraph);
+      font-weight: var(--weight-regular);
+      align-items: center;
+      gap: var(--size-8);
+      flex-shrink: 0;
+    }
+
+    /* The decorative #f7fafc ellipse is hidden in the file on both mobile
+       LOGOS frames, so it is not drawn here either. */
+    .credentials::after {
+      display: none;
+    }
+
+    /* MBA is drawn at 40% in the mobile frame (392:8137). */
+    .credentials li:last-of-type img {
+      opacity: 0.4;
+    }
+
+    /* ---- Visão · VISAO 328x1092 (392:8140) ------------------------------- */
+    .visao__grid {
+      display: flex;
+      flex-direction: column;
+      gap: var(--size-40);
+    }
+
+    .visao__title {
+      font-size: var(--text-display-lg);
+      line-height: var(--leading-display-lg);
+      /* The frame sets this headline Bold; desktop draws it Black. */
+      font-weight: var(--weight-bold);
+    }
+
+    .visao__body {
+      gap: var(--size-24);
+    }
+
+    /* ---- Princípios · Card + 4 cards (392:8148) --------------------------
+       The desktop card is a 710px band with the four cards pinned to its
+       bottom edge. Mobile keeps that construction — photo, #5779aa ellipse in
+       hard-light, cards over it — but the cards become a horizontal rail,
+       which is how the frame draws them: `Card` is 341% of the section width
+       with the four cards side by side inside it.
+
+       The cards also change material: white at 90% with a 50px backdrop blur
+       (392:8155), where desktop draws them solid. */
+    .principios {
+      block-size: 584px;
+      margin-block-start: var(--size-56);
+    }
+
+    .principios::after {
+      inline-size: 660px;
+      block-size: 488px;
+      inset-inline-start: 29px;
+      inset-block-start: 53px;
+    }
+
+    .principios__cards {
+      inset-inline: 0;
+      inset-block-end: 0;
+      display: flex;
+      gap: var(--size-16);
+      padding: var(--size-24);
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+    }
+
+    .principios__cards::-webkit-scrollbar {
+      display: none;
+    }
+
+    .principio {
+      flex: 0 0 232px;
+      min-block-size: 0;
+      scroll-snap-align: center;
+      background-color: rgb(255 255 255 / 90%);
+      backdrop-filter: blur(50px);
+    }
+
+    /* gap 16 between the icon and the text block, against the desktop 49px
+       offset that positions a 40px icon at a drawn y of 113. */
+    .principio h3 {
+      margin-block-start: var(--size-16);
+      font-weight: var(--weight-bold);
     }
   }
 }
