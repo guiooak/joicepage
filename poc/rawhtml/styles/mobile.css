@@ -881,5 +881,79 @@
     .sobre__cards li:last-child {
       box-shadow: 0 0 80px rgb(0 0 0 / 8%);
     }
+
+    /* ---- FAQ · faq 328x1476 (392:8384) -----------------------------------
+       One column: tag at y40, headline and lead at y76, the eight cards from
+       y336. The headline is 96 tall over three lines, which is 32/1.0 — the
+       value --text-h1 already carries here.
+
+       The copy still does not exist. Re-verified against this frame: the FAQ
+       instance (392:8391) is as childless as its eight desktop counterparts. */
+    .faq__grid {
+      display: flex;
+      flex-direction: column;
+      gap: var(--size-40);
+      margin-block-start: var(--size-40);
+    }
+
+    .faq__title {
+      margin-block-start: var(--size-40);
+    }
+
+    /* ---- Footer · footer 328x605 (392:8392) ------------------------------
+       Two stacked columns where desktop runs three across: brand and
+       credentials, then the contacts and the social row. */
+    .site-footer {
+      gap: var(--size-24);
+      margin-block: var(--size-72) var(--size-16);
+      padding: var(--size-24) var(--size-16);
+    }
+
+    .site-footer__top {
+      flex-direction: column;
+      gap: var(--size-24);
+    }
+
+    .site-footer__brand {
+      inline-size: auto;
+      gap: var(--size-24);
+    }
+
+    .site-footer__contact {
+      gap: var(--size-4);
+    }
+
+    /* The labels are the mobile frame's own — 24px tall rows above each
+       value, quieter than the value they introduce. */
+    .site-footer__label {
+      display: block;
+      font-size: var(--text-paragraph);
+      line-height: var(--leading-paragraph);
+      opacity: 0.7;
+    }
+
+    .site-footer__contact .site-footer__label + a {
+      margin-block-end: var(--size-16);
+    }
+
+    .site-footer__social {
+      display: flex;
+      flex-direction: column;
+      gap: var(--size-8);
+    }
+
+    /* The frame draws the footer's link column (392:8423) hidden on mobile,
+       so the section nav goes. Its bottom bar stays: those are the cookie and
+       privacy links, and a policy link is not something to drop because one
+       frame leaves it out. */
+    .site-footer__nav {
+      display: none;
+    }
+
+    .site-footer__bottom {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--size-8);
+    }
   }
 }

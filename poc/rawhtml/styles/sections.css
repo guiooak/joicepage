@@ -997,6 +997,40 @@
     gap: var(--size-8);
   }
 
+  /* "Telefone:" / "Email:" / "Acompanhe…" are drawn in the mobile frame only
+     (392:8402, 392:8405, 392:8408). The desktop footer lists the contacts
+     bare, so the labels are carried in the HTML and hidden here. */
+  .site-footer__label {
+    display: none;
+  }
+
+  /* The social marks are drawn in both frames but were never resolvable from
+     the desktop footer instance. Shown at both widths now that they exist. */
+  .site-footer__social ul {
+    display: flex;
+    gap: var(--size-8);
+  }
+
+  .site-footer__social a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    inline-size: 40px;
+    block-size: 40px;
+    color: var(--color-button-ink);
+    border-radius: var(--radius-pill);
+    transition: opacity var(--transition);
+  }
+
+  .site-footer__social a:hover {
+    opacity: 0.7;
+  }
+
+  .site-footer__social svg {
+    inline-size: 24px;
+    block-size: 24px;
+  }
+
   .site-footer__nav a,
   .site-footer__contact a {
     color: var(--color-button-ink);

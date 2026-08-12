@@ -745,12 +745,50 @@
           <a href="#duvidas">Dúvidas</a>
         </nav>
 
+        <!-- The mobile frame is the first place the footer appears expanded
+             rather than as an unresolved instance, so it is the source for
+             everything below: the "Telefone;"/"Email:" labels (392:8402,
+             392:8405) and the social row (392:8409), neither of which the
+             desktop instance ever revealed. The labels are drawn on mobile
+             only and are hidden above the breakpoint. -->
         <div class="site-footer__contact">
-          <a href="mailto:oi@joicesperandio.com.br">oi@joicesperandio.com.br</a>
+          <span class="site-footer__label">Telefone:</span>
           <!-- TODO: confirm the mobile number before deploy. The design draws
                "+55 47 9193-9397" — eight digits after the DDD, where Brazilian
                mobiles have had nine since the national rollout. -->
           <a href="https://wa.me/5547991939397">+55 47 99193-9397</a>
+
+          <span class="site-footer__label">Email:</span>
+          <a href="mailto:oi@joicesperandio.com.br">oi@joicesperandio.com.br</a>
+        </div>
+
+        <div class="site-footer__social">
+          <span class="site-footer__label">Acompanhe pelas redes sociais:</span>
+          <!-- The frame draws four marks: Instagram, TikTok, LinkedIn and
+               YouTube (Facebook and X are drawn hidden). Only two are wired,
+               because only two URLs are known — both are already in the
+               JSON-LD sameAs. TODO: get the TikTok and YouTube handles from
+               Joice; inventing them would produce links that 404. -->
+          <ul>
+            <li>
+              <a href="https://www.instagram.com/joicesperandio/" aria-label="Instagram">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.6" />
+                  <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.6" />
+                  <circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" />
+                </svg>
+              </a>
+            </li>
+            <li>
+              <a href="https://www.linkedin.com/in/joice-sperandio/" aria-label="LinkedIn">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <rect x="3" y="3" width="18" height="18" rx="4" fill="none" stroke="currentColor" stroke-width="1.6" />
+                  <path d="M7.5 10.5v6M7.5 7.6v.1" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+                  <path d="M11.4 16.5v-3.4a2.1 2.1 0 0 1 4.2 0v3.4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+                </svg>
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
 
