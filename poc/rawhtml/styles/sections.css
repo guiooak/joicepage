@@ -1004,8 +1004,24 @@
     display: none;
   }
 
-  /* The social marks are drawn in both frames but were never resolvable from
-     the desktop footer instance. Shown at both widths now that they exist. */
+  /* The Serviços slide controls belong to the mobile carousel (392:8216).
+     The desktop frame draws no such control, so they are off by default and
+     mobile.css turns them on — not the other way round, which would leave
+     them rendering at 1440 whenever a rule failed to match. */
+  .servicos__slide {
+    display: none;
+  }
+
+  /* The social marks come from the mobile footer (392:8409), the only place
+     the footer resolves to real children. The desktop footer is an
+     unexpanded instance, so whether it carries them is unknown — and the
+     desktop build is verified against a drawn 396px footer. They stay
+     mobile-only until that instance can be expanded; see the figextract
+     override work in .ai/plans/remaining-work.md. */
+  .site-footer__social {
+    display: none;
+  }
+
   .site-footer__social ul {
     display: flex;
     gap: var(--size-8);

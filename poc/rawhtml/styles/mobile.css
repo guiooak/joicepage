@@ -530,12 +530,9 @@
       border-block-end: 1px solid var(--color-line);
     }
 
-    /* Slide controls 56x56, #e5eef4, r 12.941 (392:8217). Shown only when
-       script is present to drive them — see the note in index.html. */
-    .servicos__slide {
-      display: none;
-    }
-
+    /* Slide controls 56x56, #e5eef4, r 12.941 (392:8217). Off by default in
+       sections.css; shown here only when script is present to drive them —
+       see the note in index.html. */
     .js .servicos__slide {
       display: flex;
       gap: var(--size-8);
@@ -766,8 +763,22 @@
     }
 
     /* ---- Números · big-numbers 328x622 (392:8298) ------------------------
-       One column, centred, numerals 136 -> 72. */
+       One column, centred, numerals 136 -> 72.
+
+       The frame also reorders it. Desktop runs CTA -> Histórias -> Números
+       (big-numbers at 6495, after HISTORIAS at 5281); mobile runs CTA ->
+       Números -> Histórias (big-numbers at 5371, before HISTORIAS at 6009).
+       The block lives inside the Histórias section in the DOM, so making
+       that section a flex column and pulling Números to the front puts it
+       between the CTA and the Histórias copy — which is the drawn order,
+       without moving anything in the markup. */
+    #historias {
+      display: flex;
+      flex-direction: column;
+    }
+
     .numeros {
+      order: -1;
       display: flex;
       flex-direction: column;
       gap: var(--size-56);
@@ -936,6 +947,7 @@
       margin-block-end: var(--size-16);
     }
 
+    /* Turned on here — off by default, see the note in sections.css. */
     .site-footer__social {
       display: flex;
       flex-direction: column;
