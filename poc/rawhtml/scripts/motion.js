@@ -19,51 +19,11 @@
   // (pointer cursors, hover states) that would lie without it.
   document.documentElement.classList.add("js");
 
-  /* ---- 0 · Mobile menu -------------------------------------------------
-     The nav ships inside a <details open>, so with no JS at all the menu is
-     simply expanded and every link works. All this does is collapse it at
-     mobile widths and close it again once a link has been followed.
-
-     That second behaviour is the whole reason a hamburger was rejected the
-     first time round: a <details> cannot be closed by CSS when a link inside
-     it is followed, so the panel stayed open covering the page. It is a
-     three-line fix in script, and the no-JS path stays correct because open
-     is the default rather than the enhancement. */
-  const disclosure = document.querySelector(".nav-disclosure");
-
-  if (disclosure) {
-    const mobile = window.matchMedia("(max-width: 767px)");
-    const summary = disclosure.querySelector("summary");
-
-    const sync = () => {
-      disclosure.open = !mobile.matches;
-      if (summary) summary.setAttribute("aria-expanded", String(disclosure.open));
-    };
-
-    sync();
-    mobile.addEventListener("change", sync);
-
-    disclosure.addEventListener("toggle", () => {
-      if (summary) summary.setAttribute("aria-expanded", String(disclosure.open));
-    });
-
-    disclosure.querySelectorAll("a").forEach((link) => {
-      link.addEventListener("click", () => {
-        if (mobile.matches) disclosure.open = false;
-      });
-    });
-  }
-
   /* ---- 2 · Serviços cards ---------------------------------------------
      ref: biggest-delivers-516518.framer.app
      Only moves the [data-open] attribute; the 899/437 transition is CSS. */
   const grid = document.querySelector(".servicos__grid");
-  const narrow = window.matchMedia("(max-width: 767px)");
-
-  /* Mobile draws both cards open in a swipe rail (392:8216) rather than one
-     open and one collapsed, so the expand behaviour must not be wired there:
-     it would put role="button" on something that does not respond. */
-  if (grid && !narrow.matches) {
+  if (grid) {
     const cards = [...grid.querySelectorAll(".service-card")];
 
     cards.forEach((card, i) => {
@@ -91,21 +51,6 @@
           e.preventDefault();
           open();
         }
-      });
-    });
-  }
-
-  /* ---- 2b · Serviços slide controls (mobile) ---------------------------
-     The rail is CSS scroll-snap and already works by swipe with no script.
-     These only move it by one card, and they stay hidden until this runs —
-     motion.css shows them under `.js`. */
-  if (grid) {
-    document.querySelectorAll(".servicos__scroll").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const step = Number(btn.dataset.scroll) || 1;
-        const card = grid.querySelector(".service-card");
-        const by = card ? card.getBoundingClientRect().width + 16 : grid.clientWidth;
-        grid.scrollBy({ left: by * step, behavior: reduced ? "auto" : "smooth" });
       });
     });
   }

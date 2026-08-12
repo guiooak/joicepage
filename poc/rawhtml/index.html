@@ -2,14 +2,10 @@
 <html lang="pt-BR">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=1440" />
 
-    <!-- Two frames are implemented, both drawn in the Figma file: `Site
-         desktop` (318:7275, 1440px) and `MOBILE 360px` (392:8099, 360px).
-         The cut between them is 767px — see styles/mobile.css. Between 768px
-         and 1440px the desktop layout applies and the page scrolls
-         horizontally, exactly as it did when this was desktop-only: the file
-         draws nothing for that range. -->
+    <!-- Desktop-only implementation, per scope. No mobile styles exist in this
+         build; the viewport is pinned to the 1440px Figma frame. -->
 
     <title>Joice Sperandio — Planejamento Financeiro e Investimentos</title>
     <meta
@@ -44,8 +40,6 @@
     <link rel="stylesheet" href="styles/base.css" />
     <link rel="stylesheet" href="styles/sections.css" />
     <link rel="stylesheet" href="styles/motion.css" />
-    <!-- Last, so its @layer components rules win on source order. -->
-    <link rel="stylesheet" href="styles/mobile.css" />
 
     <!-- Deferred and entirely additive: the page is complete without it. -->
     <script src="scripts/motion.js" defer></script>
@@ -110,39 +104,17 @@
           <span>sperandio</span>
         </a>
 
-        <!-- The mobile frame draws a hamburger (392:8108); the desktop frame
-             draws the links inline. Both are this one disclosure.
+        <nav class="nav" aria-label="Navegação principal">
+          <a href="#inicio">Início</a>
+          <a href="#visao">Visão</a>
+          <a href="#servicos">Serviços</a>
+          <a href="#processo">Processo</a>
+          <a href="#historias">Histórias</a>
+          <a href="#sobre">Sobre</a>
+          <a href="#duvidas">Dúvidas</a>
+        </nav>
 
-             It ships `open` on purpose. Without JS the menu is simply
-             expanded — tall, but every link works and every word is in the
-             HTML, which is the constraint that matters. scripts/motion.js
-             collapses it at mobile widths and closes it when a link is
-             followed; that close-on-follow is why the earlier desktop build
-             rejected a hamburger, and it is script, not CSS, that fixes it.
-
-             On desktop the whole disclosure is `display: contents`, so the
-             nav and the CTA stay direct children of the bar and render
-             exactly as they did before this element existed. -->
-        <details class="nav-disclosure" open>
-          <summary class="nav-toggle">
-            <span class="nav-toggle__bars" aria-hidden="true"></span>
-            <span class="nav-toggle__label">Menu</span>
-          </summary>
-
-          <div class="nav-disclosure__panel">
-            <nav class="nav" aria-label="Navegação principal">
-              <a href="#inicio">Início</a>
-              <a href="#visao">Visão</a>
-              <a href="#servicos">Serviços</a>
-              <a href="#processo">Processo</a>
-              <a href="#historias">Histórias</a>
-              <a href="#sobre">Sobre</a>
-              <a href="#duvidas">Dúvidas</a>
-            </nav>
-
-            <a class="btn btn--pill" href="#contato">Agendar uma conversa</a>
-          </div>
-        </details>
+        <a class="btn btn--pill" href="#contato">Agendar uma conversa</a>
       </div>
     </header>
 
@@ -184,36 +156,31 @@
         </p>
       </section>
 
-      <!-- The mobile frame draws this row 720 wide inside a 360 page, so
-           it becomes a scroll rail below the breakpoint. The wrapper carries
-           the shell; on desktop it is the same box it always was. -->
-      <div class="shell credentials-rail">
-        <ul class="credentials">
-          <li>
-            <img src="assets/img/cred-cvm.png" alt="" width="64" height="64" />
-            <span>
-              <strong>CVM</strong>
-              Consultora de <br />Valores Mobiliários
-            </span>
-          </li>
-          <li class="credentials__rule" aria-hidden="true"></li>
-          <li>
-            <img src="assets/img/cred-cfp.png" alt="" width="64" height="64" />
-            <span>
-              <strong>CFP©</strong>
-              Certified Financial <br />Planner
-            </span>
-          </li>
-          <li class="credentials__rule" aria-hidden="true"></li>
-          <li>
-            <img src="assets/img/cred-mba.png" alt="" width="64" height="64" />
-            <span>
-              <strong>MBA</strong>
-              Mercado de <br />Capitais
-            </span>
-          </li>
-        </ul>
-      </div>
+      <ul class="shell credentials">
+        <li>
+          <img src="assets/img/cred-cvm.png" alt="" width="64" height="64" />
+          <span>
+            <strong>CVM</strong>
+            Consultora de <br />Valores Mobiliários
+          </span>
+        </li>
+        <li class="credentials__rule" aria-hidden="true"></li>
+        <li>
+          <img src="assets/img/cred-cfp.png" alt="" width="64" height="64" />
+          <span>
+            <strong>CFP©</strong>
+            Certified Financial <br />Planner
+          </span>
+        </li>
+        <li class="credentials__rule" aria-hidden="true"></li>
+        <li>
+          <img src="assets/img/cred-mba.png" alt="" width="64" height="64" />
+          <span>
+            <strong>MBA</strong>
+            Mercado de <br />Capitais
+          </span>
+        </li>
+      </ul>
 
       <section class="shell section" id="visao">
         <p class="tag">Visão</p>
@@ -364,22 +331,6 @@
             </ul>
             <svg class="service-card__arrow" aria-hidden="true"><use href="#i-arrow" /></svg>
           </article>
-        </div>
-
-        <!-- Slide 392:8216 — two 56px controls the mobile frame draws under
-             the card. The rail itself is CSS scroll-snap and works by swipe
-             with no script at all, so these are shown only once motion.js
-             has confirmed it can drive them. Controls that cannot move
-             anything are worse than controls that are not drawn. -->
-        <div class="servicos__slide">
-          <button class="servicos__scroll" type="button" data-scroll="-1">
-            <svg aria-hidden="true"><use href="#i-arrow" /></svg>
-            <span>Serviço anterior</span>
-          </button>
-          <button class="servicos__scroll" type="button" data-scroll="1">
-            <svg aria-hidden="true"><use href="#i-arrow" /></svg>
-            <span>Próximo serviço</span>
-          </button>
         </div>
       </section>
 
@@ -651,36 +602,31 @@
         </div>
       </section>
 
-      <!-- The mobile frame draws this row 720 wide inside a 360 page, so
-           it becomes a scroll rail below the breakpoint. The wrapper carries
-           the shell; on desktop it is the same box it always was. -->
-      <div class="shell credentials-rail">
-        <ul class="credentials">
-          <li>
-            <img src="assets/img/cred-cvm.png" alt="" width="64" height="64" />
-            <span>
-              <strong>CVM</strong>
-              Consultora de <br />Valores Mobiliários
-            </span>
-          </li>
-          <li class="credentials__rule" aria-hidden="true"></li>
-          <li>
-            <img src="assets/img/cred-cfp.png" alt="" width="64" height="64" />
-            <span>
-              <strong>CFP©</strong>
-              Certified Financial <br />Planner
-            </span>
-          </li>
-          <li class="credentials__rule" aria-hidden="true"></li>
-          <li>
-            <img src="assets/img/cred-mba.png" alt="" width="64" height="64" />
-            <span>
-              <strong>MBA</strong>
-              Mercado de <br />Capitais
-            </span>
-          </li>
-        </ul>
-      </div>
+      <ul class="shell credentials">
+        <li>
+          <img src="assets/img/cred-cvm.png" alt="" width="64" height="64" />
+          <span>
+            <strong>CVM</strong>
+            Consultora de <br />Valores Mobiliários
+          </span>
+        </li>
+        <li class="credentials__rule" aria-hidden="true"></li>
+        <li>
+          <img src="assets/img/cred-cfp.png" alt="" width="64" height="64" />
+          <span>
+            <strong>CFP©</strong>
+            Certified Financial <br />Planner
+          </span>
+        </li>
+        <li class="credentials__rule" aria-hidden="true"></li>
+        <li>
+          <img src="assets/img/cred-mba.png" alt="" width="64" height="64" />
+          <span>
+            <strong>MBA</strong>
+            Mercado de <br />Capitais
+          </span>
+        </li>
+      </ul>
 
       <!-- faq 1360x987 · left 553 · items 783x820 @x577 -->
       <section class="shell section" id="duvidas">
@@ -768,50 +714,12 @@
           <a href="#duvidas">Dúvidas</a>
         </nav>
 
-        <!-- The mobile frame is the first place the footer appears expanded
-             rather than as an unresolved instance, so it is the source for
-             everything below: the "Telefone;"/"Email:" labels (392:8402,
-             392:8405) and the social row (392:8409), neither of which the
-             desktop instance ever revealed. The labels are drawn on mobile
-             only and are hidden above the breakpoint. -->
         <div class="site-footer__contact">
-          <span class="site-footer__label">Telefone:</span>
+          <a href="mailto:oi@joicesperandio.com.br">oi@joicesperandio.com.br</a>
           <!-- TODO: confirm the mobile number before deploy. The design draws
                "+55 47 9193-9397" — eight digits after the DDD, where Brazilian
                mobiles have had nine since the national rollout. -->
           <a href="https://wa.me/5547991939397">+55 47 99193-9397</a>
-
-          <span class="site-footer__label">Email:</span>
-          <a href="mailto:oi@joicesperandio.com.br">oi@joicesperandio.com.br</a>
-        </div>
-
-        <div class="site-footer__social">
-          <span class="site-footer__label">Acompanhe pelas redes sociais:</span>
-          <!-- The frame draws four marks: Instagram, TikTok, LinkedIn and
-               YouTube (Facebook and X are drawn hidden). Only two are wired,
-               because only two URLs are known — both are already in the
-               JSON-LD sameAs. TODO: get the TikTok and YouTube handles from
-               Joice; inventing them would produce links that 404. -->
-          <ul>
-            <li>
-              <a href="https://www.instagram.com/joicesperandio/" aria-label="Instagram">
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.6" />
-                  <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.6" />
-                  <circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" />
-                </svg>
-              </a>
-            </li>
-            <li>
-              <a href="https://www.linkedin.com/in/joice-sperandio/" aria-label="LinkedIn">
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <rect x="3" y="3" width="18" height="18" rx="4" fill="none" stroke="currentColor" stroke-width="1.6" />
-                  <path d="M7.5 10.5v6M7.5 7.6v.1" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
-                  <path d="M11.4 16.5v-3.4a2.1 2.1 0 0 1 4.2 0v3.4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
-                </svg>
-              </a>
-            </li>
-          </ul>
         </div>
       </div>
 

@@ -43,19 +43,6 @@
     display: block;
   }
 
-  /* The nav and the header CTA live inside a <details> so the mobile frame's
-     hamburger has something to toggle. At desktop widths the disclosure is
-     dissolved — `display: contents` removes its box, leaving the nav and the
-     button as direct flex children of the bar, exactly as before. */
-  .nav-disclosure,
-  .nav-disclosure__panel {
-    display: contents;
-  }
-
-  .nav-toggle {
-    display: none;
-  }
-
   .nav {
     display: flex;
     align-items: center;
@@ -995,56 +982,6 @@
     display: flex;
     flex-direction: column;
     gap: var(--size-8);
-  }
-
-  /* "Telefone:" / "Email:" / "Acompanhe…" are drawn in the mobile frame only
-     (392:8402, 392:8405, 392:8408). The desktop footer lists the contacts
-     bare, so the labels are carried in the HTML and hidden here. */
-  .site-footer__label {
-    display: none;
-  }
-
-  /* The Serviços slide controls belong to the mobile carousel (392:8216).
-     The desktop frame draws no such control, so they are off by default and
-     mobile.css turns them on — not the other way round, which would leave
-     them rendering at 1440 whenever a rule failed to match. */
-  .servicos__slide {
-    display: none;
-  }
-
-  /* The social marks come from the mobile footer (392:8409), the only place
-     the footer resolves to real children. The desktop footer is an
-     unexpanded instance, so whether it carries them is unknown — and the
-     desktop build is verified against a drawn 396px footer. They stay
-     mobile-only until that instance can be expanded; see the figextract
-     override work in .ai/plans/remaining-work.md. */
-  .site-footer__social {
-    display: none;
-  }
-
-  .site-footer__social ul {
-    display: flex;
-    gap: var(--size-8);
-  }
-
-  .site-footer__social a {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    inline-size: 40px;
-    block-size: 40px;
-    color: var(--color-button-ink);
-    border-radius: var(--radius-pill);
-    transition: opacity var(--transition);
-  }
-
-  .site-footer__social a:hover {
-    opacity: 0.7;
-  }
-
-  .site-footer__social svg {
-    inline-size: 24px;
-    block-size: 24px;
   }
 
   .site-footer__nav a,
