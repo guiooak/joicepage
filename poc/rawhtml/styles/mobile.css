@@ -426,5 +426,203 @@
       margin-block-start: var(--size-16);
       font-weight: var(--weight-bold);
     }
+
+    /* ---- Serviços · SERVICOS 328x1226 (392:8176) -------------------------
+       Desktop puts the two cards side by side at 899/437 and swaps which one
+       is open. Mobile draws one card at a time, 329.5 wide, with a pair of
+       scroll controls beneath (392:8216) — a carousel, not an accordion.
+
+       So the open/collapsed mechanic is switched off entirely below the
+       breakpoint: both cards are full cards, and the rail scrolls. */
+    .servicos__head {
+      display: flex;
+      flex-direction: column;
+      gap: var(--size-40);
+      margin-block-start: var(--size-40);
+    }
+
+    .servicos__head h2 {
+      font-weight: var(--weight-bold);
+    }
+
+    .servicos__intro {
+      display: flex;
+      flex-direction: column;
+      gap: var(--size-24);
+    }
+
+    .servicos__grid {
+      gap: var(--size-16);
+      margin-block-start: var(--size-56);
+      /* Bleed the rail to both page edges, then pad it back so the first
+         card still starts on the gutter. */
+      margin-inline: calc(var(--page-gutter) * -1);
+      padding-inline: var(--page-gutter);
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .servicos__grid::-webkit-scrollbar {
+      display: none;
+    }
+
+    .service-card {
+      flex: 0 0 100%;
+      block-size: auto;
+      scroll-snap-align: center;
+      gap: var(--size-16);
+      padding: var(--size-24) var(--size-16);
+    }
+
+    /* Neutralise the desktop collapse. Both cards are drawn open here, so
+       nothing may be clipped or hidden. */
+    .service-card,
+    .service-card[data-open] {
+      flex-basis: 100%;
+      overflow: visible;
+    }
+
+    .service-card:not([data-open]) .service-card__claim,
+    .service-card:not([data-open]) .service-card__text,
+    .service-card:not([data-open]) .service-card__list {
+      visibility: visible;
+    }
+
+    .js .service-card:not([data-open]) {
+      cursor: auto;
+    }
+
+    /* The 90px corner arrow belongs to the desktop collapsed card. */
+    .service-card__arrow {
+      display: none;
+    }
+
+    .service-card__number {
+      font-size: var(--text-numeral-sm);
+      line-height: var(--leading-numeral-sm);
+    }
+
+    .service-card__title {
+      margin-block-start: 0;
+    }
+
+    /* The frame sets the claim Bold on mobile (392:8189); desktop draws it
+       regular. */
+    .service-card__claim {
+      margin-block-start: 0;
+      font-weight: var(--weight-bold);
+    }
+
+    .service-card__text {
+      margin-block-start: 0;
+    }
+
+    .service-card__list {
+      margin-block-start: 0;
+    }
+
+    /* list-item: rule under each row, padY 8, arrow 32, gap 24 (392:8192). */
+    .service-card__list li {
+      block-size: auto;
+      padding-block: var(--size-8);
+      border-block-end: 1px solid var(--color-line);
+    }
+
+    /* Slide controls 56x56, #e5eef4, r 12.941 (392:8217). Shown only when
+       script is present to drive them — see the note in index.html. */
+    .servicos__slide {
+      display: none;
+    }
+
+    .js .servicos__slide {
+      display: flex;
+      gap: var(--size-8);
+      justify-content: center;
+      margin-block-start: var(--size-16);
+    }
+
+    .servicos__scroll {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      inline-size: 56px;
+      block-size: 56px;
+      padding: var(--size-12);
+      background-color: var(--color-surface-tint);
+      border-radius: 12.941px;
+      color: var(--color-accent);
+      cursor: pointer;
+    }
+
+    .servicos__scroll svg {
+      inline-size: 24px;
+      block-size: 24px;
+    }
+
+    .servicos__scroll[data-scroll="-1"] svg {
+      rotate: 180deg;
+    }
+
+    /* Label kept for the accessible name, not drawn. */
+    .servicos__scroll span {
+      position: absolute;
+      inline-size: 1px;
+      block-size: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+
+    /* ---- Processo · PROCESSO 328x868 (392:8219) -------------------------- */
+    .processo__grid {
+      display: flex;
+      flex-direction: column;
+      gap: var(--size-40);
+      margin-block-start: var(--size-40);
+    }
+
+    .processo__grid h2 {
+      font-weight: var(--weight-bold);
+    }
+
+    /* Header padY 24, title 24px Medium, icon 24 — and a rule above the
+       first item as well as under each, which is how the frame draws the
+       component (dividers top and bottom, I392:8228;121:2977). */
+    .accordion {
+      border-block-start: 1px solid var(--color-line);
+    }
+
+    .accordion__item summary {
+      block-size: auto;
+      padding-block: var(--size-24);
+      align-items: flex-start;
+      gap: var(--size-16);
+    }
+
+    .accordion__icon {
+      inline-size: 24px;
+      block-size: 24px;
+      margin-block-start: 4px;
+    }
+
+    /* Open panel: padX 16 padY 16, 20px Bold at 85% black, above its own
+       rule (I392:8228;121:2427). */
+    .accordion__panel {
+      padding: var(--size-16);
+      padding-block-end: var(--size-16);
+      border-block-start: 1px solid var(--color-line);
+      font-weight: var(--weight-bold);
+      color: rgb(60 60 67 / 85%);
+    }
+
+    /* The mobile frame's PROCESSO holds the intro card and the accordion and
+       nothing else — its closing paragraph and button (393:8830) are drawn
+       hidden, as they are on desktop (318:7313). Desktop still renders them
+       pending a decision; mobile follows the frame. */
+    .processo__close {
+      display: none;
+    }
   }
 }

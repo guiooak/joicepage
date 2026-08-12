@@ -365,6 +365,22 @@
             <svg class="service-card__arrow" aria-hidden="true"><use href="#i-arrow" /></svg>
           </article>
         </div>
+
+        <!-- Slide 392:8216 — two 56px controls the mobile frame draws under
+             the card. The rail itself is CSS scroll-snap and works by swipe
+             with no script at all, so these are shown only once motion.js
+             has confirmed it can drive them. Controls that cannot move
+             anything are worse than controls that are not drawn. -->
+        <div class="servicos__slide">
+          <button class="servicos__scroll" type="button" data-scroll="-1">
+            <svg aria-hidden="true"><use href="#i-arrow" /></svg>
+            <span>Serviço anterior</span>
+          </button>
+          <button class="servicos__scroll" type="button" data-scroll="1">
+            <svg aria-hidden="true"><use href="#i-arrow" /></svg>
+            <span>Próximo serviço</span>
+          </button>
+        </div>
       </section>
 
       <section class="shell section" id="processo">

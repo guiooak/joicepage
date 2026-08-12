@@ -58,7 +58,12 @@
      ref: biggest-delivers-516518.framer.app
      Only moves the [data-open] attribute; the 899/437 transition is CSS. */
   const grid = document.querySelector(".servicos__grid");
-  if (grid) {
+  const narrow = window.matchMedia("(max-width: 767px)");
+
+  /* Mobile draws both cards open in a swipe rail (392:8216) rather than one
+     open and one collapsed, so the expand behaviour must not be wired there:
+     it would put role="button" on something that does not respond. */
+  if (grid && !narrow.matches) {
     const cards = [...grid.querySelectorAll(".service-card")];
 
     cards.forEach((card, i) => {
@@ -86,6 +91,21 @@
           e.preventDefault();
           open();
         }
+      });
+    });
+  }
+
+  /* ---- 2b · Serviços slide controls (mobile) ---------------------------
+     The rail is CSS scroll-snap and already works by swipe with no script.
+     These only move it by one card, and they stay hidden until this runs —
+     motion.css shows them under `.js`. */
+  if (grid) {
+    document.querySelectorAll(".servicos__scroll").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const step = Number(btn.dataset.scroll) || 1;
+        const card = grid.querySelector(".service-card");
+        const by = card ? card.getBoundingClientRect().width + 16 : grid.clientWidth;
+        grid.scrollBy({ left: by * step, behavior: reduced ? "auto" : "smooth" });
       });
     });
   }
