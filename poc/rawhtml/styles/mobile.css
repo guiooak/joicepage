@@ -624,5 +624,168 @@
     .processo__close {
       display: none;
     }
+
+    /* ---- CTA · paragrafo 328x641 (392:8237) ------------------------------
+       Same block as desktop — #e5eef4, r24, scattered tags — restacked: the
+       avatar comes into flow above the headline instead of being pinned, and
+       padding drops from 64 all round to padX 24 / padY 64. */
+    .conversa {
+      block-size: auto;
+      margin-block-start: var(--size-72);
+      padding: var(--size-64) var(--size-24);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--size-72);
+    }
+
+    .conversa__avatar {
+      position: static;
+      order: -1;
+    }
+
+    .conversa__body {
+      position: static;
+      inline-size: 100%;
+      gap: var(--size-24);
+    }
+
+    .conversa__text {
+      font-size: var(--text-h3);
+      line-height: var(--leading-h3);
+    }
+
+    /* Tag pills shrink to padX 8 and keep the 20px body size (I392:8242).
+       Two variants are drawn: filled #ccdceb with #28445e copy, and outlined
+       on the section's own #e5eef4. */
+    .conversa .tag {
+      padding: 0 var(--size-8);
+      font-size: var(--text-paragraph);
+      line-height: var(--leading-paragraph);
+    }
+
+    .conversa .tag:nth-of-type(2),
+    .conversa .tag:nth-of-type(3),
+    .conversa .tag:nth-of-type(5) {
+      background-color: var(--c-blue-tint);
+      color: var(--color-accent-deep);
+      border-color: transparent;
+    }
+
+    .conversa .tag:nth-of-type(1),
+    .conversa .tag:nth-of-type(4),
+    .conversa .tag:nth-of-type(6) {
+      background-color: var(--color-surface-tint);
+      color: var(--color-accent);
+      border-color: var(--color-line-strong);
+    }
+
+    /* Offsets transcribed from the mobile frame, in the same source order the
+       desktop offsets use. Two of them (Patrimônio at 489, Imparcialidade at
+       569) are drawn beyond the 328 column and run off the edge — that is
+       what the frame does, and the section clips them. */
+    .conversa { overflow: hidden; }
+    .conversa .tag:nth-of-type(1) { inset-inline-start: 45px;  inset-block-start: 23px; }
+    .conversa .tag:nth-of-type(2) { inset-inline-start: 14px;  inset-block-start: 146px; }
+    .conversa .tag:nth-of-type(3) { inset-inline-start: 489px; inset-block-start: 164px; }
+    .conversa .tag:nth-of-type(4) { inset-inline-start: 204px; inset-block-start: 199px; }
+    .conversa .tag:nth-of-type(5) { inset-inline-start: 187px; inset-block-start: 71px; }
+    .conversa .tag:nth-of-type(6) { inset-inline-start: 569px; inset-block-start: 99px; }
+
+    /* ---- Histórias · HISTORIAS 328x1346.67 (392:8248) --------------------
+       The frame puts the photograph above the copy, where desktop sets it
+       beside it. */
+    .historias__grid {
+      display: flex;
+      flex-direction: column;
+      gap: var(--size-40);
+      margin-block-start: var(--size-56);
+    }
+
+    .historias__media {
+      order: -1;
+      inline-size: 100%;
+      block-size: auto;
+      aspect-ratio: 1536 / 1024;
+    }
+
+    /* ---- Depoimento (392:8256) -------------------------------------------
+       Drawn flat on the page ground here — no white card, no padding — with
+       the quote mark, then the quote, then the names as ruled rows. */
+    .depoimento {
+      display: flex;
+      flex-direction: column;
+      gap: var(--size-24);
+      margin-block-start: var(--size-48);
+      padding: 0;
+      background-color: transparent;
+      border-radius: 0;
+    }
+
+    .depoimento > div {
+      display: flex;
+      flex-direction: column;
+      gap: var(--size-64);
+    }
+
+    .depoimento__mark {
+      font-size: 72px;
+      line-height: 0.6;
+    }
+
+    /* Quote steps down to 24px Medium (392:8262). */
+    .depoimento__quote {
+      font-size: var(--text-h5);
+      line-height: var(--leading-h5);
+      font-weight: var(--weight-medium);
+      color: var(--color-body);
+    }
+
+    /* Each name is a ruled row: border top and bottom, padY 24 (392:8268). */
+    .depoimento__people li {
+      padding-block: var(--size-24);
+      border-block: 1px solid var(--color-line);
+    }
+
+    .depoimento__people li + li {
+      border-block-start: 0;
+    }
+
+    .depoimento__tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--size-8);
+      margin-block-start: var(--size-8);
+    }
+
+    .depoimento__tags span {
+      padding: 0 var(--size-8);
+      background-color: var(--color-surface-tint);
+      color: var(--color-accent);
+      border-radius: var(--radius-pill);
+    }
+
+    /* ---- Números · big-numbers 328x622 (392:8298) ------------------------
+       One column, centred, numerals 136 -> 72. */
+    .numeros {
+      display: flex;
+      flex-direction: column;
+      gap: var(--size-56);
+      padding-block: var(--size-48);
+      text-align: center;
+    }
+
+    /* The desktop column is a fixed 420px box; here the block is only as
+       tall as its numeral and label. */
+    .numeros > div {
+      block-size: auto;
+      gap: var(--size-8);
+    }
+
+    .numeros dt {
+      font-size: var(--text-numeral);
+      line-height: 1;
+      letter-spacing: var(--tracking-numeral);
+    }
   }
 }
