@@ -787,5 +787,99 @@
       line-height: 1;
       letter-spacing: var(--tracking-numeral);
     }
+
+    /* ---- Sobre · SOBRE 328x1733 (392:8308) -------------------------------
+       The collage moves above the copy and shrinks to 324x331 (392:8309).
+       Every offset below is the drawn mobile one, not the desktop geometry
+       scaled: the panel keeps its 0.415 ratio but the three thumbs are sized
+       individually in the frame (106.6x76.2, 103.6x74, 112x80), so scaling
+       one factor over the whole collage would get all three wrong. */
+    .sobre__grid {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin-block-start: var(--size-40);
+    }
+
+    .sobre__media {
+      order: -1;
+      inline-size: 324px;
+      max-inline-size: 100%;
+      block-size: 331px;
+      margin-inline: auto;
+    }
+
+    .sobre__panel {
+      inset-inline-start: 58.1px;
+      inline-size: 207.8px;
+      block-size: 290.3px;
+      border-radius: 8px;
+    }
+
+    .sobre__thumb {
+      border-radius: 7px;
+    }
+
+    /* 392:8323 · 392:8318 · 392:8327, in the same order the desktop rules
+       use so the two sets stay comparable. */
+    .sobre__thumb--1 {
+      inline-size: 103.6px;
+      block-size: 74px;
+      inset-inline-start: 220.45px;
+      inset-block-start: -11.67px;
+    }
+
+    .sobre__thumb--2 {
+      inline-size: 106.65px;
+      block-size: 76.18px;
+      inset-inline-start: 0;
+      inset-block-start: 51.33px;
+    }
+
+    .sobre__thumb--3 {
+      inline-size: 112px;
+      block-size: 80px;
+      inset-inline-start: 202px;
+      inset-block-start: 214.33px;
+    }
+
+    .sobre__col {
+      padding-block-start: var(--size-40);
+    }
+
+    .sobre__title {
+      font-size: 48px;
+      line-height: 1;
+    }
+
+    /* The frame's Sobre holds the tag, the headline and the paragraph, and no
+       buttons — 392:8335 has no Action child, matching the desktop node
+       318:7347 which is drawn hidden. */
+    .sobre__actions {
+      display: none;
+    }
+
+    /* Cards: padding 32 kept, plus a 1px #e2e9eb border the desktop card does
+       not carry, and the number column centred at 50px.
+
+       The frame draws the five as an overlapping deck (-133px here, -65 on
+       desktop). That overlap is the resting state of the "Stack" scroll
+       behaviour in the designer's Interactions board, not a static layout, so
+       it stays expressed as the sticky stack in motion.css — the same
+       decision the desktop build already made and recorded. */
+    .sobre__cards li {
+      min-block-size: 0;
+      border: 1px solid var(--color-line);
+    }
+
+    .sobre__num {
+      text-align: center;
+    }
+
+    /* Card 05 is drawn detached from the deck with a soft drop shadow
+       (392:8365). */
+    .sobre__cards li:last-child {
+      box-shadow: 0 0 80px rgb(0 0 0 / 8%);
+    }
   }
 }
