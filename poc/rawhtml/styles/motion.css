@@ -37,10 +37,18 @@
            this tall is only a few hundred pixels of scroll, so a stagger
            inside it resolves faster than the eye reads it — measured going
            0 to 10 words inked between two samples 170px apart. Across
-           `cover` the sweep takes the whole pass and is legible. */
+           `cover` the sweep takes the whole pass and is legible.
+
+           Starting at 28% rather than 6% is the second correction. At 6% the
+           whole sweep ran while the headline was still in the bottom half of
+           the screen and was fully inked by the time its top reached y=400 —
+           measured, it finished before the line was in a reading position, so
+           the effect was over before it was being looked at. Pushed ~270px of
+           scroll later, the reveal now runs while the headline sits in the
+           middle of the viewport. */
         animation-range:
-          cover calc(6% + (var(--i) / var(--n)) * 30%)
-          cover calc(20% + (var(--i) / var(--n)) * 30%);
+          cover calc(28% + (var(--i) / var(--n)) * 30%)
+          cover calc(42% + (var(--i) / var(--n)) * 30%);
       }
     }
   }
