@@ -421,8 +421,16 @@
   #servicos  { padding-block-start: var(--size-140); }  /* SERVICOS   padY 140 */
   #processo  { padding-block-start: var(--size-160); }  /* PROCESSO   padY 160 */
   #historias { padding-block-start: var(--size-140); }  /* HISTORIAS  padY 140 */
-  #sobre     { padding-block-start: var(--size-80); }   /* SOBRE      padY 80  */
-  #duvidas   { padding-block-start: var(--size-100); }  /* faq        padY 100 */
+  /* Drawn padY is 80. The 32 at the end is not from the file: it is the
+     matching gutter for the pinned collage, so the picture clears the bottom
+     of the section as it releases instead of running flush into the next
+     one. */
+  #sobre     { padding-block: var(--size-80) var(--size-32); }
+  /* padY 100 top AND bottom. Only the top was applied, so the last question
+     ended flush with the section edge and sat 24px from the footer — every
+     other boundary has the next section's own top padding as breathing room,
+     and this one had none. */
+  #duvidas   { padding-block: var(--size-100); }
 
   /* ---- Visão -----------------------------------------------------------
      Title 664 · paragraph 438 @x922 → a 258px channel between them. */
@@ -1101,8 +1109,19 @@
   .sobre__media {
     position: sticky;
     align-self: start;
-    inset-block-start: var(--size-40);
+    /* The gutter above the picture while it is pinned. This is the sticky
+       offset rather than padding on the section — sticky pins against the
+       viewport, so no amount of padding on #sobre can open a gap here. */
+    inset-block-start: var(--size-32);
     block-size: 700px;
+    /* Sticky travel ends when the element's MARGIN box reaches the bottom of
+       its containing block. The collage is 700 tall against a 158 card, so
+       its bottom got there ~540px before the last card settled — it unpinned
+       and scrolled away while "Maternidade & Família" was still most of a
+       screen below. A negative bottom margin lifts the margin box by that
+       difference, buying back exactly that much travel, and costs no layout
+       space because nothing follows it in this column. */
+    margin-block-end: -542px;
   }
 
   .sobre__panel {
@@ -1255,14 +1274,23 @@
     gap: var(--size-8);
   }
 
-  /* Each mark sits in an 8px round hit area. */
+  /* Equal 40px hit areas with the glyph centred, rather than a uniform 8px
+     of padding around glyphs of different sizes. The frame draws Instagram at
+     24 and the rest at 20, so padding alone gave a 40px box next to a 36px
+     one and the row read as misaligned. 40 is what the 24px mark plus its 8px
+     padding comes to, so the largest is unchanged and the others catch up. */
   .site-footer__social a {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: var(--size-8);
+    inline-size: 40px;
+    block-size: 40px;
     border-radius: var(--radius-pill);
     transition: background-color var(--transition);
+  }
+
+  .site-footer__social img {
+    flex-shrink: 0;
   }
 
   .site-footer__social a:hover {
