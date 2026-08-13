@@ -46,6 +46,7 @@ jobs:
           set -euo pipefail
 
           for f in index.html robots.txt sitemap.xml \
+                   favicon.svg favicon.png apple-touch-icon.png \
                    styles/tokens.css styles/base.css styles/sections.css \
                    styles/motion.css scripts/motion.js \
                    assets/fonts/allomira-variable.woff2 \

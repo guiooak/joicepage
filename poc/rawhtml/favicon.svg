@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Joice Sperandio">
+  <!-- The wordmark is a two-line serif lockup and is unreadable at 16px, so
+       this is a monogram instead. Brand navy #28445e with the page ground
+       #f4f7f7 for the letter — the same pairing the footer uses.
+
+       The J is drawn as stroked paths rather than set in Lora: a favicon has
+       no access to the site's webfonts, so any text here would fall back to
+       whatever the OS offers and change shape per platform. -->
+  <rect width="64" height="64" rx="14" fill="#28445e" />
+  <g fill="none" stroke="#f4f7f7" stroke-width="7" stroke-linecap="round">
+    <path d="M36 18 V38 a9 9 0 0 1 -18 0" />
+    <path d="M24 18 H46" />
+  </g>
+</svg>

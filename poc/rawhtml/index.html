@@ -25,6 +25,18 @@
     <meta property="og:image" content="https://joicesperandio.com.br/assets/img/og.jpg" />
     <meta name="twitter:card" content="summary_large_image" />
 
+    <!-- Relative, like every other asset here: the review app is served from
+         a subpath (guiooak.github.io/joicepage/) and root-absolute icon paths
+         would resolve outside it.
+
+         Declaring `rel="icon"` also stops the browser's automatic request for
+         /favicon.ico, which was 404ing on every page load. The PNGs are the
+         same artwork rendered out for the platforms that will not take an SVG
+         icon. -->
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="favicon.png" sizes="32x32" type="image/png" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+
     <!-- The headline face and the hero photo are both above the fold and both
          gate the first meaningful paint, so neither should wait on the CSS. -->
     <link
