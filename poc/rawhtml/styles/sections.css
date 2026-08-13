@@ -95,27 +95,29 @@
     background-color: color-mix(in oklab, var(--color-button-primary) 86%, white);
   }
 
+  /* The border is drawn inside the 52px box, not added to it. Without the
+     compensation this button comes out 54 and, because the hero lays the pair
+     out in a stretch row, it takes the solid one with it. */
   .btn--ghost {
     color: var(--color-button-ink);
     border: 1px solid var(--color-button-ink);
+    padding-block: calc(var(--size-12) - 1px);
   }
 
   .btn--ghost:hover {
     background-color: rgb(244 247 247 / 14%);
   }
 
-  /* The header CTA is the one pill in the design. */
-  .btn--pill {
-    background-color: var(--color-button);
-    color: var(--color-button-ink);
-    border-radius: var(--radius-pill);
-    font-size: var(--text-caption);
-    line-height: var(--leading-tag);
-  }
+  /* The header CTA was drawn here as a pill with a 16px label. Both were
+     invented: the `.fig` export cannot expand the Menu instance, so nothing
+     in it was ever read from the file.
 
-  .btn--pill:hover {
-    background-color: var(--color-button-hover);
-  }
+     It is the same Button component as everywhere else, and the geometry
+     says so — Menu is 1360x84 with padY 16, leaving exactly the 52px the
+     Button component is drawn at. The component resolves (via the mobile
+     frame, the only place an instance of it expands) to r 16, padX 24,
+     padY 12, gap 8, label 20px. So the header CTA is just `.btn--solid`
+     and this variant no longer exists. */
 
   /* ---- Tag / eyebrow ---------------------------------------------------
      36px tall · padX 32 · padY 4 · r 999. */
