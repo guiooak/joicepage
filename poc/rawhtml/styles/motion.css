@@ -290,8 +290,15 @@
           content-visibility 320ms allow-discrete;
       }
 
+      /* `content-visibility` has to be set here explicitly. Declaring a
+         transition for it on the closed state is not enough — the UA's own
+         `[open]` rule does not win once the property is author-transitioned,
+         so the panel stayed `hidden` at block-size 0 and never opened.
+         Measured: without this line an open panel computes blockSize 0px and
+         contentVisibility hidden, with it 164px and visible. */
       .accordion__item[open]::details-content {
         block-size: auto;
+        content-visibility: visible;
       }
     }
   }

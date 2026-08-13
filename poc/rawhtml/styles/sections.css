@@ -1028,8 +1028,19 @@
 
   /* Collage frame 782x700. The three cards sit at the offsets drawn in the
      file, two of which fall outside the frame box — hence overflow visible. */
+  /* The left column runs 1498 tall because the card deck needs that much
+     scroll length for the Stack behaviour, while the collage is only 700 —
+     which left 784px of dead space under the image.
+
+     Sticky turns that gap into the deck's runway: the collage pins while the
+     cards scroll past it and releases at the section end, so the space is
+     used rather than empty. `align-self: start` is load bearing — a grid item
+     stretches to its area by default, and a stretched item has nowhere to
+     travel, so it would never stick. */
   .sobre__media {
-    position: relative;
+    position: sticky;
+    align-self: start;
+    inset-block-start: var(--size-40);
     block-size: 700px;
   }
 
