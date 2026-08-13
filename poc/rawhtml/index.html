@@ -363,7 +363,7 @@
                  Four of the six open with a bold lead line and then a
                  paragraph; the last two are a single paragraph. That shape is
                  the design's, not a formatting choice. -->
-            <details class="accordion__item" open>
+            <details class="accordion__item" name="processo" open>
               <summary>Conversa inicial<span class="accordion__icon"></span></summary>
               <div class="accordion__panel">
                 <strong>Entendimento do momento atual, objetivos e desafios.</strong>
@@ -371,7 +371,7 @@
                 realidade e avaliar como posso apoiar no seu processo.
               </div>
             </details>
-            <details class="accordion__item">
+            <details class="accordion__item" name="processo">
               <summary>Proposta personalizada<span class="accordion__icon"></span></summary>
               <div class="accordion__panel">
                 <strong>Escopo, prazo, formato de trabalho e investimento.</strong>
@@ -379,7 +379,7 @@
                 as informações necessárias para decidir com tranquilidade.
               </div>
             </details>
-            <details class="accordion__item">
+            <details class="accordion__item" name="processo">
               <summary>Consultoria e planejamento<span class="accordion__icon"></span></summary>
               <div class="accordion__panel">
                 <strong>Estratégia construída de forma personalizada.</strong>
@@ -388,7 +388,7 @@
                 está vivendo.
               </div>
             </details>
-            <details class="accordion__item">
+            <details class="accordion__item" name="processo">
               <summary>Acompanhamento<span class="accordion__icon"></span></summary>
               <div class="accordion__panel">
                 <strong>Suporte próximo durante a implementação.</strong>
@@ -396,7 +396,7 @@
                 prática com mais clareza e segurança.
               </div>
             </details>
-            <details class="accordion__item">
+            <details class="accordion__item" name="processo">
               <summary>Atendimento personalizado<span class="accordion__icon"></span></summary>
               <div class="accordion__panel">
                 Tudo é adaptado para sua realidade, com encontros individuais
@@ -404,7 +404,7 @@
                 projeto.
               </div>
             </details>
-            <details class="accordion__item">
+            <details class="accordion__item" name="processo">
               <summary>Recomendações independentes<span class="accordion__icon"></span></summary>
               <div class="accordion__panel">
                 Orientações sem vínculo com bancos, corretoras ou instituições
@@ -477,7 +477,16 @@
 
         <div class="depoimento">
           <div>
-            <p class="depoimento__mark">&rdquo;</p>
+            <!-- The drawn mark is a vector (72x48, two slanted bars at 30%),
+                 not a typographic quote character. Exported from the file
+                 rather than approximated with &rdquo; in Lora. -->
+            <img
+              class="depoimento__mark"
+              src="assets/img/quote.svg"
+              alt=""
+              width="72"
+              height="48"
+            />
             <blockquote class="depoimento__quote">
               Durante muitos anos, por questões de saúde, eu simplesmente não
               pensava no futuro. Pós transplante, quando ganhei o “longo prazo”,
@@ -678,7 +687,7 @@
                the .fig decoder does not expand. Reading them needed
                get_design_context, not a better export. -->
           <div class="faq__list">
-            <details class="accordion__item">
+            <details class="accordion__item" name="duvidas">
               <summary>Não entendo praticamente nada sobre investimentos. Ainda assim faz sentido conversar?<span class="accordion__icon"></span></summary>
               <div class="accordion__panel">
                 Sim. Você não precisa ter conhecimento prévio para buscar
@@ -687,7 +696,7 @@
                 com mais segurança.
               </div>
             </details>
-            <details class="accordion__item">
+            <details class="accordion__item" name="duvidas">
               <summary>Como saber se preciso de planejamento financeiro ou consultoria em investimentos?<span class="accordion__icon"></span></summary>
               <div class="accordion__panel">
                 Essa é uma dúvida bastante comum e você não precisa chegar com
@@ -696,7 +705,7 @@
                 sentido.
               </div>
             </details>
-            <details class="accordion__item">
+            <details class="accordion__item" name="duvidas">
               <summary>Já tenho investimentos e assessoria. Ainda assim a consultoria pode me ajudar?<span class="accordion__icon"></span></summary>
               <div class="accordion__panel">
                 Sim. Muitas pessoas procuram a consultoria para ter uma visão
@@ -704,7 +713,7 @@
                 se eles continuam alinhados aos seus objetivos e perfil.
               </div>
             </details>
-            <details class="accordion__item">
+            <details class="accordion__item" name="duvidas">
               <summary>Quanto preciso investir para contratar o serviço?<span class="accordion__icon"></span></summary>
               <div class="accordion__panel">
                 O investimento depende do tipo de serviço, do escopo do
@@ -717,7 +726,7 @@
                 e segurança se o trabalho faz sentido para você neste momento.
               </div>
             </details>
-            <details class="accordion__item">
+            <details class="accordion__item" name="duvidas">
               <summary>Preciso organizar minha vida financeira antes de procurar ajuda?<span class="accordion__icon"></span></summary>
               <div class="accordion__panel">
                 Não. Na prática, muitas pessoas procuram ajuda justamente
@@ -725,7 +734,7 @@
                 visibilidade sobre a própria situação financeira.
               </div>
             </details>
-            <details class="accordion__item">
+            <details class="accordion__item" name="duvidas">
               <summary>Os atendimentos são presenciais ou online?<span class="accordion__icon"></span></summary>
               <div class="accordion__panel">
                 Todo o trabalho acontece de forma online, permitindo atender
@@ -733,7 +742,7 @@
                 vivem no exterior.
               </div>
             </details>
-            <details class="accordion__item">
+            <details class="accordion__item" name="duvidas">
               <summary>A conversa inicial tem custo?<span class="accordion__icon"></span></summary>
               <div class="accordion__panel">
                 Não. A conversa inicial é gratuita e sem compromisso. É um
@@ -741,7 +750,7 @@
                 se faz sentido seguirmos em frente.
               </div>
             </details>
-            <details class="accordion__item">
+            <details class="accordion__item" name="duvidas">
               <summary>Você executa os investimentos para mim?<span class="accordion__icon"></span></summary>
               <div class="accordion__panel">
                 Não. Meu papel é orientar, explicar possibilidades e construir

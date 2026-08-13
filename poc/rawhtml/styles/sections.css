@@ -872,11 +872,13 @@
     border-radius: var(--radius-lg);
   }
 
+  /* quote 72x48, then a 64px gap before the text (295:9343 draws the
+     depoimento column as gap 64). The mark carries its own 30% opacity and
+     #5779aa fill inside the SVG. */
   .depoimento__mark {
-    font-family: var(--font-serif);
-    font-size: 88px;
-    line-height: 0.6;
-    color: var(--color-line-strong);
+    inline-size: 72px;
+    block-size: 48px;
+    margin-block-end: var(--size-64);
   }
 
   .depoimento__quote {

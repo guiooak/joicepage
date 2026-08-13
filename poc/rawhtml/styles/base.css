@@ -118,6 +118,11 @@
      before adding any. */
   html {
     container-type: inline-size;
+    /* Lets `block-size` animate to and from `auto`, which the accordion
+       panels need — see the note in styles/motion.css. Scoped to the root
+       because that is the only place it can be set; it changes nothing on
+       its own, only what a transition is allowed to interpolate. */
+    interpolate-size: allow-keywords;
   }
 
   body {

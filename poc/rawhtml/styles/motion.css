@@ -262,6 +262,40 @@
     }
   }
 
+  /* ---- 7 · Accordions --------------------------------------------------
+     Both accordions — Processo and the FAQ — open one panel at a time and
+     animate rather than snapping.
+
+     Exclusivity is the `name` attribute on <details>, not script. Browsers
+     close the other panels in the same named group themselves, so it works
+     with JS off and needs no state to be tracked anywhere. The frame draws
+     both accordions with exactly one panel open, which is what this enforces.
+
+     The animation needs `::details-content`, because a closed <details> hides
+     its content outright and there is nothing to transition. `interpolate-size`
+     is what lets `block-size` animate to and from `auto` — the panels are all
+     different heights and hard-coding any of them would break the moment the
+     copy changes. `content-visibility` needs `allow-discrete` so the content
+     stays rendered for the length of the close.
+
+     Guarded: where this is not supported the panels open instantly, which is
+     the behaviour that shipped before. */
+  @supports (interpolate-size: allow-keywords) and (selector(::details-content)) {
+    @media (prefers-reduced-motion: no-preference) {
+      .accordion__item::details-content {
+        block-size: 0;
+        overflow: hidden;
+        transition:
+          block-size 320ms cubic-bezier(0.4, 0, 0.2, 1),
+          content-visibility 320ms allow-discrete;
+      }
+
+      .accordion__item[open]::details-content {
+        block-size: auto;
+      }
+    }
+  }
+
   /* ---- 5 · Counter -----------------------------------------------------
      ref: final-intend-665098.framer.app
      Driven from JS so the real figures stay in the HTML — a CSS counter
