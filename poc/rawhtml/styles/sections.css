@@ -154,10 +154,19 @@
     position: relative;
     inline-size: 1358px;
     block-size: 750px;
-    /* Left-aligned to the 40px page gutter, not centred. The hero is 1358
-       against every other section's 1360, so centring put it 1px right of
-       the drawn x=40 and left 41/41 instead of the drawn 40/42. */
-    margin-inline: var(--page-gutter) auto;
+    /* Centred, with every other section.
+
+       This was briefly pinned to the 40px gutter to reproduce the frame's
+       40/42 split — the hero is 1358 wide against every other section's 1360,
+       so centring leaves 41/41 rather than the drawn 40/42. That was a
+       mistake: the 40/42 is a detail of where the hero sits inside a 1440
+       frame, not a rule about the viewport. Pinning it left held the hero
+       against the window edge at any width above 1440 while the rest of the
+       page centred — 40/522 against the shell's 280/280 at 1920.
+
+       One pixel of asymmetry inside the frame is worth far less than staying
+       in the same column as everything else. */
+    margin-inline: auto;
     margin-block-start: var(--size-24);
     border-radius: var(--radius-lg);
     overflow: hidden;
