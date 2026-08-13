@@ -269,6 +269,55 @@
     }
   }
 
+  /* ---- 8 · CTA pills ---------------------------------------------------
+     Not from the Interactions board — the frame draws these six static at
+     fixed offsets. Asked for on top: they drift, and they move away from the
+     cursor.
+
+     Two independent transforms, which is the reason this composes at all.
+     The drift animates the `translate` property; the cursor push is written
+     to `transform` by scripts/motion.js. CSS applies translate/rotate/scale
+     before transform and keeps them separate, so the two never overwrite
+     each other and neither needs to know about the other.
+
+     `inset-*` still carries the drawn position, so the pills float around
+     exactly where the file puts them. */
+  @media (prefers-reduced-motion: no-preference) {
+    .conversa .tag {
+      animation: pill-drift var(--drift, 9s) var(--drift-delay, 0s) ease-in-out
+        infinite alternate;
+      /* The push is set per frame; the transition is what gives it weight
+         instead of snapping the pill to the cursor. */
+      transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: translate, transform;
+    }
+
+    /* Staggered so the six never move as a block. Durations are deliberately
+       not multiples of one another, so the group does not resynchronise. */
+    .conversa .tag:nth-of-type(1) { --drift: 8.5s;  --drift-delay: -0.4s; --dx: 7px;  --dy: -9px; }
+    .conversa .tag:nth-of-type(2) { --drift: 10.5s; --drift-delay: -2.9s; --dx: -6px; --dy: -12px; }
+    .conversa .tag:nth-of-type(3) { --drift: 9.5s;  --drift-delay: -1.7s; --dx: 9px;  --dy: 7px; }
+    .conversa .tag:nth-of-type(4) { --drift: 11.5s; --drift-delay: -4.1s; --dx: -8px; --dy: 9px; }
+    .conversa .tag:nth-of-type(5) { --drift: 9s;    --drift-delay: -3.3s; --dx: 5px;  --dy: 11px; }
+    .conversa .tag:nth-of-type(6) { --drift: 12s;   --drift-delay: -0.9s; --dx: -9px; --dy: -7px; }
+  }
+
+  @keyframes pill-drift {
+    from {
+      translate: 0 0;
+    }
+
+    to {
+      translate: var(--dx, 0) var(--dy, -8px);
+    }
+  }
+
+  /* Only once script is driving the push — otherwise the cursor affordance
+     would suggest an interaction that does not exist. */
+  .js .conversa .tag {
+    cursor: default;
+  }
+
   /* ---- 7 · Accordions --------------------------------------------------
      Both accordions — Processo and the FAQ — open one panel at a time and
      animate rather than snapping.

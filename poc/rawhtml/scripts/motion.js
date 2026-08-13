@@ -217,6 +217,79 @@
     );
   }
 
+  /* ---- 8 · CTA pills follow away from the cursor -----------------------
+     The drift is CSS; this only adds the push. It writes `transform`, which
+     composes with the `translate` the drift animates rather than fighting it
+     — see the note in styles/motion.css.
+
+     Everything is computed in the CTA's own coordinate space, not the
+     viewport's. The page is scaled by a `zoom` on body at widths under
+     1440, so viewport pixels and the element's own pixels are not the same
+     unit; mixing them would make the push strength drift with window size.
+     `offsetLeft`/`offsetTop` are already unzoomed, and the ratio between the
+     block's rendered and offset width recovers the factor for the pointer.
+
+     Positions are read from `offsetLeft`, which ignores transforms. Reading
+     `getBoundingClientRect()` instead would measure the pill where the push
+     has already put it and feed its own output back in, which oscillates. */
+  const cta = document.querySelector(".conversa");
+
+  if (cta && !reduced) {
+    const pills = [...cta.querySelectorAll(".tag")];
+    const RADIUS = 200; // how close the cursor has to get, in CTA pixels
+    const STRENGTH = 30; // furthest a pill is pushed
+    let frame = null;
+    let pointer = null;
+
+    const render = () => {
+      frame = null;
+      const box = cta.getBoundingClientRect();
+      // zoom factor: rendered width against the element's own width
+      const scale = cta.offsetWidth ? box.width / cta.offsetWidth : 1;
+
+      pills.forEach((pill) => {
+        if (!pointer) {
+          pill.style.transform = "";
+          return;
+        }
+
+        const cx = pill.offsetLeft + pill.offsetWidth / 2;
+        const cy = pill.offsetTop + pill.offsetHeight / 2;
+        const dx = cx - (pointer.x - box.left) / scale;
+        const dy = cy - (pointer.y - box.top) / scale;
+        const dist = Math.hypot(dx, dy);
+
+        if (dist > RADIUS || dist === 0) {
+          pill.style.transform = "";
+          return;
+        }
+
+        // Squared falloff: nothing happens until the cursor is genuinely
+        // near, then the pill moves decisively.
+        const force = (1 - dist / RADIUS) ** 2;
+        const step = (STRENGTH * force) / dist;
+        pill.style.transform =
+          `translate(${(dx * step).toFixed(2)}px, ${(dy * step).toFixed(2)}px)`;
+      });
+    };
+
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(render);
+    };
+
+    cta.addEventListener("pointermove", (e) => {
+      // Coarse pointers have no hover to track; a tap should not fling them.
+      if (e.pointerType === "touch") return;
+      pointer = { x: e.clientX, y: e.clientY };
+      schedule();
+    });
+
+    cta.addEventListener("pointerleave", () => {
+      pointer = null;
+      schedule();
+    });
+  }
+
   /* ---- 5 · Counter -----------------------------------------------------
      ref: final-intend-665098.framer.app
      Reads the figure already rendered in the HTML, counts up to it, then
