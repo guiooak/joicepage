@@ -161,22 +161,62 @@
     isolation: isolate;
   }
 
+  /* The photograph is NOT a cover-fit of the frame. It is placed 2343.4x1850.2
+     at -681.4,-531 and rotated 4.14deg — far larger than the 1358x750 box and
+     hanging off it on every side, which is what puts Joice at the scale the
+     frame draws her and sweeps the light streak across at an angle.
+
+     `object-fit: cover` centred a much wider crop instead, so she read smaller
+     and the desk came into shot. Size and rotation are from the file (.fig
+     `IMG_3139 3` — and the committed asset is 2200x1737, the same 1.266 ratio,
+     so it is the raw photograph rather than a pre-cropped export).
+
+     The offsets are NOT the .fig's `@-681.4,-531`, and that trap is worth
+     naming: Figma rotates about a node's ORIGIN, CSS about its CENTRE, so the
+     stored translation cannot be used directly. Using it put Joice ~70px right
+     and ~82px high. These come from the frame's own rotated bounding box
+     instead — 2471x2014.5 at -815,-531, whose centre is 420.4,476.3:
+
+       left = 420.4 - 2343.4/2 = -751.3     top = 476.3 - 1850.2/2 = -448.8
+
+     Checked rather than trusted: rotating 2343.4x1850.2 by 4.14deg gives a
+     bounding box of 2470.9x2014.6 against the frame's reported 2471x2014.5. */
   .hero__photo {
     position: absolute;
-    inset: 0;
-    inline-size: 100%;
-    block-size: 100%;
+    inline-size: 2343.4px;
+    block-size: 1850.2px;
+    inset-inline-start: -751.3px;
+    inset-block-start: -448.8px;
+    max-inline-size: none;
     object-fit: cover;
+    rotate: 4.14deg;
     /* Rectangle over the photo at 8% black in the file. */
     background-color: var(--hero-veil);
   }
 
-  /* Ellipse 1 1264.7x988.1 @338,703 · Ellipse 2 1809x1414 @-989,140 */
+  /* Ellipse 1 1264.7x988.1 @338,703 · Ellipse 2 1809x1414 @-989,140.
+
+     Both carry a heavy layer blur and 60% opacity, which is what turns them
+     from two purple discs into the soft lilac wash the frame actually shows.
+     Taken from the exported SVGs rather than guessed — Figma writes the blur
+     out as a real filter:
+
+       <g opacity="0.6" style="mix-blend-mode:hard-light">
+       <feGaussianBlur stdDeviation="150" />
+
+     CSS blur() is specified in the same stdDeviation, so blur(150px) is the
+     exact value, not an approximation of it. Without these two lines the
+     hero reads as a hard-edged violet diagonal.
+
+     `.hero` clips, which stands in for the mask the frame uses to keep the
+     blur bleed inside the rounded rect. */
   .hero__blob {
     position: absolute;
     background-color: var(--hero-blend);
     border-radius: 50%;
     mix-blend-mode: hard-light;
+    opacity: 0.6;
+    filter: blur(150px);
     pointer-events: none;
   }
 
@@ -185,6 +225,8 @@
     block-size: 988.1px;
     inset-inline-start: 338px;
     inset-block-start: 703px;
+    /* The frame rotates this one; Ellipse 2 is drawn unrotated. */
+    rotate: -16.16deg;
   }
 
   .hero__blob--2 {
