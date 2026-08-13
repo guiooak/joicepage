@@ -763,11 +763,14 @@
       </section>
     </main>
 
-    <!-- footer 1360x396 · fill #28445e · pad 40 · r 24. Contact details are
-         the ones resolved from the footer symbol and recorded in
-         .ai/plans/joice-landing-page.md. -->
+    <!-- footer 1360x396 · fill #28445e · pad 40 · gap 40 · r 24.
+
+         Four columns, `align-items: end`, which is how the frame draws it —
+         not the top-row / credentials / bottom-row stack this used to be.
+         Everything here comes from the resolved instance 318:7401; before it
+         could be expanded, the whole footer was inferred. -->
     <footer class="shell site-footer">
-      <div class="site-footer__top">
+      <div class="site-footer__col">
         <div class="site-footer__brand">
           <a class="brand brand--inverse" href="#inicio">
             <span>joice</span>
@@ -779,36 +782,66 @@
           </p>
         </div>
 
-        <nav class="site-footer__nav" aria-label="Navegação do rodapé">
-          <a href="#visao">Visão</a>
-          <a href="#servicos">Serviços</a>
-          <a href="#processo">Processo</a>
-          <a href="#historias">Histórias</a>
-          <a href="#sobre">Sobre</a>
-          <a href="#duvidas">Dúvidas</a>
-        </nav>
+        <p class="site-footer__creds">
+          → CEA Especialista em Investimentos<br />
+          → CVM Consultora de Valores Mobiliários 002276-4<br />
+          → CFP® Certified Financial Planner
+        </p>
+      </div>
 
+      <div class="site-footer__col">
         <div class="site-footer__contact">
-          <a href="mailto:oi@joicesperandio.com.br">oi@joicesperandio.com.br</a>
-          <!-- TODO: confirm the mobile number before deploy. The design draws
-               "+55 47 9193-9397" — eight digits after the DDD, where Brazilian
-               mobiles have had nine since the national rollout. -->
-          <a href="https://wa.me/5547991939397">+55 47 99193-9397</a>
+          <div class="site-footer__field">
+            <span class="site-footer__label">Telefone;</span>
+            <!-- TODO: confirm the mobile number before deploy. The design
+                 draws "+55 47 9193-9397" — eight digits after the DDD, where
+                 Brazilian mobiles have had nine since the national rollout. -->
+            <a class="site-footer__phone" href="https://wa.me/5547991939397">+55 47 99193-9397</a>
+          </div>
+          <div class="site-footer__field">
+            <span class="site-footer__label">Email:</span>
+            <a href="mailto:oi@joicesperandio.com.br">oi@joicesperandio.com.br</a>
+          </div>
+        </div>
+
+        <div class="site-footer__social">
+          <span class="site-footer__label">Acompanhe pelas redes sociais:</span>
+          <!-- The frame draws four marks. Only Instagram and LinkedIn are
+               wired, because only those two URLs are known — both are already
+               in the JSON-LD sameAs. TikTok and YouTube need handles from
+               Joice; inventing them would ship links that 404. -->
+          <ul>
+            <li>
+              <a href="https://www.instagram.com/joicesperandio/" aria-label="Instagram">
+                <img src="assets/img/social-instagram.svg" alt="" width="24" height="24" />
+              </a>
+            </li>
+            <li>
+              <a href="https://www.linkedin.com/in/joice-sperandio/" aria-label="LinkedIn">
+                <img src="assets/img/social-linkedin.svg" alt="" width="20" height="20" />
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
 
-      <p class="site-footer__creds">
-        → CEA Especialista em Investimentos<br />
-        → CVM Consultora de Valores Mobiliários 002276-4<br />
-        → CFP® Certified Financial Planner
-      </p>
+      <nav class="site-footer__col site-footer__nav" aria-label="Navegação do rodapé">
+        <a href="#inicio">Home</a>
+        <a href="#visao">Visão</a>
+        <a href="#servicos">Serviços</a>
+        <a href="#processo">Processo</a>
+        <a href="#historias">Histórias</a>
+        <a href="#sobre">Sobre</a>
+        <a href="#duvidas">Dúvidas</a>
+        <a href="/politica-de-cookies">Política de Cookies</a>
+        <a href="/politica-de-privacidade">Política de Privacidade</a>
+      </nav>
 
-      <div class="site-footer__bottom">
-        <small>© 2026 Joice Sperandio</small>
-        <nav aria-label="Políticas">
-          <a href="/politica-de-cookies">Política de Cookies</a>
-          <a href="/politica-de-privacidade">Política de Privacidade</a>
-        </nav>
+      <div class="site-footer__col site-footer__end">
+        <a class="site-footer__totop" href="#inicio" aria-label="Voltar ao topo">
+          <img src="assets/img/to-top.svg" alt="" width="40" height="40" />
+        </a>
+        <small>© 2026</small>
       </div>
     </footer>
   </body>

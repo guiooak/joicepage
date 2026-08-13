@@ -141,16 +141,24 @@
     }
   }
 
-  /* Collapsed cards clip their copy rather than dropping it — the text stays
-     in the DOM for crawlers and for anyone without JS. */
+  /* The collapsed card DROPS its copy from layout rather than hiding it in
+     place. `visibility: hidden` keeps the box, so at the collapsed 437 measure
+     the copy still laid out 1014px tall inside an 874 card and was sliced at
+     the edge. `display: none` takes it out of flow, so the card is sized by
+     whichever one is open.
+
+     The text is equally present in the HTML either way — this changes layout,
+     not what is served, and the copy is in the response for crawlers in both
+     cases. The frame agrees: it draws the collapsed card's `Content` and
+     `List` nodes hidden (318:9745, 318:9748), not merely transparent. */
   .service-card {
     overflow: hidden;
   }
 
-  .service-card:not([data-open]) .service-card__claim,
-  .service-card:not([data-open]) .service-card__text,
-  .service-card:not([data-open]) .service-card__list {
-    visibility: hidden;
+  .service-card:not([data-open]):not(:hover) .service-card__claim,
+  .service-card:not([data-open]):not(:hover) .service-card__text,
+  .service-card:not([data-open]):not(:hover) .service-card__list {
+    display: none;
   }
 
   .service-card[data-open] .service-card__arrow {
@@ -167,21 +175,15 @@
      tap, keeps the click behaviour alone. Click and keyboard are untouched —
      this is additive, and the card is still a button. */
   @media (hover: hover) and (pointer: fine) {
-    .js .servicos__grid:hover .service-card {
+    .servicos__grid:hover .service-card {
       flex-basis: 437px;
     }
 
-    .js .servicos__grid .service-card:hover {
+    .servicos__grid .service-card:hover {
       flex-basis: 899px;
     }
 
-    .js .servicos__grid .service-card:hover .service-card__claim,
-    .js .servicos__grid .service-card:hover .service-card__text,
-    .js .servicos__grid .service-card:hover .service-card__list {
-      visibility: visible;
-    }
-
-    .js .servicos__grid .service-card:hover .service-card__arrow {
+    .servicos__grid .service-card:hover .service-card__arrow {
       display: none;
     }
 
