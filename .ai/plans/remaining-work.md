@@ -164,25 +164,47 @@ Both are now `data-quote` attributes on their `<li>` in `.depoimento__people`.
 `scripts/motion.js` already switched on any element carrying `data-quote`, so
 the carousel went from one live entry to three with no change to the script.
 
-Still unwritten: **Frances [Sobrenome]** and **Rafael & [Parceira]** — their
-name frames are `hidden` in every state drawn anywhere in the file, so no
-active state exposes their text. Ask Joice; the surnames are placeholders in
-the mockup too and need real names before launch either way.
+Still unwritten: **Frances [Sobrenome]** and **Rafael & [Parceira]**. Now
+confirmed properly rather than inferred — four of the five `Depoimentos`
+instances (`318:7447`, `318:7451`, `318:7448`, `318:7449`) were expanded, and
+**none of them override the quote**: every one carries Alessandra's text. Only
+the active name's Tags frame changes between states. So the desktop frame holds
+exactly one written quote, and the other two came from the mobile annotations.
 
-## 5 · FAQ copy — confirmed missing, second source
+Ask Joice; the surnames are placeholders in the mockup too and need real names
+before launch either way.
 
-Independently re-verified through the MCP tree: **every** FAQ instance is a
-childless leaf — eight on desktop (`413:8970`, `413:19942`, `413:20032`,
-`413:20122`, `413:20212`, `413:20302`, `413:20392`, `413:20482`), seven more in
-the mobile annotations. Not an extraction limitation in `figextract`; the cards
-are drawn empty.
+Two loose ends here, both small:
 
-Same for three of the six Processo panels. `grep -c "A capturar" index.html`
-→ **11**.
+- The quote is drawn **28px Bold (H4)**, which the build does not currently
+  match.
+- Simone, Frances and Rafael each carry category tags that the build does not
+  render (only Alessandra's are in). Reading them needs a full
+  `get_design_context` on the parent instance — addressing the Tags sub-frame
+  directly (`I318:7451;295:9360`) returns an empty node.
 
-Purely a writing task for Joice: eight Q&A pairs, three Processo panel texts.
-Nothing technical unblocks it. It is the single largest thing standing between
-this build and launch.
+## 5 · ~~FAQ copy — confirmed missing~~ — WRONG, and now DONE
+
+**This section was wrong, twice, and the mistake is worth recording.** It said
+the FAQ copy did not exist, on the strength of two sources agreeing that the
+eight `FAQ` nodes were empty. Both sources were blind in the same way: they
+were **instances**, and neither the `.fig` decoder nor `get_metadata` on a
+parent expands instance overrides. "Empty" meant "I cannot see inside", not
+"nothing is there".
+
+All eight Q&A pairs and all six Processo panels existed the whole time, in the
+detached instances the Desktop section's arrows point at. They came out with
+`get_design_context`, which does expand overrides. `grep -c "A capturar"` →
+**0**.
+
+Two lessons for the next extraction:
+
+- A childless `INSTANCE` in a metadata dump means **unresolved**, never empty.
+  Only `get_design_context` — or §7's override walker — settles it.
+- `get_metadata` *does* expand an instance when called **directly on that
+  instance**, and text shows up in node names. That is far cheaper than
+  `get_design_context` for reading copy, and it is how the Depoimentos states
+  were checked.
 
 ## 6 · Carry-overs already recorded, still open
 
@@ -255,18 +277,20 @@ Joice rather than guessing, since a wrong one ships a 404 in the footer.
 | 4 | Create `og.jpg` | — | small |
 | 5 | Ask about hidden CTAs (§2) and `play-circle` (§3) | Joice / designer | — |
 | 6 | Confirm the WhatsApp number, test `wa.me` on a phone | Joice | small |
-| 7 | FAQ + Processo copy (§5) | **Joice — writing** | large |
+| ~~7~~ | ~~FAQ + Processo copy (§5)~~ | done — it existed all along | — |
 | 8 | Policy pages, GBP fields | Joice | medium |
 | 9 | `figextract` visibility + overrides (§7) — also unblocks §8 | — | medium |
 | 10 | TikTok and YouTube handles for the footer (§8) | Joice | small |
+| 11 | Testimonial tags for Simone / Frances / Rafael (§4) | — | small |
 
-Items 3 and 4 are what is left that is unblocked and self-contained.
-Everything from 5 on needs input from Joice, and item 7 remains the launch
-blocker it has been throughout.
+Items 3 and 4 are what is left that is unblocked and self-contained. **The
+launch blocker is gone** — the FAQ copy was never a writing task.
 
-Both remaining unblocked items need a Figma asset export, so mind the quota:
-the Starter plan allows **six MCP tool calls a month** and they are spent for
-August 2026.
+Quota is no longer the constraint either. The file was duplicated into a Pro
+team (`kj4nWRhUjFSFcTXPS1v7dQ`), which is 200 calls/day against the original's
+6/month. Node IDs survived the duplicate, so every id in this document still
+resolves. Mind that the copy is a **snapshot**: the designer's file is still
+the live one.
 
 ## Re-verification after any of this
 

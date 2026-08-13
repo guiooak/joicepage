@@ -114,7 +114,9 @@
           <a href="#duvidas">Dúvidas</a>
         </nav>
 
-        <a class="btn btn--solid" href="#contato">Agendar uma conversa</a>
+        <!-- Fill is #5779aa (primary-base), confirmed from the resolved Menu
+             instance 318:7276 — not the #28445e the other buttons carry. -->
+        <a class="btn btn--primary" href="#contato">Agendar uma conversa</a>
       </div>
     </header>
 
@@ -353,43 +355,60 @@
 
           <div class="processo__col">
             <div class="accordion">
+            <!-- All six panels come from `Accordion PROCESSO` (318:7402) in
+                 the Desktop section, which the arrow from the "Processo"
+                 label points at. It draws every panel expanded, where the
+                 page frame draws them collapsed.
+
+                 Four of the six open with a bold lead line and then a
+                 paragraph; the last two are a single paragraph. That shape is
+                 the design's, not a formatting choice. -->
             <details class="accordion__item" open>
               <summary>Conversa inicial<span class="accordion__icon"></span></summary>
               <div class="accordion__panel">
-                Entendimento do momento atual, objetivos e desafios. Fazemos uma
-                conversa online de 30 minutos para entender sua realidade e
-                avaliar como posso apoiar no seu processo.
+                <strong>Entendimento do momento atual, objetivos e desafios.</strong>
+                Fazemos uma conversa online de 30 minutos para entender sua
+                realidade e avaliar como posso apoiar no seu processo.
               </div>
             </details>
-
-            <!-- Two of the five panels below are resolved: their copy exists
-                 in the MOBILE 360px frame, which carries the expanded states
-                 the desktop frame draws collapsed. The remaining three are
-                 not written anywhere in the file yet. -->
             <details class="accordion__item">
               <summary>Proposta personalizada<span class="accordion__icon"></span></summary>
-              <div class="accordion__panel">A capturar no Figma.</div>
+              <div class="accordion__panel">
+                <strong>Escopo, prazo, formato de trabalho e investimento.</strong>
+                Você recebe uma proposta construída para o seu caso, com todas
+                as informações necessárias para decidir com tranquilidade.
+              </div>
             </details>
             <details class="accordion__item">
               <summary>Consultoria e planejamento<span class="accordion__icon"></span></summary>
-              <div class="accordion__panel">A capturar no Figma.</div>
+              <div class="accordion__panel">
+                <strong>Estratégia construída de forma personalizada.</strong>
+                Organizamos as informações, definimos prioridades e
+                estruturamos as decisões necessárias para o momento que você
+                está vivendo.
+              </div>
             </details>
             <details class="accordion__item">
               <summary>Acompanhamento<span class="accordion__icon"></span></summary>
-              <div class="accordion__panel">A capturar no Figma.</div>
+              <div class="accordion__panel">
+                <strong>Suporte próximo durante a implementação.</strong>
+                Você conta com acompanhamento para colocar as decisões em
+                prática com mais clareza e segurança.
+              </div>
             </details>
             <details class="accordion__item">
               <summary>Atendimento personalizado<span class="accordion__icon"></span></summary>
               <div class="accordion__panel">
-                Encontros individuais e um trabalho adaptado à sua realidade,
-                com suporte durante todo o processo.
+                Tudo é adaptado para sua realidade, com encontros individuais
+                em tempo real e suporte próximo para tirar dúvidas ao longo do
+                projeto.
               </div>
             </details>
             <details class="accordion__item">
               <summary>Recomendações independentes<span class="accordion__icon"></span></summary>
               <div class="accordion__panel">
-                Orientações sem vínculo com instituições financeiras,
-                garantindo total independência nas recomendações.
+                Orientações sem vínculo com bancos, corretoras ou instituições
+                financeiras (garantia de 100% de imparcialidade).
               </div>
             </details>
             </div>
@@ -646,43 +665,89 @@
           <!-- Native <details> so every answer stays in the HTML and remains
                crawlable — a deliberate choice, not a fallback.
 
-               TODO(copy): the questions DO NOT EXIST in the Figma file. This
-               was checked, not assumed: `SYMBOL FAQ` (115:2224) and every one
-               of its instances contain zero text nodes in the decoded export.
-               The eight cards are drawn empty. So this copy has to come from
-               Joice — it is a writing task, not an extraction one. -->
+               The copy DOES exist, and the earlier note here saying otherwise
+               was wrong. It lives in eight detached `FAQ` instances in the
+               Desktop section (413:8970, 413:19942, 413:20032, 413:20122,
+               413:20212, 413:20302, 413:20392, 413:20482), which the arrow
+               from the "Faq" label points at. Each instance draws the same
+               eight questions with a different one expanded, so the answers
+               are spread one per instance.
+
+               They read as empty through `figextract` because they are
+               INSTANCE nodes: the text is in per-instance overrides, which
+               the .fig decoder does not expand. Reading them needed
+               get_design_context, not a better export. -->
           <div class="faq__list">
             <details class="accordion__item">
-              <summary>Pergunta 1 — a capturar no Figma<span class="accordion__icon"></span></summary>
-              <div class="accordion__panel">A capturar no Figma.</div>
+              <summary>Não entendo praticamente nada sobre investimentos. Ainda assim faz sentido conversar?<span class="accordion__icon"></span></summary>
+              <div class="accordion__panel">
+                Sim. Você não precisa ter conhecimento prévio para buscar
+                ajuda. O objetivo do trabalho é justamente trazer clareza,
+                explicar possibilidades e te ajudar a participar das decisões
+                com mais segurança.
+              </div>
             </details>
             <details class="accordion__item">
-              <summary>Pergunta 2 — a capturar no Figma<span class="accordion__icon"></span></summary>
-              <div class="accordion__panel">A capturar no Figma.</div>
+              <summary>Como saber se preciso de planejamento financeiro ou consultoria em investimentos?<span class="accordion__icon"></span></summary>
+              <div class="accordion__panel">
+                Essa é uma dúvida bastante comum e você não precisa chegar com
+                essa resposta pronta. A conversa inicial existe justamente para
+                entender seu momento e identificar qual caminho faz mais
+                sentido.
+              </div>
             </details>
             <details class="accordion__item">
-              <summary>Pergunta 3 — a capturar no Figma<span class="accordion__icon"></span></summary>
-              <div class="accordion__panel">A capturar no Figma.</div>
+              <summary>Já tenho investimentos e assessoria. Ainda assim a consultoria pode me ajudar?<span class="accordion__icon"></span></summary>
+              <div class="accordion__panel">
+                Sim. Muitas pessoas procuram a consultoria para ter uma visão
+                independente sobre os investimentos que já possuem e entender
+                se eles continuam alinhados aos seus objetivos e perfil.
+              </div>
             </details>
             <details class="accordion__item">
-              <summary>Pergunta 4 — a capturar no Figma<span class="accordion__icon"></span></summary>
-              <div class="accordion__panel">A capturar no Figma.</div>
+              <summary>Quanto preciso investir para contratar o serviço?<span class="accordion__icon"></span></summary>
+              <div class="accordion__panel">
+                O investimento depende do tipo de serviço, do escopo do
+                trabalho e da complexidade da demanda. Algumas situações exigem
+                uma análise mais pontual. Outras envolvem planejamento de longo
+                prazo, construção patrimonial ou acompanhamento mais próximo.
+                Por isso, cada proposta é construída de forma personalizada.
+                Após a conversa inicial, você recebe todas as informações sobre
+                escopo, etapas, prazo e investimento, para decidir com clareza
+                e segurança se o trabalho faz sentido para você neste momento.
+              </div>
             </details>
             <details class="accordion__item">
-              <summary>Pergunta 5 — a capturar no Figma<span class="accordion__icon"></span></summary>
-              <div class="accordion__panel">A capturar no Figma.</div>
+              <summary>Preciso organizar minha vida financeira antes de procurar ajuda?<span class="accordion__icon"></span></summary>
+              <div class="accordion__panel">
+                Não. Na prática, muitas pessoas procuram ajuda justamente
+                porque não sabem por onde começar ou sentem que perderam
+                visibilidade sobre a própria situação financeira.
+              </div>
             </details>
             <details class="accordion__item">
-              <summary>Pergunta 6 — a capturar no Figma<span class="accordion__icon"></span></summary>
-              <div class="accordion__panel">A capturar no Figma.</div>
+              <summary>Os atendimentos são presenciais ou online?<span class="accordion__icon"></span></summary>
+              <div class="accordion__panel">
+                Todo o trabalho acontece de forma online, permitindo atender
+                pessoas em qualquer lugar do Brasil e também brasileiros que
+                vivem no exterior.
+              </div>
             </details>
             <details class="accordion__item">
-              <summary>Pergunta 7 — a capturar no Figma<span class="accordion__icon"></span></summary>
-              <div class="accordion__panel">A capturar no Figma.</div>
+              <summary>A conversa inicial tem custo?<span class="accordion__icon"></span></summary>
+              <div class="accordion__panel">
+                Não. A conversa inicial é gratuita e sem compromisso. É um
+                espaço para entendermos seu momento, suas dúvidas e avaliarmos
+                se faz sentido seguirmos em frente.
+              </div>
             </details>
             <details class="accordion__item">
-              <summary>Pergunta 8 — a capturar no Figma<span class="accordion__icon"></span></summary>
-              <div class="accordion__panel">A capturar no Figma.</div>
+              <summary>Você executa os investimentos para mim?<span class="accordion__icon"></span></summary>
+              <div class="accordion__panel">
+                Não. Meu papel é orientar, explicar possibilidades e construir
+                estratégias alinhadas aos seus objetivos. As decisões e
+                movimentações permanecem sempre sob seu controle.
+              </div>
             </details>
           </div>
         </div>
