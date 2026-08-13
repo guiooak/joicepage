@@ -245,7 +245,13 @@
   }
 
   @media (prefers-reduced-motion: no-preference) {
-    .js .depoimento__people li[data-quote][aria-current="true"]::after {
+    /* Gated on [data-rotating], which motion.js sets when the clock actually
+       starts. Without it the bar ran from page load: the first entry already
+       carries aria-current in the HTML, so its 7s animation began immediately
+       and had long finished before anyone scrolled down. The bar looked dead
+       on first view and only seemed to work once the rotation moved
+       aria-current to a second entry and restarted it. */
+    .js .depoimento[data-rotating] .depoimento__people li[data-quote][aria-current="true"]::after {
       content: "";
       position: absolute;
       inset-inline: 0;
@@ -256,7 +262,7 @@
       animation: tick var(--testimonial-interval, 7s) linear both;
     }
 
-    .js .depoimento__people li[aria-current="true"]:hover::after {
+    .js .depoimento[data-rotating] .depoimento__people li[aria-current="true"]:hover::after {
       animation-play-state: paused;
     }
   }

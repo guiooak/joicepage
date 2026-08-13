@@ -179,9 +179,14 @@
       }, delay);
     };
 
+    const block = document.querySelector(".depoimento");
+
     const start = () => {
       if (stopped || timer) return;
       remaining = INTERVAL;
+      // Marks the moment the clock begins, so the CSS progress bar starts
+      // with it rather than at page load — see styles/motion.css.
+      if (block) block.dataset.rotating = "";
       run(remaining);
     };
 
@@ -245,7 +250,6 @@
 
     // The observer only decides when to begin; it disconnects immediately
     // after, so nothing can pause the rotation later.
-    const block = document.querySelector(".depoimento");
     if ("IntersectionObserver" in window && block) {
       const io = new IntersectionObserver(
         (entries) => {

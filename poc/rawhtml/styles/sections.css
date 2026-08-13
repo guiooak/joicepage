@@ -1108,8 +1108,25 @@
     /* The gutter above the picture while it is pinned. This is the sticky
        offset rather than padding on the section — sticky pins against the
        viewport, so no amount of padding on #sobre can open a gap here. */
-    inset-block-start: var(--size-32);
+    /* Divided by the fit factor below, because `zoom` scales this inset too
+       — left alone the top gutter shrank with the picture (29 instead of 32
+       at a 700px window). Dividing cancels that out so it stays exactly 32
+       whatever the viewport. */
+    inset-block-start: calc(var(--size-32) / var(--fit));
     block-size: 700px;
+
+    /* ...and the matching one below it. The collage is a fixed 700 and the
+       gutters are 32 each, so on any viewport under 764 it ran off the bottom
+       of the screen while pinned — measured -32 at a 700px window, and the
+       browser here is shorter still. `zoom` rather than `scale` because the
+       collage's panel and three thumbs are absolutely positioned at fixed
+       pixel offsets: a transform would shrink the picture and leave its
+       layout box at 700, while zoom takes the box with it and keeps the
+       sticky arithmetic honest.
+
+       Capped at 1 so a tall window gets the drawn size untouched. */
+    --fit: min(1, calc((100dvh - 64px) / 700px));
+    zoom: var(--fit);
   }
 
   .sobre__panel {
