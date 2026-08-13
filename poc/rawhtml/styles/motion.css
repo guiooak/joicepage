@@ -280,26 +280,37 @@
 
      Guarded: where this is not supported the panels open instantly, which is
      the behaviour that shipped before. */
-  @supports (interpolate-size: allow-keywords) and (selector(::details-content)) {
-    @media (prefers-reduced-motion: no-preference) {
-      .accordion__item::details-content {
-        block-size: 0;
-        overflow: hidden;
-        transition:
-          block-size 320ms cubic-bezier(0.4, 0, 0.2, 1),
-          content-visibility 320ms allow-discrete;
-      }
+  /* An animation on the OPEN state, not a transition from a forced-closed
+     one. The distinction is the whole point and was learned the hard way.
 
-      /* `content-visibility` has to be set here explicitly. Declaring a
-         transition for it on the closed state is not enough — the UA's own
-         `[open]` rule does not win once the property is author-transitioned,
-         so the panel stayed `hidden` at block-size 0 and never opened.
-         Measured: without this line an open panel computes blockSize 0px and
-         contentVisibility hidden, with it 164px and visible. */
-      .accordion__item[open]::details-content {
-        block-size: auto;
-        content-visibility: visible;
-      }
+     The obvious construction is `::details-content { block-size: 0 }` plus an
+     `[open]` override back to auto. It animates both ways — and if anything
+     about that override fails to take, the closed rule still applies and the
+     panel cannot open at all. A decorative animation had made the content
+     unreachable. Caught on Chrome 150, which reports support for both
+     `::details-content` and `interpolate-size` and still would not honour the
+     override; Chrome 151 runs the same CSS correctly.
+
+     Written this way the default state is untouched: the panel is whatever
+     the browser makes it, and this only adds a keyframe on the way in. The
+     worst case anywhere is no animation, never a panel that will not open.
+     The cost is that closing is instant, which is the cheaper half to lose. */
+  @media (prefers-reduced-motion: no-preference) {
+    .accordion__item[open]::details-content {
+      animation: panel-open 320ms cubic-bezier(0.4, 0, 0.2, 1);
+      overflow: hidden;
+    }
+  }
+
+  @keyframes panel-open {
+    from {
+      block-size: 0;
+      opacity: 0;
+    }
+
+    to {
+      block-size: auto;
+      opacity: 1;
     }
   }
 
