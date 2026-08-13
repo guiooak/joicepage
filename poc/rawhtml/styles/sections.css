@@ -131,16 +131,35 @@
      and this variant no longer exists. */
 
   /* ---- Tag / eyebrow ---------------------------------------------------
-     36px tall · padX 32 · padY 4 · r 999. */
+     36px tall · padX 32 · padY 4 · r 999.
+
+     padY is short by the border, which is drawn inside the 36 rather than
+     added to it — 4 + 4 + 28 of line box + 2 of border came out 38. */
   .tag {
     display: inline-block;
-    padding: var(--size-4) var(--size-32);
+    padding: calc(var(--size-4) - 1px) var(--size-32);
     font-size: var(--text-paragraph);
     line-height: var(--leading-paragraph);
     letter-spacing: var(--tracking-paragraph);
     color: var(--color-accent);
     border: 1px solid var(--color-line-strong);
     border-radius: var(--radius-pill);
+  }
+
+  /* Every section puts 40 between its tag and whatever follows — the frame
+     sets the tag 36 tall at y=0 and the next block at y=76, in all six.
+     Three of them had no gap at all and the other three each carried their
+     own copy of the value, so it is stated once here instead.
+
+     The CTA is the exception: its pills are absolutely placed decoration
+     rather than an eyebrow, and a margin would shift them off their drawn
+     offsets. */
+  .tag + * {
+    margin-block-start: var(--size-40);
+  }
+
+  .conversa .tag + * {
+    margin-block-start: 0;
   }
 
   /* ---- Hero ------------------------------------------------------------
@@ -411,7 +430,6 @@
     display: grid;
     grid-template-columns: 664px 438px;
     justify-content: space-between;
-    margin-block-start: var(--size-40);
   }
 
   .visao__title {
@@ -1007,7 +1025,6 @@
   }
 
   .sobre__title {
-    margin-block-start: var(--size-40);
     font-size: var(--text-h1);
     line-height: var(--leading-h1);
     font-weight: var(--weight-bold);
@@ -1121,7 +1138,6 @@
   }
 
   .faq__title {
-    margin-block-start: var(--size-40);
     font-size: var(--text-h1);
     line-height: var(--leading-h1);
     font-weight: var(--weight-bold);
