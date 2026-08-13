@@ -1114,14 +1114,6 @@
        viewport, so no amount of padding on #sobre can open a gap here. */
     inset-block-start: var(--size-32);
     block-size: 700px;
-    /* Sticky travel ends when the element's MARGIN box reaches the bottom of
-       its containing block. The collage is 700 tall against a 158 card, so
-       its bottom got there ~540px before the last card settled — it unpinned
-       and scrolled away while "Maternidade & Família" was still most of a
-       screen below. A negative bottom margin lifts the margin box by that
-       difference, buying back exactly that much travel, and costs no layout
-       space because nothing follows it in this column. */
-    margin-block-end: -542px;
   }
 
   .sobre__panel {

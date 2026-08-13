@@ -111,10 +111,15 @@
      28px of travel across the whole viewport pass. */
   @supports (animation-timeline: view()) {
     @media (prefers-reduced-motion: no-preference) {
+      /* `.sobre__media` is deliberately NOT here. It is sticky, and a
+         scroll-driven translate on a pinned element fights the pin: the
+         collage drifted +-14px against its own sticky offset, so its bottom
+         wandered 6-14px against the last card instead of holding. Parallax
+         and sticky are two answers to the same question and only one of them
+         can be right for a given element. */
       .hero__photo,
       .principios__image,
-      .historias__media,
-      .sobre__media {
+      .historias__media {
         animation: drift linear both;
         animation-timeline: view();
         animation-range: cover;
