@@ -155,24 +155,33 @@
       show(selectable[(i + 1) % selectable.length]);
     };
 
+    /* Starts once, then runs for the life of the page.
+
+       It used to pause whenever the block left the viewport and again on
+       hover and focus. That made the rotation feel conditional on the scroll
+       position: leave the section and come back and it had frozen. Now the
+       only thing the observer decides is WHEN it begins — after that the
+       interval is never cleared. */
     const start = () => {
       if (stopped || timer) return;
       timer = setInterval(advance, INTERVAL);
-    };
-
-    const pause = () => {
-      clearInterval(timer);
-      timer = null;
     };
 
     selectable.forEach((person) => {
       person.setAttribute("role", "button");
       person.setAttribute("tabindex", "0");
 
+      /* Picking an entry jumps to it and restarts the clock, rather than
+         ending the rotation as it used to. Restarting matters: without it a
+         click could land a fraction of a second before the next tick and be
+         swept away immediately. */
       const pick = () => {
-        stopped = true; // a deliberate choice ends the rotation
-        pause();
         show(person);
+        if (timer) {
+          clearInterval(timer);
+          timer = null;
+        }
+        start();
       };
 
       person.addEventListener("click", pick);
@@ -184,21 +193,20 @@
       });
     });
 
-    // Reading should not race the clock.
+    // The observer only decides when to begin; it disconnects immediately
+    // after, so nothing can pause the rotation later.
     const block = document.querySelector(".depoimento");
-    if (block) {
-      block.addEventListener("pointerenter", pause);
-      block.addEventListener("pointerleave", start);
-      block.addEventListener("focusin", pause);
-      block.addEventListener("focusout", start);
-    }
-
-    // Nothing rotates while the section is off screen.
     if ("IntersectionObserver" in window && block) {
-      new IntersectionObserver(
-        (entries) => entries.forEach((e) => (e.isIntersecting ? start() : pause())),
+      const io = new IntersectionObserver(
+        (entries) => {
+          if (entries.some((e) => e.isIntersecting)) {
+            io.disconnect();
+            start();
+          }
+        },
         { threshold: 0.25 }
-      ).observe(block);
+      );
+      io.observe(block);
     } else {
       start();
     }

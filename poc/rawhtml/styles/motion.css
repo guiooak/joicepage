@@ -216,7 +216,11 @@
      So the list auto-advances and this draws the countdown. The bar is a
      pseudo-element scaling from 0 to 1 over the same interval motion.js
      uses, restarted each time the active entry changes — no timer state in
-     CSS, it simply re-runs when aria-current moves. */
+     CSS, it simply re-runs when aria-current moves.
+
+     It used to pause on hover and focus, matching a pause in the script.
+     Both are gone: the rotation starts when the section is first seen and
+     then runs continuously, so the bar has nothing to pause for. */
   .js .depoimento__people li[data-quote] {
     position: relative;
     transition: color var(--transition), opacity var(--transition);
@@ -243,13 +247,6 @@
       background-color: var(--color-accent);
       transform-origin: left center;
       animation: tick var(--testimonial-interval, 7s) linear both;
-    }
-
-    /* Reading the quote should not race a timer. motion.js stops the clock
-       on hover and focus; this stops the bar with it. */
-    .js .depoimento:hover .depoimento__people li[aria-current="true"]::after,
-    .js .depoimento:focus-within .depoimento__people li[aria-current="true"]::after {
-      animation-play-state: paused;
     }
   }
 
