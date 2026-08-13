@@ -154,7 +154,10 @@
     position: relative;
     inline-size: 1358px;
     block-size: 750px;
-    margin-inline: auto;
+    /* Left-aligned to the 40px page gutter, not centred. The hero is 1358
+       against every other section's 1360, so centring put it 1px right of
+       the drawn x=40 and left 41/41 instead of the drawn 40/42. */
+    margin-inline: var(--page-gutter) auto;
     margin-block-start: var(--size-24);
     border-radius: var(--radius-lg);
     overflow: hidden;
@@ -362,12 +365,28 @@
   }
 
   /* ---- Section shell ---------------------------------------------------
-     The vertical rhythm is NOT uniform: each frame carries its own padY in
-     the file, and that padding is what separates one section from the next.
-     A single blanket value ran Visão and Serviços tall against the drawn
-     heights, so the per-section values are transcribed here. */
+     Two things set the vertical rhythm, and the build only had one of them.
+
+     Each frame carries its own padY, transcribed per section below. On top of
+     that, `Site desktop` is a vertical auto-layout with `gap=24`, so there is
+     a uniform 24px between every pair of sections. Measured across all twelve
+     boundaries in the file, it is 24 at every one — the note that used to sit
+     here calling the rhythm "NOT uniform" was reading the per-section padding
+     and missing the frame gap entirely.
+
+     Without it eight boundaries sat flush at 0 and three sat at 120, and the
+     page ran 24px short per section against the drawn offsets. */
   .section {
     padding-block-start: var(--section-padding-top);
+  }
+
+  /* The frame gap. `main`'s children are the drawn sections; `.conversa` and
+     `.numeros` are drawn as siblings too but nest inside Processo and
+     Histórias here, so they take it explicitly. */
+  main > * + *,
+  .conversa,
+  .numeros {
+    margin-block-start: var(--size-24);
   }
 
   #visao     { padding-block-start: var(--size-40); }   /* VISAO      padY 40  */
@@ -758,7 +777,6 @@
   .conversa {
     position: relative;
     block-size: 550px;
-    margin-block-start: var(--size-120);
     padding: var(--size-64);
     background-color: var(--color-surface-tint);
     border-radius: var(--radius-lg);
@@ -901,7 +919,6 @@
     grid-template-columns: repeat(3, 1fr);
     gap: var(--size-24);
     padding-block: var(--size-80);
-    margin-block-start: var(--size-120);
     text-align: center;
   }
 
@@ -1071,7 +1088,8 @@
     display: flex;
     flex-direction: column;
     gap: var(--size-40);
-    margin-block: var(--size-120) var(--size-24);
+    /* Frame gap above, frame padY below. */
+    margin-block: var(--size-24);
     padding: var(--size-40);
     background-color: var(--color-accent-deep);
     border-radius: var(--radius-lg);
