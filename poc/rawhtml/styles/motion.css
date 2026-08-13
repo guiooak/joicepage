@@ -218,9 +218,11 @@
      uses, restarted each time the active entry changes — no timer state in
      CSS, it simply re-runs when aria-current moves.
 
-     It used to pause on hover and focus, matching a pause in the script.
-     Both are gone: the rotation starts when the section is first seen and
-     then runs continuously, so the bar has nothing to pause for. */
+     The bar pauses in place while the pointer is over the entry currently
+     showing, matching the hold in motion.js so the two stay in step — the
+     script keeps the time remaining rather than restarting, precisely so the
+     bar can resume from where it stopped rather than jumping. Only that
+     entry: the others are a control, not the thing being read. */
   .js .depoimento__people li[data-quote] {
     position: relative;
     transition: color var(--transition), opacity var(--transition);
@@ -247,6 +249,10 @@
       background-color: var(--color-accent);
       transform-origin: left center;
       animation: tick var(--testimonial-interval, 7s) linear both;
+    }
+
+    .js .depoimento__people li[aria-current="true"]:hover::after {
+      animation-play-state: paused;
     }
   }
 

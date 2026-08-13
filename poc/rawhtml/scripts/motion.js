@@ -155,16 +155,46 @@
       show(selectable[(i + 1) % selectable.length]);
     };
 
-    /* Starts once, then runs for the life of the page.
+    /* Starts once the section has been seen, then runs for the life of the
+       page. It used to pause whenever the block left the viewport, which made
+       the rotation feel conditional on scroll position — leave and come back
+       and it had frozen. The observer now only decides WHEN it begins.
 
-       It used to pause whenever the block left the viewport and again on
-       hover and focus. That made the rotation feel conditional on the scroll
-       position: leave the section and come back and it had frozen. Now the
-       only thing the observer decides is WHEN it begins — after that the
-       interval is never cleared. */
+       A chained timeout rather than an interval, because the clock has to be
+       resumable: hovering the current entry pauses it mid-count, and the CSS
+       progress bar pauses in place at the same moment. Restarting the timer
+       from zero on resume would put the two out of step — the bar would carry
+       on from 40% while the timer counted a fresh 7s. Tracking the remaining
+       time keeps them together. */
+    let startedAt = 0;
+    let remaining = INTERVAL;
+
+    const run = (delay) => {
+      startedAt = performance.now();
+      timer = setTimeout(() => {
+        timer = null;
+        advance();
+        remaining = INTERVAL;
+        run(INTERVAL);
+      }, delay);
+    };
+
     const start = () => {
       if (stopped || timer) return;
-      timer = setInterval(advance, INTERVAL);
+      remaining = INTERVAL;
+      run(remaining);
+    };
+
+    const pause = () => {
+      if (!timer) return;
+      clearTimeout(timer);
+      timer = null;
+      remaining = Math.max(0, remaining - (performance.now() - startedAt));
+    };
+
+    const resume = () => {
+      if (stopped || timer) return;
+      run(remaining);
     };
 
     selectable.forEach((person) => {
@@ -177,10 +207,7 @@
          swept away immediately. */
       const pick = () => {
         show(person);
-        if (timer) {
-          clearInterval(timer);
-          timer = null;
-        }
+        pause();
         start();
       };
 
@@ -192,6 +219,29 @@
         }
       });
     });
+
+    /* Hovering the entry that is currently showing holds the clock, so
+       someone part way through the quote is not moved on. Only that entry —
+       hovering the others keeps it running, since they are a control rather
+       than the thing being read.
+
+       Delegated, because which element counts changes as the rotation moves.
+       The `relatedTarget` check keeps a move between a row's own children
+       from registering as a leave. */
+    const list = document.querySelector(".depoimento__people");
+
+    if (list) {
+      list.addEventListener("pointerover", (e) => {
+        if (e.pointerType === "touch") return;
+        if (e.target.closest('li[aria-current="true"]')) pause();
+      });
+
+      list.addEventListener("pointerout", (e) => {
+        if (e.pointerType === "touch") return;
+        const row = e.target.closest('li[aria-current="true"]');
+        if (row && !row.contains(e.relatedTarget)) resume();
+      });
+    }
 
     // The observer only decides when to begin; it disconnects immediately
     // after, so nothing can pause the rotation later.
