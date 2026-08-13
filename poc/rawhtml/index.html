@@ -428,18 +428,28 @@
         <div class="conversa" id="contato">
           <img
             class="conversa__avatar"
-            src="assets/img/cta-avatar.jpg"
+            src="assets/img/cta-avatar.png"
             alt="Joice Sperandio"
-            width="141"
-            height="141"
+            width="282"
+            height="282"
             loading="lazy"
           />
-          <span class="tag">Aposentadoria</span>
-          <span class="tag">Possibilidades</span>
-          <span class="tag">Patrimônio</span>
+          <!-- Source order is the file's instance order, because the offsets
+               in sections.css are keyed to it by nth-of-type. It was not
+               before: the offsets were transcribed in instance order while
+               the labels were written in another, so every pill sat in the
+               wrong place. Matched back by the drawn widths — 118 / 124 / 84
+               / 123 / 124 / 92 — which identify the labels unambiguously.
+
+               Two variants, also missing: three pills are filled #ccdceb with
+               #28445e copy, three are outlined #5779aa on the section's own
+               #e5eef4. All six were rendered as the same flat chip. -->
+          <span class="tag tag--filled">Possibilidades</span>
+          <span class="tag tag--filled">Independência</span>
           <span class="tag">Objetivos</span>
-          <span class="tag">Independência</span>
           <span class="tag">Imparcialidade</span>
+          <span class="tag">Aposentadoria</span>
+          <span class="tag tag--filled">Patrimônio</span>
           <div class="conversa__body">
             <p class="conversa__text">
               Tudo começa com uma conversa simples e sem compromisso. Um

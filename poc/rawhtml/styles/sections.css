@@ -788,14 +788,17 @@
     text-align: center;
   }
 
+  /* Drawn 141x141 at 609.5,82.5. The asset is the file's own 282x282 export
+     — a circular crop with a thin ring already baked in, so no border-radius
+     is applied here; clipping it again only softens that ring. The previous
+     asset was a 280x420 seated photograph, an entirely different image. */
   .conversa__avatar {
     position: absolute;
     inset-inline-start: 609.5px;
     inset-block-start: 82.5px;
     inline-size: 141px;
     block-size: 141px;
-    border-radius: 50%;
-    object-fit: cover;
+    object-fit: contain;
   }
 
   /* Frame 1232x172 @64,295.5 — headline (96) + 24 gap + button (52). Stacked
@@ -820,12 +823,39 @@
     color: var(--color-body);
   }
 
+  /* Drawn 28 tall. Rendered as inline-flex at an explicit height so the 1px
+     border sits inside the box — with padding alone the outlined variant came
+     out 30 and the two variants disagreed by 2px. */
+  /* 20px copy with 8px of horizontal padding — the pill is content-sized and
+     its 28px height falls out of 20 x 1.4. The build had 16px copy in 16px
+     padding, which lands near the right height by coincidence and gets the
+     type size and the widths wrong.
+
+     Height is still set explicitly so the outlined variant's 1px border sits
+     inside the box; on auto height it would render 30 against the filled
+     variant's 28. */
   .conversa .tag {
     position: absolute;
-    padding: 6px var(--size-16);
-    font-size: var(--text-caption);
-    line-height: var(--leading-tag);
-    background-color: var(--color-surface-card-alt);
+    display: inline-flex;
+    align-items: center;
+    block-size: 28px;
+    padding: 0 var(--size-8);
+    font-size: var(--text-paragraph);
+    line-height: var(--leading-paragraph);
+    letter-spacing: var(--tracking-paragraph);
+  }
+
+  /* Outlined: the section's own #e5eef4 with a #5779aa edge and copy. */
+  .conversa .tag {
+    background-color: var(--color-surface-tint);
+    color: var(--color-accent);
+    border-color: var(--color-line-strong);
+  }
+
+  /* Filled: #ccdceb with the deeper #28445e copy and no edge. */
+  .conversa .tag--filled {
+    background-color: var(--c-blue-tint);
+    color: var(--color-accent-deep);
     border-color: transparent;
   }
 
