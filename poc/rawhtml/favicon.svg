@@ -1,14 +1,19 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Joice Sperandio">
   <!-- The wordmark is a two-line serif lockup and is unreadable at 16px, so
-       this is a monogram instead. Brand navy #28445e with the page ground
-       #f4f7f7 for the letter — the same pairing the footer uses.
+       this is a "js" monogram instead — lowercase, matching how the wordmark
+       sets the name. Brand navy #28445e with the page ground #f4f7f7 for the
+       letters, the same pairing the footer uses.
 
-       The J is drawn as stroked paths rather than set in Lora: a favicon has
-       no access to the site's webfonts, so any text here would fall back to
-       whatever the OS offers and change shape per platform. -->
+       Drawn as stroked paths rather than set in Lora: a favicon has no access
+       to the site's webfonts, so any text here would fall back to whatever
+       the OS offers and change shape per platform.
+
+       Both glyphs are stroked at 6 and the pair is centred on 32,32 — the j's
+       hook reaches x=12 and the s ends at x=52. -->
   <rect width="64" height="64" rx="14" fill="#28445e" />
-  <g fill="none" stroke="#f4f7f7" stroke-width="7" stroke-linecap="round">
-    <path d="M36 18 V38 a9 9 0 0 1 -18 0" />
-    <path d="M24 18 H46" />
+  <g fill="none" stroke="#f4f7f7" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M26 27 V39 a6 6 0 0 1 -11 3" />
+    <path d="M49 31 C49 26 37 26 37 31.5 C37 36 49 34.5 49 39.5 C49 45 37 45 37 40" />
   </g>
+  <circle cx="26" cy="19" r="3" fill="#f4f7f7" />
 </svg>
