@@ -211,6 +211,20 @@
     );
   }
 
+  /* Início in the menu, the wordmark and the footer's back-to-top all aim at
+     #inicio, the hero — which is NOT the top of the page: the header and the
+     24px frame gap put it 132 down. The 48 above therefore stopped 84 short.
+
+     Any offset at least as large as that distance lands the scroll at 0,
+     because scrolling clamps there — so this is deliberately generous rather
+     than exact. Matching the 132 with a constant would mean keeping it in
+     step with the header's height, and the header is not --header-height
+     tall: that token sizes the row inside it, and the padding around the row
+     brings the element to 108. Overshooting sidesteps the whole question. */
+  #inicio {
+    scroll-margin-top: 1000px;
+  }
+
   :focus-visible {
     outline: 3px solid var(--color-accent);
     outline-offset: 3px;
