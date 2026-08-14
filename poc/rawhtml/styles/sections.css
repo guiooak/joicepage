@@ -1102,27 +1102,34 @@
   .sobre__media {
     position: sticky;
     align-self: start;
-    /* The gutter above the picture while it is pinned. This is the sticky
-       offset rather than padding on the section — sticky pins against the
-       viewport, so no amount of padding on #sobre can open a gap here. */
-    /* Divided by the fit factor below, because `zoom` scales this inset too
-       — left alone the top gutter shrank with the picture (29 instead of 32
-       at a 700px window). Dividing cancels that out so it stays exactly 32
-       whatever the viewport. */
-    inset-block-start: calc(var(--size-32) / var(--fit));
     block-size: 700px;
 
-    /* ...and the matching one below it. The collage is a fixed 700 and the
-       gutters are 32 each, so on any viewport under 764 it ran off the bottom
-       of the screen while pinned — measured -32 at a 700px window, and the
-       browser here is shorter still. `zoom` rather than `scale` because the
-       collage's panel and three thumbs are absolutely positioned at fixed
-       pixel offsets: a transform would shrink the picture and leave its
-       layout box at 700, while zoom takes the box with it and keeps the
-       sticky arithmetic honest.
+    /* The 32px gutters, top and bottom, while the collage is pinned. They are
+       measured against the PICTURES, not this box: two of the four images are
+       drawn outside it. Thumb 1 hangs 42.7 above the top edge and thumb 3
+       drops 80.5 below the bottom, so the set actually spans -42.7..780.5 —
+       823.2 tall against a 700 box. Basing the arithmetic on 700 put the
+       box's edge at 32 and left thumb 1 ten pixels off the top of a 900px
+       window. */
+    --collage-lead: 42.7px; /* thumb 1's overhang above the box */
+    --collage-height: 823.2px; /* thumb 1's top to thumb 3's bottom */
+
+    /* Both gutters at once. `zoom` scales the inset as well as the collage,
+       so the offset the viewport actually sees is inset x fit; wanting
+       32 + lead x fit out of that gives 32/fit + lead. Substituting it into
+       the bottom edge — 32 + height x fit — makes the bottom gutter 32
+       exactly when fit hits the ratio below, and wider on a taller window
+       where fit is capped. Sticky pins against the viewport, so this has to
+       be the sticky offset; no amount of padding on #sobre can open it. */
+    inset-block-start: calc(var(--size-32) / var(--fit) + var(--collage-lead));
+
+    /* `zoom` rather than `scale` because the panel and the three thumbs are
+       absolutely positioned at fixed pixel offsets: a transform would shrink
+       the picture and leave its layout box at 700, while zoom takes the box
+       with it and keeps the sticky arithmetic honest.
 
        Capped at 1 so a tall window gets the drawn size untouched. */
-    --fit: min(1, calc((100dvh - 64px) / 700px));
+    --fit: min(1, calc((100dvh - 64px) / var(--collage-height)));
     zoom: var(--fit);
   }
 
