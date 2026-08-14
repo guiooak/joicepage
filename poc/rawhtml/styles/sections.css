@@ -405,7 +405,14 @@
      Without it eight boundaries sat flush at 0 and three sat at 120, and the
      page ran 24px short per section against the drawn offsets. */
   .section {
-    padding-block-start: var(--section-padding-top);
+    padding-block-start: var(--section-pad, var(--section-padding-top));
+
+    /* How far the section's first visible thing — the eyebrow tag — sits
+       below that padding. Every section but Visão wraps its content in a grid
+       drawn 40 lower; Visão's tag is a direct child, so it has no lead.
+       Declared here rather than repeated in each grid rule because base.css
+       needs the same number: padding + lead is where an anchor has to aim. */
+    --section-lead: var(--size-40);
   }
 
   /* The frame gap. `main`'s children are the drawn sections; `.conversa` and
@@ -417,20 +424,23 @@
     margin-block-start: var(--size-24);
   }
 
-  #visao     { padding-block-start: var(--size-40); }   /* VISAO      padY 40  */
-  #servicos  { padding-block-start: var(--size-140); }  /* SERVICOS   padY 140 */
-  #processo  { padding-block-start: var(--size-160); }  /* PROCESSO   padY 160 */
-  #historias { padding-block-start: var(--size-140); }  /* HISTORIAS  padY 140 */
+  /* Each section's drawn padY, held in a variable because base.css needs the
+     same number to work out where an anchor should land — see the note on
+     [id] there. Declaring it twice is how the two drifted apart. */
+  #visao     { --section-pad: var(--size-40); --section-lead: 0px; } /* padY 40 */
+  #servicos  { --section-pad: var(--size-140); }  /* SERVICOS   padY 140 */
+  #processo  { --section-pad: var(--size-160); }  /* PROCESSO   padY 160 */
+  #historias { --section-pad: var(--size-140); }  /* HISTORIAS  padY 140 */
   /* Drawn padY is 80. The 32 at the end is not from the file: it is the
      matching gutter for the pinned collage, so the picture clears the bottom
      of the section as it releases instead of running flush into the next
      one. */
-  #sobre     { padding-block: var(--size-80) var(--size-32); }
+  #sobre     { --section-pad: var(--size-80); padding-block-end: var(--size-32); }
   /* padY 100 top AND bottom. Only the top was applied, so the last question
      ended flush with the section edge and sat 24px from the footer — every
      other boundary has the next section's own top padding as breathing room,
      and this one had none. */
-  #duvidas   { padding-block: var(--size-100); }
+  #duvidas   { --section-pad: var(--size-100); padding-block-end: var(--size-100); }
 
   /* ---- Visão -----------------------------------------------------------
      Title 664 · paragraph 438 @x922 → a 258px channel between them. */
@@ -601,7 +611,7 @@
     display: grid;
     grid-template-columns: 668px 548px;
     justify-content: space-between;
-    margin-block-start: var(--size-40);
+    margin-block-start: var(--section-lead);
   }
 
   .servicos__head h2 {
@@ -714,7 +724,7 @@
     display: grid;
     grid-template-columns: 553px 663px;
     justify-content: space-between;
-    margin-block-start: var(--size-40);
+    margin-block-start: var(--section-lead);
   }
 
   .processo__grid h2 {
@@ -908,7 +918,7 @@
     display: grid;
     grid-template-columns: 553px 767px;
     justify-content: space-between;
-    margin-block-start: var(--size-40);
+    margin-block-start: var(--section-lead);
   }
 
   .historias__grid h2 {
@@ -1029,7 +1039,7 @@
     display: grid;
     grid-template-columns: 554px 782px;
     gap: var(--size-48);
-    margin-block-start: var(--size-40);
+    margin-block-start: var(--section-lead);
   }
 
   .sobre__title {
@@ -1162,7 +1172,7 @@
     display: grid;
     grid-template-columns: 553px 783px;
     gap: var(--size-24);
-    margin-block-start: var(--size-40);
+    margin-block-start: var(--section-lead);
   }
 
   .faq__title {

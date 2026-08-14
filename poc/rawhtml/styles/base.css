@@ -193,8 +193,22 @@
     font-weight: var(--weight-medium);
   }
 
+  /* Where a menu click lands. The offset has to cancel the section's own top
+     padding, otherwise it positions the section's BOX and the padding then
+     pushes the content down the screen — measured, every section landed
+     correctly at 124 while its heading sat between 240 and 400, which reads
+     as the middle of the page rather than the top.
+
+     Subtracting the section's padding and content lead — both declared once,
+     in sections.css — puts the section's first visible element, the eyebrow
+     tag, 48 from the top, with the heading immediately under it. Aiming the
+     heading itself at 48 would push the tag off screen.
+
+     Anything with neither variable (the hero, the CTA) just gets the 48. */
   [id] {
-    scroll-margin-top: calc(var(--header-height) + var(--size-40));
+    scroll-margin-top: calc(
+      var(--size-48) - var(--section-pad, 0px) - var(--section-lead, 0px)
+    );
   }
 
   :focus-visible {
