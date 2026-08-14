@@ -310,13 +310,19 @@
     }
 
     /* Staggered so the six never move as a block. Durations are deliberately
-       not multiples of one another, so the group does not resynchronise. */
-    .conversa .tag:nth-of-type(1) { --drift: 8.5s;  --drift-delay: -0.4s; --dx: 7px;  --dy: -9px; }
-    .conversa .tag:nth-of-type(2) { --drift: 10.5s; --drift-delay: -2.9s; --dx: -6px; --dy: -12px; }
-    .conversa .tag:nth-of-type(3) { --drift: 9.5s;  --drift-delay: -1.7s; --dx: 9px;  --dy: 7px; }
-    .conversa .tag:nth-of-type(4) { --drift: 11.5s; --drift-delay: -4.1s; --dx: -8px; --dy: 9px; }
-    .conversa .tag:nth-of-type(5) { --drift: 9s;    --drift-delay: -3.3s; --dx: 5px;  --dy: 11px; }
-    .conversa .tag:nth-of-type(6) { --drift: 12s;   --drift-delay: -0.9s; --dx: -9px; --dy: -7px; }
+       not multiples of one another, so the group does not resynchronise.
+
+       Tuned down in two passes from the first set: 8.5-12s, then 5.5-7.7s,
+       now 4.1-5.8s — a little over twice the original speed. The travel
+       distances are untouched throughout, so this is the same movement taken
+       quicker, not a bigger one, and the cursor push is a separate transform
+       on a separate property, so its feel is unchanged. */
+    .conversa .tag:nth-of-type(1) { --drift: 4.1s; --drift-delay: -0.4s; --dx: 7px;  --dy: -9px; }
+    .conversa .tag:nth-of-type(2) { --drift: 5.2s; --drift-delay: -2.9s; --dx: -6px; --dy: -12px; }
+    .conversa .tag:nth-of-type(3) { --drift: 4.6s; --drift-delay: -1.7s; --dx: 9px;  --dy: 7px; }
+    .conversa .tag:nth-of-type(4) { --drift: 5.6s; --drift-delay: -4.1s; --dx: -8px; --dy: 9px; }
+    .conversa .tag:nth-of-type(5) { --drift: 4.4s; --drift-delay: -3.3s; --dx: 5px;  --dy: 11px; }
+    .conversa .tag:nth-of-type(6) { --drift: 5.8s; --drift-delay: -0.9s; --dx: -9px; --dy: -7px; }
   }
 
   @keyframes pill-drift {
