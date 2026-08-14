@@ -804,23 +804,6 @@
     color: var(--color-body);
   }
 
-  /* Closing line + button under the accordion. */
-  .processo__close {
-    margin-block-start: 26px;
-  }
-
-  .processo__close p {
-    font-size: var(--text-h3);
-    line-height: var(--leading-h3);
-    font-weight: var(--weight-bold);
-    letter-spacing: 0;
-    color: var(--color-body);
-  }
-
-  .processo__close .btn {
-    margin-block-start: var(--size-24);
-  }
-
   /* ---- CTA "conversa" --------------------------------------------------
      1360x550 · fill #e5eef4 · pad 64 · r 24. Avatar 141px @609.5,82.5;
      the six tags sit at the exact offsets drawn in the file. */
