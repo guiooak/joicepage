@@ -744,8 +744,13 @@
     padding-block-start: var(--size-72);
   }
 
+  /* The file's dividers are zero-height overlays (`h-0` with the line drawn
+     at `inset: -1px`), so they cost no layout. A real border does: it made
+     every closed row 78 against the drawn 77, and the drift compounded down
+     a 6- and an 8-item list. An inset shadow draws the same hairline and
+     takes no space. */
   .accordion__item {
-    border-block-end: 1px solid var(--color-line);
+    box-shadow: inset 0 -1px 0 var(--color-line);
   }
 
   .accordion__item summary {
@@ -758,9 +763,19 @@
     line-height: var(--leading-h5);
     font-weight: var(--weight-medium);
     letter-spacing: 0;
-    color: var(--color-ink);
+    /* Text/txt-primary, pure black — this component's own token, one notch
+       darker than the --color-ink used everywhere else on the page. Half of
+       the title/copy colour pair; the other half is on the panel below. */
+    color: var(--color-ink-strong);
     cursor: pointer;
     list-style: none;
+  }
+
+  /* The file draws a hairline between the header and the panel on an open
+     item (divider 121:2980). Same zero-height treatment as the item rule
+     above, so the header stays exactly 77. */
+  .accordion__item[open] summary {
+    box-shadow: inset 0 -1px 0 var(--color-line);
   }
 
   .accordion__item summary::-webkit-details-marker {
@@ -799,9 +814,19 @@
     rotate: -45deg;
   }
 
+  /* 16 on every side, so the copy is indented from the title, which sits
+     flush. Was a bare 24 at the bottom only. */
   .accordion__panel {
-    padding-block-end: var(--size-24);
-    color: var(--color-body);
+    padding: var(--size-16);
+    color: var(--color-body-quiet);
+  }
+
+  /* The lead line is its own row in the file, not a bold run at the head of
+     the paragraph — four of the six Processo panels have one. Same colour as
+     the copy under it and NO space between them: the design sets `mb-0`, so
+     the two rows stack on line-height alone. */
+  .accordion__lead {
+    font-weight: var(--weight-bold);
   }
 
   /* ---- CTA "conversa" --------------------------------------------------

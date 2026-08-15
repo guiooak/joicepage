@@ -34,6 +34,14 @@
     --c-muted: #4c646e;       /* Elements/Text/Body/neutral          */
     --c-steel: #73949d;       /* Background/Neutral/neutral-strong   */
 
+    /* The accordion component carries its own two text colours, and they are
+       not the page's: Text/txt-primary is pure black and Text/txt-secondary
+       is #3c3c43 at 85%. Kept verbatim rather than mapped onto --c-ink /
+       --c-muted, because the whole point of the pair is that the title and
+       the copy under it read as different colours. */
+    --c-black: #000000;       /* Text/txt-primary   */
+    --c-slate: #3c3c43;       /* Text/txt-secondary */
+
     --c-line: #e2e9eb;        /* Elements/Border/neutral-subtle */
     --c-line-strong: #587882; /* Elements/Border/neutral-strong */
 
@@ -52,6 +60,11 @@
        quieter variant used under the big numbers and in the credential bars. */
     --color-body: var(--c-ink);
     --color-body-soft: var(--c-muted);
+    /* Accordion panels only — see the primitives above. The alpha is the
+       design's, and it is worth keeping as alpha: the component is drawn on
+       white in the Desktop section and on the page ground in the frame. */
+    --color-body-quiet: rgb(60 60 67 / 85%);
+    --color-ink-strong: var(--c-black);
 
     --color-accent: var(--c-blue);
     --color-accent-deep: var(--c-navy);
