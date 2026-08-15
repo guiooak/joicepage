@@ -744,6 +744,23 @@
     padding-block-start: var(--size-72);
   }
 
+  /* Reserve the tallest state so opening a panel never reflows the page.
+     Without this the section resized under the reader and the CTA below it
+     jumped: 4749.4 with everything closed, 4762 on the two short panels,
+     4790 on the four tall ones.
+
+     578 is not a number invented to be safe — it is what the file draws the
+     accordion frame at (663x578), and it is exactly the tallest state here:
+     five closed rows at 77 plus one 193px open item. So the common case
+     fills the box precisely and the slack only appears when a short panel or
+     no panel is open, absorbed as a gutter under the last row.
+
+     `min-` rather than a fixed size deliberately: if the copy ever outgrows
+     this, the page reflows rather than running the accordion into the CTA. */
+  .processo__col .accordion {
+    min-block-size: 578px;
+  }
+
   /* The file's dividers are zero-height overlays (`h-0` with the line drawn
      at `inset: -1px`), so they cost no layout. A real border does: it made
      every closed row 78 against the drawn 77, and the drift compounded down
