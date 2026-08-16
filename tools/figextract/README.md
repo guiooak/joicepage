@@ -7,7 +7,12 @@ without needing edit access to the file on figma.com.
 python3 figkiwi.py "/path/to/Joice Sperandio.fig" canvas.json   # ~52MB
 python3 extract.py 1        # top-level sections
 python3 extract.py 99       # full tree
+python3 extract.py 99 "MOBILE 360px"   # a different root frame
+python3 extract.py 99 392:8099         # …or the same one by guid
 ```
+
+Nodes the designer switched off are tagged `HIDDEN`, so a dump never describes
+a page nobody sees.
 
 Requires Python 3.14+ (uses stdlib `compression.zstd`).
 

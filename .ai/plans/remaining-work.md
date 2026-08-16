@@ -233,8 +233,10 @@ Unchanged from the decision record, restated so this file is self-sufficient:
 Two capabilities the tool lacks, both of which cost a scarce MCP call to work
 around today:
 
-- **`hidden` flags.** Item 2 above was undetectable from the `.fig` dump.
-  Highest value per unit of effort — it is one field.
+- ~~**`hidden` flags.** Item 2 above was undetectable from the `.fig` dump.
+  Highest value per unit of effort — it is one field.~~ **Done** — `extract.py`
+  now tags switched-off nodes `HIDDEN`, and takes its root frame as an
+  argument so it can dump the mobile page too.
 - **INSTANCE expansion** via `symbolData` / `overrides`. This is what hides the
   five testimonials, the six Processo panels, and the Menu and footer contents.
   Item 4 was recovered only because the designer happened to draw the mobile

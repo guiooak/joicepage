@@ -1,0 +1,33 @@
+/* ============================================================================
+   COMPONENTS — mobile only, no breakpoints by design.
+
+   Every dimension here is transcribed from the `MOBILE 360px` frame
+   (392:8099) in `tools/figextract/figma-mcp-layouts-tree.xml`, which carries
+   each node's id, name, box and hidden flag. Node ids are quoted in comments
+   wherever a number would otherwise look arbitrary, so the next editor can
+   tell "as drawn" from "invented".
+
+   This is NOT a responsive variant of poc/rawhtml. The mobile frame is a
+   separately-designed layout: different structure (hamburger nav, two
+   horizontal rails, a two-card carousel) and different copy in at least five
+   places. Where a string here differs from the desktop's, the mobile frame
+   is right.
+   ========================================================================= */
+
+@layer components {
+  /* The page frame: a 360-wide vertical stack, 16 padding, 16 gap. Derived
+     from the drawn section tops — each section starts exactly 16 below the
+     previous one's bottom, the whole way down the 11477.67 canvas. */
+  .frame {
+    display: flex;
+    flex-direction: column;
+    gap: var(--frame-gap);
+    padding: var(--page-gutter);
+  }
+
+  /* Sections are all 328 — the frame width less both gutters — except the
+     two Credenciais rails, which are drawn 720 and overflow on purpose. */
+  .frame > * {
+    inline-size: var(--content-width);
+  }
+}

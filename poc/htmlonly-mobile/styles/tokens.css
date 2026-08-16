@@ -1,0 +1,184 @@
+/* Cascade order, declared once for the whole site. */
+@layer reset, tokens, base, components;
+
+/* ============================================================================
+   DESIGN TOKENS — Joice Sperandio
+
+   PROVENANCE: every value below is EXACT, taken from the Figma file rather
+   than sampled. Two independent sources agree on them:
+
+     · Figma MCP `get_variable_defs` on frame 318:7275 — the named variables
+       (Background/Color/primary-base, Elements/Text/Body/neutral, …).
+     · `tools/figextract/site-desktop.spec.txt` — the decoded .fig export,
+       which carries the same fills and type stack per node.
+
+   Where the two are quoted below, the Figma variable name is in the comment
+   so a future edit can be traced back to source.
+
+   Desktop only. There are deliberately no breakpoints in this stylesheet.
+   ========================================================================= */
+
+@layer tokens {
+  :root {
+    /* ---- Primitives ------------------------------------------------------
+       Named for what they are. The semantic layer below is what components
+       should reference — these exist so a palette change happens once. */
+    --c-navy: #28445e;        /* Background/Color/secondary-base   */
+    --c-blue: #5779aa;        /* Background/Color/primary-base     */
+    --c-blue-tint: #ccdceb;   /* Background/Color/secondary-subtle */
+    --c-blue-pale: #e5eef4;   /* Background/Color/primary-subtle   */
+    --c-violet: #50518a;      /* Elements/Text/Title/Color/quaternary-base */
+    --c-violet-pale: #d3d8ea; /* Background/Color/quaternary-subtle */
+
+    --c-ink: #151a1d;         /* Elements/Text/Title/Neutral/default */
+    --c-muted: #4c646e;       /* Elements/Text/Body/neutral          */
+    --c-steel: #73949d;       /* Background/Neutral/neutral-strong   */
+
+    /* The accordion component carries its own two text colours, and they are
+       not the page's: Text/txt-primary is pure black and Text/txt-secondary
+       is #3c3c43 at 85%. Kept verbatim rather than mapped onto --c-ink /
+       --c-muted, because the whole point of the pair is that the title and
+       the copy under it read as different colours. */
+    --c-black: #000000;       /* Text/txt-primary   */
+    --c-slate: #3c3c43;       /* Text/txt-secondary */
+
+    --c-line: #e2e9eb;        /* Elements/Border/neutral-subtle */
+    --c-line-strong: #587882; /* Elements/Border/neutral-strong */
+
+    --c-paper: #f4f7f7;       /* Background/Neutral/default — the page ground */
+    --c-white: #ffffff;       /* Background/Neutral/white */
+    --c-mist: #f7fafc;        /* decorative ellipse behind the LOGOS bars */
+
+    /* ---- Semantic -------------------------------------------------------- */
+    /* The page ground is #f4f7f7, NOT white. White is a surface (menu bar,
+       Princípios cards, the testimonial block) that sits on top of it. */
+    --color-page: var(--c-paper);
+    --color-surface: var(--c-white);
+
+    --color-ink: var(--c-ink);
+    /* Body copy is #151a1d almost everywhere; #4c646e is the deliberately
+       quieter variant used under the big numbers and in the credential bars. */
+    --color-body: var(--c-ink);
+    --color-body-soft: var(--c-muted);
+    /* Accordion panels only — see the primitives above. The alpha is the
+       design's, and it is worth keeping as alpha: the component is drawn on
+       white in the Desktop section and on the page ground in the frame. */
+    --color-body-quiet: rgb(60 60 67 / 85%);
+    --color-ink-strong: var(--c-black);
+
+    --color-accent: var(--c-blue);
+    --color-accent-deep: var(--c-navy);
+    --color-accent-soft: var(--c-blue);
+    /* Unrevealed state of the two-tone Visão headline — see the scroll reveal
+       in the designer's Interactions spec. */
+    --color-ghost-ink: var(--c-blue-tint);
+
+    --color-surface-card: var(--c-blue-tint);
+    --color-surface-card-alt: var(--c-blue-pale);
+    --color-surface-tint: var(--c-blue-pale);
+    --color-line: var(--c-line);
+    --color-line-strong: var(--c-blue);
+
+    --color-button: var(--c-navy);
+    --color-button-primary: var(--c-blue);
+    --color-button-ink: var(--c-paper);
+    --color-button-hover: color-mix(in oklab, var(--c-navy) 86%, white);
+
+    /* The hero is a photograph with two large #50518a ellipses blended over
+       it in hard-light — not a gradient. Kept as tokens so the blend colour
+       and the wash under it stay editable in one place. */
+    --hero-blend: var(--c-violet);
+    --hero-veil: rgb(0 0 0 / 8%);
+
+    /* ---- Typography ------------------------------------------------------
+       Two families, both real and self-hosted. Allomira is the licensed
+       commercial face (one variable woff2, 100–900); Lora is open (SIL OFL)
+       and sets the numerals. The generics after them are a safety net for a
+       failed font load, not a design fallback. */
+    --font-sans: "Allomira", ui-sans-serif, system-ui, -apple-system,
+      "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-serif: "Lora", ui-serif, Georgia, "Times New Roman", serif;
+
+    /* Size / line-height pairs, read per node from the .fig export. */
+    --text-display-lg: 90px;      /* Visão headline, Allomira Black       */
+    --leading-display-lg: 0.92;
+    --text-display: 72px;         /* Hero, Serviços, Processo headlines   */
+    --leading-display: 0.92;
+    --text-h1: 56px;              /* Histórias, Sobre, FAQ headlines      */
+    --leading-h1: 0.92;
+    --text-h2: 48px;              /* service card titles, CTA paragraph   */
+    --leading-h2: 1;
+    --text-h3: 32px;              /* Processo closing, Sobre card numbers */
+    --leading-h3: 1;
+    --text-h4: 28px;
+    --leading-h4: 1.2;
+    --text-h5: 24px;              /* credential text, big-number labels   */
+    --leading-h5: 1.2;
+    --text-paragraph: 20px;       /* ALL body copy. Not 16px.             */
+    --leading-paragraph: 1.4;
+    --text-caption: 16px;
+    --leading-caption: 1.5;
+    --text-tag: 16px;
+    --leading-tag: 1;
+
+    /* Lora numerals. */
+    --text-numeral: 136px;        /* big-numbers      */
+    --leading-numeral: 1;
+    --text-numeral-sm: 120px;     /* service card 01 / 02 */
+    --leading-numeral-sm: 0.92;
+
+    --weight-regular: 400;
+    --weight-medium: 500;
+    --weight-semibold: 600;
+    --weight-bold: 700;
+    --weight-black: 900;
+
+    /* Figma sets letterSpacing 1% on the 20px paragraph style and -1% on the
+       big numerals; every heading style is 0. */
+    --tracking-paragraph: 0.01em;
+    --tracking-numeral: -0.01em;
+
+    /* ---- Dimension ------------------------------------------------------- */
+    /* The mobile frame `MOBILE 360px` (392:8099) is drawn 360 wide with a 16
+       gutter, so every section is 328 — except the two Credenciais rails,
+       drawn 720 and meant to overflow. Colour, family and weight above are
+       untouched from the desktop build: both layouts read the same Figma
+       variables, so only these dimensions differ. */
+    --frame-width: 360px;
+    --content-width: 328px;
+    --page-gutter: 16px;
+    /* The frame is a vertical stack with a uniform 16 gap and 16 padding —
+       derived from the drawn section tops, which are each exactly 16 below
+       the previous section's bottom, all the way down the 11477.67 canvas.
+       Padding *inside* each section is per-section and lives in sections.css;
+       there is no mobile equivalent of the desktop's --section-padding-top. */
+    --frame-gap: 16px;
+
+    --size-4: 4px;
+    --size-8: 8px;
+    --size-12: 12px;
+    --size-16: 16px;
+    --size-24: 24px;
+    --size-32: 32px;
+    --size-40: 40px;
+    --size-48: 48px;
+    --size-56: 56px;
+    --size-64: 64px;
+    --size-72: 72px;
+    --size-80: 80px;
+    --size-96: 96px;
+    --size-100: 100px;
+    --size-120: 120px;
+    --size-140: 140px;
+    --size-160: 160px;
+
+    --radius-sm: 8px;
+    --radius-md: 16px;   /* buttons, Princípios cards, Sobre cards */
+    --radius-lg: 24px;   /* menu bar, hero, service cards, CTA, footer */
+    --radius-pill: 999px;
+
+    --header-height: 84px;
+
+    --transition: 160ms ease;
+  }
+}

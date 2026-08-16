@@ -1,4 +1,10 @@
-"""Walk the decoded .fig node tree and report the desktop page."""
+"""Walk the decoded .fig node tree and report one page.
+
+    extract.py [maxdepth] [root]
+
+`root` is a node guid ("392:8099") or a frame name ("MOBILE 360px"), and
+defaults to the desktop frame.
+"""
 import json, collections, sys
 
 d = json.load(open("canvas.json"))
@@ -21,7 +27,17 @@ for n in nodes:
 for k in kids:
     kids[k].sort(key=lambda n: n["parentIndex"].get("position", ""))
 
-ROOT = next(gid(n["guid"]) for n in nodes if n.get("name") == "Site desktop")
+DEFAULT_ROOT = "Site desktop"
+
+
+def resolve(root):
+    """A guid passes through; anything else is looked up as a frame name."""
+    if root in by:
+        return root
+    hit = next((gid(n["guid"]) for n in nodes if n.get("name") == root), None)
+    if not hit:
+        sys.exit("no node named %r" % root)
+    return hit
 
 
 def hexcolor(c):
@@ -72,6 +88,8 @@ def walk(guid, depth=0, maxdepth=99):
     sz = n.get("size") or {}
     tr = n.get("transform") or {}
     bits = ["%-13s %s" % (n["type"], n.get("name"))]
+    if n.get("visible") is False:
+        bits.append("HIDDEN")
     if sz:
         bits.append("%gx%g" % (round(sz.get("x", 0), 1), round(sz.get("y", 0), 1)))
     if tr:
@@ -98,5 +116,5 @@ def walk(guid, depth=0, maxdepth=99):
 
 if __name__ == "__main__":
     md = int(sys.argv[1]) if len(sys.argv) > 1 else 1
-    start = sys.argv[2] if len(sys.argv) > 2 else ROOT
-    walk(start, 0, md)
+    start = sys.argv[2] if len(sys.argv) > 2 else DEFAULT_ROOT
+    walk(resolve(start), 0, md)

@@ -1,0 +1,12 @@
+/* ============================================================================
+   MOTION — everything here is additive.
+
+   Same contract as poc/rawhtml: delete this file and scripts/motion.js and
+   the page is exactly the static build again. Nothing in here may be required
+   to read the page, and every behaviour is guarded by
+   `prefers-reduced-motion`.
+   ========================================================================= */
+
+@layer components {
+  /* Filled in per section. */
+}
