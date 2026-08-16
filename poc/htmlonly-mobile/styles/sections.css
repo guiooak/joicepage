@@ -1100,14 +1100,22 @@
   .sobre__deck .sobre__card:nth-child(3) { inset-block-start: 142px; }
   .sobre__deck .sobre__card:nth-child(4) { inset-block-start: 213px; }
 
-  /* card 328x204 · fill #f4f7f7 (the page ground) · pad32 · r16 · content
-     264 = number 50 + 24 + rule + 24 + copy 166. */
+  /* card 328x204 · fill #f4f7f7 (the page ground) · 1px #e2e9eb · pad32 ·
+     r16 · content 264 = number 50 + 24 + rule + 24 + copy 166, centred.
+
+     The hairline is what makes the deck legible: the card fill IS the page
+     ground, so without an edge the overlap reads as clipped text rather than
+     stacked cards. Inset shadow rather than a border, so the card stays 204
+     — Figma draws the stroke inside. */
   .sobre__card {
     display: flex;
+    align-items: center;
     gap: var(--size-24);
     padding: var(--size-32);
     background-color: var(--color-page);
+    box-shadow: inset 0 0 0 1px var(--color-line);
     border-radius: var(--radius-md);
+    overflow: clip;
   }
 
   /* Line 52 — a 94 rule between the number and the copy, centred in a
@@ -1122,10 +1130,13 @@
     flex-shrink: 0;
   }
 
+  /* Centred in the row, which is what puts it below the 71px cut on the
+     three stacked cards — the frame shows only their first line of copy. */
   .sobre__num {
     order: 0;
     inline-size: 50px;
     flex-shrink: 0;
+    text-align: center;
     font-size: var(--text-h3);
     line-height: var(--leading-h3);
     font-weight: var(--weight-bold);
