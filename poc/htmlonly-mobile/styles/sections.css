@@ -53,11 +53,12 @@
     filter: drop-shadow(0 16px 10px rgb(87 121 170 / 8%));
   }
 
-  /* Logo 120x48 — two lines of Lora at 24/1.05 come to 48 on the nose. */
+  /* Logo 120x48 — two lines of Lora at 24/24. The desktop's 1.05 ratio
+     gives 50.4 here, which shows up as 2.4px on the footer column. */
   .brand {
     font-family: var(--font-serif);
     font-size: var(--text-h5);
-    line-height: 1.05;
+    line-height: var(--size-24);
     color: var(--color-ink);
   }
 
@@ -1185,6 +1186,196 @@
     line-height: var(--leading-h3);
     font-weight: var(--weight-bold);
     color: var(--color-accent-deep);
+  }
+
+  /* ---- FAQ --------------------------------------------------------------
+     392:8384 · 328x1476 · pt40 · pb40 · head 272 · gap24 · list 1100. */
+  .faq {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-24);
+    padding-block: var(--size-40);
+    --section-pad: var(--size-40);
+  }
+
+  .faq__head {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-40);
+    align-items: flex-start;
+  }
+
+  .faq__intro {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-16);
+  }
+
+  .faq__intro h2 {
+    font-size: var(--text-h3);
+    line-height: var(--leading-h3);
+    font-weight: var(--weight-bold);
+    color: var(--color-accent-deep);
+  }
+
+  /* A different component from the Processo accordion: white cards on the
+     page ground at r8, 16 apart, each px16 py24 with a 16 gap to its answer,
+     and a chevron rather than a plus. */
+  .faq__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-16);
+  }
+
+  .faq__item {
+    background-color: var(--color-surface);
+    border-radius: var(--radius-sm);
+    overflow: clip;
+  }
+
+  .faq__item summary {
+    display: flex;
+    align-items: center;
+    gap: var(--size-16);
+    padding-inline: var(--size-16);
+    padding-block: var(--size-24);
+    font-size: var(--text-paragraph);
+    line-height: var(--leading-paragraph);
+    letter-spacing: var(--tracking-paragraph);
+    font-weight: var(--weight-bold);
+    /* Text/txt-primary — pure black, this component's own token. */
+    color: var(--color-ink-strong);
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .faq__item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  /* `_icon / chevron.right` closed, `chevron.down` open — one 16px glyph
+     rotated a quarter turn, which is exactly how the file draws the pair. */
+  .faq__chevron {
+    inline-size: var(--size-16);
+    block-size: var(--size-16);
+    flex-shrink: 0;
+    margin-inline-start: auto;
+    background-color: currentcolor;
+    rotate: -90deg;
+    transition: rotate var(--transition);
+    clip-path: polygon(
+      12% 30%, 50% 68%, 88% 30%, 100% 42%, 50% 92%, 0% 42%
+    );
+  }
+
+  .faq__item[open] .faq__chevron {
+    rotate: 0deg;
+  }
+
+  /* The Surface is px16 py24 with a 16 gap, so an OPEN item is
+     24 + header + 16 + answer + 24. The summary keeps its own 24 only while
+     closed — leaving it in place when open measured the open item at 256
+     against the drawn 232, and put the whole list 24 over. */
+  .faq__item[open] summary {
+    padding-block-end: 0;
+  }
+
+  .faq__answer {
+    padding-inline: var(--size-16);
+    padding-block-end: var(--size-24);
+    margin-block-start: var(--size-16);
+    color: var(--color-body-quiet);
+  }
+
+  /* ---- Footer -----------------------------------------------------------
+     392:8392 · 328x605 · #28445e · r24 · padX16 · padY24 · two columns 24
+     apart, 296 wide. */
+  .site-footer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-24);
+    padding-inline: var(--size-16);
+    padding-block: var(--size-24);
+    background-color: var(--color-accent-deep);
+    border-radius: var(--radius-lg);
+    color: var(--color-button-ink);
+  }
+
+  .site-footer__col {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-24);
+  }
+
+  .site-footer__brand {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-24);
+  }
+
+  .brand--inverse {
+    color: var(--color-button-ink);
+  }
+
+  /* The description is drawn 268 wide inside a 296 column, not full bleed. */
+  .site-footer__brand p {
+    inline-size: 268px;
+  }
+
+  /* 16/1.5 with the three drawn breaks — four lines at 296 is the drawn 96,
+     because the CVM line is the one that wraps. */
+  .site-footer__creds {
+    font-size: var(--text-caption);
+    line-height: var(--leading-caption);
+    letter-spacing: 0;
+  }
+
+  /* The second column runs on 32 where the first runs on 24 — contact to
+     social is 32, and so is phone block to email block. */
+  .site-footer__col:last-child,
+  .site-footer__contact {
+    gap: var(--size-32);
+  }
+
+  .site-footer__contact {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* The phone value's box is drawn 29 and the email's 28, at the same 20px
+     size — a 1px inconsistency in the file, kept so the contact block comes
+     to its drawn 153. */
+  .site-footer__field:first-child a {
+    line-height: 29px;
+  }
+
+  .site-footer__field,
+  .site-footer__social {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-8);
+  }
+
+  .site-footer__label {
+    font-size: var(--text-caption);
+    line-height: var(--leading-caption);
+    letter-spacing: 0;
+  }
+
+  /* Frame 150 · 40 tall · Instagram in a 40 box at 24, the rest in 36 boxes
+     at 20. Facebook and X are drawn hidden. */
+  .site-footer__social ul {
+    display: flex;
+    align-items: center;
+    gap: var(--size-8);
+    block-size: var(--size-40);
+  }
+
+  .site-footer__social a {
+    display: grid;
+    place-items: center;
+    inline-size: var(--size-40);
+    block-size: var(--size-40);
   }
 
   .slide__btn svg {
