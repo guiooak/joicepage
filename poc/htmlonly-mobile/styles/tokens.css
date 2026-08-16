@@ -99,11 +99,15 @@
       "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     --font-serif: "Lora", ui-serif, Georgia, "Times New Roman", serif;
 
-    /* Size / line-height pairs, read per node from the .fig export. */
-    --text-display-lg: 90px;      /* Visão headline, Allomira Black       */
-    --leading-display-lg: 0.92;
-    --text-display: 72px;         /* Hero, Serviços, Processo headlines   */
-    --leading-display: 0.92;
+    /* Size / line-height pairs. Each one below was checked against the box
+       the mobile frame draws for it: rendering the copy at that size and
+       measure has to come out at the drawn height, to the pixel. Every one
+       does — servicos 96, processo 128, historias 128, sobre 288, faq 96,
+       CTA 224, visao 156, hero 200 — which is why there are no ratios left
+       in this block where the frame gives a whole number.
+
+       The desktop's 90 and 72 display sizes have no mobile counterpart: the
+       largest thing on this page is the 56 Visão headline. */
     /* 52px, not the 0.92 ratio the desktop carries. Figma resolves 92% of 56
        to a whole 52 rather than 51.52, and its own text boxes prove it: the
        Visão headline (392:8145) is 156 for three lines and the desktop's
@@ -113,13 +117,15 @@
        11477-tall canvas. */
     --text-h1: 56px;              /* Visão headline                       */
     --leading-h1: 52px;
-    --text-h2: 48px;              /* service card titles, CTA paragraph   */
-    --leading-h2: 1;
-    --text-h3: 32px;              /* Processo closing, Sobre card numbers */
-    --leading-h3: 1;
+    --text-h2: 48px;              /* Sobre headline only                  */
+    --leading-h2: 48px;
+    /* Every other section headline — Serviços, Processo, Histórias, FAQ —
+       plus the CTA paragraph and the Sobre card numerals. */
+    --text-h3: 32px;
+    --leading-h3: 32px;
     --text-h4: 28px;
     --leading-h4: 1.2;
-    --text-h5: 24px;              /* credential text, big-number labels   */
+    --text-h5: 24px;              /* big-number labels                    */
     --leading-h5: 1.2;
     --text-paragraph: 20px;       /* ALL body copy. Not 16px.             */
     --leading-paragraph: 1.4;
@@ -138,11 +144,14 @@
     --text-hero: 40px;
     --leading-hero: 1;
 
-    /* Lora numerals. */
-    --text-numeral: 136px;        /* big-numbers      */
-    --leading-numeral: 1;
-    --text-numeral-sm: 120px;     /* service card 01 / 02 */
-    --leading-numeral-sm: 0.92;
+    /* Lora numerals, both 72 on mobile against the desktop's 136 and 120.
+       Recovered from the drawn boxes: the service-card "01" is 71x66 against
+       the desktop's 119x110 — 0.597 and 0.600 of it — and 120 x 0.6 = 72,
+       whose 0.92 leading is a whole 66. The big numbers are 72/1. */
+    --text-numeral: 72px;         /* big-numbers          */
+    --leading-numeral: 72px;
+    --text-numeral-sm: 72px;      /* service card 01 / 02 */
+    --leading-numeral-sm: 66px;
 
     --weight-regular: 400;
     --weight-medium: 500;

@@ -65,6 +65,17 @@
        own, so the rhythm is unbroken while `header`, `main` and `footer` keep
        their landmarks. -->
   <body class="frame">
+    <!-- The list arrow, drawn as a 32x32 vector in every Serviços list-item
+         (392:8193 and its five siblings). Inlined rather than exported: it is
+         one path, and the list collapses without it. -->
+    <svg aria-hidden="true" style="position: absolute; width: 0; height: 0">
+      <defs>
+        <symbol id="i-arrow" viewBox="0 0 24 24">
+          <path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M4 12h16m-7-7 7 7-7 7" />
+        </symbol>
+      </defs>
+    </svg>
+
     <!-- Menu 392:8100 · 328x88 @y16 · white · 1px #f4f7f7 · r24 · padX 24 ·
          padY 16 · drop shadow 0 16px 10px rgba(87,121,170,.08). The desktop
          bar's nav row and CTA are both drawn `hidden` here (392:8102,
@@ -271,6 +282,87 @@
               </li>
             </ul>
           </div>
+        </div>
+      </section>
+
+      <!-- SERVICOS 392:8176 · 328x1226 @y2212 · pt80 · gap56.
+           Card-open 392:8183 is the only card the page frame draws; 02 lives
+           in a detached state frame beside the page (393:10515), which is how
+           its copy is recovered. Both are here, on a scroll-snap rail. -->
+      <section class="servicos" id="servicos">
+        <div class="servicos__head">
+          <div class="servicos__intro">
+            <p class="tag">Serviços</p>
+            <h2>Dois serviços principais. Diferentes objetivos. O mesmo cuidado.</h2>
+          </div>
+          <!-- Mobile's own intro, not the desktop's two paragraphs. -->
+          <p>
+            Cada pessoa chega com uma necessidade diferente. Independentemente
+            do ponto de partida, o objetivo é o mesmo: construir decisões mais
+            conscientes.
+          </p>
+        </div>
+
+        <div class="servicos__rail">
+          <article class="service-card" id="servico-01">
+            <p class="service-card__number">01</p>
+            <div class="service-card__body">
+              <h3>Planejamento Financeiro</h3>
+              <div class="service-card__claim">
+                <p>Clareza para decidir. Estrutura para construir.</p>
+                <p>
+                  Para quem deseja organizar a vida financeira e construir um
+                  futuro com mais previsibilidade.
+                </p>
+              </div>
+              <!-- Every label here is SHORTER than the desktop's: "Compra de
+                   imóvel" for "Compra de um imóvel", "Chegada dos filhos" for
+                   "Chegada dos filhos e educação", and so on. Mobile's own. -->
+              <ul class="service-card__list">
+                <li><svg class="arrow" aria-hidden="true"><use href="#i-arrow" /></svg>Compra de imóvel</li>
+                <li><svg class="arrow" aria-hidden="true"><use href="#i-arrow" /></svg>Chegada dos filhos</li>
+                <li><svg class="arrow" aria-hidden="true"><use href="#i-arrow" /></svg>Organização financeira para autônomos</li>
+                <li><svg class="arrow" aria-hidden="true"><use href="#i-arrow" /></svg>Mudanças de carreira</li>
+                <li><svg class="arrow" aria-hidden="true"><use href="#i-arrow" /></svg>Planejamento da aposentadoria</li>
+                <li><svg class="arrow" aria-hidden="true"><use href="#i-arrow" /></svg>Projetos e objetivos de vida</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="service-card service-card--alt" id="servico-02">
+            <p class="service-card__number">02</p>
+            <div class="service-card__body">
+              <h3>Consultoria em Investimentos</h3>
+              <div class="service-card__claim">
+                <p>Segurança para investir. Autonomia para evoluir.</p>
+                <p>
+                  Para quem deseja investir com mais estratégia ou receber
+                  orientação independente sobre sua carteira.
+                </p>
+              </div>
+              <ul class="service-card__list">
+                <li><svg class="arrow" aria-hidden="true"><use href="#i-arrow" /></svg>Reorganização de investimentos</li>
+                <li><svg class="arrow" aria-hidden="true"><use href="#i-arrow" /></svg>Gestão de heranças</li>
+                <li><svg class="arrow" aria-hidden="true"><use href="#i-arrow" /></svg>Estratégia da carteira</li>
+                <li><svg class="arrow" aria-hidden="true"><use href="#i-arrow" /></svg>Proteção patrimonial</li>
+                <li><svg class="arrow" aria-hidden="true"><use href="#i-arrow" /></svg>Construção de patrimônio</li>
+                <li><svg class="arrow" aria-hidden="true"><use href="#i-arrow" /></svg>Planejamento da aposentadoria</li>
+              </ul>
+            </div>
+          </article>
+        </div>
+
+        <!-- Slide 392:8216 · two 56x56 Scroll instances at x104 and x168, so
+             a centred pair with an 8 gap. Plain in-page links: following one
+             scrolls the rail to that card with no script at all, which is
+             what keeps the second service reachable with JS off. -->
+        <div class="slide">
+          <a class="slide__btn" href="#servico-01" aria-label="Ver Planejamento Financeiro">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 12H4m7 7-7-7 7-7" /></svg>
+          </a>
+          <a class="slide__btn" href="#servico-02" aria-label="Ver Consultoria em Investimentos">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 12h16m-7-7 7 7-7 7" /></svg>
+          </a>
         </div>
       </section>
     </main>

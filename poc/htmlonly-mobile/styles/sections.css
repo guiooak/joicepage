@@ -512,4 +512,157 @@
     letter-spacing: var(--tracking-paragraph);
     color: var(--color-accent);
   }
+
+  /* ---- Serviços ---------------------------------------------------------
+     392:8176 · 328x1226 · pt80 · gap56. head 324 · rail 654 · slide 56, and
+     80 + 324 + 56 + 654 + 56 + 56 comes to the drawn 1226. */
+  .servicos {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-56);
+    padding-block-start: var(--size-80);
+    --section-pad: var(--size-80);
+  }
+
+  .servicos__head,
+  .servicos__intro {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-40);
+    align-items: flex-start;
+  }
+
+  /* 32/32 Black. Three lines at 328 is the drawn 96 — checked by rendering
+     the string, not assumed: 40 gives four lines and 48 gives five. */
+  .servicos__head h2 {
+    font-size: var(--text-h3);
+    line-height: var(--leading-h3);
+    font-weight: var(--weight-black);
+    color: var(--color-accent-deep);
+  }
+
+  /* The carousel. Two cards on a snap rail inside the 328 section, with the
+     Slide buttons below as plain in-page links — following one scrolls the
+     rail to that card with no script, which is what keeps the second service
+     reachable with JS off.
+
+     Height is pinned to the drawn 654 rather than left to the taller card.
+     02 measures 662 in its own detached state frame (393:10515) because that
+     is a separate artboard; on the page the slot is 654, and the 8px it
+     loses is empty space under its last list item. */
+  .servicos__rail {
+    display: flex;
+    gap: var(--size-16);
+    block-size: 654px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: inline mandatory;
+    scrollbar-width: none;
+    overscroll-behavior-inline: contain;
+  }
+
+  .servicos__rail::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Card-open 392:8183 · 329.5x654 · padX16 · padY24 · r24. The 329.5 is a
+     pixel and a half wider than every other section, and is drawn that way. */
+  .service-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-16);
+    flex: 0 0 329.5px;
+    padding-inline: var(--size-16);
+    padding-block: var(--size-24);
+    background-color: var(--color-surface-card);
+    border-radius: var(--radius-lg);
+    scroll-snap-align: start;
+    /* Overrides the [id] rule in base.css: these ids exist for the rail
+       buttons, and the section's own 80 padding must not offset them. */
+    scroll-margin: 0;
+  }
+
+  .service-card--alt {
+    background-color: var(--color-surface-card-alt);
+  }
+
+  /* "01" 71x66 — Lora 72/66. */
+  .service-card__number {
+    font-family: var(--font-serif);
+    font-size: var(--text-numeral-sm);
+    line-height: var(--leading-numeral-sm);
+    font-weight: var(--weight-regular);
+    letter-spacing: 0;
+    color: var(--color-accent);
+  }
+
+  .service-card__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-16);
+  }
+
+  .service-card__body h3 {
+    font-size: var(--text-h3);
+    line-height: var(--leading-h3);
+    font-weight: var(--weight-bold);
+    color: var(--color-accent-deep);
+  }
+
+  .service-card__claim {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-8);
+    color: var(--color-body);
+  }
+
+  /* list-item 297.5 wide · one-liners 48, the two-line "Organização
+     financeira para autônomos" 72 · arrow 32 at gap 24. A floor plus 8
+     padding gives both without pinning two heights. */
+  .service-card__list li {
+    display: flex;
+    align-items: center;
+    gap: var(--size-24);
+    min-block-size: 48px;
+    padding-block: var(--size-8);
+    color: var(--color-body);
+  }
+
+  .arrow {
+    inline-size: var(--size-32);
+    block-size: var(--size-32);
+    flex-shrink: 0;
+    color: var(--color-accent);
+  }
+
+  /* Slide 392:8216 · 328x56 · two 56x56 at x104 and x168 — centred, gap 8. */
+  .slide {
+    display: flex;
+    justify-content: center;
+    gap: var(--size-8);
+    block-size: var(--size-56);
+  }
+
+  /* The Scroll instances are not expanded in the export and no call was spent
+     on them, so this is the plainest thing that does their job: the same 56
+     box, the same accent, and the list arrow mirrored for "previous". */
+  .slide__btn {
+    display: grid;
+    place-items: center;
+    inline-size: var(--size-56);
+    block-size: var(--size-56);
+    color: var(--color-accent);
+    border-radius: var(--radius-pill);
+    box-shadow: inset 0 0 0 1px var(--color-accent);
+  }
+
+  .slide__btn svg {
+    inline-size: var(--size-24);
+    block-size: var(--size-24);
+    fill: none;
+    stroke: currentcolor;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
 }
