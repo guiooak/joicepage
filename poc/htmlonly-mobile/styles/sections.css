@@ -1000,6 +1000,152 @@
     box-shadow: none;
   }
 
+  /* ---- Sobre ------------------------------------------------------------
+     392:8308 · 328x1733 · pt40 · collage 331 · content 1118 (its own pt40
+     over a 1078 card) · then the fifth card at y1473.33. */
+  .sobre {
+    padding-block-start: var(--size-40);
+    --section-pad: var(--size-40);
+  }
+
+  /* image 392:8309 · 324x331. Two of the three thumbs are drawn outside the
+     box, so it does not clip. */
+  .sobre__collage {
+    position: relative;
+    inline-size: 324px;
+    block-size: 331px;
+  }
+
+  .sobre__collage img {
+    position: absolute;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+  }
+
+  /* Mask group 392:8310 · 207.8x290.33 @58.1,20.33 */
+  .sobre__panel {
+    inline-size: 207.8px;
+    block-size: 290.33px;
+    inset-inline-start: 58.1px;
+    inset-block-start: 20.33px;
+  }
+
+  /* 392:8318 · 106.65x76.18 @0,51.33 */
+  .sobre__thumb--1 {
+    inline-size: 106.65px;
+    block-size: 76.18px;
+    inset-inline-start: 0;
+    inset-block-start: 51.33px;
+  }
+
+  /* 392:8323 · 103.6x74 @220.45,-11.67 */
+  .sobre__thumb--2 {
+    inline-size: 103.6px;
+    block-size: 74px;
+    inset-inline-start: 220.45px;
+    inset-block-start: -11.67px;
+  }
+
+  /* 392:8327 · 112x80 @202,214.33 */
+  .sobre__thumb--3 {
+    inline-size: 112px;
+    block-size: 80px;
+    inset-inline-start: 202px;
+    inset-block-start: 214.33px;
+  }
+
+  .sobre__content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-56);
+    padding-block-start: var(--size-40);
+  }
+
+  .sobre__right {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-40);
+    align-items: flex-start;
+  }
+
+  .sobre__intro {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-24);
+  }
+
+  /* 48/48 Bold — six lines at 328 is the drawn 288, and the only place on
+     the page that uses this size. */
+  .sobre__intro h2 {
+    font-size: var(--text-h2);
+    line-height: var(--leading-h2);
+    font-weight: var(--weight-bold);
+    color: var(--color-accent);
+  }
+
+  /* The deck keeps its drawn 466 while the cards sit at the drawn offsets. */
+  .sobre__deck {
+    position: relative;
+    block-size: 466px;
+  }
+
+  .sobre__deck .sobre__card {
+    position: absolute;
+    inset-inline: 0;
+  }
+
+  .sobre__deck .sobre__card:nth-child(1) { inset-block-start: 0; }
+  .sobre__deck .sobre__card:nth-child(2) { inset-block-start: 71px; }
+  .sobre__deck .sobre__card:nth-child(3) { inset-block-start: 142px; }
+  .sobre__deck .sobre__card:nth-child(4) { inset-block-start: 213px; }
+
+  /* card 328x204 · fill #f4f7f7 (the page ground) · pad32 · r16 · content
+     264 = number 50 + 24 + rule + 24 + copy 166. */
+  .sobre__card {
+    display: flex;
+    gap: var(--size-24);
+    padding: var(--size-32);
+    background-color: var(--color-page);
+    border-radius: var(--radius-md);
+  }
+
+  /* Line 52 — a 94 rule between the number and the copy, centred in a
+     content block that is 140, 168 or 196 depending on the card. */
+  .sobre__card::before {
+    content: "";
+    order: 1;
+    align-self: center;
+    inline-size: 1px;
+    block-size: 94px;
+    background-color: var(--color-line);
+    flex-shrink: 0;
+  }
+
+  .sobre__num {
+    order: 0;
+    inline-size: 50px;
+    flex-shrink: 0;
+    font-size: var(--text-h3);
+    line-height: var(--leading-h3);
+    font-weight: var(--weight-bold);
+    color: var(--color-accent);
+  }
+
+  .sobre__card p {
+    order: 2;
+    inline-size: 166px;
+    color: var(--color-body);
+  }
+
+  .sobre__card strong {
+    font-weight: var(--weight-bold);
+  }
+
+  /* Drawn at y1473.33 where `content` ends at 1489 — 15.67 of overlap. */
+  .sobre__card--last {
+    margin-block-start: -15.67px;
+  }
+
   /* ---- Big numbers ------------------------------------------------------
      392:8298 · 328x622 · padY48 · gap56 · each block 138 = 72 + 8 + 58. */
   .numeros {
