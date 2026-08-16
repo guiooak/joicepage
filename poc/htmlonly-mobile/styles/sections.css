@@ -329,4 +329,187 @@
     display: block;
     font-weight: inherit;
   }
+
+  /* ---- Tag pill --------------------------------------------------------
+     392:8142 and every other `tag` instance on the page: 1px #5779aa, r999,
+     padX 32, padY 4, label 20/1.4 #5779aa. 28 + 8 = the drawn 36, so the
+     stroke straddles the edge here too and has to be an inset shadow rather
+     than a border — with a real border "Visão" measures 38x109 instead of
+     the drawn 36x105. */
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding-inline: var(--size-32);
+    padding-block: var(--size-4);
+    font-size: var(--text-tag);
+    line-height: var(--leading-tag);
+    letter-spacing: var(--tracking-paragraph);
+    color: var(--color-accent);
+    box-shadow: inset 0 0 0 1px var(--color-accent);
+    border-radius: var(--radius-pill);
+  }
+
+  /* ---- Visão -----------------------------------------------------------
+     392:8140 · 328x1092 · pt40 · gap56 between the copy block and the Card.
+     Inside, `content` and `Content` each carry gap 40. */
+  .visao {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-56);
+    padding-block-start: var(--size-40);
+    --section-pad: var(--size-40);
+  }
+
+  .visao__head,
+  .visao__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-40);
+    align-items: flex-start;
+  }
+
+  /* H1 56/0.92 Bold. Three lines at 328 wide is the drawn 156. */
+  .visao__title {
+    font-size: var(--text-h1);
+    line-height: var(--leading-h1);
+    font-weight: var(--weight-bold);
+    color: var(--color-accent);
+  }
+
+  .visao__title em {
+    font-style: normal;
+    color: var(--color-ghost-ink);
+  }
+
+  /* ---- Princípios ------------------------------------------------------
+     Card 392:8148 · mask 328x584 · r24. Photo 0, veil 1, ellipse 2, cards 3 —
+     the same composite as the desktop, drawn at mobile's own numbers. */
+  .principios {
+    position: relative;
+    block-size: 584px;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  /* IMG_3124 392:8152 · 466x768 @-58,0 — a portrait crop that overhangs the
+     mask left, right and bottom, so the mask does the framing. */
+  .principios__image {
+    position: absolute;
+    inline-size: 466px;
+    block-size: 768px;
+    inset-inline-start: -58px;
+    inset-block-start: 0;
+    max-inline-size: none;
+    object-fit: cover;
+    z-index: 0;
+  }
+
+  /* 20% black over the photo, as an overlay — a background-color would paint
+     behind an opaque JPEG and never show. */
+  .principios::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background-color: rgb(0 0 0 / 20%);
+    pointer-events: none;
+  }
+
+  /* Ellipse 392:8153 · 214x1015.96 @-16.82,52.58 · #5779aa, hard-light,
+     opacity 0.5 — a tall narrow lens where the desktop's is a wide disc, so
+     this is a different drawing rather than a scaled one.
+
+     The blur is derived, not read, the same way the hero's is: the desktop's
+     150 came from an exported feGaussianBlur, and 150/1226 = 0.1223 of the
+     short axis; 0.1223 x 214 = 26. Unblurred this is a hard blue band across
+     the photograph. */
+  .principios::after {
+    content: "";
+    position: absolute;
+    inline-size: 214px;
+    block-size: 1015.96px;
+    inset-inline-start: -16.82px;
+    inset-block-start: 52.58px;
+    z-index: 2;
+    background-color: var(--c-blue);
+    border-radius: 50%;
+    mix-blend-mode: hard-light;
+    opacity: 0.5;
+    filter: blur(26px);
+    pointer-events: none;
+  }
+
+  /* The second horizontal rail: Card 392:8154 is drawn 1120 wide inside the
+     328 mask. Same hidden-scrollbar reasoning as the Credenciais rail. */
+  .principios__rail {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    overscroll-behavior-inline: contain;
+  }
+
+  .principios__rail::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* 1120 wide · p24 · gap16 · items-end. The cards are 256 each and their
+     bottoms all land on 558.265 = 582.265 - 24, which is what `flex-end`
+     reproduces without pinning four different heights. */
+  .principios__cards {
+    display: flex;
+    align-items: flex-end;
+    gap: var(--size-16);
+    inline-size: 1120px;
+    block-size: 582.265px;
+    padding: var(--size-24);
+  }
+
+  /* card 256 wide · rgba(255,255,255,.9) over a 50px backdrop blur, which is
+     why the photograph reads faintly through each one · r16 · p24 · gap16,
+     with 8 between the title and the copy. */
+  .principio {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-16);
+    flex: 1 0 0;
+    min-inline-size: 0;
+    padding: var(--size-24);
+    background-color: rgb(255 255 255 / 90%);
+    backdrop-filter: blur(50px);
+    border-radius: var(--radius-md);
+    overflow: clip;
+  }
+
+  .principio--clipped {
+    block-size: 273px;
+  }
+
+  .principio__icon {
+    inline-size: var(--size-40);
+    block-size: var(--size-40);
+  }
+
+  .principio__icon--sm {
+    inline-size: var(--size-32);
+    block-size: var(--size-32);
+  }
+
+  .principio div {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-8);
+  }
+
+  .principio h3 {
+    font-size: var(--text-paragraph);
+    line-height: var(--leading-paragraph);
+    font-weight: var(--weight-bold);
+    letter-spacing: var(--tracking-paragraph);
+    color: var(--color-accent);
+  }
 }

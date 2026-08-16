@@ -104,8 +104,15 @@
     --leading-display-lg: 0.92;
     --text-display: 72px;         /* Hero, Serviços, Processo headlines   */
     --leading-display: 0.92;
-    --text-h1: 56px;              /* Histórias, Sobre, FAQ headlines      */
-    --leading-h1: 0.92;
+    /* 52px, not the 0.92 ratio the desktop carries. Figma resolves 92% of 56
+       to a whole 52 rather than 51.52, and its own text boxes prove it: the
+       Visão headline (392:8145) is 156 for three lines and the desktop's
+       "Pessoas diferentes…" (56/0.92, four lines) is 208 — both exactly
+       n x 52. As a ratio every H1 block on the page comes out ~1.5px short
+       and every section below it shifts up, which compounds down an
+       11477-tall canvas. */
+    --text-h1: 56px;              /* Visão headline                       */
+    --leading-h1: 52px;
     --text-h2: 48px;              /* service card titles, CTA paragraph   */
     --leading-h2: 1;
     --text-h3: 32px;              /* Processo closing, Sobre card numbers */
