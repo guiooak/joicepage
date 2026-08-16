@@ -118,8 +118,18 @@
     --leading-paragraph: 1.4;
     --text-caption: 16px;
     --leading-caption: 1.5;
-    --text-tag: 16px;
-    --leading-tag: 1;
+    /* Mobile override: the tag pill is drawn at the 20px paragraph size with
+       1.4 leading, not the desktop's 16/1 — confirmed on 392:8142, which is
+       105 wide for "Visão" at padX 32. */
+    --text-tag: 20px;
+    --leading-tag: 1.4;
+
+    /* The one deliberately off-token size in the whole mobile frame. The
+       designer's note (413:20597): the hero headline started as the 48px H2
+       style and Joice asked for it smaller, so it was set to 40px by hand and
+       there is no Figma style behind it. Leading is a flat 1. */
+    --text-hero: 40px;
+    --leading-hero: 1;
 
     /* Lora numerals. */
     --text-numeral: 136px;        /* big-numbers      */

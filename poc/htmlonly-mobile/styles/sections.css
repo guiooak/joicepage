@@ -17,17 +17,126 @@
 @layer components {
   /* The page frame: a 360-wide vertical stack, 16 padding, 16 gap. Derived
      from the drawn section tops — each section starts exactly 16 below the
-     previous one's bottom, the whole way down the 11477.67 canvas. */
-  .frame {
+     previous one's bottom, the whole way down the 11477.67 canvas.
+
+     `main` repeats the stack without the padding, so header → first section
+     and section → section are both 16 and the landmarks stay intact. */
+  .frame,
+  .frame > main {
     display: flex;
     flex-direction: column;
     gap: var(--frame-gap);
+  }
+
+  .frame {
     padding: var(--page-gutter);
   }
 
-  /* Sections are all 328 — the frame width less both gutters — except the
-     two Credenciais rails, which are drawn 720 and overflow on purpose. */
-  .frame > * {
-    inline-size: var(--content-width);
+  /* ---- Header ---------------------------------------------------------- */
+  /* Menu 392:8100 · 328x88 · white · 1px #f4f7f7 · r24 · padX 24 · padY 16.
+     Static, the way the frame draws it. The drawer below is the only thing
+     that overlays, so the bar itself needs no stacking context beyond this. */
+  .site-header {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-inline: var(--size-24);
+    padding-block: var(--size-16);
+    background-color: var(--color-surface);
+    /* The hairline is an inset shadow, not a border, because the drawn box is
+       88 = 16 + 56 + 16 with the stroke straddling the edge. A real 1px
+       border would make it 90 and push every section below it down by 2. */
+    box-shadow: inset 0 0 0 1px var(--c-paper);
+    border-radius: var(--radius-lg);
+    filter: drop-shadow(0 16px 10px rgb(87 121 170 / 8%));
+  }
+
+  /* Logo 120x48 — two lines of Lora at 24/1.05 come to 48 on the nose. */
+  .brand {
+    font-family: var(--font-serif);
+    font-size: var(--text-h5);
+    line-height: 1.05;
+    color: var(--color-ink);
+  }
+
+  .brand span {
+    display: block;
+  }
+
+  /* ---- Nav drawer ------------------------------------------------------ */
+  /* `Action]` 392:8104 is a 56x56 tap target holding a 24px icon at padding
+     16. The 56 is what sets the bar's 88 height (56 + 2x16), so the summary
+     has to keep it exactly. */
+  .menu__toggle {
+    display: grid;
+    place-items: center;
+    inline-size: var(--size-56);
+    block-size: var(--size-56);
+    cursor: pointer;
+    list-style: none;
+  }
+
+  /* Safari still paints the disclosure triangle without this. */
+  .menu__toggle::-webkit-details-marker {
+    display: none;
+  }
+
+  .menu__icon {
+    inline-size: var(--size-24);
+    block-size: var(--size-24);
+    fill: none;
+    stroke: #343330; /* Phosphor "stone", the icon's own colour */
+    stroke-width: 1.5;
+    stroke-linecap: round;
+  }
+
+  /* Hangs off the bar rather than pushing the page down: the frame draws the
+     Menu 88 tall in every state it draws, and an open drawer that reflowed
+     the page would move every section top below it. */
+  .menu__panel {
+    position: absolute;
+    inset-inline: 0;
+    inset-block-start: calc(100% + var(--size-8));
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-16);
+    padding: var(--size-24);
+    background-color: var(--color-surface);
+    box-shadow: inset 0 0 0 1px var(--c-paper);
+    border-radius: var(--radius-lg);
+    filter: drop-shadow(0 16px 10px rgb(87 121 170 / 8%));
+  }
+
+  .menu__panel a:not(.btn) {
+    font-size: var(--text-paragraph);
+    line-height: var(--leading-paragraph);
+    letter-spacing: var(--tracking-paragraph);
+    color: var(--color-ink);
+  }
+
+  /* ---- Button ---------------------------------------------------------- */
+  /* Button 392:8124 · fill #5779aa · padX 24 · padY 12 · r16 · label 20/1.4
+     #f4f7f7. 28 + 24 = the drawn 52 height. Full width wherever the frame
+     draws it stretched. */
+  .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--size-8);
+    padding-inline: var(--size-24);
+    padding-block: var(--size-12);
+    font-size: var(--text-paragraph);
+    line-height: var(--leading-paragraph);
+    letter-spacing: var(--tracking-paragraph);
+    border-radius: var(--radius-md);
+    color: var(--color-button-ink);
+    background-color: var(--color-button);
+    transition: background-color var(--transition);
+  }
+
+  .btn--primary {
+    background-color: var(--color-button-primary);
   }
 }

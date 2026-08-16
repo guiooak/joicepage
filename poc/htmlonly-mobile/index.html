@@ -60,8 +60,55 @@
     <script src="scripts/motion.js" defer></script>
   </head>
 
-  <body>
-    <main class="frame">
+  <!-- The page frame IS the body: a 360-wide vertical stack, 16 padding, 16
+       gap. `main` nests inside it with the same gap and no padding of its
+       own, so the rhythm is unbroken while `header`, `main` and `footer` keep
+       their landmarks. -->
+  <body class="frame">
+    <!-- Menu 392:8100 · 328x88 @y16 · white · 1px #f4f7f7 · r24 · padX 24 ·
+         padY 16 · drop shadow 0 16px 10px rgba(87,121,170,.08). The desktop
+         bar's nav row and CTA are both drawn `hidden` here (392:8102,
+         392:8103); what is visible is the Logo and a 24px List icon in a 56
+         tap target (392:8108 inside 392:8104).
+
+         So the links need a drawer, and it is a native <details>: the frame
+         does not draw the open state, and a disclosure is the one control
+         that carries "expanded/collapsed" to assistive tech, keyboard and
+         no-JS readers without a line of script. Same contract as
+         poc/rawhtml — this page is complete with scripting off. -->
+    <header class="site-header">
+      <!-- Logo 392:8101, 120x48. Drawn as a vector wordmark; set as the same
+           two-line Lora lockup the desktop build uses, so the words stay in
+           the HTML rather than becoming an image. -->
+      <a class="brand" href="#inicio">
+        <span>joice</span>
+        <span>sperandio</span>
+      </a>
+
+      <details class="menu">
+        <summary class="menu__toggle" aria-label="Menu">
+          <!-- The drawn icon is Phosphor's `List` at 24px, stroke #343330
+               ("stone"), three bars inset 15.63% — traced rather than
+               exported, because three straight lines are the whole glyph. -->
+          <svg class="menu__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M3.75 6h16.5M3.75 12h16.5M3.75 18h16.5" />
+          </svg>
+        </summary>
+
+        <nav class="menu__panel" aria-label="Navegação principal">
+          <a href="#inicio">Início</a>
+          <a href="#visao">Visão</a>
+          <a href="#servicos">Serviços</a>
+          <a href="#processo">Processo</a>
+          <a href="#historias">Histórias</a>
+          <a href="#sobre">Sobre</a>
+          <a href="#duvidas">Dúvidas</a>
+          <a class="btn btn--primary" href="https://wa.me/5547991939397" target="_blank" rel="noopener noreferrer">Agendar uma conversa</a>
+        </nav>
+      </details>
+    </header>
+
+    <main>
       <!-- Sections land here one commit at a time, in the order the frame
            draws them — see .ai/plans/mobile-page.md. -->
     </main>
