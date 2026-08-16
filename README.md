@@ -2,10 +2,11 @@
 
 Single-page landing site for Joice Sperandio, financial planner.
 
-**Review app:** <https://guiooak.github.io/joicepage/> — redeployed on every
-push to `main`.
+**Review app:** <https://guiooak.github.io/joicepage/> (desktop) and
+<https://guiooak.github.io/joicepage/mobile/> (mobile) — both redeployed on
+every push to `main`.
 
-That URL is for review only. It is served `noindex` and its canonical points at
+Those URLs are for review only. It is served `noindex` and its canonical points at
 itself, deliberately, so it cannot compete with the real domain — see
 [Deploying](#deploying). The production home will be
 `joicesperandio.com.br`, which today still serves a different site.
@@ -15,8 +16,18 @@ itself, deliberately, so it cannot compete with the real domain — see
 ```
 .ai/plans/          architecture plan and decision record
 poc/                one folder per build approach — siblings, independently runnable
-  rawhtml/          zero-dependency: hand-authored HTML + modern CSS  <- current
+  rawhtml/          zero-dependency desktop page, built to the 1440 frame  <- ships at /
+  htmlonly-mobile/  zero-dependency mobile page, built to the 360 frame    <- ships at /mobile/
+tools/figextract/   decodes a .fig export into a readable node tree
+tools/measure/      headless-Chrome geometry harness, no dependencies
 ```
+
+The two pages are **siblings, not a page and its breakpoint**. The Figma file
+holds a separately-designed `MOBILE 360px` frame whose structure differs
+(hamburger nav, two horizontal rails, a two-card carousel) and whose copy
+differs in a dozen places. A responsive layer was tried in this repo and
+reverted in `d750c35` because it fought the desktop build. See
+[`.ai/plans/mobile-page.md`](.ai/plans/mobile-page.md).
 
 `poc/` exists so alternative build approaches can be evaluated side by side
 against the same design. Each folder is self-contained and deployable on its
@@ -45,7 +56,8 @@ structure rather than inventing its own.
 No install, no build:
 
 ```sh
-cd poc/rawhtml && python3 -m http.server 8000
+cd poc/rawhtml && python3 -m http.server 8000          # desktop
+cd poc/htmlonly-mobile && python3 -m http.server 8000  # mobile
 ```
 
 Then open <http://localhost:8000>. Use the server rather than opening
@@ -54,11 +66,22 @@ block them, so the type would silently fall back.
 
 ## Deploying
 
-`.github/workflows/deploy.yml` publishes `poc/rawhtml/` to
-<https://guiooak.github.io/joicepage/> on every push to `main`, plus a manual
-`workflow_dispatch` for redeploying the current `main` without an empty
-commit. Only that folder is uploaded, so the plan docs and the `.fig` tooling
-never reach the public site.
+`.github/workflows/deploy.yml` publishes **both** pages on every push to
+`main`, plus a manual `workflow_dispatch` for redeploying the current `main`
+without an empty commit.
+
+GitHub Pages allows one site per repository, so it is **one artifact with the
+mobile build nested inside it**, not two deployments:
+
+```
+poc/rawhtml/          →  _site/           →  /joicepage/
+poc/htmlonly-mobile/  →  _site/mobile/    →  /joicepage/mobile/
+```
+
+Only those two folders are uploaded, so the plan docs and the `.fig` tooling
+never reach the public site. `robots.txt` and `sitemap.xml` exist at the root
+only — they are ignored at a subpath, and the guard fails the run if one turns
+up in the mobile folder.
 
 Pages had to be enabled once by hand. `configure-pages` is set to
 `enablement: true`, but the workflow's `GITHUB_TOKEN` can deploy to Pages
@@ -73,10 +96,13 @@ There is still no build step: the artifact is the source directory copied
 verbatim. Delete the workflow and the page is unchanged and still deployable
 by hand.
 
-Two guards, because this is outward facing. Before upload, the run fails if an
-expected file is missing or if `index.html` references a relative asset that
-does not exist. After deploy, it fetches the live URL and greps for copy that
-has to be in the HTML rather than waiting on JS.
+Two guards, because this is outward facing, and both run over **each** folder.
+Before upload, the run fails if an expected file is missing, if `index.html`
+references a relative asset that does not exist, or if a stylesheet has an
+unbalanced comment (that one caught a real silently-swallowed rule). After
+deploy, it fetches both live URLs and greps each for copy that has to be in the
+HTML rather than waiting on JS — with page-*specific* phrases, so a mobile URL
+that accidentally served the desktop page still fails.
 
 ### The github.io deployment is a review app
 
@@ -100,11 +126,22 @@ three ways. The reasoning matters more than the code, so it is spelled out:
 3. **`sitemap.xml` dropped.** It lists the production URL, and a review app
    should not advertise a sitemap at all.
 
+The mobile page needs one rewrite the desktop does not. Its authored canonical
+points at the **desktop** URL — that is the standard separate-URL mobile
+annotation, paired with the desktop's `rel="alternate" media="only screen and
+(max-width: 640px)"` pointing back at it — so the blanket rewrite would leave
+it aimed at the deployment root rather than at itself. The step re-points it
+(and `og:url`) at `<base>/mobile/` afterwards, and asserts both.
+
+That annotation is wired **now**, while both pages are `noindex` review apps,
+so the production cutover is a DNS change rather than an SEO project. Two URLs
+serving the same content otherwise compete for the same queries.
+
 Every one of those is asserted after the fact, so a silent `sed` failure fails
 the run instead of publishing something that leaks.
 
-Gated on a `CNAME` file. To go live for real: add `poc/rawhtml/CNAME` with the
-domain, point DNS at Pages, and the step no-ops — the deployment is then
+Gated on a `CNAME` file at the artifact root. To go live for real: add
+`poc/rawhtml/CNAME` with the domain, point DNS at Pages, and the step no-ops — the deployment is then
 production and the authored canonical, `robots.txt` and `sitemap.xml` are
 already correct.
 
@@ -129,6 +166,13 @@ links are how Google finds a URL in the first place.
 
 ## Status
 
+**Both pages are built.** The desktop's thirteen sections and the mobile's
+fourteen. Every mobile section lands on the geometry the `MOBILE 360px` frame
+draws, measured in headless Chrome at 360 — the largest deviation anywhere is
+0.34px, and it is Figma's own rounding. `tools/measure/measure.mjs` is the
+harness; it reports each section's top and height divided back through the
+page's own zoom factor, so the same table comes out at 360, 390 and 430.
+
 All thirteen sections are built. `styles/tokens.css` now holds **exact** values
 pulled from the Figma variables, cross-checked against the decoded `.fig`
 export — the earlier provisional/sampled tokens are gone, and so is the note
@@ -140,14 +184,11 @@ MCP plan ran out of tool calls partway through, so the images came from the
 `.fig` route instead, which needs no subscription and no quota. That route is
 the reason it kept working; keep it.
 
-One thing is genuinely outstanding, and it is a **writing** task, not an
-extraction one:
-
-- **FAQ copy does not exist in the Figma file.** Checked rather than assumed:
-  `SYMBOL FAQ` (115:2224) and every one of its instances contain zero text
-  nodes. The eight cards are drawn empty. Three of the six Processo accordion
-  panels are likewise unwritten. `grep -n "A capturar" index.html` — 11 spots.
-  This copy has to come from Joice.
+The FAQ copy **does** exist and the whole FAQ is built. An earlier note here
+said otherwise; it was wrong. The text lives in per-instance overrides, which
+is why the `.fig` decoder reports the cards as empty — reading it needed
+`get_design_context`, not a better export. `grep -c "A capturar" index.html`
+is now 0 on both pages.
 
 Worth knowing: the `Site desktop` frame is **stale in one place**. It draws
 service card 02 with card 01's list duplicated. The intended copy exists

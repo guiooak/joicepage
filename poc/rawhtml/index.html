@@ -14,6 +14,17 @@
     />
     <link rel="canonical" href="https://joicesperandio.com.br/" />
 
+    <!-- The mobile half of the pair, at its own URL — poc/htmlonly-mobile,
+         built against the `MOBILE 360px` frame. Two URLs serving the same
+         content compete for the same queries; the standard separate-URL
+         annotation is this `rel="alternate"` here and a `rel="canonical"`
+         back to this page from there. Wired now, while both are noindex
+         review apps, so the production cutover is a DNS change rather than
+         an SEO project. -->
+    <!-- One line on purpose: the deploy workflow asserts this tag points at
+         the deployed mobile URL with a single grep. -->
+    <link rel="alternate" media="only screen and (max-width: 640px)" href="https://joicesperandio.com.br/mobile/" />
+
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="pt_BR" />
     <meta property="og:title" content="Joice Sperandio — Planejamento Financeiro e Investimentos" />
