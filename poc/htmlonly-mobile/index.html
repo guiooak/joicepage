@@ -109,8 +109,48 @@
     </header>
 
     <main>
-      <!-- Sections land here one commit at a time, in the order the frame
-           draws them — see .ai/plans/mobile-page.md. -->
+      <!-- Hero `content` 392:8110 · 328x724 @y120. Same construction as the
+           desktop hero — a photograph with two #50518a ellipses composited
+           over it in hard-light, clipped to the rounded rect — drawn at
+           mobile's own geometry, not scaled down from 1440. -->
+      <section class="hero" id="inicio">
+        <img
+          class="hero__photo"
+          src="assets/img/hero-joice.jpg"
+          alt="Joice Sperandio, planejadora financeira"
+          width="1368"
+          height="1080"
+          fetchpriority="high"
+        />
+        <span class="hero__blob hero__blob--1" aria-hidden="true"></span>
+        <span class="hero__blob hero__blob--2" aria-hidden="true"></span>
+
+        <div class="hero__content">
+          <!-- Drawn with a hard break after "O futuro que" (392:8120 renders
+               as two paragraphs), then four wrapped lines — five at 40/1.0,
+               which is the 200 the text box measures inside its 454 slot. -->
+          <div class="hero__titleblock">
+            <h1 class="hero__title">
+              O futuro que<br />você deseja viver começa pelas decisões que
+              toma hoje.
+            </h1>
+          </div>
+          <!-- NOT the desktop lead. The mobile frame writes its own, shorter:
+               "…construir uma vida com mais intenção, usando o dinheiro como
+               ferramenta de sustentação" where the desktop says "…construir
+               patrimônio com intenção, tomar decisões com mais segurança…". -->
+          <p class="hero__lead">
+            Planejamento financeiro e consultoria em investimentos para quem
+            deseja construir uma vida com mais intenção, usando o dinheiro
+            como ferramenta de sustentação
+          </p>
+          <!-- One button, full width. The frame draws a second (392:8125)
+               directly under it, hidden. -->
+          <div class="hero__actions">
+            <a class="btn btn--primary" href="https://wa.me/5547991939397" target="_blank" rel="noopener noreferrer">Agendar uma conversa</a>
+          </div>
+        </div>
+      </section>
     </main>
   </body>
 </html>

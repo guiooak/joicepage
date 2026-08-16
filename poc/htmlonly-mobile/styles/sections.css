@@ -139,4 +139,122 @@
   .btn--primary {
     background-color: var(--color-button-primary);
   }
+
+  /* ---- Hero ------------------------------------------------------------
+     `content` 392:8110, 328x724, clipped to r24. Photo, an 8% black veil,
+     two hard-light ellipses, copy — in that z order. */
+  .hero {
+    position: relative;
+    block-size: 724px;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  /* `IMG_3139 5` 392:8113, drawn far larger than the box and hanging off
+     every side, which is what puts Joice at the scale the frame shows rather
+     than the centred crop `object-fit: cover` would give.
+
+     The numbers are derived, and the derivation is worth keeping because the
+     stored ones cannot be used directly: Figma rotates about a node's ORIGIN
+     and CSS about its CENTRE. The file reports the ROTATED bounding box —
+     1434.66x1186 at -888.54,-346.61 — and the design context resolves the
+     unrotated size to 1367.9x1080 at 4.54deg. Centre of the bbox is
+     -171.2,246.4, so:
+
+       left = -171.2 - 1367.9/2 = -855.2    top = 246.4 - 1080/2 = -293.6
+
+     Checked: 1367.9x1080 rotated 4.54deg bounds 1449x1185 against the
+     reported 1434.7x1186. The 14px in width is the 0.77deg skew the file also
+     carries, which is not reproduced — at this scale it moves nothing
+     visible. 1367.9x1080 is a 1.2666 ratio, the same as the committed
+     2200x1737 asset, so this is the raw photograph and not a second crop. */
+  .hero__photo {
+    position: absolute;
+    inline-size: 1367.9px;
+    block-size: 1080px;
+    inset-inline-start: -855.2px;
+    inset-block-start: -293.6px;
+    max-inline-size: none;
+    object-fit: cover;
+    rotate: 4.54deg;
+    z-index: 0;
+  }
+
+  /* The 8% black wash over the photo — an overlay, not a background-color on
+     the <img>, which would paint behind an opaque JPEG and never show. */
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background-color: var(--hero-veil);
+    pointer-events: none;
+  }
+
+  /* Ellipse 2 (392:8114) and Ellipse 3 (392:8115): both 794x281.16 at x-233,
+     stacked at y291.04 and y503.03. Two flat lenses, not the desktop's near
+     circles, so this is a different drawing rather than a scaled one.
+
+     Opacity and hard-light are the file's. The blur is NOT: the desktop
+     values came from Figma's exported `feGaussianBlur`, and no export was
+     taken here. 30px keeps the same blur-to-short-axis ratio the desktop
+     ellipses carry (150/1414 = 0.106; 0.106 x 281.16 = 29.8). Without a
+     blur the hero reads as two hard violet bands, so some value is needed;
+     this one is reasoned, not read. */
+  .hero__blob {
+    position: absolute;
+    inline-size: 794px;
+    block-size: 281.156px;
+    inset-inline-start: -233px;
+    background-color: var(--hero-blend);
+    border-radius: 50%;
+    mix-blend-mode: hard-light;
+    opacity: 0.6;
+    filter: blur(30px);
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .hero__blob--1 {
+    inset-block-start: 291.037px;
+  }
+
+  .hero__blob--2 {
+    inset-block-start: 503.027px;
+  }
+
+  /* Content 392:8116 · 305.36x666 @11.53,30.89 · gap 24 throughout. */
+  .hero__content {
+    position: absolute;
+    inset-inline-start: 11.53px;
+    inset-block-start: 30.89px;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-24);
+    inline-size: 305.36px;
+  }
+
+  /* Title 392:8118 is a 454-tall slot with the copy pinned to its BOTTOM —
+     the 254 above it is where the photograph shows through. */
+  .hero__titleblock {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    block-size: 454px;
+  }
+
+  .hero__title {
+    font-size: var(--text-hero);
+    line-height: var(--leading-hero);
+    font-weight: var(--weight-bold);
+    text-align: center;
+    color: var(--color-button-ink);
+  }
+
+  .hero__lead {
+    text-align: center;
+    color: var(--color-button-ink);
+  }
 }
