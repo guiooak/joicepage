@@ -840,7 +840,6 @@
      IS the drawn 28. Same inset-shadow hairline as the tag — a real border
      makes it 30. */
   .pill {
-    position: absolute;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -857,6 +856,147 @@
   .pill--filled {
     color: var(--color-accent-deep);
     background-color: var(--color-surface-card);
+    box-shadow: none;
+  }
+
+  /* The six CTA pills are placed absolutely at the file's own offsets; every
+     other pill on the page sits in flow. */
+  .conversa .pill {
+    position: absolute;
+  }
+
+  /* ---- Histórias --------------------------------------------------------
+     392:8248 · 328x1346.67 @y6009 · pt60 · gap48. hero 570.67 (image 218.67
+     + 40 + left 312), then the testimonial block at 668. */
+  .historias {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-48);
+    padding-block-start: 60px;
+    --section-pad: 60px;
+  }
+
+  .historias__hero,
+  .historias__left {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-40);
+    align-items: flex-start;
+  }
+
+  /* Image right 392:8250 · 328x218.67 · r24. */
+  .historias__media {
+    inline-size: var(--content-width);
+    block-size: 218.67px;
+    object-fit: cover;
+    border-radius: var(--radius-lg);
+  }
+
+  .historias__content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-24);
+  }
+
+  .historias__content h2 {
+    font-size: var(--text-h3);
+    line-height: var(--leading-h3);
+    font-weight: var(--weight-bold);
+    color: var(--color-accent-deep);
+  }
+
+  /* Alessandra 392:8256 · 328x668 · testimonial 344 + 24 + names 300. No
+     white card and no padding here, unlike the desktop's: the frame draws
+     Testimonials flush at 0,0 on the page ground. */
+  .depoimento {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-24);
+  }
+
+  /* The three radios drive the switch. Visually hidden rather than
+     `display: none`, so they stay focusable and the labels stay operable
+     from the keyboard. */
+  .depoimento__pick {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+    clip-path: inset(50%);
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  /* testimonial 392:8258 · 344 = mark 48 + gap 64 + quote 232. */
+  .depoimento__stage {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-64);
+  }
+
+  .depoimento__mark {
+    inline-size: 72px;
+    block-size: 48px;
+  }
+
+  /* Pinned to the drawn 232, which is also the tallest of the three at this
+     measure — Alessandra and Luiz & Lívia both come to 232 and Simone to
+     174 — so switching quotes never moves the section. Same reserved-height
+     rule the Processo accordion follows. */
+  .depoimento__quotes {
+    display: grid;
+    block-size: 232px;
+  }
+
+  .depoimento__quotes blockquote {
+    grid-area: 1 / 1;
+    font-size: var(--text-h5);
+    line-height: var(--leading-h5);
+    letter-spacing: 0;
+    color: var(--color-body);
+    visibility: hidden;
+  }
+
+  #depo-1:checked ~ .depoimento__stage blockquote:nth-of-type(1),
+  #depo-2:checked ~ .depoimento__stage blockquote:nth-of-type(2),
+  #depo-3:checked ~ .depoimento__stage blockquote:nth-of-type(3) {
+    visibility: visible;
+  }
+
+  /* Names 392:8267 · 300 = 148 + 76 + 76. Each block is padY 24 around a 28
+     name, with the active one's tags 8 under it. */
+  .depoimento__people li {
+    padding-block: var(--size-24);
+    color: var(--color-body-soft);
+  }
+
+  .depoimento__people label {
+    display: block;
+    cursor: pointer;
+  }
+
+  #depo-1:checked ~ .depoimento__people li:nth-child(1) label,
+  #depo-2:checked ~ .depoimento__people li:nth-child(2) label,
+  #depo-3:checked ~ .depoimento__people li:nth-child(3) label {
+    color: var(--color-ink);
+  }
+
+  /* Tags 392:8270 · 328x64 · two rows of 28 with an 8 gap, widths 183 / 124
+     / 233. */
+  .depoimento__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--size-8);
+    margin-block-start: var(--size-8);
+  }
+
+  /* The testimonial tag is an unexpanded instance, so its variant is the
+     desktop build's rather than something read here: filled #e5eef4 with
+     #5779aa copy, no outline. */
+  .pill--soft {
+    background-color: var(--color-surface-tint);
     box-shadow: none;
   }
 

@@ -507,6 +507,95 @@
           <dd>anos de experiência com <br />planejamento financeiro</dd>
         </div>
       </dl>
+
+      <!-- HISTORIAS 392:8248 · 328x1346.67 @y6009 · pt60 · gap48. -->
+      <section class="historias" id="historias">
+        <div class="historias__hero">
+          <img
+            class="historias__media"
+            src="assets/img/historias.jpg"
+            alt="Atendimento online com Joice Sperandio"
+            width="328"
+            height="219"
+            loading="lazy"
+          />
+          <div class="historias__left">
+            <p class="tag">Histórias</p>
+            <div class="historias__content">
+              <h2>Pessoas diferentes. Momentos diferentes. Decisões importantes em comum.</h2>
+              <p>
+                Nenhuma dessas histórias começou da mesma forma. Mas todas
+                começaram com uma conversa.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Alessandra 392:8256 · 328x668 · testimonial 344 + 24 + names 300.
+             Unlike the desktop's, this one sits straight on the page ground —
+             no white card, no padding; the frame draws Testimonials flush at
+             0,0.
+
+             Three quotes, three names. Frances and Rafael are drawn hidden
+             here (392:8274, 392:8286) and no state anywhere in the file
+             exposes their text, so they are not on the page at all.
+
+             The switch is radio inputs, not script: the plan's no-JS
+             constraint says every testimonial has to be reachable with
+             JavaScript off, and all three quotes are in the HTML with a
+             `:checked ~` rule deciding which is shown. -->
+        <div class="depoimento">
+          <input class="depoimento__pick" type="radio" name="depoimento" id="depo-1" checked />
+          <input class="depoimento__pick" type="radio" name="depoimento" id="depo-2" />
+          <input class="depoimento__pick" type="radio" name="depoimento" id="depo-3" />
+
+          <div class="depoimento__stage">
+            <!-- The mark is a 72x48 vector (392:8260), two slanted bars at
+                 30% — exported, not approximated with a quote character. -->
+            <img class="depoimento__mark" src="assets/img/quote.svg" alt="" width="72" height="48" />
+            <div class="depoimento__quotes">
+              <!-- Mobile's own, and much shorter than the desktop's: "eu não
+                   pensava no futuro. Depois do transplante, precisei aprender
+                   a construí-lo" against the desktop's longer telling. -->
+              <blockquote>
+                Durante muitos anos, por questões de saúde, eu não pensava no
+                futuro. Depois do transplante, precisei aprender a construí-lo.
+                A Joice transformou minha insegurança em planejamento. Hoje
+                entendo meus números e tomo decisões com muito mais
+                tranquilidade.
+              </blockquote>
+              <blockquote>
+                Desde 2023, conto com o acompanhamento da Joice para organizar
+                minha vida financeira e tomar decisões com mais segurança. O
+                que mais valorizo é o cuidado e a personalização em cada etapa.
+              </blockquote>
+              <blockquote>
+                A Joice transformou números espalhados em decisões mais
+                conscientes. A organização financeira e dos investimentos
+                trouxe clareza sobre nossas prioridades, aposentadoria e
+                construção de patrimônio. Tudo de forma simples e aplicável ao
+                nosso dia a dia.
+              </blockquote>
+            </div>
+          </div>
+
+          <!-- Names are placeholders in the mockup itself ("Sobrenome",
+               "[Sobrenome]"), reproduced verbatim rather than invented. Only
+               the active one carries tags, which is how the file draws it. -->
+          <ul class="depoimento__people">
+            <li>
+              <label for="depo-1">Alessandra Sobrenome</label>
+              <span class="depoimento__tags">
+                <span class="pill pill--soft">Organização financeira</span>
+                <span class="pill pill--soft">Aposentadoria</span>
+                <span class="pill pill--soft">Planejamento de longo prazo</span>
+              </span>
+            </li>
+            <li><label for="depo-2">Simone [Sobrenome]</label></li>
+            <li><label for="depo-3">Luiz &amp; Lívia</label></li>
+          </ul>
+        </div>
+      </section>
     </main>
   </body>
 </html>
