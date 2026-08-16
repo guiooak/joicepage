@@ -124,9 +124,14 @@
     --text-h3: 32px;
     --leading-h3: 32px;
     --text-h4: 28px;
-    --leading-h4: 1.2;
-    --text-h5: 24px;              /* big-number labels                    */
-    --leading-h5: 1.2;
+    --leading-h4: 34px;
+    /* Big-number labels and the accordion titles. 29, not 28.8: Figma rounds
+       a computed line height to the nearest whole pixel, and its boxes prove
+       it here too — the big-number label (392:8301) is 58 for two lines and
+       the accordion header (24 + line + 24) is 77. Same rounding as the
+       56/0.92 -> 52 above, and as Lora's 72/0.92 -> 66. */
+    --text-h5: 24px;
+    --leading-h5: 29px;
     --text-paragraph: 20px;       /* ALL body copy. Not 16px.             */
     --leading-paragraph: 1.4;
     --text-caption: 16px;

@@ -860,6 +860,40 @@
     box-shadow: none;
   }
 
+  /* ---- Big numbers ------------------------------------------------------
+     392:8298 · 328x622 · padY48 · gap56 · each block 138 = 72 + 8 + 58. */
+  .numeros {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-56);
+    padding-block: var(--size-48);
+  }
+
+  .numeros div {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-8);
+  }
+
+  .numeros dt {
+    font-family: var(--font-serif);
+    font-size: var(--text-numeral);
+    line-height: var(--leading-numeral);
+    font-weight: var(--weight-regular);
+    letter-spacing: var(--tracking-numeral);
+    color: var(--color-accent);
+  }
+
+  /* 24/1.2 over two lines is 57.6, which is the drawn 58. */
+  .numeros dd {
+    margin: 0;
+    font-size: var(--text-h5);
+    line-height: var(--leading-h5);
+    font-weight: var(--weight-medium);
+    letter-spacing: 0;
+    color: var(--color-body-soft);
+  }
+
   .processo-extras h3 {
     font-size: var(--text-h3);
     line-height: var(--leading-h3);
