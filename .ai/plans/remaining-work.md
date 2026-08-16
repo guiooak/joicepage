@@ -269,6 +269,32 @@ Two of the four social URLs are known and already in the JSON-LD `sameAs`
 (Instagram, LinkedIn). **TikTok and YouTube are not** — get the handles from
 Joice rather than guessing, since a wrong one ships a 404 in the footer.
 
+## 9 · Found while building the mobile page
+
+Three things the mobile frame raises that only the designer can settle.
+
+**The FAQ's second answer is a copy-paste, not an answer.** `393:10620` is the
+only state anywhere in the file that draws "Como saber se preciso de
+planejamento financeiro ou consultoria em investimentos?" open, and its
+override repeats question 1's answer word for word. Every other mobile answer
+is its own, and shorter than the desktop's. Shipping the duplicate would put
+the same paragraph under two different questions, so `poc/htmlonly-mobile`
+carries the **desktop's** answer to that question with a comment saying so.
+One line from the designer replaces it.
+
+**`play-circle` again, on mobile.** `392:8315`, 49.77, centred on the Sobre
+collage panel — the same open question as §3 and left out for the same
+reason. If the answer is "there is a video", both builds need it.
+
+**The Sobre deck hides three cards by design.** `392:8344` stacks four 204-tall
+cards 71 apart (a −133 auto-layout gap), so only the first line of copy on
+cards 01–03 is visible, with their numerals cut off below the fold of each
+card. `poc/htmlonly-mobile` reproduces it exactly, and the design's own
+screenshot of the node confirms that is what is drawn. Worth confirming it is
+intended as a static stack rather than a scroll-driven reveal that the frame
+cannot express — the desktop has the same construction at gap −65 and the
+desktop build stood it up as a flat list instead (§6).
+
 ## Suggested order
 
 | # | Task | Blocked on | Size |
@@ -277,13 +303,15 @@ Joice rather than guessing, since a wrong one ships a 404 in the footer.
 | ~~2~~ | ~~Wire the two recovered testimonials (§4)~~ | done `cfc4f04` | — |
 | 3 | Export the Serviços arrow, delete the inline symbol | — | small |
 | 4 | Create `og.jpg` | — | small |
-| 5 | Ask about hidden CTAs (§2) and `play-circle` (§3) | Joice / designer | — |
+| 5 | Ask about hidden CTAs (§2) and `play-circle` (§3, §9) | Joice / designer | — |
 | 6 | Confirm the WhatsApp number, test `wa.me` on a phone | Joice | small |
 | ~~7~~ | ~~FAQ + Processo copy (§5)~~ | done — it existed all along | — |
 | 8 | Policy pages, GBP fields | Joice | medium |
 | 9 | `figextract` visibility + overrides (§7) — also unblocks §8 | — | medium |
 | 10 | TikTok and YouTube handles for the footer (§8) | Joice | small |
 | 11 | Testimonial tags for Simone / Frances / Rafael (§4) | — | small |
+| 12 | Real answer for mobile FAQ question 2 (§9) | designer | small |
+| 13 | Confirm the Sobre deck is a static stack (§9) | designer | small |
 
 Items 3 and 4 are what is left that is unblocked and self-contained. **The
 launch blocker is gone** — the FAQ copy was never a writing task.

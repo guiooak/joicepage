@@ -212,6 +212,48 @@ whole FAQ is built) and the related "11 spots" `A capturar` count (zero remain).
   `poc/rawhtml` and confirm zero delta — the workflow restructure must not
   change what the desktop site serves.
 
+## What actually happened
+
+Amended after the build, as this file promised it would be.
+
+**The call budget was not the risk.** The plan assumed ~6 calls a month and
+budgeted 14 against it. The file had already been duplicated into a Pro team
+(200/day, noted at the end of `remaining-work.md`), so the constraint was
+never real. Seventeen calls went in, and the last five were cheap because
+`get_design_context` accepts an instance-scoped id — `I393:10915;115:2522`
+returns one FAQ block rather than all eight. Use that form when chasing a
+single override; it is roughly a tenth of the response.
+
+Two calls were wasted and are worth naming: `get_design_context` on a
+**section** node returns sparse metadata and tells you to call its children
+individually, so `393:10516` bought nothing the committed tree did not
+already have.
+
+**The `.fig` fallback was never needed**, but the two `extract.py` changes
+shipped anyway, so it is ready.
+
+**Type had to be measured, not read.** Sizes came from rendering each string
+at the drawn measure in headless Chrome and comparing against the drawn box —
+that is what settled 32/32 for four of the five section headlines, 48/48 for
+Sobre, 24/29 for the testimonial and Lora 72 for both numerals.
+
+**Figma rounds line height to the nearest whole pixel, and it compounds.**
+This was the one systemic bug. Expressed as ratios, 56/0.92 renders 51.52
+against Figma's 52 and 24/1.2 renders 28.8 against Figma's 29 — a pixel and a
+half per H1 block and a fifth of a pixel per accordion row, which walks every
+section below it up the page. `tokens.css` therefore holds px leading wherever
+the frame gives a whole number, and the whole page lands within 0.34px.
+
+**One answer is not from the mobile frame.** FAQ question 2's override
+duplicates question 1's answer in the only state that draws it open. The
+desktop's answer is in its place, marked in the markup and logged as item 12
+in `remaining-work.md`.
+
+**`tools/measure/measure.mjs`** is the harness the plan assumed already
+existed. It did not, so it was written: no dependencies, drives Chrome over
+the DevTools protocol, and divides every offset back through the page's own
+zoom so one table compares across widths.
+
 ## Out of scope
 
 Unrelated items already logged in `remaining-work.md` stay there:
