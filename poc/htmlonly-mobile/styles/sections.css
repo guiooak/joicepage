@@ -257,4 +257,76 @@
     text-align: center;
     color: var(--color-button-ink);
   }
+
+  /* ---- Credenciais rail -------------------------------------------------
+     LOGOS 392:8126 · 720x228 · Competences 720x84 @y72, so padY 72.
+
+     720 in a 360 page is not a mistake in the file — it is how the frame says
+     "this scrolls". The rail keeps its drawn 720 and the section scrolls it.
+
+     The scrollbar is hidden deliberately. A classic scrollbar would eat 15px
+     out of the 228 and change the section's height on the desktop browsers
+     the geometry harness runs in; phones draw overlay scrollbars, which take
+     nothing. Momentum scrolling and the drag are untouched. */
+  .credenciais {
+    block-size: 228px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    overscroll-behavior-inline: contain;
+  }
+
+  .credenciais::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* CMV 208 · rule @246 · CFP 201 @284 · rule @523 · MBA 159 @561. The four
+     gaps are 37.5 once the two 1px rules are counted, which `space-between`
+     produces from the drawn 720 without hard-coding it. */
+  .credenciais__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    inline-size: 720px;
+    block-size: 84px;
+    margin-block: var(--size-72);
+  }
+
+  /* 20/1.4, not the desktop bar's 24/1.2. Confirmed three ways: the drawn 84
+     is 3 x 28 exactly, and each text box is the desktop's width scaled by
+     20/24 — 159 -> 132.5 against the drawn 136, 150 -> 125 against 129,
+     102 -> 85 against 87. */
+  .credenciais li {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--size-8);
+    font-size: var(--text-paragraph);
+    line-height: var(--leading-paragraph);
+    font-weight: var(--weight-medium);
+    letter-spacing: 0;
+    color: var(--color-body-soft);
+  }
+
+  /* Line 50 / Line 51 are siblings of the three groups in the file, not
+     borders on them — so they are real elements here too. */
+  .credenciais__rule {
+    inline-size: 1px;
+    block-size: 64px;
+    background-color: var(--color-line);
+    align-self: center;
+  }
+
+  .credenciais img {
+    inline-size: 64px;
+    block-size: 64px;
+    flex-shrink: 0;
+    object-fit: contain;
+    /* image 5 sits at y10 in an 84 row: (84 - 64) / 2. */
+    margin-block-start: 10px;
+  }
+
+  .credenciais strong {
+    display: block;
+    font-weight: inherit;
+  }
 }
