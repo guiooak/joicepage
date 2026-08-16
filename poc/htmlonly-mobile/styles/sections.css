@@ -656,6 +656,150 @@
     box-shadow: inset 0 0 0 1px var(--color-accent);
   }
 
+  /* ---- Processo ---------------------------------------------------------
+     392:8219 · 328x868 · pt80 · pb40 · gap40. head 284 · accordion 424. */
+  .processo {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-40);
+    padding-block: var(--size-80) var(--size-40);
+    --section-pad: var(--size-80);
+  }
+
+  .processo__head {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-40);
+    align-items: flex-start;
+  }
+
+  .processo__intro {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-24);
+  }
+
+  .processo__intro h2 {
+    font-size: var(--text-h3);
+    line-height: var(--leading-h3);
+    font-weight: var(--weight-black);
+    color: var(--color-accent-deep);
+  }
+
+  /* ---- Accordion --------------------------------------------------------
+     The component is the desktop's, at mobile's numbers: header py24 with a
+     24/1.2 Medium title in pure black and a 24px icon, panel px16 py16 with
+     20/1.4 at rgba(60,60,67,.85). 24 + 28.8 + 24 is the drawn 77.
+
+     Pinned to the drawn 424 — three closed rows at 77 plus one open at 193.
+     The desktop learned this the hard way: without a reserved height, opening
+     a shorter panel shortens the section and shoves everything below it. */
+  .accordion {
+    block-size: 424px;
+  }
+
+  /* The file's dividers are zero-height overlays (`h-0`, line drawn at
+     `inset: -1px`), so they cost no layout. A real border does: it makes
+     every closed row 78 against the drawn 77 and the drift compounds. */
+  .accordion__item {
+    box-shadow: inset 0 -1px 0 var(--color-line);
+  }
+
+  .accordion__item summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--size-16);
+    padding-block: var(--size-24);
+    font-size: var(--text-h5);
+    line-height: var(--leading-h5);
+    font-weight: var(--weight-medium);
+    letter-spacing: 0;
+    /* Text/txt-primary — pure black, this component's own token, one notch
+       darker than the --color-ink the rest of the page uses. */
+    color: var(--color-ink-strong);
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .accordion__item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  /* The hairline between header and panel on an open item (divider
+     121:2980). Zero-height like the others, so the header stays 77. */
+  .accordion__item[open] summary {
+    box-shadow: inset 0 -1px 0 var(--color-line);
+  }
+
+  /* Drawn as `I / Math / plus` closed and `I / Gaming / xmark` open, both
+     24 — two bars with one rotated away, rather than two exported SVGs. */
+  .accordion__icon {
+    position: relative;
+    inline-size: var(--size-24);
+    block-size: var(--size-24);
+    flex-shrink: 0;
+  }
+
+  .accordion__icon::before,
+  .accordion__icon::after {
+    content: "";
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline-start: 0;
+    inline-size: 100%;
+    block-size: 1.5px;
+    background-color: currentcolor;
+    transition: rotate var(--transition);
+  }
+
+  .accordion__icon::after {
+    rotate: 90deg;
+  }
+
+  .accordion__item[open] .accordion__icon::before {
+    rotate: 45deg;
+  }
+
+  .accordion__item[open] .accordion__icon::after {
+    rotate: -45deg;
+  }
+
+  .accordion__panel {
+    padding: var(--size-16);
+    color: var(--color-body-quiet);
+  }
+
+  /* Only the first panel is drawn Bold; the other three are Regular. Read
+     per instance rather than shared. */
+  .accordion__lead {
+    font-weight: var(--weight-bold);
+  }
+
+  /* ---- Processo extras --------------------------------------------------
+     393:9244 · 328x360 @y4338 · two blocks 40 apart, 40 of padding under the
+     second. These are the two accordion items the mobile frame switches off
+     (392:8232, 392:8233), promoted to blocks — and reworded on the way. */
+  .processo-extras {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-40);
+    padding-block-end: var(--size-40);
+  }
+
+  .processo-extras > div {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-8);
+  }
+
+  .processo-extras h3 {
+    font-size: var(--text-h3);
+    line-height: var(--leading-h3);
+    font-weight: var(--weight-bold);
+    color: var(--color-accent-deep);
+  }
+
   .slide__btn svg {
     inline-size: var(--size-24);
     block-size: var(--size-24);
