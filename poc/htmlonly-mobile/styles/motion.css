@@ -145,12 +145,42 @@
      `interpolate-size: allow-keywords` — already set on the root in
      base.css — is what lets `block-size` reach `auto`, which matters here
      because every panel is a different height and hard-coding any of them
-     would break the moment the copy changes. */
-  @media (prefers-reduced-motion: no-preference) {
-    .accordion__item[open]::details-content,
-    .faq__item[open]::details-content {
-      animation: panel-open 320ms cubic-bezier(0.4, 0, 0.2, 1);
-      overflow: hidden;
+     would break the moment the copy changes.
+
+     And that last point carries a guard poc/rawhtml does not need. Growing
+     from `block-size: 0` to `block-size: auto` is only interpolable where
+     `interpolate-size` / `calc-size()` exists, and that is Blink only. On
+     WebKit `auto` is not an interpolable target, so the keyframe resolves
+     discretely — the panel holds at 0 through the first half of the fade and
+     then snaps to full height, which reads as a flicker rather than as an
+     animation.
+
+     That is not an edge case for this page. Every browser on iOS runs
+     WebKit, Chrome included, because iOS requires WKWebView — so it is the
+     path most of this page's visitors take, and it is where the flicker was
+     reported.
+
+     The height tween is therefore gated behind the feature that makes it
+     possible, and engines without it fade instead: no height interpolation,
+     no discrete step, nothing to flicker. `overflow: hidden` belongs to the
+     height half only — with no growing box to clip it just risks its own
+     repaint artefacts. */
+  @supports (interpolate-size: allow-keywords) {
+    @media (prefers-reduced-motion: no-preference) {
+      .accordion__item[open]::details-content,
+      .faq__item[open]::details-content {
+        animation: panel-open 320ms cubic-bezier(0.4, 0, 0.2, 1);
+        overflow: hidden;
+      }
+    }
+  }
+
+  @supports not (interpolate-size: allow-keywords) {
+    @media (prefers-reduced-motion: no-preference) {
+      .accordion__item[open]::details-content,
+      .faq__item[open]::details-content {
+        animation: panel-fade 240ms ease both;
+      }
     }
   }
 
@@ -191,6 +221,18 @@
 
     to {
       block-size: auto;
+      opacity: 1;
+    }
+  }
+
+  /* Opacity alone: every engine interpolates it, and it needs to know nothing
+     about the panel's final height. */
+  @keyframes panel-fade {
+    from {
+      opacity: 0;
+    }
+
+    to {
       opacity: 1;
     }
   }
