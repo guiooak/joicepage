@@ -210,12 +210,18 @@ Two lessons for the next extraction:
 
 Unchanged from the decision record, restated so this file is self-sufficient:
 
-1. **Serviços list arrow** — still the one invented inline `<symbol>`. It is a
-   VECTOR node, so it did not come out with the bitmap fills. Export and drop
-   the `<defs>` block.
-2. **`assets/img/og.jpg` does not exist** — `og:image` 404s, so WhatsApp and
-   LinkedIn previews render imageless. Cheap, and it matters for a page whose
-   lead capture *is* a WhatsApp link.
+1. ~~**Serviços list arrow**~~ — done `8da4d28`. It was invented: a 24 viewBox
+   at stroke-width 1.5 with round caps, against the real 32 viewBox at
+   stroke-width 2 with a mitred, subtly curved head. Exported from `392:8193`
+   to `assets/img/arrow.svg` in both folders, referenced with `<img>` as this
+   codebase already does for `quote.svg`, and the `<defs>` carrier is gone.
+   Note it was thirteen instances on desktop, not twelve — the 90px
+   `.service-card__arrow` in the card corner used the same symbol.
+2. ~~**`assets/img/og.jpg`**~~ — done `8da4d28`. Composed at 1200x630 from the
+   page's own materials: the real Allomira and Lora files, the real palette,
+   the brand lockup as the header draws it, the `og:description` as the lead,
+   and `hero-joice.jpg`. Rendered through headless Chrome and downsampled,
+   74KB, duplicated into both folders like every other asset.
 3. **Confirm the WhatsApp number.** Drawn `+55 47 9193-9397`, eight digits after
    the DDD; the mobile frame draws the same, so the file does not settle it.
    The build assumes `+55 47 99193-9397` in both the footer link and the
@@ -301,8 +307,8 @@ desktop build stood it up as a flat list instead (§6).
 |---|---|---|---|
 | ~~1~~ | ~~Fix `motion.css` comment + balance assertion~~ | done `cfc4f04` | — |
 | ~~2~~ | ~~Wire the two recovered testimonials (§4)~~ | done `cfc4f04` | — |
-| 3 | Export the Serviços arrow, delete the inline symbol | — | small |
-| 4 | Create `og.jpg` | — | small |
+| ~~3~~ | ~~Export the Serviços arrow, delete the inline symbol~~ | done `8da4d28` | — |
+| ~~4~~ | ~~Create `og.jpg`~~ | done `8da4d28` | — |
 | 5 | Ask about hidden CTAs (§2) and `play-circle` (§3, §9) | Joice / designer | — |
 | 6 | Confirm the WhatsApp number, test `wa.me` on a phone | Joice | small |
 | ~~7~~ | ~~FAQ + Processo copy (§5)~~ | done — it existed all along | — |
@@ -313,9 +319,23 @@ desktop build stood it up as a flat list instead (§6).
 | 12 | Real answer for mobile FAQ question 2 (§9) | designer | small |
 | ~~13~~ | ~~Confirm the Sobre deck is a static stack (§9)~~ | answered — see §10 | — |
 | ~~14~~ | ~~Route phones and tablets to the mobile page~~ | done `c16d2a1` | — |
+| ~~15~~ | ~~Stand the Sobre deck up and pile it on scroll (§10)~~ | done `4b6eae2` | — |
+| ~~16~~ | ~~Build the mobile motion layer~~ | done `431601d` | — |
+| 17 | Revisit the desktop Sobre deck against §10 | — | small |
 
-Items 3 and 4 are what is left that is unblocked and self-contained. **The
-launch blocker is gone** — the FAQ copy was never a writing task.
+**Nothing unblocked and self-contained is left.** Items 3 and 4 were the last
+two, and both shipped in `8da4d28`. Everything still open in the table waits
+on Joice or the designer, except item 9 — teaching `figextract` to expand
+INSTANCE overrides — which is unblocked but is tooling rather than a
+launch item, and which item 8 depends on.
+
+Item 17 is the one thing this round opened rather than closed. `poc/rawhtml`
+already lays its five Sobre cards out flat and piles them with sticky, which
+is the same answer `poc/htmlonly-mobile` now gives — but the desktop's depth
+ramp, its sticky offsets and its `--header-height` allowance were all tuned
+against a deck it believed was a static drawn overlap. Now that §10 has named
+the component, the two are worth reading side by side to check they are
+telling the same story at the two widths.
 
 ## 10 · The Sobre deck is a two-state interaction, not a static stack
 

@@ -256,6 +256,7 @@ zoom so one table compares across widths.
 
 ## Out of scope
 
-Unrelated items already logged in `remaining-work.md` stay there:
-`assets/img/og.jpg` (og:image 404s), the two policy pages, confirming the
-WhatsApp number, and the TikTok/YouTube handles.
+Unrelated items already logged in `remaining-work.md` stay there: the two
+policy pages, confirming the WhatsApp number, and the TikTok/YouTube handles.
+(`assets/img/og.jpg` was on this list and has since been created — see
+`remaining-work.md` §6.)

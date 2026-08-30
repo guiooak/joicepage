@@ -151,10 +151,8 @@ links are how Google finds a URL in the first place.
 
 ### Before the real cutover
 
-- **`assets/img/og.jpg` does not exist**, so `og:image` 404s and link previews
-  (WhatsApp, LinkedIn) will render without an image. Pre-existing, unrelated to
-  hosting, but it is on the verification list and should be fixed before the
-  domain switch.
+- ~~`assets/img/og.jpg` does not exist~~ — created in `8da4d28`, 1200x630,
+  in both folders. Link previews now carry an image.
 - The footer links `/politica-de-cookies` and `/politica-de-privacidade` are
   site-absolute — correct for a root domain, but they resolve outside the
   project path on `guiooak.github.io/joicepage/`. Neither page exists yet.
