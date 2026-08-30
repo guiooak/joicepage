@@ -62,4 +62,186 @@
      readable list sections.css lays out. The state this page used to ship —
      the pile, with no way to open it — is the one thing that must not be
      the resting state. */
+
+  /* ---- Text scroll -----------------------------------------------------
+     The Visão headline inks in word by word, from the tint the frame draws
+     its second half in to the accent. scripts/motion.js wraps each word and
+     hands it an index; the stagger is the only thing those indices are for.
+
+     Spread over `cover`, not `entry`: the entry phase of a block this tall
+     is a few hundred pixels of scroll, and a stagger inside it resolves
+     faster than the eye reads it. Starting at 28% keeps the sweep running
+     while the headline sits mid-viewport rather than finishing before it is
+     in a reading position. Both numbers are the desktop's, measured there.
+
+     Without the timeline — or without script, where no words exist — the
+     headline keeps the static two-tone split sections.css gives it. */
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .visao__title .word {
+        color: var(--color-ghost-ink);
+        animation: ink-in linear both;
+        animation-timeline: view();
+        animation-range:
+          cover calc(28% + (var(--i) / var(--n)) * 30%)
+          cover calc(42% + (var(--i) / var(--n)) * 30%);
+      }
+    }
+  }
+
+  @keyframes ink-in {
+    to {
+      color: var(--color-accent);
+    }
+  }
+
+  /* ---- Parallax --------------------------------------------------------
+     "Pensei em colocar um paralax de leve nas fotos, subindo levemente no
+     scroll, bem pouquinho." Deliberately small — 14px either side of centre
+     across the whole viewport pass.
+
+     `.sobre__collage` is deliberately NOT here. Its three thumbs are
+     absolutely positioned against the panel at drawn offsets, two of them
+     hanging outside the box; drifting the container would slide that whole
+     arrangement against the copy it is measured from. Parallax and a fixed
+     composite are two answers to the same question. */
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .hero__photo,
+      .principios__image,
+      .historias__media {
+        animation: drift linear both;
+        animation-timeline: view();
+        animation-range: cover;
+        will-change: transform;
+      }
+    }
+  }
+
+  @keyframes drift {
+    from {
+      translate: 0 14px;
+    }
+
+    to {
+      translate: 0 -14px;
+    }
+  }
+
+  /* ---- Panels ----------------------------------------------------------
+     The nav drawer, the Processo accordion and the FAQ are all native
+     <details>, and all three open instantly today.
+
+     This has to be an animation on the OPEN state, not a transition from a
+     forced-closed one, and the distinction is the whole point — it is
+     written out at poc/rawhtml/styles/motion.css:362 after a decorative
+     animation there made panel content unreachable on one Chrome version.
+     Written this way the default state is untouched: the worst case anywhere
+     is no animation, never a panel that will not open. The cost is that
+     closing is instant, which is the cheaper half to lose.
+
+     `::details-content` is required because a closed <details> hides its
+     content outright and there is nothing to transition.
+     `interpolate-size: allow-keywords` — already set on the root in
+     base.css — is what lets `block-size` reach `auto`, which matters here
+     because every panel is a different height and hard-coding any of them
+     would break the moment the copy changes. */
+  @media (prefers-reduced-motion: no-preference) {
+    .accordion__item[open]::details-content,
+    .faq__item[open]::details-content {
+      animation: panel-open 320ms cubic-bezier(0.4, 0, 0.2, 1);
+      overflow: hidden;
+    }
+  }
+
+  /* The nav drawer is NOT in that rule, and the reason is worth keeping.
+     `.menu__panel` is `position: absolute` and there is no `.menu` rule to
+     position it, so its containing block is `.site-header` — which leaves
+     `::details-content` a zero-height box with the panel out of flow inside
+     it. Animating `block-size` there is a silent no-op: nothing breaks, and
+     nothing moves either. (It does not clip the panel, because an absolutely
+     positioned box whose containing block is outside the overflow box escapes
+     the clip — but a no-op animation is not worth shipping on that reasoning.)
+
+     So the drawer animates itself, which is what an out-of-flow panel wants
+     anyway: it drops in from under the bar it hangs off. */
+  @media (prefers-reduced-motion: no-preference) {
+    .menu[open] .menu__panel {
+      animation: drawer-in 240ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+  }
+
+  @keyframes drawer-in {
+    from {
+      opacity: 0;
+      translate: 0 -8px;
+    }
+
+    to {
+      opacity: 1;
+      translate: 0 0;
+    }
+  }
+
+  @keyframes panel-open {
+    from {
+      block-size: 0;
+      opacity: 0;
+    }
+
+    to {
+      block-size: auto;
+      opacity: 1;
+    }
+  }
+
+  /* The accordion's plus becomes a cross, and the FAQ's chevron turns over.
+     Both marks are drawn in both states in the file, so this animates
+     between two drawn positions rather than inventing one. */
+  @media (prefers-reduced-motion: no-preference) {
+    .accordion__icon::before,
+    .accordion__icon::after,
+    .faq__chevron {
+      transition: rotate var(--transition), scale var(--transition);
+    }
+  }
+
+  /* ---- Testimonial -----------------------------------------------------
+     The switch is three radios and a CSS grid overlay — no script. All this
+     adds is the crossfade.
+
+     `visibility` is transitioned alongside `opacity` on purpose: it is a
+     discrete property, so it flips at the END of the transition on the way
+     out, which is what holds the outgoing quote on screen long enough to
+     actually cross with the incoming one. Transitioning opacity alone would
+     hide it instantly and fade the new one in against the page. */
+  @media (prefers-reduced-motion: no-preference) {
+    .depoimento__quotes blockquote {
+      opacity: 0;
+      transition:
+        opacity 320ms ease,
+        visibility 320ms ease;
+    }
+
+    #depo-1:checked ~ .depoimento__stage blockquote:nth-of-type(1),
+    #depo-2:checked ~ .depoimento__stage blockquote:nth-of-type(2),
+    #depo-3:checked ~ .depoimento__stage blockquote:nth-of-type(3) {
+      opacity: 1;
+    }
+  }
+
+  /* ---- Rails -----------------------------------------------------------
+     The two Credenciais rails and the Serviços carousel are `overflow-x:
+     auto` with hidden scrollbars. A tap on an in-page anchor, or a keyboard
+     user tabbing to a card, currently jumps them. Smooth scrolling is a
+     behaviour rather than a decoration, so it is not inside the
+     reduced-motion guard — instead it asks for the preference directly,
+     which is what `scroll-behavior` is designed for. */
+  @media (prefers-reduced-motion: no-preference) {
+    .credenciais__row,
+    .servicos__rail,
+    .principios__rail {
+      scroll-behavior: smooth;
+    }
+  }
 }
