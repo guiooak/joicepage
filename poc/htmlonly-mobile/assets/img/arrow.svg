@@ -1,0 +1,8 @@
+<!-- Servicos list arrow, exported from Figma 392:8193 (and its thirteen
+     siblings across both frames, all identical). Stroke #5779aa is
+     Background/Color/primary-base, the accent token.
+     No double hyphen anywhere in here: XML forbids it inside a comment,
+     and an invalid comment makes the whole file fail to parse as an image. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
+  <path d="M17.11 5.33325L17.11 5.68418C17.11 6.32754 17.3792 6.91242 17.8079 7.33645L26.6654 15.978L17.8079 24.6634C17.3742 25.0874 17.105 25.6674 17.11 26.3157V26.6666M26.5611 15.9877L5.33203 15.9877" stroke="#5779AA" stroke-width="2" stroke-miterlimit="10"/>
+</svg>

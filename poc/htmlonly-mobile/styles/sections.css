@@ -629,11 +629,13 @@
     color: var(--color-body);
   }
 
+  /* An exported file now (assets/img/arrow.svg, from 392:8193) rather than a
+     symbol drawing itself in `currentColor`, so there is no `color` here —
+     the stroke is #5779aa, the same --color-accent, baked in by the export. */
   .arrow {
     inline-size: var(--size-32);
     block-size: var(--size-32);
     flex-shrink: 0;
-    color: var(--color-accent);
   }
 
   /* Slide 392:8216 · 328x56 · two 56x56 at x104 and x168 — centred, gap 8. */

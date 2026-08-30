@@ -701,12 +701,15 @@
     color: var(--color-body);
   }
 
+  /* `color` is gone from here and from .service-card__arrow: the list arrow
+     is an exported file now (assets/img/arrow.svg) rather than a symbol
+     drawing itself in `currentColor`, and its stroke is #5779aa — the same
+     --color-accent, baked in by the export. */
   .service-card__list img,
   .service-card__list svg {
     inline-size: 32px;
     block-size: 32px;
     flex-shrink: 0;
-    color: var(--color-accent);
   }
 
   .service-card__arrow {
@@ -715,7 +718,6 @@
     inset-block-end: var(--size-48);
     inline-size: 90px;
     block-size: 90px;
-    color: var(--color-accent);
   }
 
   /* ---- Processo --------------------------------------------------------
