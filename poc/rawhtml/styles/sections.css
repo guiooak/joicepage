@@ -1193,7 +1193,8 @@
     border-radius: 15px;
   }
 
-  /* image 16 @511,-42.7 · image 17 @0,386.6 · image 18 @381,630.6 */
+  /* image 16 @511,-42.7 · image 19 @0,386.6 · image 18 @381,630.6
+     (@0,386.6 stacks image 19 over image 17; 19 is the one on top.) */
   .sobre__thumb--1 { inset-inline-start: 511px; inset-block-start: -42.7px; }
   .sobre__thumb--2 { inset-inline-start: 0;     inset-block-start: 386.6px; }
   .sobre__thumb--3 { inset-inline-start: 381px; inset-block-start: 630.6px; }
