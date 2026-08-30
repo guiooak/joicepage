@@ -377,9 +377,17 @@
     const duration = 900;
     const start = performance.now();
 
-    // Hold the box at its final width so the row does not reflow while
-    // the digits change.
-    el.style.minInlineSize = `${el.getBoundingClientRect().width}px`;
+    // Hold the box at its final width so the row does not reflow while the
+    // digits change.
+    //
+    // `offsetWidth`, NOT getBoundingClientRect(): the page scales its whole
+    // canvas with `zoom`, and the rect comes back in zoomed pixels while a
+    // CSS length is read unzoomed. Writing one into the other inflated the
+    // box by the zoom factor — 328 became 355.34 at 390 and 391.78 at 430 —
+    // so the numeral sat off centre for the length of the count and snapped
+    // back when the count cleared the property. offsetWidth is unaffected by
+    // zoom and reports the drawn 328 at every width.
+    el.style.minInlineSize = `${el.offsetWidth}px`;
 
     const frame = (now) => {
       const t = Math.min((now - start) / duration, 1);
