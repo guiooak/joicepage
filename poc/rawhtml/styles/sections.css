@@ -40,15 +40,39 @@
     filter: drop-shadow(0 16px 10px rgb(87 121 170 / 8%));
   }
 
+  /* The wordmark is a VECTOR in the file — Logo 120x48, the same component in
+     the header and the footer — not live type. Two lines of Lora only ever
+     approximated its letterforms, and drew them in --color-ink (#151a1d)
+     where the asset is #35425d.
+
+     Painted as a mask over `currentcolor` rather than shipped as two coloured
+     files. The header draws it #35425d and the footer #f4f7f7, the two
+     exports are byte-identical apart from that fill, and #f4f7f7 is already
+     --color-button-ink — which .brand--inverse sets. So one asset, and the
+     colour rules that were already here keep driving it. A mask reads the
+     asset's alpha, so its own fill is irrelevant.
+
+     `contain` in a 120x48 box lands the 110.896x48 artwork with ~4.55 either
+     side, which is the inset the frame draws (4.5 / 4.608). */
   .brand {
-    font-family: var(--font-serif);
-    font-size: var(--text-h5);
-    line-height: 1.05;
-    color: var(--color-ink);
+    display: block;
+    inline-size: 120px;
+    block-size: 48px;
+    color: var(--c-logo);
+    background-color: currentcolor;
+    -webkit-mask: url("../assets/img/logo.svg") no-repeat center / contain;
+    mask: url("../assets/img/logo.svg") no-repeat center / contain;
   }
 
+  /* The name stays in the document as real text rather than becoming an
+     aria-label, so anything that reads the page still finds it. */
   .brand span {
-    display: block;
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
   }
 
   /* Menu-links (38:650): gap 40, each link Allomira Regular 20px #151a1d.
