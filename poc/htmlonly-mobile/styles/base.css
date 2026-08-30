@@ -123,13 +123,19 @@
        narrowest phone, not the target, so capping at 1 would leave a 70px
        margin on a 430 screen.
 
-       Capped at 640 — the width below which the desktop page hands over via
-       `rel="alternate"`. Past that this is not the right page anyway, and an
-       uncapped zoom would render it 4x on a desktop browser.
+       Capped at 1024, which is where the desktop page takes over. Tablets
+       are served by THIS page, not by a tier of their own, so the canvas
+       scales the whole way up to the handover: an iPad Pro 11" in portrait
+       (834) renders it at 2.32x and an iPad Pro 12.9" (1024) at 2.84x, in
+       the same layout a phone gets.
+
+       The cap survives only for the case the redirect cannot cover — a wide
+       desktop browser that reached this URL with `?layout=mobile` pinned.
+       Uncapped that would render 5.3x.
 
        Degrades safely: a browser that cannot compute it drops the
        declaration and gets the plain 360 canvas. */
-    zoom: calc(min(100cqw, 640px) / var(--frame-width));
+    zoom: calc(min(100cqw, 1024px) / var(--frame-width));
   }
 
   h1,

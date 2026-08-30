@@ -5,7 +5,65 @@
     <meta name="viewport" content="width=1440" />
 
     <!-- Desktop-only implementation, per scope. No mobile styles exist in this
-         build; the viewport is pinned to the 1440px Figma frame. -->
+         build; the viewport is pinned to the 1440px Figma frame. Phones and
+         tablets are not served by this page at all — the script below hands
+         them to poc/htmlonly-mobile, which is a separately-designed layout
+         rather than a breakpoint of this one. -->
+
+    <!-- HANDOVER. The `rel="alternate"` below is an annotation to search
+         engines, not a redirect, so without this script a phone loads the
+         1440 canvas and pinch-scales it to about a quarter size. Two things
+         make this less obvious than it looks:
+
+         1. `innerWidth` REPORTS 1440 HERE on a phone, because the viewport
+            above pins it — and every media query resolves against that pin
+            too, so neither can be the signal. `screen.width` is unaffected by
+            the pin. Desktop browsers ignore viewport meta entirely, so there
+            `innerWidth` is the honest one and `screen.width` is the whole
+            monitor. `Math.min` of the two is correct in both worlds.
+         2. The two pages' thresholds must be strict complements or they
+            ping-pong forever: here `> 1024` stays, there `<= 1024` stays.
+
+         Inclusive at 1024 on purpose — iPad Pro 12.9" portrait is exactly
+         1024, and `< 1024` would miss it. Relative navigation, because the
+         review app is served from a subpath and production from a root.
+         `?layout=desktop` pins a choice for the session so nobody is
+         trapped. -->
+    <script>
+      (function () {
+        "use strict";
+        var BREAK = 1024;
+        var pinned = null;
+        try {
+          var asked = new URLSearchParams(location.search).get("layout");
+          if (asked) sessionStorage.setItem("jsp-layout", asked);
+          pinned = sessionStorage.getItem("jsp-layout");
+        } catch (e) {}
+
+        // Leaves tools/measure/measure.mjs measuring the page it was pointed
+        // at instead of following a redirect into a 404.
+        if (navigator.webdriver) return;
+
+        function go() {
+          location.replace("mobile/" + location.search + location.hash);
+        }
+        if (pinned === "mobile") return go();
+        if (pinned === "desktop") return;
+
+        function check() {
+          if (Math.min(screen.width, innerWidth) <= BREAK) go();
+        }
+        check();
+
+        var t;
+        function later() {
+          clearTimeout(t);
+          t = setTimeout(check, 150);
+        }
+        addEventListener("resize", later);
+        addEventListener("orientationchange", later);
+      })();
+    </script>
 
     <title>Joice Sperandio — Planejamento Financeiro e Investimentos</title>
     <meta
@@ -23,7 +81,7 @@
          an SEO project. -->
     <!-- One line on purpose: the deploy workflow asserts this tag points at
          the deployed mobile URL with a single grep. -->
-    <link rel="alternate" media="only screen and (max-width: 640px)" href="https://joicesperandio.com.br/mobile/" />
+    <link rel="alternate" media="only screen and (max-width: 1024px)" href="https://joicesperandio.com.br/mobile/" />
 
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="pt_BR" />

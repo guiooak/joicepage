@@ -8,6 +8,51 @@
          rather than a different one. -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+    <!-- HANDOVER, the other half of the pair in poc/rawhtml/index.html. Read
+         that one first — it carries the reasoning; this is its complement.
+
+         `innerWidth` alone is right HERE, unlike over there: the viewport
+         above is `device-width`, so nothing is pinning it and it already
+         reports the truth. `screen.width` is deliberately NOT consulted —
+         some browsers report it orientation-independently, which would strand
+         a tablet in landscape on the wrong page.
+
+         `> 1024` leaves; `<= 1024` stays. Strict complement of the desktop
+         page's test, which is what stops the two from ping-ponging. -->
+    <script>
+      (function () {
+        "use strict";
+        var BREAK = 1024;
+        var pinned = null;
+        try {
+          var asked = new URLSearchParams(location.search).get("layout");
+          if (asked) sessionStorage.setItem("jsp-layout", asked);
+          pinned = sessionStorage.getItem("jsp-layout");
+        } catch (e) {}
+
+        if (navigator.webdriver) return;
+
+        function go() {
+          location.replace("../" + location.search + location.hash);
+        }
+        if (pinned === "desktop") return go();
+        if (pinned === "mobile") return;
+
+        function check() {
+          if (innerWidth > BREAK) go();
+        }
+        check();
+
+        var t;
+        function later() {
+          clearTimeout(t);
+          t = setTimeout(check, 150);
+        }
+        addEventListener("resize", later);
+        addEventListener("orientationchange", later);
+      })();
+    </script>
+
     <title>Joice Sperandio — Planejamento Financeiro e Investimentos</title>
     <meta
       name="description"
@@ -17,7 +62,7 @@
     <!-- The mobile/desktop pair, wired now so the production cutover is a DNS
          change rather than an SEO project. This page is the mobile half: it
          points its canonical at the desktop URL, which in turn points back
-         here with `rel="alternate" media="only screen and (max-width: 640px)"`.
+         here with `rel="alternate" media="only screen and (max-width: 1024px)"`.
          That is the standard annotation for separate-URL mobile sites; without
          it the two URLs compete for the same queries.
 

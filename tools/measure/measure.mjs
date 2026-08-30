@@ -56,9 +56,23 @@ await new Promise((r) => server.listen(0, "127.0.0.1", r));
 const origin = `http://127.0.0.1:${server.address().port}/`;
 
 const profile = await mkdtemp(join(tmpdir(), "measure-"));
+
+/* `google-chrome` is the right name on Linux and in CI, and resolves nowhere
+ * on a Mac, where the binary lives inside the .app bundle. $CHROME wins so an
+ * unusual install can say where it is without editing this file. */
+const CHROME =
+  process.env.CHROME ??
+  (process.platform === "darwin"
+    ? "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+    : "google-chrome");
+
 const chrome = spawn(
-  "google-chrome",
+  CHROME,
   [
+    // Headless already sets navigator.webdriver, which is how both pages'
+    // handover scripts recognise this harness and leave it on the page it
+    // was pointed at rather than redirecting it into a 404. Verified, not
+    // assumed — --enable-automation is not needed for it.
     "--headless=new",
     "--remote-debugging-port=0",
     `--user-data-dir=${profile}`,
