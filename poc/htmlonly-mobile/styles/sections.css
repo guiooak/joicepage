@@ -1084,21 +1084,23 @@
     color: var(--color-accent);
   }
 
-  /* The deck keeps its drawn 466 while the cards sit at the drawn offsets. */
+  /* A flat, readable list — NOT the drawn 466 box with cards at 0/71/142/213.
+
+     That box is the collapsed half of a two-state component (`Gui ›
+     Interactions` 293:7721) and it cannot be read: at the drawn offsets only
+     71px of cards 01–03 shows, and `.sobre__card` centres its content, so
+     even the numerals sit below the cut. motion.css rebuilds the pile with
+     sticky offsets instead, which keeps every card readable as it becomes the
+     active one and still arrives at the drawn overlap.
+
+     This is the same call poc/rawhtml already made for the same component —
+     see `.sobre__cards` there, a grid with the same 8px gap. It costs the
+     section its drawn height, which is the one place on this page where the
+     frame is deliberately not reproduced. */
   .sobre__deck {
-    position: relative;
-    block-size: 466px;
+    display: grid;
+    gap: var(--size-8);
   }
-
-  .sobre__deck .sobre__card {
-    position: absolute;
-    inset-inline: 0;
-  }
-
-  .sobre__deck .sobre__card:nth-child(1) { inset-block-start: 0; }
-  .sobre__deck .sobre__card:nth-child(2) { inset-block-start: 71px; }
-  .sobre__deck .sobre__card:nth-child(3) { inset-block-start: 142px; }
-  .sobre__deck .sobre__card:nth-child(4) { inset-block-start: 213px; }
 
   /* card 328x204 · fill #f4f7f7 (the page ground) · 1px #e2e9eb · pad32 ·
      r16 · content 264 = number 50 + 24 + rule + 24 + copy 166, centred.
@@ -1153,10 +1155,11 @@
     font-weight: var(--weight-bold);
   }
 
-  /* Drawn at y1473.33 where `content` ends at 1489 — 15.67 of overlap. */
-  .sobre__card--last {
-    margin-block-start: -15.67px;
-  }
+  /* Drawn at y1473.33 where `content` ends at 1489 — 15.67 of overlap. That
+     offset belonged to the collapsed layout; in the flat list the card is the
+     last item of the deck and the grid gap places it. The class stays because
+     the card carries the tallest copy on the page and the deck's depth ramp
+     keys off it being last. */
 
   /* ---- Big numbers ------------------------------------------------------
      392:8298 · 328x622 · padY48 · gap56 · each block 138 = 72 + 8 + 58. */

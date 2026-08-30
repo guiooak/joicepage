@@ -8,5 +8,58 @@
    ========================================================================= */
 
 @layer components {
-  /* Filled in per section. */
+  /* ---- Stack -----------------------------------------------------------
+     `Gui › Interactions` 293:7721 draws the Sobre deck in two states — five
+     cards piled at 554x466 with one line of copy each, and the same five
+     spread and readable at 554x956 — under the heading "Stack". The mobile
+     frame draws only the piled one, so sections.css lays the cards out flat
+     (the readable state) and this rebuilds the pile on scroll.
+
+     Sticky offsets are what rebuild it: each card pins 10px lower than the
+     one before, so as the section passes they gather into the drawn overlap
+     while every card is fully readable when it is the active one.
+
+     The header here is `position: relative`, not sticky, so there is no
+     fixed chrome to clear — the offset is just the section's own 40px
+     rhythm. (poc/rawhtml adds `--header-height` for exactly that reason.) */
+  @media (prefers-reduced-motion: no-preference) {
+    .sobre__deck .sobre__card {
+      position: sticky;
+      inset-block-start: calc(var(--size-40) + var(--i, 0) * 10px);
+    }
+
+    .sobre__deck .sobre__card:nth-child(1) { --i: 0; }
+    .sobre__deck .sobre__card:nth-child(2) { --i: 1; }
+    .sobre__deck .sobre__card:nth-child(3) { --i: 2; }
+    .sobre__deck .sobre__card:nth-child(4) { --i: 3; }
+    .sobre__deck .sobre__card:nth-child(5) { --i: 4; }
+
+    /* Sticky alone rebuilds the deck but gives it no depth — every card stays
+       the same size, so the pile reads as a list that happens to overlap. The
+       covered cards sit back instead: smaller and slightly dimmer under the
+       one that has settled over them.
+
+       Per card, not scroll-driven, and that is deliberate — the note at
+       poc/rawhtml/styles/motion.css:83 records that a `view()` timeline was
+       measured here and is wrong, because cards sticky inside one container
+       leave the scrollport together and all recede at once, which reads as
+       the block flinching rather than as a stack.
+
+       Origin is the top edge so a card shrinks away from the viewer instead
+       of drifting out of the position its sticky offset just gave it. */
+    .sobre__deck .sobre__card {
+      transform-origin: top center;
+      scale: calc(1 - (4 - var(--i, 0)) * 0.015);
+      filter: brightness(calc(1 - (4 - var(--i, 0)) * 0.012));
+      transition:
+        scale var(--transition),
+        filter var(--transition);
+    }
+  }
+
+  /* Under reduced motion nothing above applies, and that is the correct
+     fallback rather than a degraded one: the cards stay the flat, fully
+     readable list sections.css lays out. The state this page used to ship —
+     the pile, with no way to open it — is the one thing that must not be
+     the resting state. */
 }

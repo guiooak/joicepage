@@ -683,9 +683,21 @@
           <!-- Card 392:8344 · 328x466 · four cards at y 0, 71, 142, 213 with
                heights 204, 204, 204, 232 — a negative auto-layout gap of
                -133, the same overlapping deck the desktop frame draws with
-               gap -65. Reproduced at the drawn offsets rather than
-               approximated: only ~71 of each of the first three shows, and
-               that IS what the frame draws. -->
+               gap -65.
+
+               That deck is the COLLAPSED half of a two-state component:
+               `Gui › Interactions` 293:7721 draws it twice, piled at 554x466
+               and spread at 554x956, under the heading "Stack". Laid out
+               collapsed it is unreadable — cards 01–03 show a 71px sliver
+               each, with their numerals centred below the cut — so the cards
+               live here as a flat list and motion.css rebuilds the pile with
+               sticky offsets on scroll. Same decision, and the same reason,
+               as poc/rawhtml's `.sobre__cards`.
+
+               The fifth card is part of the deck for that reason too. The
+               frame draws it outside `content`, overlapping its bottom by
+               15.67, because in the collapsed state it is the one card that
+               is fully visible; in the stack it is simply the last one. -->
           <ol class="sobre__deck">
             <li class="sobre__card">
               <span class="sobre__num">01</span>
@@ -703,14 +715,11 @@
               <span class="sobre__num">04</span>
               <p><strong>Transição de carreira</strong> Planejei cada passo até me consolidar como consultora e me dedicar 100% a essa atuação.</p>
             </li>
+            <li class="sobre__card sobre__card--last">
+              <span class="sobre__num">05</span>
+              <p><strong>Maternidade &amp; Família</strong> Ser mãe da Elisa e parceira do Gui ampliou meu olhar sobre tempo, segurança, autonomia e possibilidades.</p>
+            </li>
           </ol>
-        </div>
-
-        <!-- card 392:8365 · 328x260 @y1473.33 — the fifth card is drawn
-             OUTSIDE `content`, overlapping its bottom by 15.67. -->
-        <div class="sobre__card sobre__card--last">
-          <span class="sobre__num">05</span>
-          <p><strong>Maternidade &amp; Família</strong> Ser mãe da Elisa e parceira do Gui ampliou meu olhar sobre tempo, segurança, autonomia e possibilidades.</p>
         </div>
       </section>
 
