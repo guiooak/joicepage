@@ -474,12 +474,28 @@
     display: none;
   }
 
-  /* 1120 wide · p24 · gap16 · items-end. The cards are 256 each and their
-     bottoms all land on 558.265 = 582.265 - 24, which is what `flex-end`
-     reproduces without pinning four different heights. */
+  /* 1120 wide · p24 · gap16, and the row sits on the drawn bottom line:
+     558.265 = 582.265 - 24. Checks out at 4 x 256 + 3 x 16 + 2 x 24 = 1120.
+
+     A grid rather than a flex row, and the reason is the whole point. The
+     frame draws the four cards at 280, 273, 300 and 308 — four different
+     heights, bottom-aligned — and 392:8160 at 273 is too short for its own
+     204-tall content block, which needs 24 + 40 + 16 + 204 + 24 = 308. The
+     designer's own detail frame for this component (393:10514) draws them
+     equal and unclipped, so the page frame's four heights are a slip, not an
+     intent.
+
+     `align-content: end` sizes the implicit row to the TALLEST card and
+     parks it on the drawn bottom line; `align-items: stretch` then takes
+     every card to that height. Equal heights, nothing clipped, bottoms where
+     they were drawn — and it stays true if the copy changes, which pinning
+     308 on the card would not. */
   .principios__cards {
-    display: flex;
-    align-items: flex-end;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 256px;
+    align-content: end;
+    align-items: stretch;
     gap: var(--size-16);
     inline-size: 1120px;
     block-size: 582.265px;
@@ -493,7 +509,6 @@
     display: flex;
     flex-direction: column;
     gap: var(--size-16);
-    flex: 1 0 0;
     min-inline-size: 0;
     padding: var(--size-24);
     background-color: rgb(255 255 255 / 90%);
@@ -501,10 +516,6 @@
     border-radius: var(--radius-md);
     overflow: clip;
     scroll-snap-align: start;
-  }
-
-  .principio--clipped {
-    block-size: 273px;
   }
 
   .principio__icon {

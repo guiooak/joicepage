@@ -279,10 +279,12 @@
                   </p>
                 </div>
               </li>
-              <!-- 392:8160 is the one card the designer pinned to a height
-                   (273) and clipped, where the other three grow with their
-                   copy. Reproduced as drawn. -->
-              <li class="principio principio--clipped">
+              <!-- 392:8160 is drawn 273 tall against a 204 content block that
+                   needs 308, so the frame clips its last line. The designer's
+                   own detail frame for this component (393:10514) draws these
+                   cards equal and unclipped, so sections.css stretches all
+                   four to the tallest rather than reproducing the slip. -->
+              <li class="principio">
                 <img class="principio__icon" src="assets/img/icon-02.png" alt="" width="40" height="40" loading="lazy" />
                 <div>
                   <h3>Decisões com autonomia</h3>
