@@ -28,10 +28,26 @@ folder that no longer runs from `python3 -m http.server`.
 
 ## Scope
 
-**Mobile only.** There are no breakpoints. `body` holds the drawn 360 canvas
-and `base.css` scales the whole thing to the viewport, so every drawn
-proportion survives at 360, 390 and 430 — the same technique the desktop build
-uses at 1440, except this one scales up as well as down.
+**Phones and tablets, through 1024px inclusive.** There are still no
+breakpoints: `body` holds the drawn 360 canvas and `base.css` scales the whole
+thing to the viewport, so every drawn proportion survives at 360, 390, 430,
+834 and 1024 alike — the same technique the desktop build uses at 1440, except
+this one scales up as well as down, and now scales a long way up. An iPad Pro
+11" in portrait renders the canvas at 2.32x, an iPad Pro 12.9" at 2.84x.
+
+The boundary is inclusive because iPad Pro 12.9" portrait is *exactly* 1024;
+`< 1024` would miss the widest tablet in portrait, which is the case the
+number exists for. Tablet landscape above it, and every laptop, gets
+`poc/rawhtml` instead.
+
+Visitors are put on the right page by a small blocking head script in each of
+the two files — `rel="alternate"` is an annotation to search engines, not a
+redirect. The desktop half has to read `Math.min(screen.width, innerWidth)`
+because its viewport is pinned to 1440 and `innerWidth` reports the pin; this
+page reads `innerWidth` alone, since its viewport is `device-width` and honest.
+The two tests are strict complements so they cannot ping-pong, and
+`?layout=mobile` or `?layout=desktop` pins a choice for the session. The
+reasoning is written out in full in the comments above each script.
 
 The scale uses `cqw`, not `vw`. `100vw` includes the classic scrollbar gutter,
 so a zoom derived from it renders the page wider than the space it has and

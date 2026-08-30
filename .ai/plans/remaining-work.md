@@ -311,10 +311,36 @@ desktop build stood it up as a flat list instead (§6).
 | 10 | TikTok and YouTube handles for the footer (§8) | Joice | small |
 | 11 | Testimonial tags for Simone / Frances / Rafael (§4) | — | small |
 | 12 | Real answer for mobile FAQ question 2 (§9) | designer | small |
-| 13 | Confirm the Sobre deck is a static stack (§9) | designer | small |
+| ~~13~~ | ~~Confirm the Sobre deck is a static stack (§9)~~ | answered — see §10 | — |
+| ~~14~~ | ~~Route phones and tablets to the mobile page~~ | done `c16d2a1` | — |
 
 Items 3 and 4 are what is left that is unblocked and self-contained. **The
 launch blocker is gone** — the FAQ copy was never a writing task.
+
+## 10 · The Sobre deck is a two-state interaction, not a static stack
+
+Item 13 asked whether the overlapping deck was meant to be static. It is not,
+and `Gui › Interactions` `293:7721` settles it: the group draws the deck
+**twice** — five cards overlapping at one line of copy each (`293:6772`,
+554×466) and the same five spread and fully readable (`293:6799`, 554×956),
+under the heading "Stack". The drawn section frame is the *collapsed*
+keyframe of that pair.
+
+So the mobile page currently ships a state nobody can read: cards 01–04 show
+a 71px strip each, and because `.sobre__num` is centred in a 204-tall card,
+even the numerals sit below the cut. Nothing is broken — the interaction was
+never built, and neither `styles/motion.css` nor `scripts/motion.js` exists
+beyond a stub.
+
+This also reopens §6's note that the desktop build "approximated" its own
+−65 deck as a flat list. Both builds are drawing one half of the same
+two-state component, and both should stand it up the same way.
+
+The constraint on any fix: the drawn frame **is** the collapsed state and
+both builds are verified against it, so the resting geometry may not move.
+The spread has to be a layer on top of it, and under
+`prefers-reduced-motion: reduce` the cards still have to be readable — a
+stack that cannot be expanded is not an acceptable fallback.
 
 Quota is no longer the constraint either. The file was duplicated into a Pro
 team (`kj4nWRhUjFSFcTXPS1v7dQ`), which is 200 calls/day against the original's
