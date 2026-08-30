@@ -1165,11 +1165,15 @@
 
   /* ---- Big numbers ------------------------------------------------------
      392:8298 · 328x622 · padY48 · gap56 · each block 138 = 72 + 8 + 58. */
+  /* Centred, numeral and caption alike — 392:8298 draws all three blocks that
+     way and the build had them ranged left. The captions wrap to two lines at
+     328, so this centres both lines rather than just the numeral above them. */
   .numeros {
     display: flex;
     flex-direction: column;
     gap: var(--size-56);
     padding-block: var(--size-48);
+    text-align: center;
   }
 
   .numeros div {

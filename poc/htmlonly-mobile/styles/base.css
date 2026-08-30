@@ -31,6 +31,21 @@
     text-decoration: none;
   }
 
+  /* Mobile browsers paint a translucent blue box over whatever you tap, and
+     it lands on the CTA pills and the drawer toggle as a flash of colour that
+     is not in the design. Cleared here rather than per component, because it
+     applies to every tappable thing on the page.
+
+     `:focus-visible` is deliberately untouched — that is the keyboard user's
+     only way of knowing where they are, and it is a different mechanism. */
+  a,
+  button,
+  summary,
+  label,
+  [role="button"] {
+    -webkit-tap-highlight-color: transparent;
+  }
+
   button {
     font: inherit;
     color: inherit;
