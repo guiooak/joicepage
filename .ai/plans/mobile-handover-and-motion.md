@@ -21,8 +21,12 @@ add a `.js` class, against 401 + 406 lines on the desktop build. Figma's
 `Gui › Interactions` section (`293:6393`) specs six behaviours, and every one
 of them maps to a section that exists on the mobile page.
 
-Outcome: a phone or tablet visiting the site lands on the mobile page and gets
-the same motion vocabulary the desktop page has.
+**The most visible symptom of that stub is the Sobre deck**, reported as "the
+interaction is not working". Nothing is broken — the interaction was never
+built, and the section ships in a state that cannot be read. See §3.
+
+Outcome: a phone or tablet visiting the site lands on the mobile page, every
+interaction on it animates, and the Sobre deck can actually be read.
 
 ### Decisions taken
 
@@ -147,7 +151,7 @@ in `poc/htmlonly-mobile/index.html`:
 | `293:7713` | Title word reveal | `.visao__title` (`:211`) | `ink-in` keyframes + word split, `motion.css:30-60`, `motion.js:22-75` |
 | `293:7714` | Serviços card open | `.servicos__rail` (`:306`) | `panel-open`, `motion.css:362-400` — but mobile is a snap carousel, not a hover grid |
 | `293:7715` | Testimonial switch | `.depoimento` (`:547`) | `motion.css:241`; mobile is radio-driven, so pure CSS — no JS port |
-| `293:7721` | Card deck depth | `.sobre` deck (`:602`) | `motion.css:83-156` sticky/depth |
+| `293:7721` | **Card deck stack → spread** | `.sobre__deck` (`:637`) | `motion.css:76-106` sticky + per-card depth — **see below** |
 | `293:7722` | Big numbers count | `.numeros dt` (`:496`) | `tick` keyframes + `countUp()`, `motion.css:270`, `motion.js:347-380` |
 | `293:7723` | Sobre collage | `.sobre__collage` (`:612`) | `drift`, `motion.css:112-156` |
 
@@ -161,6 +165,73 @@ transition from a forced-closed one.
 **Deliberately not ported:** section 8 of `motion.js:274-345`, the
 cursor-repelled CTA pills. It is guarded by `(hover: hover) and (pointer: fine)`
 and by `pointerType === "touch"` checks; on a touch page it is dead code.
+
+**Every interaction gets a transition, not just the six specced ones.** The
+page has several state changes that currently snap, because a transition was
+never written for them. All of them are already-working native elements, so
+this is decoration layered on top and nothing here may become load-bearing:
+
+| Interaction | Selector | What to add |
+|---|---|---|
+| Nav drawer | `<details>` (`:99`), CSS `sections.css:69-118` | Panel height tween + chevron/burger rotate |
+| Processo accordion | `<details>` (`:396`) | `panel-open`, one open at a time via `name=` |
+| FAQ accordion | `.faq__item` (`:701`) | Same tween, chevron rotate |
+| Serviços carousel | `.servicos__rail` (`:306`) | `scroll-behavior: smooth`, active-card emphasis on snap |
+| Testimonial switch | `.depoimento__pick` radios (`:548-550`) | Crossfade between quotes — pure CSS, no JS |
+| Both rails | `sections.css:262-282`, `445-459` | `scroll-behavior: smooth` |
+| Sobre deck | `.sobre__deck` (`:637`) | The stack → spread below |
+| To-top control | `assets/img/to-top.svg` | Fade/slide in past a scroll offset |
+
+`<details>` height tweens need `interpolate-size: allow-keywords`, already set
+at `base.css:104`, and must be an animation on the open state rather than a
+transition from a forced-closed one — the reason is written out at
+`poc/rawhtml/styles/motion.css:362`.
+
+### The Sobre deck — the one that is visibly broken
+
+`Gui › Interactions` group `293:7721` draws the deck in **two states**: five
+cards overlapping with one line of copy each (`293:6772`, 554×466), and the
+same five spread out and fully readable (`293:6799`, 554×956). The mobile
+build ships only the collapsed one, so cards 01–04 cannot be read at all — and
+because `.sobre__num` is centred in a 204-tall card while only 71px of it
+shows, even the numerals fall below the cut.
+
+This resolves item 13 of `.ai/plans/remaining-work.md`, which asked whether the
+stack was intended as static. It is not; it is the first keyframe of a
+two-state interaction the frame could not express.
+
+Three structural changes are needed before any motion can be attached:
+
+1. **`.sobre__deck` children are `position: absolute`** (`sections.css:1093`)
+   at hard offsets 0/71/142/213 inside a fixed `block-size: 466px`. `sticky`
+   does not apply to absolutely positioned elements, so the desktop technique
+   cannot be dropped in. Rebuild the stack in normal flow with negative
+   `margin-block-start` — which reproduces the same drawn offsets, since −133
+   is exactly the auto-layout gap Figma specifies — and let the container
+   height come from content.
+2. **The fifth card is outside the deck.** `.sobre__card--last` (`:665`) sits
+   outside `.sobre__content` entirely, pulled up by `margin-block-start:
+   -15.67px`. The spec stacks all five together, so it has to join the `<ol>`
+   for the interaction to read as one deck. Its −15.67 overlap then becomes
+   part of the same negative-margin sequence.
+3. **`overflow: clip` on `.sobre__card`** (`sections.css:1113`) is fine
+   collapsed but will clip during the spread — check it once the cards move.
+
+Then the motion, reusing `poc/rawhtml/styles/motion.css:76-106`: sticky
+offsets rebuild the pile, and a per-card `scale`/`brightness` keyed off an
+`--i` custom property gives it depth. Read the comment there before starting —
+it records that a `view()` timeline was tried for this and is *wrong*, because
+sticky cards leave the scrollport together and all five recede at once, which
+reads as the block flinching rather than as a stack. The depth must be
+spatial, per card.
+
+**The constraint that makes this delicate:** the drawn frame *is* the
+collapsed state, and this build is verified against it to 0.34px. So the
+resting state must still measure 466px with cards at 0/71/142/213, and the
+spread may only exist as a scroll-driven or reduced-motion-gated layer on top.
+Under `prefers-reduced-motion: reduce` the cards must be readable some other
+way — a static spread is the honest answer there, since a stack no one can
+expand is not an acceptable fallback.
 
 Two mechanical cautions. Scroll-driven work goes behind
 `@supports (animation-timeline: view())` exactly as the desktop does at
@@ -185,9 +256,14 @@ Both are items 3 and 4 in `.ai/plans/remaining-work.md`, both unblocked.
 
 ## 5 · Record it
 
-- `.ai/plans/remaining-work.md` — strike items 3 and 4; add the handover and
-  the motion layer with the inclusive 1024px decision and its accepted
-  trade-off — including why the boundary is `<=` and not `<`.
+- `.ai/plans/remaining-work.md` — strike items 3 and 4; **strike item 13 and
+  rewrite §9's third paragraph**, which says the mobile build "reproduces it
+  exactly" and asks whether a static stack is intended. `Gui › Interactions`
+  `293:7721` answers it: the stack is one of two drawn states, so the doc's
+  open question is closed and the desktop's flat-list treatment (§6) should be
+  revisited against the same spec. Then add the handover and the motion layer
+  with the inclusive 1024px decision and its accepted trade-off — including
+  why the boundary is `<=` and not `<`.
 - `poc/htmlonly-mobile/README.md:29-38` — the **Scope** section currently says
   "Mobile only. There are no breakpoints" and cites the 640 handover. Rewrite:
   this page now serves phones and tablets through 1024px inclusive, uncapped.
@@ -239,6 +315,17 @@ page is still complete and readable — the nav drawer, FAQ, Processo accordion
 and Serviços carousel are native elements and must all still work. Then run
 with `prefers-reduced-motion: reduce` forced and confirm behaviour survives
 while decoration does not.
+
+**The Sobre deck specifically**, since it carries a geometry constraint the
+rest of the motion work does not:
+
+- at rest, `measure.mjs` still reports the deck at 466px with the cards at
+  0/71/142/213 — the drawn collapsed state, unchanged
+- scrolling through the section spreads all five cards to fully readable, and
+  the numerals 01–05 are visible rather than cut off below the fold
+- under `prefers-reduced-motion: reduce` all five are readable without
+  scrolling — a stack that cannot be expanded is not an acceptable fallback
+- with `styles/motion.css` deleted the section still measures as it does today
 
 **Deploy guards.** They run over both folders and will catch the two things
 most likely to go wrong here — a required file missing and an unbalanced CSS
