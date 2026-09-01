@@ -40,28 +40,36 @@
     filter: drop-shadow(0 16px 10px rgb(87 121 170 / 8%));
   }
 
-  /* The wordmark is a VECTOR in the file — Logo 120x48, the same component in
-     the header and the footer — not live type. Two lines of Lora only ever
-     approximated its letterforms, and drew them in --color-ink (#151a1d)
-     where the asset is #35425d.
+  /* The wordmark is the full brand lockup — the `js` monogram under the sun
+     and the water line, over JOICE SPERANDIO / PLANEJADORA FINANCEIRA. Logo
+     120x48, the same component in the header and the footer, and artwork
+     rather than live type: two lines of Lora only ever approximated the mark
+     this replaced, and drew them in --color-ink (#151a1d).
 
      Painted as a mask over `currentcolor` rather than shipped as two coloured
-     files. The header draws it #35425d and the footer #f4f7f7, the two
-     exports are byte-identical apart from that fill, and #f4f7f7 is already
-     --color-button-ink — which .brand--inverse sets. So one asset, and the
-     colour rules that were already here keep driving it. A mask reads the
-     asset's alpha, so its own fill is irrelevant.
+     files. The header draws it --c-logo and the footer #f4f7f7, which is
+     already --color-button-ink — the colour .brand--inverse sets. So one
+     asset, and the colour rules that were already here keep driving it.
 
-     `contain` in a 120x48 box lands the 110.896x48 artwork with ~4.55 either
-     side, which is the inset the frame draws (4.5 / 4.608). */
+     A mask reads the asset's ALPHA, which is the whole reason this swap is a
+     one-line change and the reason the file carries no colour: it is stored
+     grey+alpha, 14KB, and the navy comes from the CSS on both surfaces.
+
+     PNG where this used to be SVG, because the artwork was supplied as
+     raster. Nothing here depends on which it is, so a vector original from
+     the designer replaces the two url()s below and nothing else. It is a 3x
+     export of the drawn slot rather than a bare trim — a 360x144 canvas,
+     120x48 at 3x, holding the mark at 333 wide — so `contain` lands it at
+     111x43.4 with the ~4.5 inset either side that the frame draws, exactly
+     where the old 110.896-wide mark sat. */
   .brand {
     display: block;
     inline-size: 120px;
     block-size: 48px;
     color: var(--c-logo);
     background-color: currentcolor;
-    -webkit-mask: url("../assets/img/logo.svg") no-repeat center / contain;
-    mask: url("../assets/img/logo.svg") no-repeat center / contain;
+    -webkit-mask: url("../assets/img/logo.png") no-repeat center / contain;
+    mask: url("../assets/img/logo.png") no-repeat center / contain;
   }
 
   /* The name stays in the document as real text rather than becoming an
