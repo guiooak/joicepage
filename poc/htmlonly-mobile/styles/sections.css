@@ -470,18 +470,36 @@
      328 mask. Same hidden-scrollbar reasoning as the Credenciais rail.
 
      Snaps like the Serviços carousel, so a drag settles on a whole card
-     rather than leaving one cut down the middle. Two differences from that
-     rail, both forced by this one's geometry:
+     rather than leaving one cut down the middle. Unlike that rail, whose
+     cards are 329.5 in a 328 port and therefore rest flush, these are 256 in
+     328 and have somewhere to sit — so where they come to rest is a decision,
+     and it is made here.
 
-       · The cards are 256 in a 328 port, so a snap point still leaves 48 of
-         the next card showing. That peek is wanted — it is what says the rail
-         scrolls — and it is why `start` is the right alignment here rather
-         than `center`.
-       · `.principios__cards` carries 24 of padding, so a bare `start` would
-         put the first card's snap position at scrollLeft 24 and eat the left
-         inset the frame draws. `scroll-padding-inline` offsets every snap
-         position by that same 24, which keeps scrollLeft 0 a valid resting
-         place and the drawn inset intact. */
+     Every card rests CENTRED, and the end inset is what buys it. This used to
+     align `start` against the frame's drawn 24 inset, and the last card came
+     out visibly wrong: the four snap targets were 0/272/544/816, but content
+     1120 in a 328 port only scrolls to 1120 - 328 = 792, so 816 was
+     unreachable. Cards 01-03 rested at 24 left / 48 right and card 04 clamped
+     to 48 left / 24 right — three cards left of centre and one right of it.
+
+     Note the clamp is why `center` alone would have fixed nothing: symmetric
+     padding leaves the snapport centre at 164 either way, and both ends still
+     run out of scroll. The inset is the load-bearing half of the fix.
+
+     36 is half the leftover, (328 - 256) / 2, and choosing it makes the
+     arithmetic close exactly at both ends rather than approximately:
+
+       content     36 + 4 x 256 + 3 x 16 + 36 = 1144
+       max scroll  1144 - 328                 =  816
+       snap        0 / 272 / 544 / 816        <- all four reachable
+
+     It costs a 12px deviation from the drawn inset, taken deliberately. The
+     frame draws a STATIC 1120-wide row inside the mask; Figma cannot express
+     a scroll, so its 24 says where the row starts, not where each card should
+     stop. The peek survives the change and reads better for being even — 20px
+     of the neighbour on each side, which says the rail scrolls both ways.
+
+     `scroll-padding-inline` is gone with the `start` alignment it served. */
   .principios__rail {
     position: absolute;
     inset: 0;
@@ -489,7 +507,6 @@
     overflow-x: auto;
     overflow-y: hidden;
     scroll-snap-type: inline mandatory;
-    scroll-padding-inline: var(--size-24);
     scrollbar-width: none;
     overscroll-behavior-inline: contain;
   }
@@ -498,8 +515,15 @@
     display: none;
   }
 
-  /* 1120 wide · p24 · gap16, and the row sits on the drawn bottom line:
-     558.265 = 582.265 - 24. Checks out at 4 x 256 + 3 x 16 + 2 x 24 = 1120.
+  /* 1144 wide · padding-block 24 · padding-inline 36 · gap16, and the row
+     sits on the drawn bottom line: 558.265 = 582.265 - 24. Checks out at
+     4 x 256 + 3 x 16 + 2 x 36 = 1144.
+
+     The 36 is the centring inset derived above, not a drawn number — the
+     frame's own row is 1120 at an inset of 24. The padding is split because
+     only the inline half moved: the block 24 is what parks the cards on
+     558.265, and `box-sizing: border-box` (base.css) means `inline-size`
+     carries the inline pair inside it.
 
      A grid rather than a flex row, and the reason is the whole point. The
      frame draws the four cards at 280, 273, 300 and 308 — four different
@@ -521,9 +545,10 @@
     align-content: end;
     align-items: stretch;
     gap: var(--size-16);
-    inline-size: 1120px;
+    inline-size: 1144px;
     block-size: 582.265px;
-    padding: var(--size-24);
+    padding-block: var(--size-24);
+    padding-inline: 36px;
   }
 
   /* card 256 wide · rgba(255,255,255,.9) over a 50px backdrop blur, which is
@@ -539,7 +564,7 @@
     backdrop-filter: blur(50px);
     border-radius: var(--radius-md);
     overflow: clip;
-    scroll-snap-align: start;
+    scroll-snap-align: center;
   }
 
   .principio__icon {
