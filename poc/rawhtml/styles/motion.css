@@ -343,7 +343,7 @@
 
   /* ---- 7 · Accordions --------------------------------------------------
      Both accordions — Processo and the FAQ — open one panel at a time and
-     animate rather than snapping.
+     animate in both directions rather than snapping.
 
      Exclusivity is the `name` attribute on <details>, not script. Browsers
      close the other panels in the same named group themselves, so it works
@@ -352,13 +352,9 @@
 
      The animation needs `::details-content`, because a closed <details> hides
      its content outright and there is nothing to transition. `interpolate-size`
-     is what lets `block-size` animate to and from `auto` — the panels are all
-     different heights and hard-coding any of them would break the moment the
-     copy changes. `content-visibility` needs `allow-discrete` so the content
-     stays rendered for the length of the close.
-
-     Guarded: where this is not supported the panels open instantly, which is
-     the behaviour that shipped before. */
+     — already set on the root in base.css — is what lets `block-size` animate
+     to and from `auto`; the panels are all different heights and hard-coding
+     any of them would break the moment the copy changes. */
   /* An animation on the OPEN state, not a transition from a forced-closed
      one. The distinction is the whole point and was learned the hard way.
 
@@ -371,14 +367,101 @@
      override; Chrome 151 runs the same CSS correctly.
 
      Written this way the default state is untouched: the panel is whatever
-     the browser makes it, and this only adds a keyframe on the way in. The
-     worst case anywhere is no animation, never a panel that will not open.
-     The cost is that closing is instant, which is the cheaper half to lose. */
-  @media (prefers-reduced-motion: no-preference) {
-    .accordion__item[open]::details-content {
-      animation: panel-open 320ms cubic-bezier(0.4, 0, 0.2, 1);
-      overflow: hidden;
+     the browser makes it, and every rule below is additive. The worst case
+     anywhere is no animation, never a panel that will not open.
+
+     Closing used to be the price of that, and it no longer is. `.is-closing`
+     comes from scripts/motion.js, which holds `[open]` for the length of the
+     collapse and only then takes it away — so the outgoing panel animates
+     from a state the browser still considers open, and this stays a keyframe
+     on an open panel rather than a forced-closed resting state. The class
+     lives for a few hundred milliseconds at a time and never while the page
+     is at rest, so nothing here can strand a panel shut. With scripting off,
+     closing is instant again, exactly as it was.
+
+     The height tween is gated on the feature that makes it possible.
+     Interpolating between `block-size: 0` and `auto` works only where
+     `interpolate-size` / `calc-size()` exists, and that is Blink only. On
+     WebKit `auto` is not an interpolable target, so the keyframe resolves
+     discretely — the panel holds its height through half the fade and then
+     jumps, which reads as a flicker rather than as an animation. Engines
+     without it fade instead: no height interpolation, no discrete step,
+     nothing to flicker. Same guard and same reasoning as
+     poc/htmlonly-mobile, which hit this first; phones and tablets are routed
+     to that page, but macOS Safari reaches this one directly.
+
+     `overflow: hidden` belongs to the height half only — with no growing box
+     to clip it just risks its own repaint artefacts — so the closing rule
+     inherits it from the `[open]` rule it sits beside rather than restating
+     it in the fade branch. */
+  /* How long scripts/motion.js holds `open` for, declared per component and
+     read off the panel being closed.
+
+     The number has to live on exactly one side, and it is this one: Chrome
+     reports NOTHING for an animation on `::details-content`. It runs and it
+     paints, but it produces no `getAnimations()` entry and fires no
+     `animationstart` or `animationend` — checked on 152, listening on both
+     the <details> and the document. So the script cannot observe the
+     animation it is waiting for and has to be told how long it lasts.
+
+     Zero is the resting value, and it is also the signal that the script
+     should not intervene at all: under prefers-reduced-motion, on an engine
+     without `::details-content`, or if the rules below are ever deleted,
+     nothing sets it and the panels close natively. Deleting this stylesheet
+     therefore disables the script's only reason to touch a panel, which is
+     the same contract the rest of the file keeps. */
+  :root {
+    --close-hold: 0ms;
+  }
+
+  @supports (selector(::details-content)) and
+    (interpolate-size: allow-keywords) {
+    @media (prefers-reduced-motion: no-preference) {
+      .accordion__item {
+        --close-hold: 320ms;
+      }
+
+      .accordion__item[open]::details-content {
+        animation: panel-open 320ms cubic-bezier(0.4, 0, 0.2, 1);
+        overflow: hidden;
+      }
+
+      /* `forwards`, so the collapsed height holds through the frame between
+         the animation finishing and the script dropping `[open]`. Without it
+         the panel springs back to full height for that frame first. */
+      .accordion__item.is-closing[open]::details-content {
+        animation: panel-close 320ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+      }
     }
+  }
+
+  @supports (selector(::details-content)) and
+    (not (interpolate-size: allow-keywords)) {
+    @media (prefers-reduced-motion: no-preference) {
+      .accordion__item {
+        --close-hold: 240ms;
+      }
+
+      .accordion__item[open]::details-content {
+        animation: panel-fade 240ms ease both;
+      }
+
+      .accordion__item.is-closing[open]::details-content {
+        animation: panel-fade-out 240ms ease both;
+      }
+    }
+  }
+
+  /* The mark belongs to the state the panel is heading for, not the one it
+     is leaving. `[open]` is held for the length of the collapse, so without
+     this the cross would sit there through the whole close and flip to a
+     plus after it — the one part of the interaction that would still snap. */
+  .accordion__item.is-closing[open] .accordion__icon::before {
+    rotate: 0deg;
+  }
+
+  .accordion__item.is-closing[open] .accordion__icon::after {
+    rotate: 90deg;
   }
 
   @keyframes panel-open {
@@ -390,6 +473,38 @@
     to {
       block-size: auto;
       opacity: 1;
+    }
+  }
+
+  @keyframes panel-close {
+    from {
+      block-size: auto;
+      opacity: 1;
+    }
+
+    to {
+      block-size: 0;
+      opacity: 0;
+    }
+  }
+
+  @keyframes panel-fade {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes panel-fade-out {
+    from {
+      opacity: 1;
+    }
+
+    to {
+      opacity: 0;
     }
   }
 

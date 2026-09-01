@@ -9,10 +9,11 @@
      · It is deferred, so it never blocks the first paint.
      · Under prefers-reduced-motion it wires behaviour, never decoration.
 
-   Almost everything on this page is CSS. Only two things genuinely need
-   script — splitting the headline into words, and counting the numerals up
-   from a figure that has to stay in the HTML. Both are ports of the desktop
-   build's sections 1 and 5.
+   Almost everything on this page is CSS. Only three things genuinely need
+   script — splitting the headline into words, counting the numerals up from
+   a figure that has to stay in the HTML, and holding a panel open long
+   enough for the stylesheet to animate it closed. All three are ports of the
+   desktop build.
    ========================================================================= */
 (() => {
   "use strict";
@@ -145,5 +146,146 @@
 
     el.textContent = original.replace(match[0], "0".padStart(digits, "0"));
     requestAnimationFrame(frame);
+  }
+
+  /* ---- 3 · Closing a panel ---------------------------------------------
+     Every collapse on the page animates open and animates closed: the nav
+     drawer, the Processo accordion and the FAQ. This is the closed half.
+
+     A <details> hides its content the instant `open` goes, so the browser
+     gives the opening half of every collapse away for free and makes the
+     closing half impossible: styles/motion.css can only ever animate a panel
+     that is still open. That is a hard constraint over there, written out
+     beside the rules, because a forced-closed resting state is what once made
+     panel content unreachable on one Chrome version.
+
+     All this does is hold `open` for the length of the collapse. It marks the
+     panel `.is-closing`, lets the stylesheet run its outgoing keyframes
+     against a panel the browser still considers open, and takes `open` away
+     once they have finished. No geometry is measured and no style is written
+     from here — every value stays in the stylesheet, and this file keeps to
+     timing.
+
+     Nothing about the page depends on it. With scripting off, under
+     prefers-reduced-motion, or on an engine that animates none of this, the
+     panels close instantly — which is exactly the behaviour that shipped
+     before, and it is reached by doing less rather than through a fallback
+     path. The last two cases arrive the same way as the first: the
+     stylesheet stops declaring a duration, so this stops intervening. */
+  const PANELS = [
+    "details.accordion__item",
+    "details.faq__item",
+    "details.menu",
+  ].join(", ");
+
+  // Panel → the `name` taken off it for the duration (or null) and the timer
+  // that will put it back. Its presence is also the "already closing" flag.
+  const state = new WeakMap();
+
+  document.querySelectorAll(PANELS).forEach((item) => {
+    const summary = item.querySelector(":scope > summary");
+    if (summary) summary.addEventListener("click", onSummaryClick);
+  });
+
+  function onSummaryClick(event) {
+    const item = event.currentTarget.parentElement;
+
+    // Clicked again mid-collapse. Finish the close now, synchronously, so the
+    // default action that follows this listener sees a closed <details> and
+    // reopens it — rather than swallowing the click for the rest of the
+    // animation.
+    if (state.has(item)) {
+      settle(item);
+      return;
+    }
+
+    if (item.open) {
+      const ms = hold(item);
+      if (!ms) return; // nothing to animate; let it close natively
+
+      event.preventDefault();
+      collapse(item, ms);
+      return;
+    }
+
+    // Opening. Where <details> share a `name` the browser closes the open one
+    // itself, instantly, the moment this one opens — so that closure has to
+    // be taken over here too, or half the interaction still snaps.
+    const sibling = openSibling(item);
+    if (!sibling) return; // nothing to rescue; let it open natively
+
+    const ms = hold(sibling);
+    if (!ms) return;
+
+    event.preventDefault();
+    collapse(sibling, ms);
+    item.open = true;
+  }
+
+  /* How long to hold this panel open, in milliseconds, straight off
+     `--close-hold` — which styles/motion.css declares beside the keyframes it
+     belongs to.
+
+     A duration is the one thing this file cannot work out for itself. Chrome
+     reports NOTHING for an animation on `::details-content`: it runs and it
+     paints, but there is no `getAnimations()` entry and no `animationstart` /
+     `animationend`, on the <details> or on the document. Both were tried on
+     152 before this. So the number comes from the stylesheet that owns it,
+     and zero — the resting value, and what every engine and every motion
+     preference the rules do not cover gets — means "do not intervene".
+
+     Read per click rather than cached, so a change of motion preference
+     takes effect without a reload, and so the drawer's shorter hold comes
+     off the drawer rather than out of a table in here. */
+  function hold(item) {
+    const declared = getComputedStyle(item)
+      .getPropertyValue("--close-hold")
+      .trim();
+    const time = /^([\d.]+)(m?s)$/.exec(declared);
+
+    return time ? Number(time[1]) * (time[2] === "s" ? 1000 : 1) : 0;
+  }
+
+  function collapse(item, ms) {
+    // Leave the exclusive group for the length of the close, so opening a
+    // neighbour does not slam this one shut under its own animation. The
+    // attribute goes back the moment the panel is actually closed: it is the
+    // only thing making one-at-a-time work with scripting off, and it must
+    // never be missing while the page is at rest.
+    const name = item.getAttribute("name");
+    if (name !== null) item.removeAttribute("name");
+
+    item.classList.add("is-closing");
+    state.set(item, { name, timer: setTimeout(() => settle(item), ms) });
+  }
+
+  function settle(item) {
+    const held = state.get(item);
+    if (!held) return;
+
+    // An interrupted close leaves its timer pending, and the panel may well
+    // be closing again by the time it fires. Clearing it stops that stale
+    // timer cutting the second collapse short.
+    clearTimeout(held.timer);
+    state.delete(item);
+
+    item.classList.remove("is-closing");
+    item.open = false;
+
+    // After `open` goes, never before: handing a still-open panel back to its
+    // group invites the browser to enforce exclusivity against whichever
+    // neighbour was just opened.
+    if (held.name !== null) item.setAttribute("name", held.name);
+  }
+
+  function openSibling(item) {
+    const name = item.getAttribute("name");
+    if (!name) return null;
+
+    return (
+      [...document.querySelectorAll("details[open]")].find(
+        (other) => other !== item && other.getAttribute("name") === name,
+      ) || null
+    );
   }
 })();

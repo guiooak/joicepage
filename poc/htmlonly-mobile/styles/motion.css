@@ -130,15 +130,23 @@
 
   /* ---- Panels ----------------------------------------------------------
      The nav drawer, the Processo accordion and the FAQ are all native
-     <details>, and all three open instantly today.
+     <details>, and all three animate in both directions.
 
      This has to be an animation on the OPEN state, not a transition from a
      forced-closed one, and the distinction is the whole point — it is
-     written out at poc/rawhtml/styles/motion.css:362 after a decorative
+     written out at poc/rawhtml/styles/motion.css:358 after a decorative
      animation there made panel content unreachable on one Chrome version.
      Written this way the default state is untouched: the worst case anywhere
-     is no animation, never a panel that will not open. The cost is that
-     closing is instant, which is the cheaper half to lose.
+     is no animation, never a panel that will not open.
+
+     Closing used to be the price of that, and it no longer is. `.is-closing`
+     comes from scripts/motion.js, which holds `[open]` for the length of the
+     collapse and only then takes it away — so the outgoing panel animates
+     from a state the browser still considers open, and these stay keyframes
+     on an open panel rather than a forced-closed resting state. The class
+     lives for a few hundred milliseconds at a time and never while the page
+     is at rest, so nothing here can strand a panel shut. With scripting off,
+     closing is instant again, exactly as it was.
 
      `::details-content` is required because a closed <details> hides its
      content outright and there is nothing to transition.
@@ -147,13 +155,13 @@
      because every panel is a different height and hard-coding any of them
      would break the moment the copy changes.
 
-     And that last point carries a guard poc/rawhtml does not need. Growing
-     from `block-size: 0` to `block-size: auto` is only interpolable where
+     And that last point carries a guard. Interpolating between
+     `block-size: 0` and `block-size: auto` works only where
      `interpolate-size` / `calc-size()` exists, and that is Blink only. On
      WebKit `auto` is not an interpolable target, so the keyframe resolves
-     discretely — the panel holds at 0 through the first half of the fade and
-     then snaps to full height, which reads as a flicker rather than as an
-     animation.
+     discretely — the panel holds at one end through the first half of the
+     fade and then snaps to the other, which reads as a flicker rather than
+     as an animation.
 
      That is not an edge case for this page. Every browser on iOS runs
      WebKit, Chrome included, because iOS requires WKWebView — so it is the
@@ -164,27 +172,90 @@
      possible, and engines without it fade instead: no height interpolation,
      no discrete step, nothing to flicker. `overflow: hidden` belongs to the
      height half only — with no growing box to clip it just risks its own
-     repaint artefacts. */
-  @supports (interpolate-size: allow-keywords) {
+     repaint artefacts — so the closing rule inherits it from the `[open]`
+     rule beside it rather than restating it in the fade branch. */
+  /* How long scripts/motion.js holds `open` for, declared per component and
+     read off the panel being closed.
+
+     The number has to live on exactly one side, and it is this one: Chrome
+     reports NOTHING for an animation on `::details-content`. It runs and it
+     paints, but it produces no `getAnimations()` entry and fires no
+     `animationstart` or `animationend` — checked on 152, listening on both
+     the <details> and the document. So the script cannot observe the
+     animation it is waiting for and has to be told how long it lasts.
+
+     Zero is the resting value, and it is also the signal that the script
+     should not intervene at all: under prefers-reduced-motion, on an engine
+     without `::details-content`, or if the rules below are ever deleted,
+     nothing sets it and the panels close natively. Deleting this stylesheet
+     therefore disables the script's only reason to touch a panel, which is
+     the same contract the rest of the file keeps. The drawer sets its own
+     further down — it is out of flow and shorter. */
+  :root {
+    --close-hold: 0ms;
+  }
+
+  @supports (selector(::details-content)) and
+    (interpolate-size: allow-keywords) {
     @media (prefers-reduced-motion: no-preference) {
+      .accordion__item,
+      .faq__item {
+        --close-hold: 320ms;
+      }
+
       .accordion__item[open]::details-content,
       .faq__item[open]::details-content {
         animation: panel-open 320ms cubic-bezier(0.4, 0, 0.2, 1);
         overflow: hidden;
       }
-    }
-  }
 
-  @supports not (interpolate-size: allow-keywords) {
-    @media (prefers-reduced-motion: no-preference) {
-      .accordion__item[open]::details-content,
-      .faq__item[open]::details-content {
-        animation: panel-fade 240ms ease both;
+      /* `forwards`, so the collapsed height holds through the frame between
+         the animation finishing and the script dropping `[open]`. Without it
+         the panel springs back to full height for that frame first. */
+      .accordion__item.is-closing[open]::details-content,
+      .faq__item.is-closing[open]::details-content {
+        animation: panel-close 320ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
       }
     }
   }
 
-  /* The nav drawer is NOT in that rule, and the reason is worth keeping.
+  @supports (selector(::details-content)) and
+    (not (interpolate-size: allow-keywords)) {
+    @media (prefers-reduced-motion: no-preference) {
+      .accordion__item,
+      .faq__item {
+        --close-hold: 240ms;
+      }
+
+      .accordion__item[open]::details-content,
+      .faq__item[open]::details-content {
+        animation: panel-fade 240ms ease both;
+      }
+
+      .accordion__item.is-closing[open]::details-content,
+      .faq__item.is-closing[open]::details-content {
+        animation: panel-fade-out 240ms ease both;
+      }
+    }
+  }
+
+  /* The FAQ summary drops its own bottom padding while open — sections.css,
+     so an open item measures the drawn 232 rather than 256. Nothing was
+     transitioning that, so it landed as a 24px jolt at each end of an
+     otherwise smooth collapse. Transitioning it folds it into the animation,
+     and `.is-closing` hands the padding back at the START of the close so it
+     eases out alongside the panel instead of after it. */
+  @media (prefers-reduced-motion: no-preference) {
+    .faq__item summary {
+      transition: padding-block-end 320ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .faq__item.is-closing[open] summary {
+      padding-block-end: var(--size-24);
+    }
+  }
+
+  /* The nav drawer is NOT in those rules, and the reason is worth keeping.
      `.menu__panel` is `position: absolute` and there is no `.menu` rule to
      position it, so its containing block is `.site-header` — which leaves
      `::details-content` a zero-height box with the panel out of flow inside
@@ -194,11 +265,37 @@
      the clip — but a no-op animation is not worth shipping on that reasoning.)
 
      So the drawer animates itself, which is what an out-of-flow panel wants
-     anyway: it drops in from under the bar it hangs off. */
+     anyway: it drops in from under the bar it hangs off, and lifts back into
+     it. Being out of flow, it needs no height tween and therefore no
+     `@supports` guard — opacity and `translate` interpolate everywhere. */
   @media (prefers-reduced-motion: no-preference) {
+    .menu {
+      --close-hold: 240ms;
+    }
+
     .menu[open] .menu__panel {
       animation: drawer-in 240ms cubic-bezier(0.4, 0, 0.2, 1);
     }
+
+    .menu.is-closing[open] .menu__panel {
+      animation: drawer-out 240ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+  }
+
+  /* Each mark belongs to the state its panel is heading for, not the one it
+     is leaving. `[open]` is held for the length of the collapse, so without
+     these the cross would sit there through the whole close and flip to a
+     plus after it — the one part of the interaction that would still snap. */
+  .accordion__item.is-closing[open] .accordion__icon::before {
+    rotate: 0deg;
+  }
+
+  .accordion__item.is-closing[open] .accordion__icon::after {
+    rotate: 90deg;
+  }
+
+  .faq__item.is-closing[open] .faq__chevron {
+    rotate: -90deg;
   }
 
   @keyframes drawer-in {
@@ -210,6 +307,18 @@
     to {
       opacity: 1;
       translate: 0 0;
+    }
+  }
+
+  @keyframes drawer-out {
+    from {
+      opacity: 1;
+      translate: 0 0;
+    }
+
+    to {
+      opacity: 0;
+      translate: 0 -8px;
     }
   }
 
@@ -225,6 +334,18 @@
     }
   }
 
+  @keyframes panel-close {
+    from {
+      block-size: auto;
+      opacity: 1;
+    }
+
+    to {
+      block-size: 0;
+      opacity: 0;
+    }
+  }
+
   /* Opacity alone: every engine interpolates it, and it needs to know nothing
      about the panel's final height. */
   @keyframes panel-fade {
@@ -234,6 +355,16 @@
 
     to {
       opacity: 1;
+    }
+  }
+
+  @keyframes panel-fade-out {
+    from {
+      opacity: 1;
+    }
+
+    to {
+      opacity: 0;
     }
   }
 
