@@ -164,12 +164,41 @@ Both are now `data-quote` attributes on their `<li>` in `.depoimento__people`.
 `scripts/motion.js` already switched on any element carrying `data-quote`, so
 the carousel went from one live entry to three with no change to the script.
 
-Still unwritten: the **quotes** for Frances and Rafael. Now confirmed
-properly rather than inferred — four of the five `Depoimentos` instances
-(`318:7447`, `318:7451`, `318:7448`, `318:7449`) were expanded, and **none of
-them override the quote**: every one carries Alessandra's text. Only the
-active name's Tags frame changes between states. So the desktop frame holds
-exactly one written quote, and the other two came from the mobile annotations.
+~~Still unwritten: the **quotes** for Frances and Rafael.~~ **WRONG — and
+this section was wrong the same way §5 was.** It claimed four of the five
+`Depoimentos` instances had been expanded and that none overrode the quote,
+so the desktop frame held exactly one. The frame holds **five**, one per
+instance, and all five are now in the build.
+
+The claim came from `get_design_context` returning nothing for those
+instances. That is the §7 blind spot, not an absence: the quotes live in each
+instance's `symbolData.symbolOverrides`, keyed by `guidPath`, which no
+metadata dump expands. Decoding the `.fig` and reading that field directly
+gives all five in one pass, no MCP call and no quota:
+
+| Instance | Active | Quote opens |
+|---|---|---|
+| `318:7447` | Alessandra | *(no override — the component default)* |
+| `318:7451` | Frances | "Eu queria entender melhor meus investimentos…" |
+| `318:7448` | Simone | "Desde 2023, construímos uma parceria…" |
+| `318:7449` | Rafael | "Quando iniciamos a consultoria… como casal…" |
+| `318:7450` | Luiz & Lívia | "O trabalho da Joice nos ajudou…" |
+
+Which person an instance shows is not inferred. Each overrides `visible` on
+the five `Tags` frames and switches exactly one on — `295:9354` Alessandra,
+`295:9360` Frances, `295:9366` Simone, `295:9372` Rafael, `295:9378` Luiz &
+Lívia. Two of the five cross-check independently against the mobile
+annotations above, which draw the same testimonials in shorter form.
+
+The lesson is the one §5 already recorded, and it has now cost two passes:
+**an instance that reads empty means unresolved, never empty.** The next
+person who hits this should decode the `.fig` and walk `symbolOverrides`
+rather than believe a metadata dump. That is item 9, and it is worth doing
+properly in `extract.py` now that the shape is known.
+
+The desktop page carries the desktop frame's own wording. Simone's and Luiz &
+Lívia's were previously the *mobile* frame's shorter variants — the only ones
+readable at the time — and are now the longer desktop text.
 
 The **names** are no longer open. Joice supplied all four, and they are in
 both builds: Alessandra Vizcarra, Frances Fonseca, Simone Maudonnet, Rafael
@@ -181,10 +210,18 @@ Two loose ends here, both small:
 
 - The quote is drawn **28px Bold (H4)**, which the build does not currently
   match.
-- Simone, Frances and Rafael each carry category tags that the build does not
-  render (only Alessandra's are in). Reading them needs a full
-  `get_design_context` on the parent instance — addressing the Tags sub-frame
-  directly (`I318:7451;295:9360`) returns an empty node.
+- ~~Simone, Frances and Rafael each carry category tags the build does not
+  render.~~ **Done.** All five sets are in, from the same override walk —
+  including the two slots no instance overrides, which fall back to the
+  component's own tag text. Only the active entry's are shown, which is how
+  the file draws it.
+
+  One consequence worth knowing: the frame lays those four tag sets out 678
+  wide on a single row, inside a column this page has only 480 of, so they
+  wrap to two rows where Alessandra's fit one. The block reserves two rows in
+  every state rather than resizing every 7s as the carousel advances, which
+  puts it at 461 against the 425 the frame draws for the one state it draws.
+  See the comment on `.depoimento__tags` in `sections.css`.
 
 ## 5 · ~~FAQ copy — confirmed missing~~ — WRONG, and now DONE
 
@@ -251,6 +288,16 @@ around today:
   Item 4 was recovered only because the designer happened to draw the mobile
   states separately.
 
+  §4 has now done this by hand and the shape is no longer a guess. On a node,
+  `symbolData.symbolOverrides` is a list; each entry has a `guidPath.guids`
+  naming the sub-node it targets, and carries whichever fields it overrides —
+  `textData.characters` for copy, `visible` for switched rows. Unset slots
+  fall through to the master component, reachable via
+  `symbolData.symbolID`. Resolving a node is therefore: read the master,
+  then apply the instance's overrides by `guidPath`. That is the whole of it,
+  and it wants to live in `extract.py` rather than be rediscovered a third
+  time.
+
 With both, the `.fig` route becomes fully self-sufficient and the six-call
 monthly quota stops being on the critical path.
 
@@ -316,9 +363,9 @@ desktop build stood it up as a flat list instead (§6).
 | 6 | Confirm the WhatsApp number, test `wa.me` on a phone | Joice | small |
 | ~~7~~ | ~~FAQ + Processo copy (§5)~~ | done — it existed all along | — |
 | 8 | Policy pages, GBP fields | Joice | medium |
-| 9 | `figextract` visibility + overrides (§7) — also unblocks §8 | — | medium |
+| 9 | `figextract` visibility + overrides (§7) — also unblocks §8, and §4 has now proved the shape | — | medium |
 | 10 | TikTok and YouTube handles for the footer (§8) | Joice | small |
-| 11 | Testimonial tags for Simone / Frances / Rafael (§4) | — | small |
+| ~~11~~ | ~~Testimonial tags for Simone / Frances / Rafael (§4)~~ | done — same override walk as the quotes | — |
 | 12 | Real answer for mobile FAQ question 2 (§9) | designer | small |
 | ~~13~~ | ~~Confirm the Sobre deck is a static stack (§9)~~ | answered — see §10 | — |
 | ~~14~~ | ~~Route phones and tablets to the mobile page~~ | done `c16d2a1` | — |

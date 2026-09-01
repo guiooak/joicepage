@@ -233,14 +233,11 @@
     transition: color var(--transition), opacity var(--transition);
   }
 
-  .js .depoimento__people li:not([data-quote]) {
-    cursor: default;
-    opacity: 0.55;
-  }
-
-  /* Non-active entries that DO have a quote read back, but not as far back
-     as the ones with nothing to show. */
-  .js .depoimento__people li[data-quote]:not([aria-current="true"]) {
+  /* Non-active entries read back. There used to be a second, dimmer step
+     here for entries carrying no quote — two of the five, whose copy was
+     thought not to exist. All five have their own quote now, so every entry
+     is selectable and the two-tier treatment has nothing left to describe. */
+  .js .depoimento__people li:not([aria-current="true"]) {
     opacity: 0.7;
   }
 

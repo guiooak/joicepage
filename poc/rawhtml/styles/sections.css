@@ -1054,6 +1054,44 @@
     flex-wrap: wrap;
     gap: var(--size-8);
     margin-block-start: var(--size-12);
+    /* Both, and both are load bearing once the box below is taller than its
+       rows: `align-items` keeps each pill its own 28px instead of stretching
+       to the line, `align-content` keeps the rows packed at the top instead
+       of spread down the reserved height. */
+    align-items: flex-start;
+    align-content: flex-start;
+  }
+
+  /* One set of tags at a time — the frame draws exactly one `Tags` frame
+     visible per state, and every one of the five instances switches the
+     other four off. Now that switching aria-current also switches the tags,
+     this is what keeps that true.
+
+     `display: none` rather than not rendering them: all five sets stay in
+     the HTML and in the crawlable response, which is the rule the whole
+     build follows for the FAQ answers and the quotes themselves. */
+  .depoimento__people li:not([aria-current="true"]) .depoimento__tags {
+    display: none;
+  }
+
+  /* Two rows reserved, always, so the block does not resize as the carousel
+     advances — and it advances by itself every 7s, so a section that changed
+     height would shift the page under a reader roughly ten times a minute.
+
+     64 = two 28px pills plus the 8 gap between them. Alessandra's three tags
+     fit one row; the other four sets need two, and that 36px difference is
+     the whole of the jump.
+
+     The cost, stated plainly: the block rests at 461 where the frame draws
+     the Alessandra state at 425. That state is the only one `Site desktop`
+     draws — the other four live on the component canvas, where their `Tags`
+     frames are laid out 678 wide on a single row, inside a column this page
+     has only 480 of. So there is no drawn height for four of the five
+     states to preserve, and holding 425 would mean honouring a number the
+     design only ever defined for one of them while the page jumped for the
+     rest. */
+  .depoimento__people li[aria-current="true"] .depoimento__tags {
+    min-block-size: 64px;
   }
 
   .depoimento__tags span {

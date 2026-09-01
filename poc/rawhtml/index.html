@@ -579,44 +579,47 @@
               height="48"
             />
             <blockquote class="depoimento__quote">
-              Durante muitos anos, por questões de saúde, eu simplesmente não
-              pensava no futuro. Pós transplante, quando ganhei o “longo prazo”,
-              precisei aprender a construir esse futuro pela primeira vez. A
-              Joice me ajudou a transformar insegurança em planejamento:
-              organizamos aposentadoria, investimentos, orçamento mensal e até o
-              sonho da casa própria. O que mais marcou foi a forma acolhedora,
-              prática e personalizada com que ela conduziu tudo. Hoje eu entendo
+              Durante muitos anos, por questões de saúde, eu simplesmente
+              não pensava no futuro. Pós transplante, quando ganhei o
+              “longo prazo”, precisei aprender a construir esse futuro
+              pela primeira vez. A Joice me ajudou a transformar
+              insegurança em planejamento: organizamos aposentadoria,
+              investimentos, orçamento mensal e até o sonho da casa
+              própria. O que mais marcou foi a forma acolhedora, prática e
+              personalizada com que ela conduziu tudo. Hoje eu entendo
               meus números e consigo tomar decisões com muito mais
               tranquilidade.
             </blockquote>
           </div>
 
-          <!-- The names are real, supplied by Joice. The mockup carries
-               placeholders in their place ("Sobrenome", "[Parceira]"), which
-               the build reproduced verbatim rather than invent; these
-               replace them and the drawn ones should not be read back in.
+          <!-- All five, each with the quote and the tags the desktop frame
+               actually draws for it, read out of the .fig export.
 
-               One is a correction rather than a completion: the frame draws
-               "Rafael & [Parceira]" as a couple, and the name given is
-               Rafael Coelho alone. So the entry is one person, not two.
+               The names come from Joice; the quotes and tags come from the
+               file. Both were previously thought unavailable, and the record
+               in .ai/plans/remaining-work.md §4 said so — it claimed the
+               frame held exactly one written quote. It holds five. They live
+               in the per-instance `symbolOverrides` of the five Depoimentos
+               instances, which neither `get_metadata` nor the old figextract
+               dump expands, so every earlier pass read them as empty.
 
-               Three of the five quotes are real. The desktop Depoimentos
-               frame (318:8414) holds five instances all named "Alessandra"
-               whose text lives in overrides the export cannot expand — which
-               is why only one was recoverable before. The mobile annotation
-               frames draw the same component in different active states, and
-               the text is plain there.
+               Each instance is cited on its entry below. Which person an
+               instance is showing is not guesswork: exactly one of the five
+               `Tags` frames is switched to visible in each, and the quote
+               sits beside it. Two of the five are independently confirmed by
+               the mobile annotation frames, which draw the same testimonials
+               in shorter form and were the source of the two quotes this
+               page carried before.
 
-               Each quote is matched to whichever name sits in the active
-               (y=0) slot of that state's Names list: 393:10527 -> Simone,
-               393:10575 -> Luiz & Lívia.
-
-               Frances Fonseca and Rafael Coelho stay unquoted: their name
-               frames are hidden in every state drawn anywhere in the file, so
-               no state exposes their text. -->
+               Rafael's is written in the plural — "como casal", tagged
+               "Planejamento para Casais" — because the frame draws the entry
+               as "Rafael & [Parceira]". Joice gave the name as Rafael Coelho
+               alone, so the name is singular and the quote is the file's own
+               words. Worth a second opinion, but not worth rewriting a
+               client's testimonial to resolve. -->
           <ul class="depoimento__people">
-            <li
-              aria-current="true"
+            <!-- 318:7447 -->
+            <li aria-current="true"
               data-quote="Durante muitos anos, por questões de saúde, eu simplesmente não pensava no futuro. Pós transplante, quando ganhei o “longo prazo”, precisei aprender a construir esse futuro pela primeira vez. A Joice me ajudou a transformar insegurança em planejamento: organizamos aposentadoria, investimentos, orçamento mensal e até o sonho da casa própria. O que mais marcou foi a forma acolhedora, prática e personalizada com que ela conduziu tudo. Hoje eu entendo meus números e consigo tomar decisões com muito mais tranquilidade."
             >
               Alessandra Vizcarra
@@ -626,17 +629,49 @@
                 <span>Planejamento de longo prazo</span>
               </span>
             </li>
-            <li>Frances Fonseca</li>
+            <!-- 318:7451 -->
             <li
-              data-quote="Desde 2023, conto com o acompanhamento da Joice para organizar minha vida financeira e tomar decisões com mais segurança. O que mais valorizo é o cuidado e a personalização em cada etapa."
+              data-quote="Eu queria entender melhor meus investimentos e me tornar menos dependente de recomendações que nem sempre colocavam meus interesses em primeiro lugar. A Joice trouxe exatamente isso: uma visão independente, didática e extremamente clara sobre meu patrimônio e minhas possibilidades. Mais do que aprender sobre investimentos, saí da consultoria com autonomia para participar das minhas próprias decisões financeiras."
+            >
+              Frances Fonseca
+              <span class="depoimento__tags">
+                <span>Consultoria em Investimentos</span>
+                <span>Decisões com Autonomia</span>
+                <span>Gestão Patrimonial</span>
+              </span>
+            </li>
+            <!-- 318:7448 -->
+            <li
+              data-quote="Desde 2023, construímos uma parceria baseada em confiança, clareza e personalização. O trabalho da Joice trouxe mais organização para minha vida financeira e mais segurança para tomar decisões importantes. O que mais valorizo é justamente o olhar individual e a tranquilidade de contar com alguém que entende minha realidade e meus objetivos."
             >
               Simone Maudonnet
+              <span class="depoimento__tags">
+                <span>Acompanhamento Contínuo</span>
+                <span>Relação de confiança</span>
+                <span>Planejamento de longo prazo</span>
+              </span>
             </li>
-            <li>Rafael Coelho</li>
+            <!-- 318:7449 -->
             <li
-              data-quote="A Joice transformou números espalhados em decisões mais conscientes. A organização financeira e dos investimentos trouxe clareza sobre nossas prioridades, aposentadoria e construção de patrimônio. Tudo de forma simples e aplicável ao nosso dia a dia."
+              data-quote="Quando iniciamos a consultoria, buscávamos entender melhor nossa realidade financeira como casal e organizar nossos próximos passos. A Joice conduziu esse processo de forma extremamente didática e personalizada, nos ajudando a estruturar orçamento, investimentos e aposentadoria de maneira clara e possível para a nossa realidade. Saímos da consultoria com muito mais segurança para planejar o futuro."
+            >
+              Rafael Coelho
+              <span class="depoimento__tags">
+                <span>Planejamento para Casais</span>
+                <span>Aposentadoria</span>
+                <span>Consultoria em Investimentos</span>
+              </span>
+            </li>
+            <!-- 318:7450 -->
+            <li
+              data-quote="O trabalho da Joice nos ajudou a transformar números espalhados em decisões mais conscientes. O quadro de situação, as projeções e a organização dos investimentos trouxeram clareza sobre prioridades, aposentadoria e construção de patrimônio. Além das ferramentas, o diferencial foi justamente a capacidade de traduzir tudo isso em algo simples e aplicável ao nosso dia a dia."
             >
               Luiz &amp; Lívia
+              <span class="depoimento__tags">
+                <span>Organização Financeira</span>
+                <span>Gestão de Patrimônio</span>
+                <span>Consultoria em Investimentos</span>
+              </span>
             </li>
           </ul>
         </div>

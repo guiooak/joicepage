@@ -160,7 +160,10 @@ stay crawlable, and the nav has no hamburger — a `<details>` disclosure cannot
 closed by CSS when a link inside it is followed, so the menu stayed open covering
 the page. Testimonial names were placeholders **in the mockup itself**
 ("Alessandra Sobrenome", "Rafael & [Parceira]"); the real ones came from
-Joice and are in the build. Do not read the drawn ones back in.
+Joice and are in the build. Do not read the drawn ones back in. All five
+testimonials are live — the quotes and tags came out of the `.fig`
+instance overrides, which is where earlier passes kept reading them as
+empty. See remaining-work §4.
 
 ## Missing
 
