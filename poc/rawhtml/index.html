@@ -99,10 +99,16 @@
          would resolve outside it.
 
          Declaring `rel="icon"` also stops the browser's automatic request for
-         /favicon.ico, which was 404ing on every page load. The PNGs are the
-         same artwork rendered out for the platforms that will not take an SVG
-         icon. -->
-    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+         /favicon.ico, which was 404ing on every page load.
+
+         There is no favicon.svg any more. It used to be a hand-drawn `js`
+         built from stroked paths, because the old two-line wordmark was
+         unreadable at 16px. The supplied icon is artwork, not something that
+         can be redrawn as paths without inventing it, so the SVG slot was
+         removed rather than filled with a raster wearing an .svg extension —
+         which would have cost bytes and bought nothing over the PNG beside
+         it. Restoring it needs a vector original, and is a one-line change
+         here plus a line in the workflow's file list. -->
     <link rel="icon" href="favicon.png" sizes="32x32" type="image/png" />
     <link rel="apple-touch-icon" href="apple-touch-icon.png" />
 
