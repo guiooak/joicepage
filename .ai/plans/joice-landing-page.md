@@ -158,8 +158,9 @@ content present in the raw HTTP response; anchor targets clear the header
 Two deliberate choices worth keeping: the FAQ uses native `<details>` so answers
 stay crawlable, and the nav has no hamburger — a `<details>` disclosure cannot be
 closed by CSS when a link inside it is followed, so the menu stayed open covering
-the page. Testimonial names are placeholders **in the mockup itself**
-("Alessandra Sobrenome", "Rafael & [Parceira]") and are reproduced as drawn.
+the page. Testimonial names were placeholders **in the mockup itself**
+("Alessandra Sobrenome", "Rafael & [Parceira]"); the real ones came from
+Joice and are in the build. Do not read the drawn ones back in.
 
 ## Missing
 

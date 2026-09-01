@@ -149,7 +149,7 @@ component in different active states, and the text is readable there.
 Matching each quote to the name sitting in the active (`y=0`) slot of its
 `Names` list:
 
-**Simone [Sobrenome]** — `393:10527`
+**Simone Maudonnet** (drawn as "Simone [Sobrenome]") — `393:10527`
 > Desde 2023, conto com o acompanhamento da Joice para organizar minha vida
 > financeira e tomar decisões com mais segurança. O que mais valorizo é o
 > cuidado e a personalização em cada etapa.
@@ -164,15 +164,18 @@ Both are now `data-quote` attributes on their `<li>` in `.depoimento__people`.
 `scripts/motion.js` already switched on any element carrying `data-quote`, so
 the carousel went from one live entry to three with no change to the script.
 
-Still unwritten: **Frances [Sobrenome]** and **Rafael & [Parceira]**. Now
-confirmed properly rather than inferred — four of the five `Depoimentos`
-instances (`318:7447`, `318:7451`, `318:7448`, `318:7449`) were expanded, and
-**none of them override the quote**: every one carries Alessandra's text. Only
-the active name's Tags frame changes between states. So the desktop frame holds
+Still unwritten: the **quotes** for Frances and Rafael. Now confirmed
+properly rather than inferred — four of the five `Depoimentos` instances
+(`318:7447`, `318:7451`, `318:7448`, `318:7449`) were expanded, and **none of
+them override the quote**: every one carries Alessandra's text. Only the
+active name's Tags frame changes between states. So the desktop frame holds
 exactly one written quote, and the other two came from the mobile annotations.
 
-Ask Joice; the surnames are placeholders in the mockup too and need real names
-before launch either way.
+The **names** are no longer open. Joice supplied all four, and they are in
+both builds: Alessandra Vizcarra, Frances Fonseca, Simone Maudonnet, Rafael
+Coelho. Note the last is a correction, not just a surname — the frame draws
+"Rafael & [Parceira]" as a couple and the entry is one person. Luiz & Lívia
+was already real and is unchanged.
 
 Two loose ends here, both small:
 
