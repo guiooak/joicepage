@@ -96,7 +96,7 @@ styles/tokens.css base.css sections.css motion.css
 scripts/motion.js
 assets/fonts/   (3 woff2, copied)
 assets/img/     (copied; re-crop only where the mobile frame differs)
-favicon.png apple-touch-icon.png
+favicon.svg favicon.png apple-touch-icon.png
 README.md
 ```
 

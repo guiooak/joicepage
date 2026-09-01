@@ -60,7 +60,7 @@ jobs:
           # NOT in this list: they only make sense at the origin root, so the
           # desktop folder carries them and the mobile folder deliberately
           # does not — see the mobile README.
-          common="index.html favicon.png apple-touch-icon.png
+          common="index.html favicon.svg favicon.png apple-touch-icon.png
                   styles/tokens.css styles/base.css styles/sections.css
                   styles/motion.css scripts/motion.js
                   assets/fonts/allomira-variable.woff2
