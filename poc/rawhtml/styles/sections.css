@@ -586,7 +586,8 @@
      pinned bottom, 24 padding) and it lands the text exactly where the file
      draws it — the frame puts the text block at y=113 with height 176, i.e.
      bottom at 289 = 313 - 24. That replaces the hand-computed 49px offset the
-     h3 used to carry. */
+     h3 used to carry. It needs the floor on `.principio div` below to survive
+     copy that does not fill the drawn block. */
   .principio {
     display: flex;
     flex-direction: column;
@@ -608,8 +609,26 @@
     border-radius: var(--radius-sm);
   }
 
-  /* The icon and this block are the two flex children; spacing comes from
-     justify-between above rather than a margin. */
+  /* h3 + p as ONE flex child, so the icon and this block are the two the
+     justify-between above distributes — the frame's own two children, and the
+     markup poc/htmlonly-mobile already uses.
+
+     The floor is what keeps the row of headings level. Bottom-pinning on its
+     own only aligns the four cards while their copy runs the same depth: card
+     03's paragraph is four lines against the others' five, so its block used
+     to sit 28px — exactly one line — lower, taking its heading out of step
+     with its neighbours' and jagging the row.
+
+     176px is the block height the frame draws, not a fudge. Held as a floor,
+     short copy leaves its slack at the bottom inside the block rather than
+     dragging the heading down: every heading lands on the drawn y=113 and the
+     block still bottom-pins at 289 wherever the copy fills it. Copy that
+     overflows grows the block, and past 313 the card, which is what the
+     min-block-size above was already for. */
+  .principio div {
+    min-block-size: 176px;
+  }
+
   .principio h3 {
     font-size: var(--text-paragraph);
     line-height: var(--leading-paragraph);
@@ -621,12 +640,6 @@
   .principio p {
     margin-block-start: var(--size-8);
     color: var(--color-body);
-  }
-
-  /* h3 and p are separate children, so keep them as one bottom-aligned group
-     by letting the heading take the free space above it. */
-  .principio h3 {
-    margin-block-start: auto;
   }
 
   /* ---- Serviços --------------------------------------------------------
