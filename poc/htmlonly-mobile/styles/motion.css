@@ -380,8 +380,9 @@
   }
 
   /* ---- Testimonial -----------------------------------------------------
-     The switch is three radios and a CSS grid overlay — no script. All this
-     adds is the crossfade.
+     The switch is three radios and a CSS grid overlay. The crossfade below
+     is the whole of it with scripting off; scripts/motion.js adds the
+     auto-advance, and the countdown rule further down draws its clock.
 
      `visibility` is transitioned alongside `opacity` on purpose: it is a
      discrete property, so it flips at the END of the transition on the way
@@ -400,6 +401,69 @@
     #depo-2:checked ~ .depoimento__stage blockquote:nth-of-type(2),
     #depo-3:checked ~ .depoimento__stage blockquote:nth-of-type(3) {
       opacity: 1;
+    }
+  }
+
+  /* The name easing between its two inks rather than snapping, as the
+     desktop does on the same 160ms. On the label and not the row, because
+     that is where the mobile build puts the colour; and outside any `.js`
+     gate, because these labels switch with scripting off and the change is
+     just as real then. Decoration, so it stays inside the guard. */
+  @media (prefers-reduced-motion: no-preference) {
+    .depoimento__people label {
+      transition: color var(--transition);
+    }
+  }
+
+  /* The desktop's countdown, ported: a rule fills under the name that is
+     showing, for exactly as long as it has left. Same 7s, same accent, same
+     `tick` keyframes as poc/rawhtml — see its motion.css §3.
+
+     Two things differ, both because the state lives in a radio here rather
+     than in an `aria-current` attribute JS writes:
+
+       · the active row is selected with the same `:checked ~ nth-child`
+         pattern the quotes and tags use, not `[aria-current="true"]`;
+       · the bar restarts because `:checked` MOVES, which destroys the
+         pseudo-element on the old row and creates it on the new one. No
+         animation needs resetting by hand.
+
+     Gated on [data-rotating], which motion.js sets when the clock actually
+     starts — the first radio is checked in the HTML, so without the gate the
+     bar would run its 7s at page load and sit finished and dead until the
+     first advance. Gated on `.js` too: with scripting off nothing advances,
+     and a countdown to nothing would be a lie. */
+  @media (prefers-reduced-motion: no-preference) {
+    .js .depoimento[data-rotating] > #depo-1:checked ~ .depoimento__people li:nth-child(1)::after,
+    .js .depoimento[data-rotating] > #depo-2:checked ~ .depoimento__people li:nth-child(2)::after,
+    .js .depoimento[data-rotating] > #depo-3:checked ~ .depoimento__people li:nth-child(3)::after {
+      content: "";
+      position: absolute;
+      inset-inline: 0;
+      inset-block-end: 0;
+      block-size: 2px;
+      background-color: var(--color-accent);
+      transform-origin: left center;
+      animation: tick var(--testimonial-interval, 7s) linear both;
+    }
+
+    /* Holding the pointer on the entry being read pauses the bar in place,
+       and motion.js keeps the matching time remaining rather than restarting,
+       so the two resume in step. Pointer only — this never fires on a touch
+       screen, where there is no hover to hold. */
+    .js .depoimento[data-rotating] > #depo-1:checked ~ .depoimento__people li:nth-child(1):hover::after,
+    .js .depoimento[data-rotating] > #depo-2:checked ~ .depoimento__people li:nth-child(2):hover::after,
+    .js .depoimento[data-rotating] > #depo-3:checked ~ .depoimento__people li:nth-child(3):hover::after {
+      animation-play-state: paused;
+    }
+  }
+
+  @keyframes tick {
+    from {
+      scale: 0 1;
+    }
+    to {
+      scale: 1 1;
     }
   }
 

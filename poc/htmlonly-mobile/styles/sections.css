@@ -985,13 +985,41 @@
     color: var(--color-accent-deep);
   }
 
-  /* Alessandra 392:8256 · 328x668 · testimonial 344 + 24 + names 300. No
+  /* Alessandra 392:8256 · 328x668 = testimonial 344 + 24 + names 300. No
      white card and no padding here, unlike the desktop's: the frame draws
-     Testimonials flush at 0,0 on the page ground. */
+     Testimonials flush at 0,0 on the page ground.
+
+     668 holds only in the state the frame draws, the one with Alessandra
+     active, and only with the frame's own inside strokes. Two things move it,
+     both of them asked for rather than read off the file:
+
+       · the desktop's divider is a real border, so each of the three entries
+         is 1px taller than drawn — 149 / 77 / 77, and the list 303 not 300;
+       · the desktop's tag pill puts 16px copy on 1 with 6px of padding where
+         the frame puts 20 on 1.4, so the pills are narrower. Measured at 328:
+         Alessandra's 158 + 111 share a row and Luiz & Lívia's 160 + 149 do
+         too, both landing the drawn two rows and a 149 entry, but Simone's
+         187 + 150 will not, and neither will her 150 + 195, so her three
+         pills take three rows and her entry comes to 185.
+
+     So the list is 303 tall under Alessandra or Luiz & Lívia and 339 under
+     Simone, and the carousel advances by itself every 7s — a section that
+     resized with it would shift the page under a reader ten times a minute.
+
+     707 is Simone's state, the tallest, reserved HERE on the block rather
+     than as a floor under the tags. Both keep the section still; only this
+     one keeps the drawn proportions. Reserving inside the active entry would
+     pad every state up to the tallest, opening 36px of dead space between
+     Alessandra's tags and the rule below them and putting her entry at 185
+     where the frame draws 148. Reserved on the block, the slack falls past
+     the end of the list, where the frame draws nothing at all: her entry
+     stays 149 against the drawn 148, and the rules sit at 0, 149 and 226
+     against a drawn 0, 148 and 224. */
   .depoimento {
     display: flex;
     flex-direction: column;
     gap: var(--size-24);
+    min-block-size: 707px;
   }
 
   /* The three radios drive the switch. Visually hidden rather than
@@ -1048,8 +1076,22 @@
   /* Names 392:8267 · 300 = 148 + 76 + 76. Each block is padY 24 around a 28
      name, with the active one's tags 8 under it. */
   .depoimento__people li {
+    position: relative;
     padding-block: var(--size-24);
     color: var(--color-body-soft);
+  }
+
+  /* The divider, verbatim from poc/rawhtml: one hairline above every entry
+     and none closing the list. Asked for explicitly — the mobile frame draws
+     a fourth rule under the last name (y=299 of the 300-tall Names frame)
+     and the desktop does not, and the desktop is the one to follow here.
+
+     A real border rather than the pseudo-element this used to draw, for the
+     same reason: it is what the web version does. It costs 1px of height per
+     entry where an inside stroke costs none, which is why the frame's 300
+     comes out as 303 — see `.depoimento` above for how that is absorbed. */
+  .depoimento__people li {
+    border-block-start: 1px solid var(--color-line);
   }
 
   .depoimento__people label {
@@ -1064,20 +1106,59 @@
   }
 
   /* Tags 392:8270 · 328x64 · two rows of 28 with an 8 gap, widths 183 / 124
-     / 233. */
+     / 233.
+
+     One set at a time, driven by the same radio that drives the quote. The
+     frame draws exactly one `Tags` frame visible per state and switches the
+     other four off, so this is what keeps that true now that all three
+     entries carry their own.
+
+     `display: none` rather than leaving them out of the markup: all three
+     sets stay in the HTML and in the crawlable response, the rule this build
+     follows for the quotes themselves and for the FAQ answers. */
   .depoimento__tags {
-    display: flex;
+    display: none;
     flex-wrap: wrap;
     gap: var(--size-8);
     margin-block-start: var(--size-8);
+    /* The drawn floor: 328x64, two 28px rows and the 8 between them. The
+       reservation that stops the carousel resizing the page is NOT here —
+       `.depoimento` above carries it, and says why. */
+    min-block-size: 64px;
   }
 
-  /* The testimonial tag is an unexpanded instance, so its variant is the
-     desktop build's rather than something read here: filled #e5eef4 with
-     #5779aa copy, no outline. */
-  .pill--soft {
-    background-color: var(--color-surface-tint);
-    box-shadow: none;
+  #depo-1:checked ~ .depoimento__people li:nth-child(1) .depoimento__tags,
+  #depo-2:checked ~ .depoimento__people li:nth-child(2) .depoimento__tags,
+  #depo-3:checked ~ .depoimento__people li:nth-child(3) .depoimento__tags {
+    display: flex;
+  }
+
+  /* The testimonial tag, verbatim from poc/rawhtml's `.depoimento__tags
+     span` — asked for explicitly, and a departure from the mobile frame
+     rather than a reading of it.
+
+     The frame draws these pills at the mobile tag size: 20px copy on 1.4,
+     which is the `--text-tag` / `--leading-tag` override two files up
+     (confirmed there against 392:8142), and which gives the 183 / 124 / 233
+     widths the Tags frame is drawn with. The desktop sets them at 16 on 1
+     with 6px of vertical padding instead. BOTH land the pill at the drawn
+     28px — 20 x 1.4 and 6 + 16 + 6 — so the row rhythm the frame measures is
+     kept either way and only the copy inside gets smaller.
+
+     Not `.pill`, and no `--soft` variant any more: this is the whole of that
+     class's mobile use, and the desktop draws the tag as a filled span with
+     no outline rather than as a variant of an outlined pill. */
+  .depoimento__tags span {
+    padding: 6px var(--size-12);
+    background-color: var(--color-surface-card-alt);
+    border-radius: var(--radius-pill);
+    font-size: var(--text-caption);
+    /* The desktop's `var(--leading-tag)`, resolved rather than referenced:
+       the token is 1 there and 1.4 here, because mobile deliberately draws
+       its SECTION labels larger. Taking the token would inherit that
+       override and make the pill 34.4 tall instead of the drawn 28. */
+    line-height: 1;
+    color: var(--color-accent);
   }
 
   /* ---- Sobre ------------------------------------------------------------

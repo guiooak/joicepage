@@ -288,4 +288,170 @@
       ) || null
     );
   }
+
+  /* ---- 4 · Testimonial -------------------------------------------------
+     A port of poc/rawhtml's carousel — same reference
+     (minimal-testimonials.framer.website), same 7s, same resumable clock,
+     same countdown drawn in CSS. The list advances on its own rather than
+     waiting to be tapped, pauses while the entry being read is under the
+     pointer, and restarts when someone picks an entry by hand.
+
+     The one structural difference, and the reason this is not a copy: the
+     desktop keeps ONE quote element and rewrites its text from `data-quote`,
+     which puts the other four quotes out of reach of a reader with scripting
+     off. Here all three are in the HTML and a radio decides which shows, so
+     this advances by CHECKING the next radio and lets the stylesheet do the
+     rest. Everything the carousel does, the labels already do by hand.
+
+     Nothing here sets role or tabindex either. The desktop needs them
+     because its entries are bare `li`s; these are real labels bound to real
+     radios, already focusable, already operable with Enter and the arrow
+     keys, and already announced as a radio group. Adding button semantics
+     on top would describe them worse than the browser does. */
+  const depoimento = document.querySelector(".depoimento");
+  const picks = [...document.querySelectorAll(".depoimento__pick")];
+
+  if (depoimento && picks.length > 1) {
+    const INTERVAL = 7000;
+    let timer = null;
+    let startedAt = 0;
+    let remaining = INTERVAL;
+
+    // Reduced motion keeps the switch and drops the rotation: advancing the
+    // page under someone who asked for less movement is the movement they
+    // asked to be rid of.
+    const stopped = reduced;
+
+    const current = () => picks.findIndex((p) => p.checked);
+
+    /* Set while the carousel is the one moving the radio, so the `change`
+       listener below can tell its own advance apart from a human picking an
+       entry. Without it the two feed each other: `advance` checks a radio,
+       the listener treats that as a pick and restarts the clock, and the
+       advance that is still unwinding schedules a second timer on top of it —
+       two clocks, and the list moving twice per tick. dispatchEvent is
+       synchronous, so the flag is only ever set across that one call. */
+    let programmatic = false;
+
+    const show = (i) => {
+      const next = picks[i];
+      if (!next || next.checked) return;
+      programmatic = true;
+      next.checked = true;
+      // A radio changed by script does not fire `change` on its own, and
+      // everything downstream — here and anywhere later — listens for it.
+      next.dispatchEvent(new Event("change", { bubbles: true }));
+      programmatic = false;
+    };
+
+    const advance = () => show((current() + 1) % picks.length);
+
+    /* A chained timeout rather than an interval, because the clock has to be
+       resumable: a pointer resting on the current entry pauses it mid-count,
+       and the CSS bar pauses in place at the same moment. Restarting from
+       zero on resume would put the two out of step — the bar would carry on
+       from 40% while the timer counted a fresh 7s. Tracking what is left
+       keeps them together. */
+    const run = (delay) => {
+      startedAt = performance.now();
+      timer = setTimeout(() => {
+        timer = null;
+        advance();
+        remaining = INTERVAL;
+        run(INTERVAL);
+      }, delay);
+    };
+
+    const start = () => {
+      if (stopped || timer) return;
+      remaining = INTERVAL;
+      // Marks the moment the clock begins, so the CSS countdown starts with
+      // it rather than at page load — see styles/motion.css.
+      depoimento.dataset.rotating = "";
+      run(remaining);
+    };
+
+    const pause = () => {
+      if (!timer) return;
+      clearTimeout(timer);
+      timer = null;
+      remaining = Math.max(0, remaining - (performance.now() - startedAt));
+    };
+
+    const resume = () => {
+      if (stopped || timer) return;
+      run(remaining);
+    };
+
+    /* Picking an entry restarts the clock rather than ending the rotation.
+       Restarting matters: without it a tap could land a fraction of a second
+       before the next tick and be swept away immediately.
+
+       Bound to `change` on the radios, which is what a label click, a tap, a
+       keyboard arrow and a script-driven check all end up doing — one
+       listener instead of one per label. */
+    picks.forEach((pick) => {
+      pick.addEventListener("change", () => {
+        if (programmatic) return;
+        // pause() is a no-op when no clock is running, so this also covers a
+        // pick that lands before the observer has started one.
+        pause();
+        start();
+      });
+    });
+
+    /* Holding the pointer over the entry that is showing pauses the clock, so
+       a reader part way through a quote is not moved on. Only that entry —
+       the others are a control rather than the thing being read.
+
+       Delegated, because which row counts changes as the rotation moves. The
+       `relatedTarget` check keeps a move between a row's own children from
+       registering as a leave. Touch is skipped: there is no hover to hold,
+       and treating a tap as one would pause the carousel for good. */
+    const list = document.querySelector(".depoimento__people");
+
+    const activeRow = (target) => {
+      const row = target.closest?.(".depoimento__people li");
+      if (!row) return null;
+      const i = [...list.children].indexOf(row);
+      return i === current() ? row : null;
+    };
+
+    if (list) {
+      list.addEventListener("pointerover", (e) => {
+        if (e.pointerType === "touch") return;
+        if (activeRow(e.target)) pause();
+      });
+
+      list.addEventListener("pointerout", (e) => {
+        if (e.pointerType === "touch") return;
+        const row = activeRow(e.target);
+        if (row && !row.contains(e.relatedTarget)) resume();
+      });
+    }
+
+    // The observer only decides WHEN the clock begins; it disconnects
+    // immediately after, so nothing can pause the rotation later. It used to
+    // be tied to visibility on the desktop, which made the rotation feel
+    // conditional on scroll position — leave and come back and it had frozen.
+    if ("IntersectionObserver" in window) {
+      const io = new IntersectionObserver(
+        (entries) => {
+          if (entries.some((e) => e.isIntersecting)) {
+            io.disconnect();
+            start();
+          }
+        },
+        { threshold: 0.25 },
+      );
+      io.observe(depoimento);
+    } else {
+      start();
+    }
+
+    document.documentElement.style.setProperty(
+      "--testimonial-interval",
+      `${INTERVAL}ms`,
+    );
+  }
 })();

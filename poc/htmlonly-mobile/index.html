@@ -576,10 +576,20 @@
              here (392:8274, 392:8286) and no state anywhere in the file
              exposes their text, so they are not on the page at all.
 
-             The switch is radio inputs, not script: the plan's no-JS
-             constraint says every testimonial has to be reachable with
-             JavaScript off, and all three quotes are in the HTML with a
-             `:checked ~` rule deciding which is shown. -->
+             The switch is radio inputs: the plan's no-JS constraint says
+             every testimonial has to be reachable with JavaScript off, and
+             all three quotes are in the HTML with a `:checked ~` rule
+             deciding which is shown.
+
+             scripts/motion.js then layers the desktop's carousel on top of
+             those radios rather than replacing them — it advances by CHECKING
+             the next one, so the same CSS draws every state and the page
+             keeps working, click by click, with the script off. That is the
+             one deliberate difference from poc/rawhtml, where the quote is a
+             single element whose text JS rewrites from `data-quote`; doing
+             that here would put the copy out of reach of a reader without
+             scripting. -->
+
         <div class="depoimento">
           <input class="depoimento__pick" type="radio" name="depoimento" id="depo-1" checked />
           <input class="depoimento__pick" type="radio" name="depoimento" id="depo-2" />
@@ -616,8 +626,23 @@
           </div>
 
           <!-- The names are real, supplied by Joice, replacing the
-               mockup's own placeholders ("Sobrenome", "[Sobrenome]"). Only
-               the active one carries tags, which is how the file draws it.
+               mockup's own placeholders ("Sobrenome", "[Sobrenome]").
+
+               Only the ACTIVE one shows tags, which is how the file draws it:
+               392:8270 is the one `Tags` frame switched on, and the other
+               four (392:8276, 8282, 8288, 8294) are all `hidden`. All three
+               sets are in the HTML and CSS decides which is shown, the same
+               rule the quotes above follow — previously only Alessandra had
+               tags at all, so hers stayed under her name whichever entry you
+               picked.
+
+               The tag copy comes from the desktop frame, where these same
+               three people carry expanded `Tags` instances; the mobile ones
+               are unexpanded (drawn 508 wide, on a column that has 328), so
+               they hold the widths but not the words. Casing is the file's
+               own and is not consistent between entries — "Organização
+               financeira" for Alessandra, "Organização Financeira" for Luiz
+               & Lívia. Left as drawn rather than normalised.
 
                Frances Fonseca and Rafael Coelho are on the desktop page but
                not here: this frame draws them hidden, and that is a layout
@@ -626,13 +651,27 @@
             <li>
               <label for="depo-1">Alessandra Vizcarra</label>
               <span class="depoimento__tags">
-                <span class="pill pill--soft">Organização financeira</span>
-                <span class="pill pill--soft">Aposentadoria</span>
-                <span class="pill pill--soft">Planejamento de longo prazo</span>
+                <span>Organização financeira</span>
+                <span>Aposentadoria</span>
+                <span>Planejamento de longo prazo</span>
               </span>
             </li>
-            <li><label for="depo-2">Simone Maudonnet</label></li>
-            <li><label for="depo-3">Luiz &amp; Lívia</label></li>
+            <li>
+              <label for="depo-2">Simone Maudonnet</label>
+              <span class="depoimento__tags">
+                <span>Acompanhamento Contínuo</span>
+                <span>Relação de confiança</span>
+                <span>Planejamento de longo prazo</span>
+              </span>
+            </li>
+            <li>
+              <label for="depo-3">Luiz &amp; Lívia</label>
+              <span class="depoimento__tags">
+                <span>Organização Financeira</span>
+                <span>Gestão de Patrimônio</span>
+                <span>Consultoria em Investimentos</span>
+              </span>
+            </li>
           </ul>
         </div>
       </section>
