@@ -346,41 +346,91 @@
 
     const advance = () => show((current() + 1) % picks.length);
 
+    /* `held` is the single source of truth for "paused". The bar reads it too,
+       through the [data-held] this sets on the block, rather than testing
+       :hover for itself — see sync() below.
+
+       Two ways to hold the entry being read, because the two kinds of pointer
+       mean different things by it:
+
+         · `over`, a pointer RESTING on the row. Transient, and mouse or pen
+           only: move away and the hold is released.
+         · `pinned`, a row a TAP left held. Sticky, and touch only: it stays
+           until something else is tapped.
+
+       A touch screen has no resting pointer. The pointer is created by the
+       finger and destroyed on lift, so `pointerout` fires the instant a tap
+       ends and `over` is empty again a moment later — while `:hover` stays on
+       whatever was tapped until the next tap lands elsewhere. Reading a hold
+       off pointer events alone therefore cannot agree with the bar on a phone,
+       whichever of the two it follows. So a tap says so explicitly, and both
+       the bar and the clock read that one answer. */
+    const list = document.querySelector(".depoimento__people");
+    let over = null;
+    let pinned = null;
+
+    const rowAt = (target) => target?.closest?.(".depoimento__people li") ?? null;
+    const activeRow = () => (list ? list.children[current()] : null) ?? null;
+    const held = () => {
+      const row = activeRow();
+      return row !== null && (over === row || pinned === row);
+    };
+
     /* A chained timeout rather than an interval, because the clock has to be
-       resumable: a pointer resting on the current entry pauses it mid-count,
-       and the CSS bar pauses in place at the same moment. Restarting from
-       zero on resume would put the two out of step — the bar would carry on
-       from 40% while the timer counted a fresh 7s. Tracking what is left
-       keeps them together. */
+       resumable: while the entry being read is held, the count stops where it
+       is and the bar stops with it. Restarting from zero on release would put
+       the two out of step — the bar would carry on from 40% while the timer
+       counted a fresh 7s. Tracking what is left keeps them together. */
     const run = (delay) => {
       startedAt = performance.now();
       timer = setTimeout(() => {
         timer = null;
         advance();
         remaining = INTERVAL;
-        run(INTERVAL);
+        // Not an unconditional re-run: the row it just advanced ONTO may be
+        // the one under the pointer, in which case the new count has to start
+        // held rather than running away under a held bar.
+        sync();
       }, delay);
-    };
-
-    const start = () => {
-      if (stopped || timer) return;
-      remaining = INTERVAL;
-      // Marks the moment the clock begins, so the CSS countdown starts with
-      // it rather than at page load — see styles/motion.css.
-      depoimento.dataset.rotating = "";
-      run(remaining);
     };
 
     const pause = () => {
       if (!timer) return;
       clearTimeout(timer);
       timer = null;
+      // The recalculation: what is left is what was left, less what has run
+      // since. This is the value resume() picks up, and it is why the bar and
+      // the clock come back in step rather than one of them starting over.
       remaining = Math.max(0, remaining - (performance.now() - startedAt));
     };
 
     const resume = () => {
-      if (stopped || timer) return;
+      if (stopped || timer || held()) return;
       run(remaining);
+    };
+
+    /* Reconciles the clock and the bar with the pointer, and is the ONLY way
+       either of them is paused or released. Every state change ends here —
+       pointer moves, a pick, an advance, the first start — so the flag the
+       CSS animation reads and the timer that moves the story can never
+       disagree about whether they are running. */
+    function sync() {
+      if (held()) {
+        depoimento.dataset.held = "";
+        pause();
+      } else {
+        delete depoimento.dataset.held;
+        resume();
+      }
+    }
+
+    const start = () => {
+      if (stopped) return;
+      remaining = INTERVAL;
+      // Marks the moment the clock begins, so the CSS countdown starts with
+      // it rather than at page load — see styles/motion.css.
+      depoimento.dataset.rotating = "";
+      sync();
     };
 
     /* Picking an entry restarts the clock rather than ending the rotation.
@@ -393,40 +443,57 @@
     picks.forEach((pick) => {
       pick.addEventListener("change", () => {
         if (programmatic) return;
-        // pause() is a no-op when no clock is running, so this also covers a
-        // pick that lands before the observer has started one.
+        // pause() first so the count is not left running against the old
+        // entry; start() re-arms it and hands over to sync(), which holds it
+        // if the pointer is resting on the row that was just picked — which,
+        // for a click or a tap, it always is.
         pause();
         start();
       });
     });
 
-    /* Holding the pointer over the entry that is showing pauses the clock, so
-       a reader part way through a quote is not moved on. Only that entry —
-       the others are a control rather than the thing being read.
+    /* Resting on the entry that is showing holds the clock, so a reader part
+       way through a quote is not moved on. Only that entry — the others are a
+       control rather than the thing being read.
 
        Delegated, because which row counts changes as the rotation moves. The
        `relatedTarget` check keeps a move between a row's own children from
-       registering as a leave. Touch is skipped: there is no hover to hold,
-       and treating a tap as one would pause the carousel for good. */
-    const list = document.querySelector(".depoimento__people");
+       registering as a leave.
 
-    const activeRow = (target) => {
-      const row = target.closest?.(".depoimento__people li");
-      if (!row) return null;
-      const i = [...list.children].indexOf(row);
-      return i === current() ? row : null;
-    };
-
+       Touch is skipped for these two — not because a tap should not hold, but
+       because on a touch screen these fire around the tap and then take the
+       hold straight back off again. The tap is recorded below instead. */
     if (list) {
       list.addEventListener("pointerover", (e) => {
         if (e.pointerType === "touch") return;
-        if (activeRow(e.target)) pause();
+        over = rowAt(e.target);
+        sync();
       });
 
       list.addEventListener("pointerout", (e) => {
         if (e.pointerType === "touch") return;
-        const row = activeRow(e.target);
-        if (row && !row.contains(e.relatedTarget)) resume();
+        const row = rowAt(e.target);
+        if (row && !row.contains(e.relatedTarget)) {
+          over = rowAt(e.relatedTarget);
+          sync();
+        }
+      });
+
+      /* The tap hold, and its release, in one line of policy: a tap pins
+         whatever row it landed on, and a tap that landed on no row pins
+         nothing. So tapping a story holds it — the bar stops and the clock
+         stops with it — and tapping anywhere else lets both go again, which
+         is the behaviour the bar was already showing on its own through
+         sticky :hover.
+
+         On the document rather than the list, because the release depends on
+         taps the list never sees. `pointerdown` rather than `click` so a press
+         that turns into a scroll still counts, and so the pin is set before
+         the resulting `change` re-arms the clock. */
+      document.addEventListener("pointerdown", (e) => {
+        if (e.pointerType !== "touch") return;
+        pinned = rowAt(e.target);
+        sync();
       });
     }
 

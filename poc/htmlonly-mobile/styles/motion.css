@@ -447,13 +447,19 @@
       animation: tick var(--testimonial-interval, 7s) linear both;
     }
 
-    /* Holding the pointer on the entry being read pauses the bar in place,
-       and motion.js keeps the matching time remaining rather than restarting,
-       so the two resume in step. Pointer only — this never fires on a touch
-       screen, where there is no hover to hold. */
-    .js .depoimento[data-rotating] > #depo-1:checked ~ .depoimento__people li:nth-child(1):hover::after,
-    .js .depoimento[data-rotating] > #depo-2:checked ~ .depoimento__people li:nth-child(2):hover::after,
-    .js .depoimento[data-rotating] > #depo-3:checked ~ .depoimento__people li:nth-child(3):hover::after {
+    /* Holding the entry being read pauses the bar in place, and motion.js
+       stops the clock on the same signal and keeps the time remaining rather
+       than restarting, so the two resume together and in step.
+
+       `[data-held]` and NOT `:hover`, which is what the desktop tests. Two
+       independent readings of "is it held" is exactly how these came apart: a
+       phone applies :hover to whatever was last tapped and keeps it there, so
+       the bar stopped on a tap while the script — which ignored touch — went
+       on counting, and the story changed under a bar that was standing still.
+       One signal, set in one place, and they cannot disagree. */
+    .js .depoimento[data-rotating][data-held] > #depo-1:checked ~ .depoimento__people li:nth-child(1)::after,
+    .js .depoimento[data-rotating][data-held] > #depo-2:checked ~ .depoimento__people li:nth-child(2)::after,
+    .js .depoimento[data-rotating][data-held] > #depo-3:checked ~ .depoimento__people li:nth-child(3)::after {
       animation-play-state: paused;
     }
   }
