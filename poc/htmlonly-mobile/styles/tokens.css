@@ -47,11 +47,10 @@
 
     --c-paper: #f4f7f7;       /* Background/Neutral/default — the page ground */
     --c-white: #ffffff;       /* Background/Neutral/white */
-    /* The wordmark's own ink, read off the exported Logo asset — so it moved
-       with the asset, from #35425d to the lockup's own #2d415d. Not a mapped
-       Figma variable and not --c-ink (#151a1d), which is what the type-based
-       approximation used to draw it in. */
-    --c-logo: #2d415d;
+    /* The wordmark's own ink, read off the exported Logo asset. Not a
+       mapped Figma variable and not --c-ink (#151a1d), which is what the
+       type-based approximation used to draw it in. */
+    --c-logo: #35425d;
     --c-mist: #f7fafc;        /* decorative ellipse behind the LOGOS bars */
 
     /* ---- Semantic -------------------------------------------------------- */
