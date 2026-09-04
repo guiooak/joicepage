@@ -1020,6 +1020,12 @@
     flex-direction: column;
     gap: var(--size-24);
     min-block-size: 707px;
+    /* The gutter picking a story scrolls to — motion.js aims the block at the
+       top of the screen and this is what keeps it off the very edge. Not the
+       `[id]` rule in base.css, which exists for menu anchors and resolves to
+       -44 inside this section: that one lands the SECTION, padding cancelled,
+       and here it is the testimonial that has to clear the top. */
+    scroll-margin-block-start: var(--size-24);
   }
 
   /* The three radios drive the switch. Visually hidden rather than

@@ -350,30 +350,41 @@
        through the [data-held] this sets on the block, rather than testing
        :hover for itself — see sync() below.
 
-       Two ways to hold the entry being read, because the two kinds of pointer
-       mean different things by it:
+       Two things can hold the entry being read, and a click outranks a hover
+       because it is a decision rather than a position:
 
-         · `over`, a pointer RESTING on the row. Transient, and mouse or pen
-           only: move away and the hold is released.
-         · `pinned`, a row a TAP left held. Sticky, and touch only: it stays
-           until something else is tapped.
+         · `over` — a pointer RESTING on the row. Mouse or pen, transient:
+           move away and it releases. A touch screen has no resting pointer,
+           so this is always empty there.
+         · `pin` — what a CLICK last said. A row means held; RELEASED means
+           running, and says so loudly enough to override a hover sitting on
+           the same row; null means no standing decision, so `over` decides.
 
-       A touch screen has no resting pointer. The pointer is created by the
-       finger and destroyed on lift, so `pointerout` fires the instant a tap
-       ends and `over` is empty again a moment later — while `:hover` stays on
-       whatever was tapped until the next tap lands elsewhere. Reading a hold
-       off pointer events alone therefore cannot agree with the bar on a phone,
-       whichever of the two it follows. So a tap says so explicitly, and both
-       the bar and the clock read that one answer. */
+       Clicking the story being read TOGGLES between those two, which is what
+       makes a click a pause rather than a stop: the bar keeps its position and
+       the clock keeps its remainder, and the next click carries on from there
+       instead of starting the story over. Clicking a DIFFERENT story is not a
+       pause at all — it switches, and the new story gets a full count.
+
+       A phone needs the pin for a second reason. The pointer there is created
+       by the finger and destroyed on lift, so `pointerout` fires the moment a
+       tap ends and `over` is empty again immediately — while `:hover` stays on
+       whatever was tapped until the next tap lands elsewhere. Reading the hold
+       off pointer events alone could never agree with the bar on a phone,
+       whichever of the two it followed. */
     const list = document.querySelector(".depoimento__people");
+    const RELEASED = Symbol("released");
     let over = null;
-    let pinned = null;
+    let pin = null;
 
     const rowAt = (target) => target?.closest?.(".depoimento__people li") ?? null;
     const activeRow = () => (list ? list.children[current()] : null) ?? null;
     const held = () => {
       const row = activeRow();
-      return row !== null && (over === row || pinned === row);
+      if (row === null) return false;
+      if (pin === RELEASED) return false;
+      if (pin !== null) return pin === row;
+      return over === row;
     };
 
     /* A chained timeout rather than an interval, because the clock has to be
@@ -443,12 +454,29 @@
     picks.forEach((pick) => {
       pick.addEventListener("change", () => {
         if (programmatic) return;
-        // pause() first so the count is not left running against the old
-        // entry; start() re-arms it and hands over to sync(), which holds it
-        // if the pointer is resting on the row that was just picked — which,
-        // for a click or a tap, it always is.
+        // pause() first so the count is not left running against the story
+        // just left; start() re-arms it for the new one and hands over to
+        // sync(), which decides from the pin whether it runs or holds.
         pause();
         start();
+
+        /* Bring the story to the top of the screen.
+
+           Something scrolls here whether or not this does: clicking a label
+           focuses its radio, and the browser scrolls a focused element into
+           view on its own. That scroll uses `nearest`, so it stops the moment
+           the 1px radio clears an edge — which lands the story wherever the
+           reader happened to be coming from, part way down the screen and
+           sometimes at the very bottom. This replaces it with one that always
+           finishes in the same place, `block: "start"` against the gutter
+           `.depoimento` carries as `scroll-margin-block-start`.
+
+           Only on a pick. The carousel turning over by itself must never move
+           the page — that would drag the reader somewhere new every 7s. */
+        depoimento.scrollIntoView({
+          block: "start",
+          behavior: reduced ? "auto" : "smooth",
+        });
       });
     });
 
@@ -475,24 +503,35 @@
         const row = rowAt(e.target);
         if (row && !row.contains(e.relatedTarget)) {
           over = rowAt(e.relatedTarget);
+          // Leaving the row also drops any standing decision, so the next
+          // hover behaves like a hover again rather than being overruled by
+          // something clicked a while ago.
+          if (over === null) pin = null;
           sync();
         }
       });
 
-      /* The tap hold, and its release, in one line of policy: a tap pins
-         whatever row it landed on, and a tap that landed on no row pins
-         nothing. So tapping a story holds it — the bar stops and the clock
-         stops with it — and tapping anywhere else lets both go again, which
-         is the behaviour the bar was already showing on its own through
-         sticky :hover.
+      /* What a click decides, for every kind of pointer:
 
-         On the document rather than the list, because the release depends on
-         taps the list never sees. `pointerdown` rather than `click` so a press
-         that turns into a scroll still counts, and so the pin is set before
-         the resulting `change` re-arms the clock. */
+           on the story being read  · toggle — pause where it stands, or let
+                                      it carry on from there
+           on another story         · not a pause: it switches, and the new
+                                      story counts from full
+           anywhere else            · drop the decision; a hover, if there is
+                                      one, governs again
+
+         On the document rather than the list, because the last of those
+         depends on clicks the list never sees. `pointerdown` rather than
+         `click` so a press that turns into a scroll still counts, and so the
+         decision is recorded before the `change` it causes re-arms the clock. */
       document.addEventListener("pointerdown", (e) => {
-        if (e.pointerType !== "touch") return;
-        pinned = rowAt(e.target);
+        const row = rowAt(e.target);
+        // activeRow() is still the OUTGOING story here — pointerdown runs
+        // before the radio changes — which is exactly what distinguishes
+        // "clicked the one being read" from "clicked another one".
+        if (row === null) pin = null;
+        else if (row !== activeRow()) pin = RELEASED;
+        else pin = held() ? RELEASED : row;
         sync();
       });
     }
