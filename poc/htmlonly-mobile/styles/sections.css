@@ -1006,7 +1006,7 @@
      Simone, and the carousel advances by itself every 7s — a section that
      resized with it would shift the page under a reader ten times a minute.
 
-     655 is Alessandra's state and Luiz & Lívia's, the tallest, reserved HERE
+     647 is Alessandra's state and Luiz & Lívia's, the tallest, reserved HERE
      on the block rather than as a floor under the tags. Not Simone's, which
      it was until the quote box came off its pin: her tags take a third row
      and cost 36, and her quote is two lines short and saves 58, so hers is
@@ -1022,7 +1022,7 @@
     display: flex;
     flex-direction: column;
     gap: var(--size-24);
-    min-block-size: 655px;
+    min-block-size: 647px;
     /* The gutter picking a story scrolls to — motion.js aims the block at the
        top of the screen and this is what keeps it off the very edge. Not the
        `[id]` rule in base.css, which exists for menu anchors and resolves to
@@ -1038,12 +1038,12 @@
      The reservation itself stays, and for the same reason: the states are not
      the same height, and a section that resized as the carousel turned would
      shift the page under a reader ten times a minute. It is only re-measured
-     for one entry instead of three — 352 above the list (mark 48 + gap 48 +
+     for one entry instead of three — 344 above the list (mark 48 + gap 40 +
      quote 232 + gap 24) and 149 under it, which is Alessandra's state and
-     Luiz & Lívia's. Simone's comes to 479: her quote is 58 shorter and her
+     Luiz & Lívia's. Simone's comes to 471: her quote is 58 shorter and her
      tags 36 taller. */
   .js .depoimento {
-    min-block-size: 501px;
+    min-block-size: 493px;
   }
 
   /* The three radios drive the switch. Visually hidden rather than
@@ -1061,18 +1061,25 @@
     white-space: nowrap;
   }
 
-  /* testimonial 392:8258 · 344 = mark 48 + gap 64 + quote 232, drawn — 328
-     here, on a 48 gap, which is the one number in this block that is not the
+  /* testimonial 392:8258 · 344 = mark 48 + gap 64 + quote 232, drawn — 320
+     here, on a 40 gap, which is the one number in this block that is not the
      frame's.
 
-     Asked for: the mark stood too far off the quote. One step down the size
-     scale, and 48 in every state now that the box below sizes to its own
-     text — the gap is drawn from the mark to the first line, so it is only
-     worth a number while the two cannot drift apart. */
+     Asked for, in two passes. The mark stood too far off the quote at the
+     drawn 64, and it also stood the SAME distance off the quote below it as
+     the section leaves above it: `.historias` sets 48 between the hero and
+     this block, so the mark sat evenly between the paragraph it has nothing
+     to do with and the quote it belongs to, and read as neither's. 40 breaks
+     the tie the only way that says which — closer to what it marks — and one
+     step down the size scale is as far as it needs to go to say it.
+
+     48 above, 40 below, and 40 in every state now that the box beneath sizes
+     to its own text. The gap is drawn from the mark to the first line, so it
+     is only worth a number while the two cannot drift apart. */
   .depoimento__stage {
     display: flex;
     flex-direction: column;
-    gap: var(--size-48);
+    gap: var(--size-40);
   }
 
   .depoimento__mark {
