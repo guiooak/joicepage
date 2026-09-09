@@ -389,6 +389,20 @@
      out, which is what holds the outgoing quote on screen long enough to
      actually cross with the incoming one. Transitioning opacity alone would
      hide it instantly and fade the new one in against the page. */
+  /* The box carries one height per story — sections.css, `.depoimento__quotes`
+     — so the rule under the quote and the name below it sit 58 higher on
+     Simone's three lines than on the other two stories' five. Eased on the
+     crossfade's own 320ms, so they travel with the quote that moved them
+     instead of snapping into place ahead of it.
+
+     Decoration: with reduced motion the height changes the moment the radio
+     does, which is what the rest of this block does too. */
+  @media (prefers-reduced-motion: no-preference) {
+    .depoimento__quotes {
+      transition: block-size 320ms ease;
+    }
+  }
+
   @media (prefers-reduced-motion: no-preference) {
     .depoimento__quotes blockquote {
       opacity: 0;

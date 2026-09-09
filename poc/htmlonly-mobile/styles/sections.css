@@ -1006,8 +1006,11 @@
      Simone, and the carousel advances by itself every 7s — a section that
      resized with it would shift the page under a reader ten times a minute.
 
-     691 is Simone's state, the tallest, reserved HERE on the block rather
-     than as a floor under the tags. Both keep the section still; only this
+     655 is Alessandra's state and Luiz & Lívia's, the tallest, reserved HERE
+     on the block rather than as a floor under the tags. Not Simone's, which
+     it was until the quote box came off its pin: her tags take a third row
+     and cost 36, and her quote is two lines short and saves 58, so hers is
+     now the shortest of the three at 633. Both keep the section still; only this
      one keeps the drawn proportions. Reserving inside the active entry would
      pad every state up to the tallest, opening 36px of dead space between
      Alessandra's tags and the rule below them and putting her entry at 185
@@ -1019,7 +1022,7 @@
     display: flex;
     flex-direction: column;
     gap: var(--size-24);
-    min-block-size: 691px;
+    min-block-size: 655px;
     /* The gutter picking a story scrolls to — motion.js aims the block at the
        top of the screen and this is what keeps it off the very edge. Not the
        `[id]` rule in base.css, which exists for menu anchors and resolves to
@@ -1032,14 +1035,15 @@
      `.depoimento__people` below — so the 339 reserved above is 154 of dead
      space at the foot of the section.
 
-     The reservation itself stays, and for the same reason: the three entries
-     are not the same height, and a section that resized as the carousel
-     turned would shift the page under a reader ten times a minute. It is only
-     re-measured for one entry instead of three — 352 above the list (mark 48
-     + gap 48 + quote 232 + gap 24) and Simone's 185 under it, still the
-     tallest of the three because her tags take a third row. */
+     The reservation itself stays, and for the same reason: the states are not
+     the same height, and a section that resized as the carousel turned would
+     shift the page under a reader ten times a minute. It is only re-measured
+     for one entry instead of three — 352 above the list (mark 48 + gap 48 +
+     quote 232 + gap 24) and 149 under it, which is Alessandra's state and
+     Luiz & Lívia's. Simone's comes to 479: her quote is 58 shorter and her
+     tags 36 taller. */
   .js .depoimento {
-    min-block-size: 537px;
+    min-block-size: 501px;
   }
 
   /* The three radios drive the switch. Visually hidden rather than
@@ -1061,13 +1065,10 @@
      here, on a 48 gap, which is the one number in this block that is not the
      frame's.
 
-     Asked for: the mark stood too far off the quote. The frame's 64 is read
-     against a quote box that is 58 taller than the shortest of the three
-     stories carries, and since the quote sits at the bottom of that box the
-     slack stacks straight onto this gap, so Simone was reading 122 clear of
-     the mark where the frame means 64. One step down the size scale takes
-     the drawn states to 48 and hers to 106, and everything below moves up
-     with it — see the two reservations above, both 16 shorter for it. */
+     Asked for: the mark stood too far off the quote. One step down the size
+     scale, and 48 in every state now that the box below sizes to its own
+     text — the gap is drawn from the mark to the first line, so it is only
+     worth a number while the two cannot drift apart. */
   .depoimento__stage {
     display: flex;
     flex-direction: column;
@@ -1079,23 +1080,53 @@
     block-size: 48px;
   }
 
-  /* Pinned to the drawn 232, which is also the tallest of the three at this
-     measure — Alessandra and Luiz & Lívia both come to 232 and Simone to
-     174 — so switching quotes never moves the section. Same reserved-height
-     rule the Processo accordion follows.
+  /* One height per story, measured at 328 wide: Alessandra and Luiz & Lívia
+     both set to five lines and 232, the drawn figure; Simone's is three lines
+     and 174.
 
-     The quote sits at the BOTTOM of that reservation, which is what makes the
-     58 of slack Simone's shorter quote leaves fall above her text rather than
-     under it. Under it, the slack lands between the last line and the rule
-     over the names — the one gap on this block that is read as a gap, because
-     the same 24 sits on the other side of that rule under the other two
-     stories and the eye has both to compare. Grid items stretch by default,
-     so this is also what lets the blockquote size to its own text at all;
-     stretched, all three filled the 232 and only their first line told you
-     where the text began. */
+     This box used to be pinned to the tallest of the three so that switching
+     quotes moved nothing below it. That is what put 58 of slack inside the
+     block on Simone's story, and slack inside the block has to come out
+     somewhere — first under her last line, where it doubled the gutter over
+     the rule, then above her first, where it pushed the mark 106 clear of a
+     quote the other two stories hold 48 off. Both gutters are asked to be the
+     same in every state, and both are measured from the TEXT, so the box has
+     to end where the text ends. There is nowhere else for the slack to go.
+
+     So it leaves the block entirely: the two reservations above take the
+     tallest state and the 22 Simone's is short of it falls past the end of
+     the list, where the frame draws nothing. The section is still the same
+     height in all three states — it is the names, not the section, that ride
+     up when her story comes round, and motion.css eases them on the same
+     320ms as the crossfade so they arrive with the quote rather than
+     snapping ahead of it.
+
+     Re-measure these if the copy or the measure changes: `node
+     tools/measure/measure.mjs poc/htmlonly-mobile 360 '.depoimento__quotes
+     blockquote'` prints all three, each sized to its own text. */
   .depoimento__quotes {
     display: grid;
-    align-items: end;
+    /* Top, so the outgoing quote stays where it is while the box resizes
+       under it. Bottom-aligned it would slide its whole 232 up into the mark
+       during the crossfade, which reads as the text moving; anchored here
+       only the rule below travels. Not `stretch`, the default, for the same
+       reason it is not `end`: a stretched blockquote fills the box instead of
+       sizing to its text. */
+    align-items: start;
+    /* The fallback the no-JS state and the unchecked moment both land on,
+       and the tallest of the three so neither can clip. */
+    block-size: 232px;
+  }
+
+  #depo-1:checked ~ .depoimento__stage .depoimento__quotes {
+    block-size: 232px;
+  }
+
+  #depo-2:checked ~ .depoimento__stage .depoimento__quotes {
+    block-size: 174px;
+  }
+
+  #depo-3:checked ~ .depoimento__stage .depoimento__quotes {
     block-size: 232px;
   }
 
