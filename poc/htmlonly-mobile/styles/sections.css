@@ -1072,9 +1072,20 @@
   /* Pinned to the drawn 232, which is also the tallest of the three at this
      measure — Alessandra and Luiz & Lívia both come to 232 and Simone to
      174 — so switching quotes never moves the section. Same reserved-height
-     rule the Processo accordion follows. */
+     rule the Processo accordion follows.
+
+     The quote sits at the BOTTOM of that reservation, which is what makes the
+     58 of slack Simone's shorter quote leaves fall above her text rather than
+     under it. Under it, the slack lands between the last line and the rule
+     over the names — the one gap on this block that is read as a gap, because
+     the same 24 sits on the other side of that rule under the other two
+     stories and the eye has both to compare. Grid items stretch by default,
+     so this is also what lets the blockquote size to its own text at all;
+     stretched, all three filled the 232 and only their first line told you
+     where the text began. */
   .depoimento__quotes {
     display: grid;
+    align-items: end;
     block-size: 232px;
   }
 
