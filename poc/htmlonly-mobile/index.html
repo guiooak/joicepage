@@ -646,7 +646,14 @@
 
                Frances Fonseca and Rafael Coelho are on the desktop page but
                not here: this frame draws them hidden, and that is a layout
-               decision rather than missing copy. -->
+               decision rather than missing copy.
+
+               With scripting on, the two entries that are NOT being read are
+               hidden along with their tags, so the list is a single name and
+               the carousel turns it over every 7s. They stay in the markup
+               all the same, and stay reachable: with the script off all three
+               are listed and pickable, and with it on the radios still take
+               the arrow keys. styles/sections.css carries the rule. -->
           <ul class="depoimento__people">
             <li>
               <label for="depo-1">Alessandra Vizcarra</label>

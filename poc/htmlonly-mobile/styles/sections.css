@@ -1028,6 +1028,20 @@
     scroll-margin-block-start: var(--size-24);
   }
 
+  /* With scripting on the list carries ONE entry — see the hiding rule under
+     `.depoimento__people` below — so the 339 reserved above is 154 of dead
+     space at the foot of the section.
+
+     The reservation itself stays, and for the same reason: the three entries
+     are not the same height, and a section that resized as the carousel
+     turned would shift the page under a reader ten times a minute. It is only
+     re-measured for one entry instead of three — 368 above the list (mark 48
+     + gap 64 + quote 232 + gap 24) and Simone's 185 under it, still the
+     tallest of the three because her tags take a third row. */
+  .js .depoimento {
+    min-block-size: 553px;
+  }
+
   /* The three radios drive the switch. Visually hidden rather than
      `display: none`, so they stay focusable and the labels stay operable
      from the keyboard. */
@@ -1098,6 +1112,28 @@
      comes out as 303 — see `.depoimento` above for how that is absorbed. */
   .depoimento__people li {
     border-block-start: 1px solid var(--color-line);
+  }
+
+  /* Only the story being read is on the page. The other two entries stay in
+     the HTML — and in the crawlable response, the rule the quotes and the FAQ
+     answers follow — but they are not drawn, so the list is one name, its
+     tags and the rule above them.
+
+     Gated on `.js`, exactly as the countdown bar is. These labels are the
+     only pointer route to the other two quotes, and with scripting off
+     nothing advances: hiding them there would leave two testimonials in the
+     file that no reader could ever reach, which is the one thing this block
+     was built not to do. With the script running the carousel reaches them
+     every 7s, and the radios — visually hidden, never `display: none` — still
+     take the arrow keys, so a keyboard picks a story by hand as before. */
+  .js .depoimento__people li {
+    display: none;
+  }
+
+  .js #depo-1:checked ~ .depoimento__people li:nth-child(1),
+  .js #depo-2:checked ~ .depoimento__people li:nth-child(2),
+  .js #depo-3:checked ~ .depoimento__people li:nth-child(3) {
+    display: block;
   }
 
   .depoimento__people label {
