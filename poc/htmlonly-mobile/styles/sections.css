@@ -1006,7 +1006,7 @@
      Simone, and the carousel advances by itself every 7s — a section that
      resized with it would shift the page under a reader ten times a minute.
 
-     707 is Simone's state, the tallest, reserved HERE on the block rather
+     691 is Simone's state, the tallest, reserved HERE on the block rather
      than as a floor under the tags. Both keep the section still; only this
      one keeps the drawn proportions. Reserving inside the active entry would
      pad every state up to the tallest, opening 36px of dead space between
@@ -1019,7 +1019,7 @@
     display: flex;
     flex-direction: column;
     gap: var(--size-24);
-    min-block-size: 707px;
+    min-block-size: 691px;
     /* The gutter picking a story scrolls to — motion.js aims the block at the
        top of the screen and this is what keeps it off the very edge. Not the
        `[id]` rule in base.css, which exists for menu anchors and resolves to
@@ -1035,11 +1035,11 @@
      The reservation itself stays, and for the same reason: the three entries
      are not the same height, and a section that resized as the carousel
      turned would shift the page under a reader ten times a minute. It is only
-     re-measured for one entry instead of three — 368 above the list (mark 48
-     + gap 64 + quote 232 + gap 24) and Simone's 185 under it, still the
+     re-measured for one entry instead of three — 352 above the list (mark 48
+     + gap 48 + quote 232 + gap 24) and Simone's 185 under it, still the
      tallest of the three because her tags take a third row. */
   .js .depoimento {
-    min-block-size: 553px;
+    min-block-size: 537px;
   }
 
   /* The three radios drive the switch. Visually hidden rather than
@@ -1057,11 +1057,21 @@
     white-space: nowrap;
   }
 
-  /* testimonial 392:8258 · 344 = mark 48 + gap 64 + quote 232. */
+  /* testimonial 392:8258 · 344 = mark 48 + gap 64 + quote 232, drawn — 328
+     here, on a 48 gap, which is the one number in this block that is not the
+     frame's.
+
+     Asked for: the mark stood too far off the quote. The frame's 64 is read
+     against a quote box that is 58 taller than the shortest of the three
+     stories carries, and since the quote sits at the bottom of that box the
+     slack stacks straight onto this gap, so Simone was reading 122 clear of
+     the mark where the frame means 64. One step down the size scale takes
+     the drawn states to 48 and hers to 106, and everything below moves up
+     with it — see the two reservations above, both 16 shorter for it. */
   .depoimento__stage {
     display: flex;
     flex-direction: column;
-    gap: var(--size-64);
+    gap: var(--size-48);
   }
 
   .depoimento__mark {
