@@ -870,10 +870,15 @@
     rotate: -45deg;
   }
 
-  /* 16 on every side, so the copy is indented from the title, which sits
-     flush. Was a bare 24 at the bottom only. */
+  /* Inline padding ZERO, so the copy starts where the question starts. The
+     16 on every side that used to be here indented the answer from a title
+     that sits flush — which is QA note 14, "o <p> desalinhou dentro do
+     accordion", stated as a deliberate choice in this very comment. The
+     design aligns them: question and answer are two rows of one padded
+     surface, sharing its left edge. The vertical 16 stays; it is the gap
+     between the two rows. */
   .accordion__panel {
-    padding: var(--size-16);
+    padding-block: var(--size-16);
     color: var(--color-body-quiet);
   }
 
@@ -1383,6 +1388,54 @@
     display: grid;
     align-content: start;
     gap: var(--size-16);
+  }
+
+  /* QA note 13, "faltou BG aqui no componente". The FAQ row is not the
+     hairline-separated item it was transcribed as — the component was
+     revised after the export this build was written from, and each row is
+     now a white card: #ffffff, radius 8, clipped, 24 of padding on all four
+     sides, 16 between rows (the gap above already matches).
+
+     Read off the live file rather than the stale dump, which is also why the
+     question drops from 24/500 to the paragraph size at Bold: the current
+     component sets 20/1.4 Bold with the 1% tracking, black, and the answer
+     20/1.4 Regular in rgb(60 60 67 / 85%) — which `--color-body-quiet`
+     already is.
+
+     Scoped to `.faq__list` on purpose. The Processo accordion shares this
+     component in the build but is a SEPARATE component in the file, and the
+     designer's note points only here; giving Processo a white card too would
+     be a guess. Its copy alignment is fixed above, which is the half that
+     cannot be wrong either way.
+
+     Still different from the file, and left for the designer: the marker.
+     The file draws chevron.right / chevron.down; this build draws a plus
+     that rotates into a cross. */
+  .faq__list .accordion__item {
+    padding: var(--size-24);
+    background-color: var(--color-surface);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    box-shadow: none;
+  }
+
+  .faq__list .accordion__item summary {
+    block-size: auto;
+    font-size: var(--text-paragraph);
+    line-height: var(--leading-paragraph);
+    font-weight: var(--weight-bold);
+    letter-spacing: var(--tracking-paragraph);
+  }
+
+  /* No divider inside the card: the open state is header + text with 16
+     between them, and the card edge is what separates one row from the next. */
+  .faq__list .accordion__item[open] summary {
+    box-shadow: none;
+  }
+
+  .faq__list .accordion__panel {
+    padding-block: 0;
+    margin-block-start: var(--size-16);
   }
 
   /* ---- Footer ----------------------------------------------------------
