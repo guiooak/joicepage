@@ -163,7 +163,12 @@
        Degrades to exactly the previous behaviour: a browser that cannot
        compute this drops the declaration, leaving the 1440 pin and its
        horizontal scroll. Nothing else depends on it. */
-    zoom: min(1, calc(100cqw / var(--frame-width)));
+    /* Named rather than inlined because the video dialog has to undo it:
+       a top-layer element still carries its ancestors' effective zoom, and a
+       player sized in viewport units would then be painted at zoom x zoom.
+       Dividing by this is the only way back to 1:1 from inside the canvas. */
+    --page-zoom: min(1, calc(100cqw / var(--frame-width)));
+    zoom: var(--page-zoom);
   }
 
   /* Weights are per-level, not shared: Figma's text styles set H1/H2/H3 Bold,

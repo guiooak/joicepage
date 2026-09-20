@@ -696,7 +696,22 @@
              yet, and it is logged as an open question in
              .ai/plans/remaining-work.md rather than silently shipped. -->
         <div class="sobre__collage">
-          <img class="sobre__panel" src="assets/img/sobre-main.jpg" alt="Joice Sperandio em atendimento" width="208" height="290" loading="lazy" />
+          <!-- The panel is the video's trigger. It is an <a> to the video
+               rather than a <button>, so that with scripting off the click
+               still reaches YouTube; section 9 of scripts/motion.js
+               intercepts it and opens the dialog at the foot of this file
+               instead. -->
+          <a class="sobre__panel" href="https://youtu.be/NGBjNBx06Wc" target="_blank" rel="noopener noreferrer" aria-label="Assistir ao vídeo de apresentação da Joice">
+            <img src="assets/img/sobre-main.jpg" alt="Joice Sperandio em atendimento" width="208" height="290" loading="lazy" />
+            <!-- play-circle 392:8315 · 49.77x49.77 @137.1,140.4 in the 324x331
+                 collage, which is the panel's dead centre. It is the desktop
+                 120x120 mark at the 0.4147 this whole frame is drawn at, so
+                 the same viewBox carries it and the stroke scales with it. -->
+            <svg class="sobre__play" viewBox="0 0 120 120" aria-hidden="true" focusable="false">
+              <circle cx="60" cy="60" r="49" />
+              <path d="M50 40 80 60 50 80 Z" />
+            </svg>
+          </a>
           <!-- The mobile frame numbers these two slots the other way round from
                the desktop one, so the shared files cross over here. -->
           <img class="sobre__thumb sobre__thumb--1" src="assets/img/sobre-thumb-2.jpg" alt="" width="107" height="76" loading="lazy" />
@@ -981,5 +996,28 @@
         </div>
       </div>
     </footer>
+
+    <!-- The player. Not in the Figma frame, which draws the play mark and
+         stops there — so it is deliberately neutral: a black 16:9 stage and
+         nothing that invents brand. The <iframe> ships with NO src; section 9
+         of scripts/motion.js fills it on open and empties it on close, which
+         is both what stops playback and what keeps YouTube from loading on
+         every visit to the page. -->
+    <dialog class="video-modal" id="video-sobre" aria-label="Vídeo de apresentação da Joice">
+      <div class="video-modal__stage">
+        <button class="video-modal__close" type="button" aria-label="Fechar vídeo">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M6 6 18 18M18 6 6 18" />
+          </svg>
+        </button>
+        <div class="video-modal__frame">
+          <iframe
+            title="Vídeo de apresentação da Joice Sperandio"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+          ></iframe>
+        </div>
+      </div>
+    </dialog>
   </body>
 </html>

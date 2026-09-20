@@ -1252,14 +1252,60 @@
     zoom: var(--fit);
   }
 
+  /* The panel carries the play mark and the whole of it is the video's
+     trigger, so it is a link with the picture inside rather than a bare
+     <img>. Every box rule below is the one the <img> carried; `overflow`
+     is new, and it is what keeps the corners rounded now that the radius
+     sits on the link instead of on the image it clips. */
   .sobre__panel {
     position: absolute;
     inset-inline-start: 140.5px;
     inset-block-start: 0;
     inline-size: 501px;
     block-size: 700px;
-    object-fit: cover;
     border-radius: var(--radius-md);
+    display: block;
+    overflow: hidden;
+  }
+
+  .sobre__panel > img {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* play-circle 293:6745 · 120x120 @190.5,289.6, drawn against the panel.
+     Stroked, never filled: the file's two vectors are a 100x100 ring inset
+     10 — hence r=49 for a 2px stroke centred on the path — and a 30x40
+     triangle at @50,40, which is 5px right of centre so the shape reads as
+     centred rather than measuring as it. */
+  .sobre__play {
+    position: absolute;
+    inset-inline-start: 190.5px;
+    inset-block-start: 289.6px;
+    inline-size: 120px;
+    block-size: 120px;
+    fill: none;
+    stroke: #fff;
+    stroke-width: 2;
+    stroke-linejoin: round;
+    /* The link is the hit area, all 501x700 of it; the mark is decoration
+       and must not swallow its own clicks. */
+    pointer-events: none;
+    transition: scale var(--transition);
+  }
+
+  /* The frame draws no hover state. A photo that is clickable and gives
+     nothing back reads as broken, so the mark takes the smallest step that
+     answers the pointer and nothing else moves. */
+  .sobre__panel:hover .sobre__play {
+    scale: 1.06;
+  }
+
+  .sobre__panel:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 4px;
   }
 
   .sobre__thumb {
@@ -1467,6 +1513,98 @@
     line-height: var(--leading-paragraph);
     letter-spacing: var(--tracking-paragraph);
     opacity: 0.6;
+  }
+
+  /* ---- Vídeo (modal) ---------------------------------------------------
+     Not in the Figma file: the frame draws the play mark and stops. So this
+     is deliberately plain — a black 16:9 stage, a scrim and a close cross —
+     rather than an invented brand surface.
+
+     `zoom` is the whole difficulty here. base.css scales the entire canvas
+     to fit the window, and a <dialog> in the top layer still carries its
+     ancestors' effective zoom: sized in viewport units it would be painted
+     at zoom x zoom and overrun the screen on any window under 1440. Undoing
+     the factor puts this one element back at 1:1 with the actual viewport,
+     which is the only coordinate space a full-screen overlay can be right
+     in. It is also why the stage is sized with min() over BOTH axes: the
+     backdrop is the viewport, so 16:9 has to be capped by height as well or
+     a short window clips the player. */
+  .video-modal {
+    zoom: calc(1 / var(--page-zoom));
+    margin: auto;
+    border: 0;
+    padding: 0;
+    background: none;
+    max-inline-size: none;
+    max-block-size: none;
+    overflow: visible;
+  }
+
+  .video-modal::backdrop {
+    background: rgb(4 12 16 / 82%);
+  }
+
+  .video-modal__stage {
+    position: relative;
+    inline-size: min(
+      1120px,
+      calc(100vw - var(--size-48) * 2),
+      calc((100vh - var(--size-48) * 2 - var(--size-48)) * 16 / 9)
+    );
+  }
+
+  .video-modal__frame {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: #000;
+  }
+
+  .video-modal__frame iframe {
+    position: absolute;
+    inset: 0;
+    inline-size: 100%;
+    block-size: 100%;
+    border: 0;
+  }
+
+  /* Above the stage rather than inside it, so it never sits over the
+     picture. The 32px it reserves is the third term in the height cap. */
+  .video-modal__close {
+    position: absolute;
+    inset-block-end: calc(100% + var(--size-16));
+    inset-inline-end: 0;
+    inline-size: var(--size-32);
+    block-size: var(--size-32);
+    padding: 0;
+    border: 0;
+    background: none;
+    color: #fff;
+    cursor: pointer;
+    opacity: 0.75;
+    transition: opacity var(--transition);
+  }
+
+  .video-modal__close:hover,
+  .video-modal__close:focus-visible {
+    opacity: 1;
+  }
+
+  .video-modal__close:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+    opacity: 1;
+  }
+
+  .video-modal__close svg {
+    inline-size: 100%;
+    block-size: 100%;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
   }
 
   /* ---- Placeholders ----------------------------------------------------

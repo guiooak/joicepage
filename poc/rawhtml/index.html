@@ -748,7 +748,22 @@
           <!-- Collage: the 501x700 panel plus the three 209.9x149.9 cards,
                at the offsets drawn in the file. -->
           <div class="sobre__media">
-            <img class="sobre__panel" src="assets/img/sobre-main.jpg" alt="Joice Sperandio em atendimento" width="501" height="700" loading="lazy" />
+            <!-- The panel is the video's trigger. It is an <a> to the video
+                 rather than a <button>, so that with scripting off the click
+                 still reaches YouTube; section 9 of scripts/motion.js
+                 intercepts it and opens the dialog at the foot of this file
+                 instead. -->
+            <a class="sobre__panel" href="https://youtu.be/NGBjNBx06Wc" target="_blank" rel="noopener noreferrer" aria-label="Assistir ao vídeo de apresentação da Joice">
+              <img src="assets/img/sobre-main.jpg" alt="Joice Sperandio em atendimento" width="501" height="700" loading="lazy" />
+              <!-- play-circle 293:6745 · 120x120 @190.5,289.6 inside the 501x700
+                   panel, which is its dead centre. The ring is the file's 100x100
+                   vector inset 10 and the triangle its 30x40 at @50,40 — both
+                   drawn as strokes, so they are strokes here too. -->
+              <svg class="sobre__play" viewBox="0 0 120 120" aria-hidden="true" focusable="false">
+                <circle cx="60" cy="60" r="49" />
+                <path d="M50 40 80 60 50 80 Z" />
+              </svg>
+            </a>
             <img class="sobre__thumb sobre__thumb--1" src="assets/img/sobre-thumb-1.jpg" alt="" width="210" height="150" loading="lazy" />
             <img class="sobre__thumb sobre__thumb--2" src="assets/img/sobre-thumb-2.jpg" alt="" width="210" height="150" loading="lazy" />
             <img class="sobre__thumb sobre__thumb--3" src="assets/img/sobre-thumb-3.jpg" alt="" width="210" height="150" loading="lazy" />
@@ -969,5 +984,28 @@
         <small>© 2026</small>
       </div>
     </footer>
+
+    <!-- The player. Not in the Figma frame, which draws the play mark and
+         stops there — so it is deliberately neutral: a black 16:9 stage and
+         nothing that invents brand. The <iframe> ships with NO src; section 9
+         of scripts/motion.js fills it on open and empties it on close, which
+         is both what stops playback and what keeps YouTube from loading on
+         every visit to the page. -->
+    <dialog class="video-modal" id="video-sobre" aria-label="Vídeo de apresentação da Joice">
+      <div class="video-modal__stage">
+        <button class="video-modal__close" type="button" aria-label="Fechar vídeo">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M6 6 18 18M18 6 6 18" />
+          </svg>
+        </button>
+        <div class="video-modal__frame">
+          <iframe
+            title="Vídeo de apresentação da Joice Sperandio"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+          ></iframe>
+        </div>
+      </div>
+    </dialog>
   </body>
 </html>

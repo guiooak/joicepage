@@ -550,4 +550,64 @@
       ) || null
     );
   }
+
+  /* ---- 9 · Vídeo -------------------------------------------------------
+     The Sobre panel is a link to the video. This turns that link into a
+     dialog, and does nothing else: the href is the behaviour with scripting
+     off, and it stays the behaviour if any step below is missing.
+
+     The <iframe> has no `src` in the markup, and gets one only on open. That
+     is not a nicety — an embed that is present from first paint loads
+     YouTube, and its player, on every visit to this page whether or not
+     anyone watches. Emptying it again on close is also the only thing that
+     actually stops playback: hiding a dialog does not pause what is inside
+     it, so a closed modal would otherwise keep talking.
+
+     Everything the dialog needs beyond that — Esc, the scrim, the focus
+     trap, returning focus to the link afterwards — is what showModal() gives
+     for free, so none of it is written here. The one gap is the click on the
+     backdrop, which is reported as a click on the <dialog> itself. */
+  const videoLink = document.querySelector(".sobre__panel[href]");
+  const videoModal = document.querySelector(".video-modal");
+  const videoFrame = videoModal && videoModal.querySelector("iframe");
+
+  // `showModal` is the load-bearing one; a browser without it keeps the link.
+  if (videoLink && videoFrame && typeof videoModal.showModal === "function") {
+    // Read off the href rather than repeated in the script, so the video is
+    // named exactly once on the page — in the markup, where it still works
+    // with this file deleted.
+    const id = new URL(videoLink.href).pathname.slice(1);
+
+    videoLink.addEventListener("click", (event) => {
+      // Leave the modified clicks alone: cmd/ctrl/shift/middle all mean
+      // "open this somewhere else", and the link can still answer that.
+      if (event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) return;
+
+      event.preventDefault();
+
+      // nocookie, and `rel=0` so the end card offers this channel rather
+      // than the open internet.
+      videoFrame.src =
+        "https://www.youtube-nocookie.com/embed/" +
+        encodeURIComponent(id) +
+        "?autoplay=1&rel=0";
+
+      videoModal.showModal();
+    });
+
+    videoModal.addEventListener("close", () => {
+      videoFrame.removeAttribute("src");
+    });
+
+    videoModal.querySelectorAll("[type='button']").forEach((button) => {
+      button.addEventListener("click", () => videoModal.close());
+    });
+
+    // The backdrop is not a child, so a click on it targets the <dialog>.
+    // The stage covers everything that is not backdrop, which makes this
+    // test exact rather than a bounding-box guess.
+    videoModal.addEventListener("click", (event) => {
+      if (event.target === videoModal) videoModal.close();
+    });
+  }
 })();

@@ -1278,18 +1278,51 @@
     block-size: 331px;
   }
 
-  .sobre__collage img {
+  /* `> *` rather than `img`: the panel is a link now, and it is the link
+     that has to take the absolute offset and the radius. */
+  .sobre__collage > * {
     position: absolute;
     object-fit: cover;
     border-radius: var(--radius-md);
   }
 
-  /* Mask group 392:8310 · 207.8x290.33 @58.1,20.33 */
+  /* Mask group 392:8310 · 207.8x290.33 @58.1,20.33.
+     The whole panel is the video's trigger, so it is a link with the picture
+     inside. `overflow` is what keeps the corners rounded now that the radius
+     sits on the link rather than on the image it clips. */
   .sobre__panel {
     inline-size: 207.8px;
     block-size: 290.33px;
     inset-inline-start: 58.1px;
     inset-block-start: 20.33px;
+    display: block;
+    overflow: hidden;
+  }
+
+  .sobre__panel > img {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* play-circle 392:8315 · 49.77x49.77 @137.1,140.4 in the collage, which is
+     the panel's centre — so it is placed against the panel here. Same mark
+     as the desktop's 120x120 at the 0.4147 this frame is drawn at; the
+     viewBox does the scaling, stroke included, exactly as the file does. */
+  .sobre__play {
+    position: absolute;
+    inset-inline-start: 79.01px;
+    inset-block-start: 120.11px;
+    inline-size: 49.77px;
+    block-size: 49.77px;
+    fill: none;
+    stroke: #fff;
+    stroke-width: 2;
+    stroke-linejoin: round;
+    /* The link is the hit area, all 207.8x290.33 of it; the mark is
+       decoration and must not swallow its own taps. */
+    pointer-events: none;
   }
 
   /* 392:8318 · 106.65x76.18 @0,51.33 */
@@ -1665,5 +1698,88 @@
     stroke-width: 1.5;
     stroke-linecap: round;
     stroke-linejoin: round;
+  }
+
+  /* ---- Vídeo (modal) ----------------------------------------------------
+     Not in the Figma file: the frame draws the play mark and stops. So this
+     is deliberately plain — a black 16:9 stage, a scrim and a close cross —
+     rather than an invented brand surface.
+
+     `zoom` is the whole difficulty here. base.css scales the entire canvas
+     from the 390 frame up to the device, and a <dialog> in the top layer
+     still carries its ancestors' effective zoom: sized in viewport units it
+     would be painted at zoom x zoom and overrun the screen. Undoing the
+     factor puts this one element back at 1:1 with the actual viewport, which
+     is the only coordinate space a full-screen overlay can be right in.
+
+     Portrait is the case that matters here, so the stage is width-first and
+     merely capped by height for the landscape turn. */
+  .video-modal {
+    zoom: calc(1 / var(--page-zoom));
+    margin: auto;
+    border: 0;
+    padding: 0;
+    background: none;
+    max-inline-size: none;
+    max-block-size: none;
+    overflow: visible;
+  }
+
+  .video-modal::backdrop {
+    background: rgb(4 12 16 / 82%);
+  }
+
+  .video-modal__stage {
+    position: relative;
+    inline-size: min(
+      calc(100vw - var(--size-16) * 2),
+      calc((100vh - var(--size-24) * 2 - var(--size-40)) * 16 / 9)
+    );
+  }
+
+  .video-modal__frame {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: #000;
+  }
+
+  .video-modal__frame iframe {
+    position: absolute;
+    inset: 0;
+    inline-size: 100%;
+    block-size: 100%;
+    border: 0;
+  }
+
+  /* Above the stage rather than over the picture. It reserves 40 — a real
+     touch target — and that is the third term in the height cap. */
+  .video-modal__close {
+    position: absolute;
+    inset-block-end: calc(100% + var(--size-16));
+    inset-inline-end: 0;
+    inline-size: var(--size-40);
+    block-size: var(--size-40);
+    padding: 8px;
+    border: 0;
+    background: none;
+    color: #fff;
+    cursor: pointer;
+  }
+
+  .video-modal__close:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+
+  .video-modal__close svg {
+    inline-size: 100%;
+    block-size: 100%;
+    fill: none;
+    stroke: currentcolor;
+    stroke-width: 2;
+    stroke-linecap: round;
   }
 }
