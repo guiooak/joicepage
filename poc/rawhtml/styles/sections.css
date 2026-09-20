@@ -386,7 +386,10 @@
 
   .credentials li {
     display: flex;
-    align-items: flex-start;
+    /* The file puts the 64 square at @0,11.5 in an 87-tall entry — exactly
+       (87 − 64) / 2. That is centred against the text, not pinned to its
+       first line, which is what `flex-start` was doing. */
+    align-items: center;
     gap: var(--size-16);
     font-size: var(--text-h5);
     line-height: var(--leading-h5);
