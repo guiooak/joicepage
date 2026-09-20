@@ -1017,9 +1017,12 @@
   }
 
   /* Testimonial block 1360x491 · fill #ffffff · pad 40 · gap 80 */
+  /* 668 and 548, the drawn widths — `space-between` then leaves the 64
+     channel the file draws between them. They were 640 and 480, which put
+     160 in the channel and squeezed both columns. */
   .depoimento {
     display: grid;
-    grid-template-columns: 640px 480px;
+    grid-template-columns: 668px 548px;
     justify-content: space-between;
     gap: var(--size-80);
     margin-block-start: var(--size-48);
@@ -1037,8 +1040,21 @@
     margin-block-end: var(--size-64);
   }
 
+  /* QA note 8, "o tamanho do texto no componente de depoimentos tá bem menor
+     do que no layout". It was: this block declared no size at all and fell
+     back to the body's 20/1.4 — the only prominent run on the page without
+     one, while every other 24px line (hero caption, credentials, accordion
+     summary, big-number labels, footer phone) sets it explicitly.
+
+     24/1.4 is measured, not guessed. The drawn box is 668x306 for this
+     quote; at 20/1.4 it sets to 168, at 24/1.2 to 230, at 24/1.4 to 269.
+     The remaining gap to 306 is a wrap difference — Figma breaks this string
+     into 9 lines where Chrome fits 8 — so the box will not land exactly on
+     the drawn number and should not be forced to. */
   .depoimento__quote {
     margin-block-start: var(--size-32);
+    font-size: var(--text-h5);
+    line-height: var(--leading-paragraph);
     color: var(--color-body);
   }
 
