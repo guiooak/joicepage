@@ -412,8 +412,10 @@
     }
 
     #depo-1:checked ~ .depoimento__stage blockquote:nth-of-type(1),
-    #depo-2:checked ~ .depoimento__stage blockquote:nth-of-type(2),
-    #depo-3:checked ~ .depoimento__stage blockquote:nth-of-type(3) {
+  #depo-2:checked ~ .depoimento__stage blockquote:nth-of-type(2),
+  #depo-3:checked ~ .depoimento__stage blockquote:nth-of-type(3),
+  #depo-4:checked ~ .depoimento__stage blockquote:nth-of-type(4),
+  #depo-5:checked ~ .depoimento__stage blockquote:nth-of-type(5) {
       opacity: 1;
     }
   }
@@ -449,8 +451,10 @@
      and a countdown to nothing would be a lie. */
   @media (prefers-reduced-motion: no-preference) {
     .js .depoimento[data-rotating] > #depo-1:checked ~ .depoimento__people li:nth-child(1)::after,
-    .js .depoimento[data-rotating] > #depo-2:checked ~ .depoimento__people li:nth-child(2)::after,
-    .js .depoimento[data-rotating] > #depo-3:checked ~ .depoimento__people li:nth-child(3)::after {
+  .js .depoimento[data-rotating] > #depo-2:checked ~ .depoimento__people li:nth-child(2)::after,
+  .js .depoimento[data-rotating] > #depo-3:checked ~ .depoimento__people li:nth-child(3)::after,
+  .js .depoimento[data-rotating] > #depo-4:checked ~ .depoimento__people li:nth-child(4)::after,
+  .js .depoimento[data-rotating] > #depo-5:checked ~ .depoimento__people li:nth-child(5)::after {
       content: "";
       position: absolute;
       inset-inline: 0;
@@ -472,8 +476,10 @@
        on counting, and the story changed under a bar that was standing still.
        One signal, set in one place, and they cannot disagree. */
     .js .depoimento[data-rotating][data-held] > #depo-1:checked ~ .depoimento__people li:nth-child(1)::after,
-    .js .depoimento[data-rotating][data-held] > #depo-2:checked ~ .depoimento__people li:nth-child(2)::after,
-    .js .depoimento[data-rotating][data-held] > #depo-3:checked ~ .depoimento__people li:nth-child(3)::after {
+  .js .depoimento[data-rotating][data-held] > #depo-2:checked ~ .depoimento__people li:nth-child(2)::after,
+  .js .depoimento[data-rotating][data-held] > #depo-3:checked ~ .depoimento__people li:nth-child(3)::after,
+  .js .depoimento[data-rotating][data-held] > #depo-4:checked ~ .depoimento__people li:nth-child(4)::after,
+  .js .depoimento[data-rotating][data-held] > #depo-5:checked ~ .depoimento__people li:nth-child(5)::after {
       animation-play-state: paused;
     }
   }

@@ -996,33 +996,29 @@
        · the desktop's divider is a real border, so each of the three entries
          is 1px taller than drawn — 149 / 77 / 77, and the list 303 not 300;
        · the desktop's tag pill puts 16px copy on 1 with 6px of padding where
-         the frame puts 20 on 1.4, so the pills are narrower. Measured at 328:
-         Alessandra's 158 + 111 share a row and Luiz & Lívia's 160 + 149 do
-         too, both landing the drawn two rows and a 149 entry, but Simone's
-         187 + 150 will not, and neither will her 150 + 195, so her three
-         pills take three rows and her entry comes to 185.
+         the frame puts 20 on 1.4, so the pills are narrower. Measured at 328,
+         three of the five sets fit two rows and a 149 entry; Simone's and
+         Caroline e Antônio's take a third row and come to 185.
 
-     So the list is 303 tall under Alessandra or Luiz & Lívia and 339 under
-     Simone, and the carousel advances by itself every 7s — a section that
+     So the list is 457 tall under the two-row stories and 493 under the
+     other two, and the carousel advances by itself every 7s — a section that
      resized with it would shift the page under a reader ten times a minute.
 
-     647 is Alessandra's state and Luiz & Lívia's, the tallest, reserved HERE
-     on the block rather than as a floor under the tags. Not Simone's, which
-     it was until the quote box came off its pin: her tags take a third row
-     and cost 36, and her quote is two lines short and saves 58, so hers is
-     now the shortest of the three at 633. Both keep the section still; only this
-     one keeps the drawn proportions. Reserving inside the active entry would
-     pad every state up to the tallest, opening 36px of dead space between
-     Alessandra's tags and the rule below them and putting her entry at 185
-     where the frame draws 148. Reserved on the block, the slack falls past
-     the end of the list, where the frame draws nothing at all: her entry
-     stays 149 against the drawn 148, and the rules sit at 0, 149 and 226
-     against a drawn 0, 148 and 224. */
+     830 is Frances's state, the tallest of the five, reserved HERE on the
+     block rather than as a floor under the tags. Hers wins on the quote
+     rather than the tags: 261 is the longest of the five and buys more than
+     the 36 a third tag row costs. Measured, not derived — every state is
+     checked against this number, and the shortest (Simone's, 779) is what
+     the slack is measured from. Reserving inside the active entry would pad
+     every state up to the tallest, opening dead space between the tags and
+     the rule below them and putting a two-row entry at 185 where the frame
+     draws 148. Reserved on the block, the slack falls past the end of the
+     list, where the frame draws nothing at all. */
   .depoimento {
     display: flex;
     flex-direction: column;
     gap: var(--size-24);
-    min-block-size: 647px;
+    min-block-size: 830px;
     /* The gutter picking a story scrolls to — motion.js aims the block at the
        top of the screen and this is what keeps it off the very edge. Not the
        `[id]` rule in base.css, which exists for menu anchors and resolves to
@@ -1032,18 +1028,18 @@
   }
 
   /* With scripting on the list carries ONE entry — see the hiding rule under
-     `.depoimento__people` below — so the 339 reserved above is 154 of dead
+     `.depoimento__people` below — so most of what is reserved above is dead
      space at the foot of the section.
 
      The reservation itself stays, and for the same reason: the states are not
      the same height, and a section that resized as the carousel turned would
      shift the page under a reader ten times a minute. It is only re-measured
-     for one entry instead of three — 344 above the list (mark 48 + gap 40 +
-     quote 232 + gap 24) and 149 under it, which is Alessandra's state and
-     Luiz & Lívia's. Simone's comes to 471: her quote is 58 shorter and her
-     tags 36 taller. */
+     for one entry instead of five. 522 is Frances's state again — 373 above
+     the list (mark 48 + gap 40 + quote 261 + gap 24) and 149 under it — and
+     it is the tallest by 22 over Caroline e Antônio's 500, whose third tag
+     row does not make up for a quote 58 shorter. */
   .js .depoimento {
-    min-block-size: 493px;
+    min-block-size: 522px;
   }
 
   /* The three radios drive the switch. Visually hidden rather than
@@ -1087,9 +1083,9 @@
     block-size: 48px;
   }
 
-  /* One height per story, measured at 328 wide: Alessandra and Luiz & Lívia
-     both set to five lines and 232, the drawn figure; Simone's is three lines
-     and 174.
+  /* One height per story, measured at 328 wide: 232 · 261 · 174 · 232 · 203,
+     in the list's order. 232 is the drawn figure and Alessandra still sits on
+     it; Frances's 261 is now the tallest and Simone's 174 still the shortest.
 
      This box used to be pinned to the tallest of the three so that switching
      quotes moved nothing below it. That is what put 58 of slack inside the
@@ -1121,8 +1117,8 @@
        sizing to its text. */
     align-items: start;
     /* The fallback the no-JS state and the unchecked moment both land on,
-       and the tallest of the three so neither can clip. */
-    block-size: 232px;
+       and the tallest of the set so neither can clip. */
+    block-size: 261px;
   }
 
   #depo-1:checked ~ .depoimento__stage .depoimento__quotes {
@@ -1130,11 +1126,19 @@
   }
 
   #depo-2:checked ~ .depoimento__stage .depoimento__quotes {
-    block-size: 174px;
+    block-size: 261px;
   }
 
   #depo-3:checked ~ .depoimento__stage .depoimento__quotes {
+    block-size: 174px;
+  }
+
+  #depo-4:checked ~ .depoimento__stage .depoimento__quotes {
     block-size: 232px;
+  }
+
+  #depo-5:checked ~ .depoimento__stage .depoimento__quotes {
+    block-size: 203px;
   }
 
   .depoimento__quotes blockquote {
@@ -1148,7 +1152,9 @@
 
   #depo-1:checked ~ .depoimento__stage blockquote:nth-of-type(1),
   #depo-2:checked ~ .depoimento__stage blockquote:nth-of-type(2),
-  #depo-3:checked ~ .depoimento__stage blockquote:nth-of-type(3) {
+  #depo-3:checked ~ .depoimento__stage blockquote:nth-of-type(3),
+  #depo-4:checked ~ .depoimento__stage blockquote:nth-of-type(4),
+  #depo-5:checked ~ .depoimento__stage blockquote:nth-of-type(5) {
     visibility: visible;
   }
 
@@ -1191,7 +1197,9 @@
 
   .js #depo-1:checked ~ .depoimento__people li:nth-child(1),
   .js #depo-2:checked ~ .depoimento__people li:nth-child(2),
-  .js #depo-3:checked ~ .depoimento__people li:nth-child(3) {
+  .js #depo-3:checked ~ .depoimento__people li:nth-child(3),
+  .js #depo-4:checked ~ .depoimento__people li:nth-child(4),
+  .js #depo-5:checked ~ .depoimento__people li:nth-child(5) {
     display: block;
   }
 
@@ -1202,7 +1210,9 @@
 
   #depo-1:checked ~ .depoimento__people li:nth-child(1) label,
   #depo-2:checked ~ .depoimento__people li:nth-child(2) label,
-  #depo-3:checked ~ .depoimento__people li:nth-child(3) label {
+  #depo-3:checked ~ .depoimento__people li:nth-child(3) label,
+  #depo-4:checked ~ .depoimento__people li:nth-child(4) label,
+  #depo-5:checked ~ .depoimento__people li:nth-child(5) label {
     color: var(--color-ink);
   }
 
@@ -1230,7 +1240,9 @@
 
   #depo-1:checked ~ .depoimento__people li:nth-child(1) .depoimento__tags,
   #depo-2:checked ~ .depoimento__people li:nth-child(2) .depoimento__tags,
-  #depo-3:checked ~ .depoimento__people li:nth-child(3) .depoimento__tags {
+  #depo-3:checked ~ .depoimento__people li:nth-child(3) .depoimento__tags,
+  #depo-4:checked ~ .depoimento__people li:nth-child(4) .depoimento__tags,
+  #depo-5:checked ~ .depoimento__people li:nth-child(5) .depoimento__tags {
     display: flex;
   }
 

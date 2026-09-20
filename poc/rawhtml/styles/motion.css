@@ -234,9 +234,9 @@
   }
 
   /* Non-active entries read back. There used to be a second, dimmer step
-     here for entries carrying no quote — two of the five, whose copy was
-     thought not to exist. All five have their own quote now, so every entry
-     is selectable and the two-tier treatment has nothing left to describe. */
+     here for entries carrying no quote, back when two of them were thought
+     to have none. Every entry has its own quote now, so all of them are
+     selectable and the two-tier treatment has nothing left to describe. */
   .js .depoimento__people li:not([aria-current="true"]) {
     opacity: 0.7;
   }

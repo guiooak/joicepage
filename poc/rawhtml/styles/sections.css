@@ -1055,13 +1055,13 @@
   }
 
   /* One set of tags at a time — the frame draws exactly one `Tags` frame
-     visible per state, and every one of the five instances switches the
-     other four off. Now that switching aria-current also switches the tags,
-     this is what keeps that true.
+     visible per state, and each instance switches the others off. Now that
+     switching aria-current also switches the tags, this is what keeps that
+     true.
 
-     `display: none` rather than not rendering them: all five sets stay in
-     the HTML and in the crawlable response, which is the rule the whole
-     build follows for the FAQ answers and the quotes themselves. */
+     `display: none` rather than not rendering them: every set stays in the
+     HTML and in the crawlable response, which is the rule the whole build
+     follows for the FAQ answers and the quotes themselves. */
   .depoimento__people li:not([aria-current="true"]) .depoimento__tags {
     display: none;
   }

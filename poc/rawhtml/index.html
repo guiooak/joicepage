@@ -572,6 +572,11 @@
               width="72"
               height="48"
             />
+            <!-- This is entry 1's `data-quote` again, verbatim: the element
+                 has to hold the first story's words before the script has run
+                 or replaced anything, and there is no way to point at the
+                 attribute from here. The pair is unenforced — reorder the
+                 list and this has to move with it. -->
             <blockquote class="depoimento__quote">
               Durante muitos anos, por questões de saúde, eu simplesmente
               não pensava no futuro. Pós transplante, quando ganhei o
@@ -586,8 +591,9 @@
             </blockquote>
           </div>
 
-          <!-- All five, each with the quote and the tags the desktop frame
-               actually draws for it, read out of the .fig export.
+          <!-- Four of the five are the quote and the tags the desktop frame
+               actually draws, read out of the .fig export. Caroline e Antônio
+               is not among them — see its own note below.
 
                The names come from Joice; the quotes and tags come from the
                file. Both were previously thought unavailable, and the record
@@ -597,7 +603,8 @@
                instances, which neither `get_metadata` nor the old figextract
                dump expands, so every earlier pass read them as empty.
 
-               Each instance is cited on its entry below. Which person an
+               Each instance is cited on its entry below; the entry with no
+               citation is the one that has no instance. Which person an
                instance is showing is not guesswork: exactly one of the five
                `Tags` frames is switched to visible in each, and the quote
                sits beside it. Two of the five are independently confirmed by
@@ -656,15 +663,17 @@
                 <span>Consultoria em Investimentos</span>
               </span>
             </li>
-            <!-- 318:7450 -->
+            <!-- No node id: this one is not in the .fig at all. Supplied by
+                 the client after the frame was drawn, so there is nothing to
+                 cite and nothing to check it against. -->
             <li
-              data-quote="O trabalho da Joice nos ajudou a transformar números espalhados em decisões mais conscientes. O quadro de situação, as projeções e a organização dos investimentos trouxeram clareza sobre prioridades, aposentadoria e construção de patrimônio. Além das ferramentas, o diferencial foi justamente a capacidade de traduzir tudo isso em algo simples e aplicável ao nosso dia a dia."
+              data-quote="O trabalho da Joice nos trouxe clareza e segurança em um momento de muitas mudanças na nossa vida. Ela fez questão de incluir nós dois em cada etapa, traduzindo o planejamento de forma simples e respeitando nossa rotina como pais de um bebê. O diferencial foi justamente esse olhar próximo e acolhedor, que nos ajudou a enxergar possibilidades, organizar prioridades e transformar nossos projetos em planos possíveis."
             >
-              Luiz &amp; Lívia
+              Caroline e Antônio
               <span class="depoimento__tags">
-                <span>Organização Financeira</span>
-                <span>Gestão de Patrimônio</span>
-                <span>Consultoria em Investimentos</span>
+                <span>Planejamento para Casais</span>
+                <span>Organização de Prioridades</span>
+                <span>Planejamento Familiar</span>
               </span>
             </li>
           </ul>

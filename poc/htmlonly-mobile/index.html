@@ -572,14 +572,25 @@
              no white card, no padding; the frame draws Testimonials flush at
              0,0.
 
-             Three quotes, three names. Frances and Rafael are drawn hidden
-             here (392:8274, 392:8286) and no state anywhere in the file
-             exposes their text, so they are not on the page at all.
+             Five quotes, five names — the desktop's whole set, in the
+             desktop's order. Frances and Rafael are drawn hidden in this
+             frame (392:8274, 392:8286) and no state in the file exposes
+             their text, so their copy is shortened from the desktop page
+             rather than read out of the file; Caroline e Antônio is not in
+             the file at all. The three quotes that came that way are marked
+             one by one below.
 
              The switch is radio inputs: the plan's no-JS constraint says
              every testimonial has to be reachable with JavaScript off, and
-             all three quotes are in the HTML with a `:checked ~` rule
-             deciding which is shown.
+             every quote is in the HTML with a `:checked ~` rule deciding
+             which is shown.
+
+             The pairing is positional, and in three places at once: radio N,
+             `blockquote:nth-of-type(N)` and `li:nth-child(N)`. Adding or
+             reordering a story means touching all of them plus the seven
+             `#depo-N` groups in the two stylesheets — and scripts/motion.js
+             maps the radio index straight onto the `li` index, so the list
+             must hold nothing but those `li`s, in that order.
 
              scripts/motion.js then layers the desktop's carousel on top of
              those radios rather than replacing them — it advances by CHECKING
@@ -594,15 +605,25 @@
           <input class="depoimento__pick" type="radio" name="depoimento" id="depo-1" checked />
           <input class="depoimento__pick" type="radio" name="depoimento" id="depo-2" />
           <input class="depoimento__pick" type="radio" name="depoimento" id="depo-3" />
+          <input class="depoimento__pick" type="radio" name="depoimento" id="depo-4" />
+          <input class="depoimento__pick" type="radio" name="depoimento" id="depo-5" />
 
           <div class="depoimento__stage">
             <!-- The mark is a 72x48 vector (392:8260), two slanted bars at
                  30% — exported, not approximated with a quote character. -->
             <img class="depoimento__mark" src="assets/img/quote.svg" alt="" width="72" height="48" />
             <div class="depoimento__quotes">
-              <!-- Mobile's own, and much shorter than the desktop's: "eu não
-                   pensava no futuro. Depois do transplante, precisei aprender
-                   a construí-lo" against the desktop's longer telling. -->
+              <!-- Mobile's own copy, and much shorter than the desktop's:
+                   "eu não pensava no futuro. Depois do transplante, precisei
+                   aprender a construí-lo" against the desktop's longer
+                   telling. The order is the desktop's, entry for entry.
+
+                   Alessandra's and Simone's were already here. Frances's,
+                   Rafael's and Caroline e Antônio's are shortened from the
+                   desktop text in the same voice — they are the only three
+                   sentences on this page that are neither the client's own
+                   words nor the file's, and they are marked so that stays
+                   visible to whoever edits next. -->
               <blockquote>
                 Durante muitos anos, por questões de saúde, eu não pensava no
                 futuro. Depois do transplante, precisei aprender a construí-lo.
@@ -610,17 +631,34 @@
                 entendo meus números e tomo decisões com muito mais
                 tranquilidade.
               </blockquote>
+              <!-- shortened here, not the client's wording -->
+              <blockquote>
+                Eu queria entender melhor meus investimentos e depender menos
+                de recomendações que nem sempre olhavam pelos meus interesses.
+                A Joice trouxe uma visão independente e muito clara sobre meu
+                patrimônio. Saí da consultoria com autonomia para participar
+                das minhas próprias decisões.
+              </blockquote>
               <blockquote>
                 Desde 2023, conto com o acompanhamento da Joice para organizar
                 minha vida financeira e tomar decisões com mais segurança. O
                 que mais valorizo é o cuidado e a personalização em cada etapa.
               </blockquote>
+              <!-- shortened here, not the client's wording -->
               <blockquote>
-                A Joice transformou números espalhados em decisões mais
-                conscientes. A organização financeira e dos investimentos
-                trouxe clareza sobre nossas prioridades, aposentadoria e
-                construção de patrimônio. Tudo de forma simples e aplicável ao
-                nosso dia a dia.
+                Buscávamos entender melhor nossa realidade financeira como
+                casal e organizar os próximos passos. A Joice conduziu tudo de
+                forma didática e personalizada, estruturando orçamento,
+                investimentos e aposentadoria. Saímos com muito mais segurança
+                para planejar o futuro.
+              </blockquote>
+              <!-- shortened here, not the client's wording -->
+              <blockquote>
+                O trabalho da Joice nos trouxe clareza e segurança num momento
+                de muitas mudanças. Ela incluiu nós dois em cada etapa,
+                respeitando nossa rotina como pais de um bebê. Esse olhar
+                próximo nos ajudou a transformar nossos projetos em planos
+                possíveis.
               </blockquote>
             </div>
           </div>
@@ -630,10 +668,10 @@
 
                Only the ACTIVE one shows tags, which is how the file draws it:
                392:8270 is the one `Tags` frame switched on, and the other
-               four (392:8276, 8282, 8288, 8294) are all `hidden`. All three
-               sets are in the HTML and CSS decides which is shown, the same
-               rule the quotes above follow — previously only Alessandra had
-               tags at all, so hers stayed under her name whichever entry you
+               four (392:8276, 8282, 8288, 8294) are all `hidden`. Every set
+               is in the HTML and CSS decides which is shown, the same rule
+               the quotes above follow — previously only Alessandra had tags
+               at all, so hers stayed under her name whichever entry you
                picked.
 
                The tag copy comes from the desktop frame, where these same
@@ -641,17 +679,13 @@
                are unexpanded (drawn 508 wide, on a column that has 328), so
                they hold the widths but not the words. Casing is the file's
                own and is not consistent between entries — "Organização
-               financeira" for Alessandra, "Organização Financeira" for Luiz
-               & Lívia. Left as drawn rather than normalised.
+               financeira" for Alessandra, "Organização de Prioridades" for
+               Caroline e Antônio. Left as drawn rather than normalised.
 
-               Frances Fonseca and Rafael Coelho are on the desktop page but
-               not here: this frame draws them hidden, and that is a layout
-               decision rather than missing copy.
-
-               With scripting on, the two entries that are NOT being read are
-               hidden along with their tags, so the list is a single name and
+               With scripting on, every entry that is NOT being read is
+               hidden along with its tags, so the list is a single name and
                the carousel turns it over every 7s. They stay in the markup
-               all the same, and stay reachable: with the script off all three
+               all the same, and stay reachable: with the script off all five
                are listed and pickable, and with it on the radios still take
                the arrow keys. styles/sections.css carries the rule. -->
           <ul class="depoimento__people">
@@ -664,7 +698,15 @@
               </span>
             </li>
             <li>
-              <label for="depo-2">Simone Maudonnet</label>
+              <label for="depo-2">Frances Fonseca</label>
+              <span class="depoimento__tags">
+                <span>Consultoria em Investimentos</span>
+                <span>Decisões com Autonomia</span>
+                <span>Gestão Patrimonial</span>
+              </span>
+            </li>
+            <li>
+              <label for="depo-3">Simone Maudonnet</label>
               <span class="depoimento__tags">
                 <span>Acompanhamento Contínuo</span>
                 <span>Relação de confiança</span>
@@ -672,11 +714,19 @@
               </span>
             </li>
             <li>
-              <label for="depo-3">Luiz &amp; Lívia</label>
+              <label for="depo-4">Rafael Coelho</label>
               <span class="depoimento__tags">
-                <span>Organização Financeira</span>
-                <span>Gestão de Patrimônio</span>
+                <span>Planejamento para Casais</span>
+                <span>Aposentadoria</span>
                 <span>Consultoria em Investimentos</span>
+              </span>
+            </li>
+            <li>
+              <label for="depo-5">Caroline e Antônio</label>
+              <span class="depoimento__tags">
+                <span>Planejamento para Casais</span>
+                <span>Organização de Prioridades</span>
+                <span>Planejamento Familiar</span>
               </span>
             </li>
           </ul>

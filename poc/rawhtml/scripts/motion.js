@@ -117,9 +117,9 @@
   /* ---- 3 · Testimonial -------------------------------------------------
      ref: minimal-testimonials.framer.website
 
-     Only the people carrying data-quote are selectable. Three of the five
-     are real; the other two are placeholders in the design itself, so there
-     is nothing to switch to and this refuses to invent it.
+     Only the people carrying data-quote are selectable, and all five do —
+     an entry without one is invisible to this and unclickable, which is the
+     thing to check first if a story ever stops taking its turn.
 
      The reference advances on its own rather than waiting to be clicked, so
      this does too — with the countdown drawn in CSS, paused on hover and
