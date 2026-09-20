@@ -1233,7 +1233,23 @@
     margin-block-start: var(--size-56);
   }
 
-  /* card 554x158 · fill #f4f7f7 · pad 32 · r 16 */
+  /* card 554x158 · fill #f4f7f7 · pad 32 · r 16.
+     QA note 12, "ta faltando o BG (é um cardzinho) e o efeito stack". The
+     fill is not missing and never was — it is #f4f7f7, exactly as drawn.
+     The trouble is that #f4f7f7 is ALSO the page ground this section sits
+     on, so a correct card is an invisible one, and a stack of invisible
+     cards is an absent stack. One cause, both halves of the note: measured
+     on scroll, the deck does converge and pile, from 166 apart down to the
+     drawn 14 stagger.
+
+     The edge is INFERRED, and it is the one thing here not read from the
+     design. figextract prints fills, sizes and radii and never strokes or
+     shadows (extract.py:49-104), and the Figma MCP hit its plan's call limit
+     before this node. So the card keeps its drawn fill and takes the
+     hairline this build already uses to separate same-coloured surfaces —
+     the accordion rows and the testimonial list both draw `--color-line`.
+     If the designer's card separates with a shadow instead, this is the one
+     line to swap. */
   .sobre__cards li {
     display: flex;
     align-items: flex-start;
@@ -1241,6 +1257,7 @@
     min-block-size: 158px;
     padding: var(--size-32);
     background-color: var(--color-page);
+    border: 1px solid var(--color-line);
     border-radius: var(--radius-md);
   }
 
