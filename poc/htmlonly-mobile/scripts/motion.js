@@ -377,9 +377,33 @@
     let over = null;
     let pin = null;
 
+    /* The video player is the third thing that can hold the clock, and the
+       only one that is not a pointer. The modal covers the carousel
+       completely: left running, the bar counts down and the story turns over
+       behind the scrim, so whoever closes the video comes back to a quote
+       they did not leave and a bar part way through one they never saw.
+
+       Read off the dialog's own `open` attribute rather than wired to
+       section 9, because showModal() announces nothing on the way IN — the
+       element has a `close` event and no matching `open` one. Watching the
+       attribute catches every path in and out through one signal, and leaves
+       section 9 knowing nothing about the carousel. */
+    const player = document.querySelector(".video-modal");
+
+    if (player) {
+      // `sync` is a function declaration below, so it is already bound here.
+      new MutationObserver(() => sync()).observe(player, {
+        attributes: true,
+        attributeFilter: ["open"],
+      });
+    }
+
     const rowAt = (target) => target?.closest?.(".depoimento__people li") ?? null;
     const activeRow = () => (list ? list.children[current()] : null) ?? null;
     const held = () => {
+      // Outranks both pointer and pin: nothing behind the player is being
+      // read, whatever the pointer was resting on when it opened.
+      if (player && player.open) return true;
       const row = activeRow();
       if (row === null) return false;
       if (pin === RELEASED) return false;
