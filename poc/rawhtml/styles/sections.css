@@ -1056,6 +1056,12 @@
     font-size: var(--text-h5);
     line-height: var(--leading-paragraph);
     color: var(--color-body);
+    /* QA note 7, "ficou uma viuva aqui no texto". This quote ended on
+       "tranquilidade." alone. `pretty` is the right tool rather than a
+       hand-placed break: the carousel turns five different quotes through
+       this one element, so a break written for one of them would be wrong
+       for the other four. Engines without it wrap as before. */
+    text-wrap: pretty;
   }
 
   .depoimento__people li {
