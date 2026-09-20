@@ -1037,8 +1037,37 @@
     cursor: pointer;
   }
 
+  /* Only the entry being read is two columns — name and tags on the left,
+     the author on the right. The four others are a single name and are
+     byte-for-byte what they were before the photo existed.
+
+     The row's height is the TEXT column's, and the photo follows it: with
+     `stretch` the grid row is already the max of the two, so nothing here
+     has to name a height and there is no second number to keep in step with
+     the tags' reservation below. Only the photo's width is declared, and
+     width does not depend on height. */
   .depoimento__people li[aria-current="true"] {
     color: var(--color-ink);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: var(--size-16);
+    align-items: start;
+  }
+
+  .depoimento__photo {
+    inline-size: 104px;
+    block-size: 104px;
+    overflow: hidden;
+    border-radius: var(--radius-md);
+  }
+
+  /* On the wrapper, never on the `li`: the countdown bar is an absolutely
+     positioned `::after` on the row, and clipping the row would clip it. */
+  .depoimento__photo img {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+    display: block;
   }
 
   .depoimento__tags {
@@ -1062,7 +1091,8 @@
      `display: none` rather than not rendering them: every set stays in the
      HTML and in the crawlable response, which is the rule the whole build
      follows for the FAQ answers and the quotes themselves. */
-  .depoimento__people li:not([aria-current="true"]) .depoimento__tags {
+  .depoimento__people li:not([aria-current="true"]) .depoimento__tags,
+  .depoimento__people li:not([aria-current="true"]) .depoimento__photo {
     display: none;
   }
 

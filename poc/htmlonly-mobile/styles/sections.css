@@ -997,19 +997,18 @@
          is 1px taller than drawn — 149 / 77 / 77, and the list 303 not 300;
        · the desktop's tag pill puts 16px copy on 1 with 6px of padding where
          the frame puts 20 on 1.4, so the pills are narrower. Measured at 328,
-         three of the five sets fit two rows and a 149 entry; Simone's and
-         Caroline e Antônio's take a third row and come to 185.
+         every set takes three rows beside the photo, so every entry is 185.
 
-     So the list is 457 tall under the two-row stories and 493 under the
-     other two, and the carousel advances by itself every 7s — a section that
+     So the list is 493 tall in every state, and the carousel advances by itself every 7s — a section that
      resized with it would shift the page under a reader ten times a minute.
 
-     830 is Frances's state, the tallest of the five, reserved HERE on the
-     block rather than as a floor under the tags. Hers wins on the quote
-     rather than the tags: 261 is the longest of the five and buys more than
-     the 36 a third tag row costs. Measured, not derived — every state is
-     checked against this number, and the shortest (Simone's, 779) is what
-     the slack is measured from. Reserving inside the active entry would pad
+     866 is Frances's state, the tallest of the five, reserved HERE on the
+     block rather than as a floor under the tags. Hers wins on the quote:
+     261 is the longest of the five, and since the photo took the tag column
+     down to 212 every set wraps to three rows, so the list no longer varies
+     between stories at all and the quote is the only thing that does.
+     Measured, not derived — every state is checked against this number, and
+     the shortest two (830) are what the slack measures from. Reserving inside the active entry would pad
      every state up to the tallest, opening dead space between the tags and
      the rule below them and putting a two-row entry at 185 where the frame
      draws 148. Reserved on the block, the slack falls past the end of the
@@ -1018,7 +1017,7 @@
     display: flex;
     flex-direction: column;
     gap: var(--size-24);
-    min-block-size: 830px;
+    min-block-size: 866px;
     /* The gutter picking a story scrolls to — motion.js aims the block at the
        top of the screen and this is what keeps it off the very edge. Not the
        `[id]` rule in base.css, which exists for menu anchors and resolves to
@@ -1034,12 +1033,12 @@
      The reservation itself stays, and for the same reason: the states are not
      the same height, and a section that resized as the carousel turned would
      shift the page under a reader ten times a minute. It is only re-measured
-     for one entry instead of five. 522 is Frances's state again — 373 above
-     the list (mark 48 + gap 40 + quote 261 + gap 24) and 149 under it — and
-     it is the tallest by 22 over Caroline e Antônio's 500, whose third tag
-     row does not make up for a quote 58 shorter. */
+     for one entry instead of five. 558 is Frances's state again — 373 above
+     the list (mark 48 + gap 40 + quote 261 + gap 24) and 185 under it — and
+     it is the tallest by 36 over the two shortest, which differ from it only
+     in the quote. */
   .js .depoimento {
-    min-block-size: 522px;
+    min-block-size: 558px;
   }
 
   /* The three radios drive the switch. Visually hidden rather than
@@ -1200,7 +1199,12 @@
   .js #depo-3:checked ~ .depoimento__people li:nth-child(3),
   .js #depo-4:checked ~ .depoimento__people li:nth-child(4),
   .js #depo-5:checked ~ .depoimento__people li:nth-child(5) {
-    display: block;
+    /* `grid`, not `block`: this group out-specifies the one that lays the
+       active row out in two columns, so `block` here would quietly win with
+       scripting on and the photo would sit under the tags instead of beside
+       them. The template itself stays down there — only the display value
+       has to be repeated. */
+    display: grid;
   }
 
   .depoimento__people label {
@@ -1227,23 +1231,67 @@
      `display: none` rather than leaving them out of the markup: all three
      sets stay in the HTML and in the crawlable response, the rule this build
      follows for the quotes themselves and for the FAQ answers. */
+  /* Same treatment as the tags, one rule below: hidden by default, and shown
+     for the entry being read by the group that shows the tags. It is a span
+     rather than a bare <img> exactly so the two can share that rule — a
+     replaced element does not want `display: flex`. */
+  .depoimento__photo {
+    display: none;
+    inline-size: 104px;
+    block-size: 104px;
+    overflow: hidden;
+    border-radius: var(--radius-md);
+  }
+
+  /* On the wrapper, never on the `li`: the countdown bar is an absolutely
+     positioned `::after` on the row, and clipping the row would clip it. */
+  .depoimento__photo img {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
   .depoimento__tags {
     display: none;
     flex-wrap: wrap;
     gap: var(--size-8);
     margin-block-start: var(--size-8);
-    /* The drawn floor: 328x64, two 28px rows and the 8 between them. The
-       reservation that stops the carousel resizing the page is NOT here —
-       `.depoimento` above carries it, and says why. */
-    min-block-size: 64px;
+    /* 100 = three 28px rows and the two 8s between them. The drawn floor was
+       328x64, two rows, and held while the tags had the width of the row to
+       themselves. The photo now takes 104 of it: on the 212 that is left no
+       two of these pills share a line, so every set takes three rows. The
+       reservation that stops the carousel resizing the page is still NOT
+       here — `.depoimento` above carries it, and says why. */
+    min-block-size: 100px;
   }
 
   #depo-1:checked ~ .depoimento__people li:nth-child(1) .depoimento__tags,
   #depo-2:checked ~ .depoimento__people li:nth-child(2) .depoimento__tags,
   #depo-3:checked ~ .depoimento__people li:nth-child(3) .depoimento__tags,
   #depo-4:checked ~ .depoimento__people li:nth-child(4) .depoimento__tags,
-  #depo-5:checked ~ .depoimento__people li:nth-child(5) .depoimento__tags {
+  #depo-5:checked ~ .depoimento__people li:nth-child(5) .depoimento__tags,
+  #depo-1:checked ~ .depoimento__people li:nth-child(1) .depoimento__photo,
+  #depo-2:checked ~ .depoimento__people li:nth-child(2) .depoimento__photo,
+  #depo-3:checked ~ .depoimento__people li:nth-child(3) .depoimento__photo,
+  #depo-4:checked ~ .depoimento__people li:nth-child(4) .depoimento__photo,
+  #depo-5:checked ~ .depoimento__people li:nth-child(5) .depoimento__photo {
     display: flex;
+  }
+
+  /* The entry being read is two columns — name and tags left, author right.
+     The others stay a single name. As on the desktop, the row's height is
+     the text column's and the photo has a fixed box, so no height is named
+     here and nothing has to be kept in step with the tags' reservation. */
+  #depo-1:checked ~ .depoimento__people li:nth-child(1),
+  #depo-2:checked ~ .depoimento__people li:nth-child(2),
+  #depo-3:checked ~ .depoimento__people li:nth-child(3),
+  #depo-4:checked ~ .depoimento__people li:nth-child(4),
+  #depo-5:checked ~ .depoimento__people li:nth-child(5) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: var(--size-12);
+    align-items: start;
   }
 
   /* The testimonial tag, verbatim from poc/rawhtml's `.depoimento__tags
