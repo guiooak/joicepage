@@ -1307,9 +1307,11 @@
   }
 
   /* play-circle 392:8315 · 49.77x49.77 @137.1,140.4 in the collage, which is
-     the panel's centre — so it is placed against the panel here. Same mark
-     as the desktop's 120x120 at the 0.4147 this frame is drawn at; the
-     viewBox does the scaling, stroke included, exactly as the file does. */
+     the panel's centre — so it is placed against the panel here. The node's
+     export is the desktop mark at 0.41476 down to the stroke (1.65905
+     against 4), so the shared viewBox scales it exactly as the file does and
+     the weight below stays the desktop's. Values, colour and opacity are
+     that export's, not a measurement. */
   .sobre__play {
     position: absolute;
     inset-inline-start: 79.01px;
@@ -1317,9 +1319,11 @@
     inline-size: 49.77px;
     block-size: 49.77px;
     fill: none;
-    stroke: #fff;
-    stroke-width: 2;
+    stroke: var(--c-paper);
+    stroke-width: 4;
+    stroke-linecap: round;
     stroke-linejoin: round;
+    opacity: 0.8;
     /* The link is the hit area, all 207.8x290.33 of it; the mark is
        decoration and must not swallow its own taps. */
     pointer-events: none;
@@ -1723,6 +1727,25 @@
     max-inline-size: none;
     max-block-size: none;
     overflow: visible;
+  }
+
+  /* The page must not scroll behind an open player. showModal() makes the
+     rest of the document inert, but inert is not unscrollable: the wheel
+     still reaches the viewport, and the canvas drifted past behind the scrim.
+
+     `scrollbar-gutter` is the load-bearing half of this, not a nicety. Look
+     at base.css: the whole canvas takes its zoom from `100cqw`, the ROOT'S
+     CONTENT WIDTH, chosen precisely so the scrollbar is excluded. Hiding the
+     overflow takes the scrollbar away, which would widen that box by the
+     gutter and rescale the entire page underneath the modal at the moment it
+     opens. Reserving the gutter holds the content width at what it already
+     was, so nothing moves. Both declarations, or neither.
+
+     `:has()` rather than a class from the script: this is a consequence of
+     the dialog being open, and the stylesheet can see that for itself. */
+  html:has(.video-modal[open]) {
+    overflow: hidden;
+    scrollbar-gutter: stable;
   }
 
   .video-modal::backdrop {
