@@ -188,12 +188,33 @@
      tap, keeps the click behaviour alone. Click and keyboard are untouched —
      this is additive, and the card is still a button. */
   @media (hover: hover) and (pointer: fine) {
-    .servicos__grid:hover .service-card {
+    /* `:has(.service-card:hover)`, not `:hover` on the row. The row is the
+       full 1360 INCLUDING its 24px gap, so crossing that gap on the way to
+       card 02 matched the row but no card: both collapsed to 437, then card
+       02 opened — two tweens back to back for one approach. */
+    .servicos__grid:has(.service-card:hover) .service-card {
       flex-basis: 437px;
     }
 
     .servicos__grid .service-card:hover {
       flex-basis: 899px;
+    }
+
+    /* QA note 5, "o hover do card 02 deu uma bugada aqui. É só no primeiro
+       hover". The card that is OPEN keeps its copy displayed by the rule
+       above this block, which only hides copy on cards that are neither
+       open nor hovered. So hovering card 02 collapsed card 01 to 437 while
+       it still held its full copy — and that copy lays out 1014 tall in an
+       874 card at that measure, a number this file already records a few
+       rules up. The row is `align-items: stretch`, so every hover-in grew
+       the whole section and every hover-out shrank it again.
+
+       While any card is hovered, the others are collapsed cards whatever
+       their open state, so they hide their copy like collapsed cards. */
+    .servicos__grid:has(.service-card:hover) .service-card:not(:hover) .service-card__claim,
+    .servicos__grid:has(.service-card:hover) .service-card:not(:hover) .service-card__text,
+    .servicos__grid:has(.service-card:hover) .service-card:not(:hover) .service-card__list {
+      display: none;
     }
 
     .servicos__grid .service-card:hover .service-card__arrow {
