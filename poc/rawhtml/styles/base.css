@@ -171,9 +171,13 @@
     zoom: var(--page-zoom);
   }
 
-  /* Weights are per-level, not shared: Figma's text styles set H1/H2/H3 Bold,
-     H4 ExtraBold and H5 Medium. Headline tracking is 0 in every style — the
-     earlier blanket -0.01em was invented. */
+  /* Weights are per-level, not shared, and the STYLE NAMES in the file do not
+     give them: Figma calls H1, H2, H3 and H4 all "Bold", but the weight token
+     behind each one differs — H1 is font-weight-600, H2 and H3 are 700, H4 is
+     800, H5 is Medium 500. Read off the variables rather than the style name,
+     which is what put H1 a step too heavy here until the designer's QA pass
+     caught it on every section title at once. Headline tracking is 0 in every
+     style — the earlier blanket -0.01em was invented. */
   h1,
   h2,
   h3,
@@ -186,7 +190,7 @@
   h1 {
     font-size: var(--text-h1);
     line-height: var(--leading-h1);
-    font-weight: var(--weight-bold);
+    font-weight: var(--weight-semibold);
   }
 
   h2 {

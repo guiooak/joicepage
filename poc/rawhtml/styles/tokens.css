@@ -106,9 +106,9 @@
     /* Size / line-height pairs, read per node from the .fig export. */
     --text-display-lg: 90px;      /* Visão headline, Allomira Black       */
     --leading-display-lg: 0.92;
-    --text-display: 72px;         /* Hero, Serviços, Processo headlines   */
+    --text-display: 72px;         /* Hero headline only                   */
     --leading-display: 0.92;
-    --text-h1: 56px;              /* Histórias, Sobre, FAQ headlines      */
+    --text-h1: 56px;              /* every section title · weight 600      */
     --leading-h1: 0.92;
     --text-h2: 48px;              /* service card titles, CTA paragraph   */
     --leading-h2: 1;

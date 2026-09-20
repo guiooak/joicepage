@@ -652,9 +652,9 @@
   }
 
   .servicos__head h2 {
-    font-size: var(--text-display);
-    line-height: var(--leading-display);
-    font-weight: var(--weight-black);
+    font-size: var(--text-h1);
+    line-height: var(--leading-h1);
+    font-weight: var(--weight-semibold);
     color: var(--color-accent-deep);
   }
 
@@ -767,9 +767,9 @@
   }
 
   .processo__grid h2 {
-    font-size: var(--text-display);
-    line-height: var(--leading-display);
-    font-weight: var(--weight-black);
+    font-size: var(--text-h1);
+    line-height: var(--leading-h1);
+    font-weight: var(--weight-semibold);
     color: var(--color-accent-deep);
   }
 
@@ -988,7 +988,7 @@
   .historias__grid h2 {
     font-size: var(--text-h1);
     line-height: var(--leading-h1);
-    font-weight: var(--weight-bold);
+    font-weight: var(--weight-semibold);
     color: var(--color-accent-deep);
   }
 
@@ -1177,7 +1177,7 @@
   .sobre__title {
     font-size: var(--text-h1);
     line-height: var(--leading-h1);
-    font-weight: var(--weight-bold);
+    font-weight: var(--weight-semibold);
     color: var(--color-accent);
   }
 
@@ -1368,7 +1368,7 @@
   .faq__title {
     font-size: var(--text-h1);
     line-height: var(--leading-h1);
-    font-weight: var(--weight-bold);
+    font-weight: var(--weight-semibold);
     color: var(--color-accent-deep);
   }
 
