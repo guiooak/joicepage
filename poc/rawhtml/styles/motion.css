@@ -349,7 +349,7 @@
 
      The animation needs `::details-content`, because a closed <details> hides
      its content outright and there is nothing to transition. `interpolate-size`
-     — already set on the root in base.css — is what lets `block-size` animate
+     — declared on `.accordion__item` below — is what lets `block-size` animate
      to and from `auto`; the panels are all different heights and hard-coding
      any of them would break the moment the copy changes. */
   /* An animation on the OPEN state, not a transition from a forced-closed
@@ -409,6 +409,30 @@
      the same contract the rest of the file keeps. */
   :root {
     --close-hold: 0ms;
+  }
+
+  /* `interpolate-size` is what lets `block-size` animate to and from `auto`,
+     which is the whole mechanism of the panel keyframes below.
+
+     It is declared HERE, on the accordion, and not on the root — which is
+     where it used to live, under a comment claiming the root was "the only
+     place it can be set". That claim was wrong: the property inherits, so any
+     ancestor of the thing being animated will do, and declaring it on <html>
+     handed it to every element on the page.
+
+     One of them could not take it. `.service-card` transitions `flex-basis`;
+     with keyword interpolation enabled the transition became able to start
+     from `auto`, and the computed value stuck at `calc-size(auto, 0px + size)`.
+     The two cards fell to content width — 1052 and 346 instead of the drawn
+     899 and 437 — overflowed the 1360 grid and gave the whole page a
+     horizontal scrollbar at scrollWidth 1463. Intermittently, which is what
+     a transition racing the first paint looks like.
+
+     So it is scoped to its one consumer. Declaring it on `.accordion__item`
+     covers the element and its `::details-content`, which is all the
+     keyframes below touch. */
+  .accordion__item {
+    interpolate-size: allow-keywords;
   }
 
   @supports (selector(::details-content)) and

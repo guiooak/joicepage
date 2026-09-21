@@ -4,7 +4,7 @@
  *
  * Serves <dir> over a throwaway HTTP server, opens it at <width> CSS pixels
  * with a mobile-shaped viewport, and prints one row per matched element:
- * its label, its top offset in page coordinates and its height.
+ * its label, its top offset in page coordinates, its height and its width.
  *
  * Offsets are reported UNSCALED — divided back through the zoom factor the
  * page applies — so they compare directly against the numbers drawn in the
@@ -166,6 +166,7 @@ const expression = `(() => {
       tag: el.tagName.toLowerCase(),
       top: +((r.top + window.scrollY) / factor).toFixed(2),
       height: +(r.height / factor).toFixed(2),
+      width: +(r.width / factor).toFixed(2),
     };
   });
   return JSON.stringify({
@@ -187,7 +188,9 @@ console.log(
     : `no horizontal scroll (scrollWidth ${out.scrollWidth} = clientWidth ${out.clientWidth})`,
 );
 for (const r of out.rows) {
-  console.log(`${r.top.toString().padStart(10)}  ${r.height.toString().padStart(9)}  ${r.tag} .${r.label}`);
+  console.log(
+    `${r.top.toString().padStart(10)}  ${r.height.toString().padStart(9)}  ${r.width.toString().padStart(9)}  ${r.tag} .${r.label}`,
+  );
 }
 
 ws.close();
