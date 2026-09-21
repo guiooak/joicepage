@@ -619,12 +619,28 @@
 
       event.preventDefault();
 
-      // nocookie, and `rel=0` so the end card offers this channel rather
-      // than the open internet.
+      /* nocookie, and `rel=0` so the end card offers this channel rather
+         than the open internet.
+
+         `cc_load_policy=0` because this video carries its subtitles in the
+         picture: YouTube's own caption track then draws a second set over
+         them. Worth knowing what this parameter can and cannot promise —
+         YouTube documents only `=1`, which forces captions on, and says the
+         default is "based on user preference". So `=0` asks for the
+         default rather than commanding silence, and a viewer whose account
+         is set to always show captions will still get them. It also does
+         not cover the other way captions switch themselves on, which is
+         playback starting muted; that one is the browser's autoplay policy
+         and this cannot reach it.
+
+         Doing better than "asks nicely" means the IFrame Player API and
+         `unloadModule("captions")` — a third-party script on every visit,
+         for a player that today loads only when someone asks for it. Not
+         worth it unless this proves insufficient. */
       videoFrame.src =
         "https://www.youtube-nocookie.com/embed/" +
         encodeURIComponent(id) +
-        "?autoplay=1&rel=0";
+        "?autoplay=1&rel=0&cc_load_policy=0";
 
       videoModal.showModal();
     });
