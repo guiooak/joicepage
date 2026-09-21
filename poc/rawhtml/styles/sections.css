@@ -762,10 +762,11 @@
   }
 
   /* ---- Processo --------------------------------------------------------
-     Left 553 · accordion column 663 @x697 (144px channel). */
+     Left 560 · accordion column 663 @x697 (137px channel). The left column
+     is 7px wider than the design so "atalhos" does not wrap alone. */
   .processo__grid {
     display: grid;
-    grid-template-columns: 553px 663px;
+    grid-template-columns: 560px 663px;
     justify-content: space-between;
   }
 
