@@ -66,23 +66,32 @@
      ref: zupstudio.framer.website + scroll-stack-component.framer.website
      The file draws these five cards as an overlapping pile: 529:4327 puts
      cards 01-04 at tops 0, 30.33, 66.33 and 106.33 over a card 158 tall, and
-     529:4348 sets 05 another 106 below 04. sections.css builds that pile as
-     the RESTING state; the sticky offsets here take it from there, spreading
-     the cards as they scroll and letting each be read in turn.
+     529:4348 sets 05 another 106 below 04.
 
-     (The "-65" this note used to quote is not in the file. It predates being
-     able to expand the deck and it sized the rest state wrongly by 460px.) */
+     That pile is the END of the effect, not its rest state. The cards start
+     as a list, each one pins at its drawn stop as it reaches the top, and by
+     the time the section leaves the viewport they have closed into exactly
+     the arrangement the frame shows. Building the pile as the resting state
+     instead — which was tried — leaves cards 01-03 showing a 30-40px edge
+     with no copy and no scroll length left to open them.
+
+     (The "-65" this note used to quote is not in the file either.) */
   @media (prefers-reduced-motion: no-preference) {
     .sobre__cards li {
       position: sticky;
-      top: calc(var(--header-height) + var(--size-40) + var(--i, 0) * 14px);
+      top: calc(var(--header-height) + var(--size-40) + var(--stack, 0px));
     }
 
-    .sobre__cards li:nth-child(1) { --i: 0; }
-    .sobre__cards li:nth-child(2) { --i: 1; }
-    .sobre__cards li:nth-child(3) { --i: 2; }
-    .sobre__cards li:nth-child(4) { --i: 3; }
-    .sobre__cards li:nth-child(5) { --i: 4; }
+    /* The drawn offsets, cumulative from the top card: 529:4327 puts 01-04 at
+       0, 30.33, 66.33 and 106.33, and 529:4348 sets 05 at 212.33. Each card
+       pins at its own stop, later cards paint over earlier ones, and once all
+       five are pinned the deck IS the frame. These were a flat 14 per card,
+       which is not a number the file contains. */
+    .sobre__cards li:nth-child(1) { --i: 0; --stack: 0px; }
+    .sobre__cards li:nth-child(2) { --i: 1; --stack: 30.33px; }
+    .sobre__cards li:nth-child(3) { --i: 2; --stack: 66.33px; }
+    .sobre__cards li:nth-child(4) { --i: 3; --stack: 106.33px; }
+    .sobre__cards li:nth-child(5) { --i: 4; --stack: 212.33px; }
   }
 
   /* Sticky offsets alone rebuild the deck but give it no depth — every card

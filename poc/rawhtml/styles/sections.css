@@ -1283,27 +1283,36 @@
     margin-block-start: var(--size-40);
   }
 
-  /* A PILE at rest, not a list. 529:4327 stacks cards 01-04 at tops 0, 30.33,
-     66.33 and 106.33 over a card 158 tall, and 529:4348 puts 05 another 106
-     below 04 — so three cards show only a 30-40px ledge, 04 shows its copy,
-     and 05 sits whole on top. Top of 01 to bottom of 05 is 370.33.
+  /* A list at rest. The pile the file draws is where the cards END UP, not
+     where they start, and the sticky offsets in motion.css take them there.
 
-     The margins below are those tops minus the 158 they overlap. The `-65`
-     that used to be quoted for this deck, in the note in motion.css, is not
-     a number the file contains.
+     This was briefly built the other way round — the drawn tops reproduced
+     as negative margins, so the deck sat piled from the first paint. It
+     matched the frame and it broke the section: cards 01-03 show a 30-40px
+     ledge in that state, which is the top edge and no copy, and with the
+     pile already closed there was no scroll length left for sticky to open
+     it. Three of five cards became unreadable at every scroll position.
 
-     The staggered `position: sticky` in motion.css still runs; it now starts
-     from the drawn pile instead of from a list that only became a pile once
-     the reader scrolled. */
+     The frame says so too, once read for layout rather than for appearance:
+     529:4315 reserves 1054 for a left column whose piled cards occupy about
+     264. That surplus is the runway. A static frame can only draw one moment
+     of a scroll effect, and this one draws the end of it.
+
+     `display: block`, and the gap as a margin, because of how far a sticky
+     card is allowed to travel. A grid item's containing block is its own grid
+     AREA, so inside `display: grid` every card was pinned to a cell its own
+     height and could not move at all — the sticky stack in motion.css has
+     never converged, on any scroll position, since the day it was written.
+     In a block container the containing block is this <ol>, so each card can
+     travel the whole deck and the pile actually closes. */
   .sobre__cards {
-    display: grid;
+    display: block;
     margin-block-start: var(--size-56);
   }
 
-  .sobre__cards li:nth-child(2) { margin-block-start: -127.67px; }
-  .sobre__cards li:nth-child(3) { margin-block-start: -122px; }
-  .sobre__cards li:nth-child(4) { margin-block-start: -118px; }
-  .sobre__cards li:nth-child(5) { margin-block-start: -52px; }
+  .sobre__cards li + li {
+    margin-block-start: var(--size-8);
+  }
 
   /* card 554x158 · fill #f4f7f7 · pad 32 · r 16.
      QA note 12, "ta faltando o BG (é um cardzinho) e o efeito stack". The
