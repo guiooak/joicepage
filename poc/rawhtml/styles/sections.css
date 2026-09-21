@@ -614,6 +614,14 @@
     border-radius: var(--radius-sm);
   }
 
+  /* Card 03 alone is drawn at 32. 529:4161, 529:4167 and 529:4177 are 40x40
+     and 529:4171 is 32x32, with the icon's y and the text block's y unchanged
+     across all four — so it is the glyph that is smaller, not the slot. */
+  .principio:nth-child(3) .principio__icon {
+    inline-size: 32px;
+    block-size: 32px;
+  }
+
   /* h3 + p as ONE flex child, so the icon and this block are the two the
      justify-between above distributes — the frame's own two children, and the
      markup poc/htmlonly-mobile already uses.
@@ -1476,6 +1484,20 @@
   .sobre__thumb--1 { inset-inline-start: 511px; inset-block-start: -42.7px; }
   .sobre__thumb--2 { inset-inline-start: 0;     inset-block-start: 386.6px; }
   .sobre__thumb--3 { inset-inline-start: 381px; inset-block-start: 630.6px; }
+
+  /* The only portrait source of the three: 293x440, where --1 and --2 are
+     615x440 and drop straight into the 210x150 slot. Scaled to cover, 47% of
+     its height survives, and a centred crop spends the top of that on empty
+     wall while cutting the desk — the subject sits low in this frame.
+
+     60% puts the window over the face and the laptop. It is a judgement call
+     and should not have to be one: the file's own crop for this slot
+     (529:4375) is 237x202, an aspect this export does not have, so the JPEG
+     was cropped somewhere other than the design and a re-export in landscape
+     would retire this line. */
+  .sobre__thumb--3 {
+    object-position: center 60%;
+  }
 
   /* ---- FAQ -------------------------------------------------------------
      Left 553 · list 783 @x577 (24px channel). */

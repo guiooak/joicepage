@@ -195,8 +195,8 @@
           class="hero__photo"
           src="assets/img/hero-joice.jpg"
           alt="Joice Sperandio, planejadora financeira"
-          width="1358"
-          height="750"
+          width="2200"
+          height="1737"
           fetchpriority="high"
         />
         <span class="hero__blob hero__blob--1" aria-hidden="true"></span>
@@ -279,8 +279,8 @@
             class="principios__image"
             src="assets/img/principios.jpg"
             alt=""
-            width="1360"
-            height="710"
+            width="2000"
+            height="1508"
             loading="lazy"
           />
 
@@ -789,7 +789,7 @@
                  intercepts it and opens the dialog at the foot of this file
                  instead. -->
             <a class="sobre__panel" href="https://youtu.be/NGBjNBx06Wc" target="_blank" rel="noopener noreferrer" aria-label="Assistir ao vídeo de apresentação da Joice">
-              <img src="assets/img/sobre-main.jpg" alt="Joice Sperandio em atendimento" width="501" height="700" loading="lazy" />
+              <img src="assets/img/sobre-main.jpg" alt="Joice Sperandio em atendimento" width="1200" height="975" loading="lazy" />
               <!-- play-circle 293:6745 · 120x120 @190.5,289.6 inside the 501x700
                    panel, which is its dead centre. Both shapes are strokes, and
                    the path data below is the node's own SVG export verbatim:
@@ -985,10 +985,16 @@
 
         <div class="site-footer__social">
           <span class="site-footer__label">Acompanhe pelas redes sociais:</span>
-          <!-- The frame draws four marks. Only Instagram and LinkedIn are
-               wired, because only those two URLs are known — both are already
-               in the JSON-LD sameAs. TikTok and YouTube need handles from
-               Joice; inventing them would ship links that 404. -->
+          <!-- The frame draws FOUR marks — Instagram 24, TikTok 20, LinkedIn
+               20, YouTube 20, each in an 8px pill (I529:4400;157:1085). Two
+               are built, because only those two URLs are known; both are
+               already in the JSON-LD sameAs, and inventing the others would
+               ship links that 404.
+
+               So this is a deliberate divergence from the design, confirmed
+               as such rather than an oversight, and the two unused SVGs have
+               been deleted rather than left in the repo looking pending. Add
+               the marks back with the handles, not before. -->
           <ul>
             <li>
               <a href="https://www.instagram.com/joicesperandio/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
