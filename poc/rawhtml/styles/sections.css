@@ -1694,10 +1694,32 @@
     background: rgb(4 12 16 / 82%);
   }
 
+  /* 1280, not 1120, so the 16:9 that falls out of it is 720.
+
+     Do not read that as a quality control. It was tried as one and it does
+     not work: the embed serves `medium` — 360p — whatever this page does.
+     Measured against the live player, reading back the quality it reports,
+     every one of these was ignored:
+
+       setPlaybackQuality("hd720")            deprecated, no effect
+       setPlaybackQualityRange(hd720,hd1080)  no effect
+       vq=hd720 on the embed URL              never supported
+       this 1120 -> 1280 widening             no effect
+       loading the frame after the dialog     no effect
+       dropping autoplay, playing by command  no effect
+
+     Checked in headless AND in a real browser window on a signed-out
+     profile, held for 60s: it starts at `medium` and never climbs, while
+     the player itself reports hd1080 and hd720 as available. Whatever
+     decides this now sits on YouTube's side.
+
+     The 1280 stays because a bigger player is better on its own terms, not
+     because it buys resolution. The two caps below still bind first on a
+     small window. */
   .video-modal__stage {
     position: relative;
     inline-size: min(
-      1120px,
+      1280px,
       calc(100vw - var(--size-48) * 2),
       calc((100vh - var(--size-48) * 2 - var(--size-48)) * 16 / 9)
     );
