@@ -754,8 +754,7 @@
      is an exported file now (assets/img/arrow.svg) rather than a symbol
      drawing itself in `currentColor`, and its stroke is #5779aa — the same
      --color-accent, baked in by the export. */
-  .service-card__list img,
-  .service-card__list svg {
+  .service-card__list img {
     inline-size: 32px;
     block-size: 32px;
     flex-shrink: 0;
@@ -851,11 +850,20 @@
   }
 
   /* Plus that becomes a cross when open — two bars, one rotated away. */
+  /* 24, the size of the xmark in the Processo component
+     (I529:4274;121:2425). The FAQ's mark is a different component and IS 16
+     (I529:4399;115:2188;401:9190), which is where this number came from and
+     why it was wrong in only one of the two places it is used. */
   .accordion__icon {
     position: relative;
+    inline-size: 24px;
+    block-size: 24px;
+    flex-shrink: 0;
+  }
+
+  .faq__list .accordion__icon {
     inline-size: 16px;
     block-size: 16px;
-    flex-shrink: 0;
   }
 
   .accordion__icon::before,
@@ -960,6 +968,10 @@
      Height is still set explicitly so the outlined variant's 1px border sits
      inside the box; on auto height it would render 30 against the filled
      variant's 28. */
+  /* Outlined is the default here: the section's own #e5eef4 with a #5779aa
+     edge and copy. (Geometry and colour used to be two rules under the same
+     selector, one after the other, which is a split with nothing on either
+     side of it.) */
   .conversa .tag {
     position: absolute;
     display: inline-flex;
@@ -969,10 +981,6 @@
     font-size: var(--text-paragraph);
     line-height: var(--leading-paragraph);
     letter-spacing: var(--tracking-paragraph);
-  }
-
-  /* Outlined: the section's own #e5eef4 with a #5779aa edge and copy. */
-  .conversa .tag {
     background-color: var(--color-surface-tint);
     color: var(--color-accent);
     border-color: var(--color-line-brand);
@@ -1341,6 +1349,7 @@
   }
 
   .sobre__num {
+    order: 0;
     inline-size: 50px;
     flex-shrink: 0;
     font-size: var(--text-h3);
@@ -1359,7 +1368,6 @@
     flex-shrink: 0;
   }
 
-  .sobre__num { order: 0; }
   .sobre__cards li p { order: 2; color: var(--color-body); }
 
   .sobre__cards strong {
@@ -1856,11 +1864,11 @@
     opacity: 1;
   }
 
+  /* Outline on focus only — hover shares the opacity above and nothing else. */
   .video-modal__close:focus-visible {
     outline: 2px solid #fff;
     outline-offset: 2px;
     border-radius: var(--radius-sm);
-    opacity: 1;
   }
 
   .video-modal__close svg {
@@ -1872,18 +1880,4 @@
     stroke-linecap: round;
   }
 
-  /* ---- Placeholders ----------------------------------------------------
-     Each of these holds the exact footprint of an asset not yet exported —
-     the Figma MCP plan hit its tool-call limit mid-build. They are meant to
-     look provisional. `grep -rn is-placeholder` lists everything outstanding. */
-  .is-placeholder {
-    display: grid;
-    place-items: center;
-    background-color: var(--c-blue-tint);
-    color: var(--color-accent-deep);
-    font-size: var(--text-caption);
-    line-height: var(--leading-caption);
-    letter-spacing: 0;
-    text-align: center;
-  }
 }

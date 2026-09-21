@@ -200,10 +200,15 @@
     font-weight: var(--weight-bold);
   }
 
+  /* h4 and h5 have no element in today's markup, and they stay: h1-h5 is the
+     document's heading scale, and dropping the two that happen to be unused
+     means the next heading added falls back to body size instead of landing
+     on its step. h4's 800 is not arbitrary either — it is the weight Figma
+     gives the H4 style, the one the testimonial quote uses. */
   h4 {
     font-size: var(--text-h4);
     line-height: var(--leading-h4);
-    font-weight: 800;
+    font-weight: var(--weight-extrabold);
   }
 
   h5 {
