@@ -588,27 +588,77 @@
       /* nocookie, and `rel=0` so the end card offers this channel rather
          than the open internet.
 
-         `cc_load_policy=0` because this video carries its subtitles in the
-         picture: YouTube's own caption track then draws a second set over
-         them. Worth knowing what this parameter can and cannot promise —
-         YouTube documents only `=1`, which forces captions on, and says the
-         default is "based on user preference". So `=0` asks for the
-         default rather than commanding silence, and a viewer whose account
-         is set to always show captions will still get them. It also does
-         not cover the other way captions switch themselves on, which is
-         playback starting muted; that one is the browser's autoplay policy
-         and this cannot reach it.
-
-         Doing better than "asks nicely" means the IFrame Player API and
-         `unloadModule("captions")` — a third-party script on every visit,
-         for a player that today loads only when someone asks for it. Not
-         worth it unless this proves insufficient. */
+         `cc_load_policy=0` stays, but it is the weaker half: YouTube
+         documents only `=1`, which forces captions ON, and calls the default
+         "based on user preference" — so `=0` asks for the default rather
+         than commanding silence, and it was not enough here. `enablejsapi=1`
+         is what carries the other half; see the caption handshake below. */
       videoFrame.src =
         "https://www.youtube-nocookie.com/embed/" +
         encodeURIComponent(id) +
-        "?autoplay=1&rel=0&cc_load_policy=0";
+        "?autoplay=1&rel=0&cc_load_policy=0&enablejsapi=1";
 
       videoModal.showModal();
+    });
+
+    /* This video carries its subtitles in the picture, so YouTube's own
+       caption track draws a SECOND set over them. `cc_load_policy=0` did not
+       stop it — it never promised to.
+
+       What does stop it is telling the player to drop the module. That is
+       normally the IFrame Player API's `unloadModule("captions")`, which
+       means loading YouTube's script; but the API is a postMessage protocol
+       underneath, and the embed answers it directly. So this speaks the
+       protocol and the page still loads NOTHING third-party until someone
+       clicks the photo.
+
+       The handshake is the fiddly part and it is YouTube's, not ours: the
+       embed stays silent until it is sent `listening`, and only then reports
+       `onReady` and its state. Both moments matter — a caption track can
+       come back when playback actually starts, so the command goes out at
+       ready AND at the transition into playing (state 1). Sending it twice
+       is harmless; sending it once at load is not enough.
+
+       Both ends are origin-checked. `message` is a window-wide event and
+       anything can post to it. */
+    const PLAYER_ORIGIN = "https://www.youtube-nocookie.com";
+
+    // "cc" is the old module name and "captions" the current one. Which one
+    // answers depends on the player build, so both go out.
+    const dropCaptions = () => {
+      const win = videoFrame.contentWindow;
+      if (!win) return;
+      for (const module of ["captions", "cc"]) {
+        win.postMessage(
+          JSON.stringify({ event: "command", func: "unloadModule", args: [module] }),
+          PLAYER_ORIGIN
+        );
+      }
+    };
+
+    videoFrame.addEventListener("load", () => {
+      // Also fires when the src is cleared on close; nothing to talk to then.
+      if (!videoFrame.getAttribute("src")) return;
+      videoFrame.contentWindow.postMessage(
+        JSON.stringify({ event: "listening" }),
+        PLAYER_ORIGIN
+      );
+      dropCaptions();
+    });
+
+    window.addEventListener("message", (event) => {
+      if (event.origin !== PLAYER_ORIGIN) return;
+      if (!videoFrame.contentWindow || event.source !== videoFrame.contentWindow) return;
+
+      let data;
+      try {
+        data = JSON.parse(event.data);
+      } catch {
+        return; // not one of the player's JSON frames
+      }
+
+      const playing = data.event === "infoDelivery" && data.info && data.info.playerState === 1;
+      if (data.event === "onReady" || playing) dropCaptions();
     });
 
     videoModal.addEventListener("close", () => {
