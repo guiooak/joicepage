@@ -135,6 +135,7 @@
     --weight-medium: 500;
     --weight-semibold: 600;
     --weight-bold: 700;
+    --weight-extrabold: 800;  /* H4 only — the testimonial quote */
     --weight-black: 900;
 
     /* Figma sets letterSpacing 1% on the 20px paragraph style and -1% on the

@@ -1017,13 +1017,20 @@
     object-fit: cover;
   }
 
-  /* Testimonial block 1360x491 · fill #ffffff · pad 40 · gap 80 */
-  /* 668 and 548, the drawn widths — `space-between` then leaves the 64
-     channel the file draws between them. They were 640 and 480, which put
-     160 in the channel and squeezed both columns. */
+  /* Testimonial block 1360x532 · fill #ffffff · pad 40 · content 1280x452.
+
+     668 and 468, read off the page instance 529:4302: `testimonial` is 668
+     wide at x=0 and `Names` is 468 at x=812, so the channel between them is
+     144 and the three add up to the 1280 the 40px padding leaves.
+
+     548 was here before, called "the drawn width", and it is — on the
+     COMPONENT CANVAS, where the name rows are laid out 548 wide. The canvas
+     is not what the page places: every instance of this component in the
+     desktop frame is 468. Measuring the component instead of the instance
+     widened the column by 80 and narrowed the channel to 64. */
   .depoimento {
     display: grid;
-    grid-template-columns: 668px 548px;
+    grid-template-columns: 668px 468px;
     justify-content: space-between;
     gap: var(--size-80);
     margin-block-start: var(--size-48);
@@ -1043,19 +1050,25 @@
 
   /* QA note 8, "o tamanho do texto no componente de depoimentos tá bem menor
      do que no layout". It was: this block declared no size at all and fell
-     back to the body's 20/1.4 — the only prominent run on the page without
-     one, while every other 24px line (hero caption, credentials, accordion
-     summary, big-number labels, footer phone) sets it explicitly.
+     back to the body's 20/1.4, the only prominent run on the page without one.
 
-     24/1.4 is measured, not guessed. The drawn box is 668x306 for this
-     quote; at 20/1.4 it sets to 168, at 24/1.2 to 230, at 24/1.4 to 269.
-     The remaining gap to 306 is a wrap difference — Figma breaks this string
-     into 9 lines where Chrome fits 8 — so the box will not land exactly on
-     the drawn number and should not be forced to. */
+     The style is H4, read off the component (I529:4302;295:9345): 28px,
+     weight 800, line height 1.2, letterSpacing 0. This used to say 24/1.4,
+     picked by fitting the drawn box rather than by reading the node — the
+     Figma file was out of reach at the time — and that guess was both a size
+     and a weight short.
+
+     The arithmetic now closes exactly, which is how the reading is confirmed:
+     28 x 1.2 = 33.6, Figma rounds a computed line height to the nearest whole
+     pixel, so 34; the drawn box is 668x306; 306 / 34 = 9 lines. Hence the
+     literal 34px rather than the ratio — a ratio would set 33.6 here and lose
+     a third of a pixel per line, nine times over, on every one of five quotes.
+     See .ai/plans/desktop-figma-fixes.md. */
   .depoimento__quote {
     margin-block-start: var(--size-32);
-    font-size: var(--text-h5);
-    line-height: var(--leading-paragraph);
+    font-size: var(--text-h4);
+    line-height: 34px;
+    font-weight: var(--weight-extrabold);
     color: var(--color-body);
     /* QA note 7, "ficou uma viuva aqui no texto". This quote ended on
        "tranquilidade." alone. `pretty` is the right tool rather than a
@@ -1065,9 +1078,17 @@
     text-wrap: pretty;
   }
 
+  /* padding-block 24 and a zero-height rule, both from the row component
+     (I529:4302;295:9352): `py-[24px]`, `border-t`, `border-b`, 1px #e2e9eb.
+
+     The rule is an inset shadow rather than a border for the same reason the
+     accordion rows use one — Figma strokes paint inside the box and cost no
+     layout, so five bordered rows would stack 5px the frame does not have.
+     The column has to come out at exactly 452: one open row at 148 and four
+     closed at 76. */
   .depoimento__people li {
-    padding-block: var(--size-16);
-    border-block-start: 1px solid var(--color-line);
+    padding-block: var(--size-24);
+    box-shadow: inset 0 1px 0 var(--color-line);
     color: var(--color-body-soft);
     cursor: pointer;
   }
@@ -1089,16 +1110,32 @@
     align-items: start;
   }
 
+  /* No height, which is what the note above already claims and this rule used
+     to contradict with a flat 104. The 104 made the photo four pixels taller
+     than the text column beside it, so the open row came out 152 against the
+     drawn 148 and the whole block overshot by the same four. `stretch` hands
+     the photo the row height the text sets — 100 — and `cover` on the image
+     absorbs the shape change. */
   .depoimento__photo {
+    position: relative;
     inline-size: 104px;
-    block-size: 104px;
+    align-self: stretch;
     overflow: hidden;
     border-radius: var(--radius-md);
   }
 
   /* On the wrapper, never on the `li`: the countdown bar is an absolutely
      positioned `::after` on the row, and clipping the row would clip it. */
+  /* Absolute, so the photo contributes NOTHING to the grid row's height.
+     `align-self: stretch` alone could not work while the <img> was in flow:
+     a stretched item still offers its intrinsic size when the row is being
+     measured, so the 208x208 source at 104 wide asked for 104, the row became
+     104, and the stretch then handed 104 straight back. Out of flow the
+     wrapper has no content to measure, the row is the text column's 100, and
+     the photo takes it. */
   .depoimento__photo img {
+    position: absolute;
+    inset: 0;
     inline-size: 100%;
     block-size: 100%;
     object-fit: cover;
@@ -1109,7 +1146,9 @@
     display: flex;
     flex-wrap: wrap;
     gap: var(--size-8);
-    margin-block-start: var(--size-12);
+    /* 8, not 12: the row component stacks name and tags with `gap-[8px]`,
+       which is what makes the open row 24 + 28 + 8 + 64 + 24 = the drawn 148. */
+    margin-block-start: var(--size-8);
     /* Both, and both are load bearing once the box below is taller than its
        rows: `align-items` keeps each pill its own 28px instead of stretching
        to the line, `align-content` keeps the rows packed at the top instead
@@ -1243,14 +1282,12 @@
      on scroll, the deck does converge and pile, from 166 apart down to the
      drawn 14 stagger.
 
-     The edge is INFERRED, and it is the one thing here not read from the
-     design. figextract prints fills, sizes and radii and never strokes or
-     shadows (extract.py:49-104), and the Figma MCP hit its plan's call limit
-     before this node. So the card keeps its drawn fill and takes the
-     hairline this build already uses to separate same-coloured surfaces —
-     the accordion rows and the testimonial list both draw `--color-line`.
-     If the designer's card separates with a shadow instead, this is the one
-     line to swap. */
+     The edge is no longer inferred. Read from the file 2026-09-21, nodes
+     318:7351 and 318:7350 (the frame that parents the pile): fill #f4f7f7,
+     stroke 1px #e2e9eb = Elements/Border/neutral-subtle = --color-line,
+     radius 16, padding 32, and NO effect. Not one of the five cards carries
+     a shadow, and neither does the frame stacking them, so that stroke is
+     the entire separation. The hairline below is the drawn value. */
   .sobre__cards li {
     display: flex;
     align-items: flex-start;
