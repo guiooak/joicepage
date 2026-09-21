@@ -228,8 +228,21 @@
      padding it sat under, and taking it out of this sum is half of that fix
      — left in, every anchor would now overshoot by 40.
 
+     The subtraction is scoped to `.section[id]` rather than every `[id]`,
+     and that scope is load bearing. `--section-pad` is a custom property, so
+     it INHERITS: an id nested inside a padded section sees its parent's pad
+     even though it has none of its own. #contato lives inside #processo,
+     which declares 160 — so the bare `[id]` rule resolved to 48 - 160 =
+     -112px there, and the menu jump to the CTA landed 112px above it. Every
+     section that declares the variable carries `class="section"`, so the
+     subtraction still applies exactly where it did.
+
      Anything without the variable (the hero, the CTA) just gets the 48. */
   [id] {
+    scroll-margin-top: var(--size-48);
+  }
+
+  .section[id] {
     scroll-margin-top: calc(var(--size-48) - var(--section-pad, 0px));
   }
 
