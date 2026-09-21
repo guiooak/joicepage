@@ -166,7 +166,7 @@
     line-height: var(--leading-paragraph);
     letter-spacing: var(--tracking-paragraph);
     color: var(--color-accent);
-    border: 1px solid var(--color-line-strong);
+    border: 1px solid var(--color-line-brand);
     border-radius: var(--radius-pill);
   }
 
@@ -975,7 +975,7 @@
   .conversa .tag {
     background-color: var(--color-surface-tint);
     color: var(--color-accent);
-    border-color: var(--color-line-strong);
+    border-color: var(--color-line-brand);
   }
 
   /* Filled: #ccdceb with the deeper #28445e copy and no edge. */
@@ -1445,8 +1445,8 @@
     position: absolute;
     inset-inline-start: 190.5px;
     inset-block-start: 289.6px;
-    inline-size: 120px;
-    block-size: 120px;
+    inline-size: var(--size-120);
+    block-size: var(--size-120);
     fill: none;
     stroke: var(--c-paper);
     stroke-width: 4;

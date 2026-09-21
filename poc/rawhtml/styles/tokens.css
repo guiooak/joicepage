@@ -28,11 +28,9 @@
     --c-blue-tint: #ccdceb;   /* Background/Color/secondary-subtle */
     --c-blue-pale: #e5eef4;   /* Background/Color/primary-subtle   */
     --c-violet: #50518a;      /* Elements/Text/Title/Color/quaternary-base */
-    --c-violet-pale: #d3d8ea; /* Background/Color/quaternary-subtle */
 
     --c-ink: #151a1d;         /* Elements/Text/Title/Neutral/default */
     --c-muted: #4c646e;       /* Elements/Text/Body/neutral          */
-    --c-steel: #73949d;       /* Background/Neutral/neutral-strong   */
 
     /* The accordion component carries its own two text colours, and they are
        not the page's: Text/txt-primary is pure black and Text/txt-secondary
@@ -43,7 +41,6 @@
     --c-slate: #3c3c43;       /* Text/txt-secondary */
 
     --c-line: #e2e9eb;        /* Elements/Border/neutral-subtle */
-    --c-line-strong: #587882; /* Elements/Border/neutral-strong */
 
     --c-paper: #f4f7f7;       /* Background/Neutral/default — the page ground */
     --c-white: #ffffff;       /* Background/Neutral/white */
@@ -67,12 +64,15 @@
     /* Accordion panels only — see the primitives above. The alpha is the
        design's, and it is worth keeping as alpha: the component is drawn on
        white in the Desktop section and on the page ground in the frame. */
-    --color-body-quiet: rgb(60 60 67 / 85%);
+    /* Text/txt-secondary at 85%, which is how the accordion panel is drawn
+       (I529:4274;121:2428 is rgba(60,60,67,.85)). Mixed from --c-slate
+       rather than restating its hex, which is what left --c-slate reading
+       as an unused token while its value was in use three lines down. */
+    --color-body-quiet: color-mix(in srgb, var(--c-slate) 85%, transparent);
     --color-ink-strong: var(--c-black);
 
     --color-accent: var(--c-blue);
     --color-accent-deep: var(--c-navy);
-    --color-accent-soft: var(--c-blue);
     /* Unrevealed state of the two-tone Visão headline — see the scroll reveal
        in the designer's Interactions spec. */
     --color-ghost-ink: var(--c-blue-tint);
@@ -81,7 +81,10 @@
     --color-surface-card-alt: var(--c-blue-pale);
     --color-surface-tint: var(--c-blue-pale);
     --color-line: var(--c-line);
-    --color-line-strong: var(--c-blue);
+    /* Elements/Border/brand-subtle. Named `-strong` it read as an alias for
+       --c-line-strong, the neutral #587882 — which it never was, and which
+       nothing uses. The rendered colour was always right; only the name lied. */
+    --color-line-brand: var(--c-blue);
 
     --color-button: var(--c-navy);
     --color-button-primary: var(--c-blue);
@@ -122,7 +125,10 @@
     --leading-paragraph: 1.4;
     --text-caption: 16px;
     --leading-caption: 1.5;
-    --text-tag: 16px;
+    /* Caption's size at solid leading, which is the testimonial pill and
+       nothing else: 16 x 1 plus 6 of padding top and bottom is the 28 the
+       file draws (I529:4302;295:9355). Caption's own 1.5 would make it 36.
+       There is no --text-tag to go with this; the size is Caption's. */
     --leading-tag: 1;
 
     /* Lora numerals. */
@@ -146,7 +152,6 @@
     /* ---- Dimension ------------------------------------------------------- */
     --frame-width: 1440px;
     --content-width: 1360px;
-    --page-gutter: 40px;
     --section-padding-top: 160px;
 
     --size-4: 4px;
