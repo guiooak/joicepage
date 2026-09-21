@@ -64,9 +64,14 @@
 
   /* ---- 4 · Stack -------------------------------------------------------
      ref: zupstudio.framer.website + scroll-stack-component.framer.website
-     The file draws these five cards as an overlapping deck (auto-layout gap
-     -65). Sticky offsets rebuild that deck on scroll while keeping each card
-     independently readable when it is the active one. */
+     The file draws these five cards as an overlapping pile: 529:4327 puts
+     cards 01-04 at tops 0, 30.33, 66.33 and 106.33 over a card 158 tall, and
+     529:4348 sets 05 another 106 below 04. sections.css builds that pile as
+     the RESTING state; the sticky offsets here take it from there, spreading
+     the cards as they scroll and letting each be read in turn.
+
+     (The "-65" this note used to quote is not in the file. It predates being
+     able to expand the deck and it sized the rest state wrongly by 460px.) */
   @media (prefers-reduced-motion: no-preference) {
     .sobre__cards li {
       position: sticky;

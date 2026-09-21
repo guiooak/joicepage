@@ -1267,11 +1267,27 @@
     margin-block-start: var(--size-40);
   }
 
+  /* A PILE at rest, not a list. 529:4327 stacks cards 01-04 at tops 0, 30.33,
+     66.33 and 106.33 over a card 158 tall, and 529:4348 puts 05 another 106
+     below 04 — so three cards show only a 30-40px ledge, 04 shows its copy,
+     and 05 sits whole on top. Top of 01 to bottom of 05 is 370.33.
+
+     The margins below are those tops minus the 158 they overlap. The `-65`
+     that used to be quoted for this deck, in the note in motion.css, is not
+     a number the file contains.
+
+     The staggered `position: sticky` in motion.css still runs; it now starts
+     from the drawn pile instead of from a list that only became a pile once
+     the reader scrolled. */
   .sobre__cards {
     display: grid;
-    gap: var(--size-8);
     margin-block-start: var(--size-56);
   }
+
+  .sobre__cards li:nth-child(2) { margin-block-start: -127.67px; }
+  .sobre__cards li:nth-child(3) { margin-block-start: -122px; }
+  .sobre__cards li:nth-child(4) { margin-block-start: -118px; }
+  .sobre__cards li:nth-child(5) { margin-block-start: -52px; }
 
   /* card 554x158 · fill #f4f7f7 · pad 32 · r 16.
      QA note 12, "ta faltando o BG (é um cardzinho) e o efeito stack". The
@@ -1282,12 +1298,17 @@
      on scroll, the deck does converge and pile, from 166 apart down to the
      drawn 14 stagger.
 
-     The edge is no longer inferred. Read from the file 2026-09-21, nodes
-     318:7351 and 318:7350 (the frame that parents the pile): fill #f4f7f7,
-     stroke 1px #e2e9eb = Elements/Border/neutral-subtle = --color-line,
-     radius 16, padding 32, and NO effect. Not one of the five cards carries
-     a shadow, and neither does the frame stacking them, so that stroke is
-     the entire separation. The hairline below is the drawn value. */
+     Read off the file, not inferred: fill #f4f7f7, stroke 1px #e2e9eb
+     (Elements/Border/neutral-subtle, which is --color-line), radius 16,
+     padding 32.
+
+     And a shadow on the TOP CARD ONLY — 529:4348 carries
+     `0 0 80px rgba(0,0,0,.08)` where cards 01-04 carry none. That one halo is
+     what separates the pile from its ground when card and ground are the same
+     colour, and it is the other half of the QA note. It is also the thing a
+     first pass here missed and wrote up as "no shadow anywhere": cards 01-04
+     live inside 529:4327 and card 05 is that frame's sibling, so reading the
+     frame and its children answered for four cards out of five. */
   .sobre__cards li {
     display: flex;
     align-items: flex-start;
@@ -1295,8 +1316,20 @@
     min-block-size: 158px;
     padding: var(--size-32);
     background-color: var(--color-page);
-    border: 1px solid var(--color-line);
+    /* Inset, not a border, for the third time on this page and for the same
+       reason: a Figma stroke paints inside the box. The drawn card is 158
+       tall and its content frame is 94 at y=32, so 32 + 94 + 32 fills it
+       exactly and a real 1px border would push the card to 160 — which then
+       walked every offset in the pile below by 2. */
+    box-shadow: inset 0 0 0 1px var(--color-line);
     border-radius: var(--radius-md);
+  }
+
+  /* Last child = the top of the pile, both in paint order and in the file. */
+  .sobre__cards li:last-child {
+    box-shadow:
+      inset 0 0 0 1px var(--color-line),
+      0 0 80px rgb(0 0 0 / 8%);
   }
 
   .sobre__num {
