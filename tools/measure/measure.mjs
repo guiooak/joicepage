@@ -150,6 +150,22 @@ await send(
   sessionId,
 );
 
+/* Then let the entry animations finish. Any <details> that loads `open` runs
+ * the 320ms panel-open keyframe, which starts at `block-size: 0` — measured
+ * during it, an open accordion reports its header height and nothing else.
+ * That is how eight FAQ rows came back at 76 each with the first one open.
+ *
+ * Waiting on getAnimations() would be the precise way and does not work here:
+ * Chrome reports no animation object at all for `::details-content`, which is
+ * the same blind spot scripts/motion.js has to work around. So this is a flat
+ * settle longer than the longest entry animation on the page.
+ */
+await send(
+  "Runtime.evaluate",
+  { expression: "new Promise((r) => setTimeout(r, 500))", awaitPromise: true },
+  sessionId,
+);
+
 const expression = `(() => {
   const probe = document.createElement("div");
   probe.style.cssText = "position:absolute;top:0;left:0;width:100px;height:100px";
