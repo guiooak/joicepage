@@ -7,7 +7,7 @@
    wherever a number would otherwise look arbitrary, so the next editor can
    tell "as drawn" from "invented".
 
-   This is NOT a responsive variant of poc/rawhtml. The mobile frame is a
+   This is NOT a responsive variant of raw/web. The mobile frame is a
    separately-designed layout: different structure (hamburger nav, two
    horizontal rails, a two-card carousel) and different copy in at least five
    places. Where a string here differs from the desktop's, the mobile frame
@@ -1104,7 +1104,7 @@
      snapping ahead of it.
 
      Re-measure these if the copy or the measure changes: `node
-     tools/measure/measure.mjs poc/htmlonly-mobile 360 '.depoimento__quotes
+     tools/measure/measure.mjs raw/mobile 360 '.depoimento__quotes
      blockquote'` prints all three, each sized to its own text. */
   .depoimento__quotes {
     display: grid;
@@ -1165,7 +1165,7 @@
     color: var(--color-body-soft);
   }
 
-  /* The divider, verbatim from poc/rawhtml: one hairline above every entry
+  /* The divider, verbatim from raw/web: one hairline above every entry
      and none closing the list. Asked for explicitly — the mobile frame draws
      a fourth rule under the last name (y=299 of the 300-tall Names frame)
      and the desktop does not, and the desktop is the one to follow here.
@@ -1294,7 +1294,7 @@
     align-items: start;
   }
 
-  /* The testimonial tag, verbatim from poc/rawhtml's `.depoimento__tags
+  /* The testimonial tag, verbatim from raw/web's `.depoimento__tags
      span` — asked for explicitly, and a departure from the mobile frame
      rather than a reading of it.
 
@@ -1451,7 +1451,7 @@
      sticky offsets instead, which keeps every card readable as it becomes the
      active one and still arrives at the drawn overlap.
 
-     This is the same call poc/rawhtml already made for the same component —
+     This is the same call raw/web already made for the same component —
      see `.sobre__cards` there, a grid with the same 8px gap. It costs the
      section its drawn height, which is the one place on this page where the
      frame is deliberately not reproduced. */

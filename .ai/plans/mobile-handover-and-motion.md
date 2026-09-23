@@ -2,13 +2,13 @@
 
 ## Context
 
-`poc/htmlonly-mobile/` is **structurally finished** — all fourteen sections of
+`raw/mobile/` is **structurally finished** — all fourteen sections of
 the Figma frame `Layouts › Mobile › MOBILE 360px` (`392:8099`) are built, and
 the geometry is verified at 360/390/430 with a largest deviation of 0.34px.
 "Continue the mobile development work" is therefore not about building
 sections. Two real gaps remain, plus two small carry-overs.
 
-**Nothing routes a phone to the mobile page.** `poc/rawhtml/index.html:26`
+**Nothing routes a phone to the mobile page.** `raw/web/index.html:26`
 carries `rel="alternate" media="only screen and (max-width: 640px)"`, which is
 an SEO annotation to Google, not a redirect. Combined with
 `<meta name="viewport" content="width=1440">` on line 5, a real phone loading
@@ -57,7 +57,7 @@ no second variable in it.
 
 ## 1 · The handover redirect
 
-**`poc/rawhtml/index.html`** — an inline, blocking `<script>` in `<head>`,
+**`raw/web/index.html`** — an inline, blocking `<script>` in `<head>`,
 before any stylesheet, so no desktop paint happens on a phone.
 
 The critical trap: line 5 pins `<meta name="viewport" content="width=1440">`,
@@ -94,18 +94,18 @@ Requirements for both directions:
 
 **Also update the SEO pair to the same number:**
 
-- `poc/rawhtml/index.html:26` — `max-width: 640px` → `max-width: 1024px`.
+- `raw/web/index.html:26` — `max-width: 640px` → `max-width: 1024px`.
   `max-width` in CSS is itself inclusive, so this matches the redirect exactly.
   Keep it on one line; `.github/workflows/deploy.yml:234` asserts this tag with
   a single `grep`, and the `[^>]*` in that pattern means the `media` change
   passes unchanged.
-- `poc/htmlonly-mobile/index.html:28` — the canonical back to the desktop URL
+- `raw/mobile/index.html:28` — the canonical back to the desktop URL
   stays as is; the deploy step that re-points it for the review app is
   unaffected.
 
 ## 2 · Canvas scaling for the tablet band
 
-**`poc/htmlonly-mobile/styles/base.css:132`** — today:
+**`raw/mobile/styles/base.css:132`** — today:
 
 ```css
 zoom: calc(min(100cqw, 640px) / var(--frame-width));
@@ -121,7 +121,7 @@ explains the 640 cap as "the width below which the desktop page hands over".
 That sentence becomes wrong the moment the number changes, and this codebase
 treats those comments as the record.
 
-**`poc/rawhtml/styles/base.css:151`** needs no change —
+**`raw/web/styles/base.css:151`** needs no change —
 `zoom: min(1, calc(100cqw / var(--frame-width)))` already floors at 0.71 once
 nothing at or below 1024 reaches it.
 
@@ -133,9 +133,9 @@ non-integer zoom rather than assuming it.
 
 ## 3 · The mobile motion layer
 
-Fill `poc/htmlonly-mobile/styles/motion.css` and `scripts/motion.js`, reusing
-the desktop implementation in `poc/rawhtml/styles/motion.css` and
-`poc/rawhtml/scripts/motion.js` rather than inventing a second vocabulary.
+Fill `raw/mobile/styles/motion.css` and `scripts/motion.js`, reusing
+the desktop implementation in `raw/web/styles/motion.css` and
+`raw/web/scripts/motion.js` rather than inventing a second vocabulary.
 
 **The contract, stated at the top of both stub files and load-bearing:** delete
 both files and the page is exactly the static build again; nothing here creates
@@ -144,7 +144,7 @@ content; the script is deferred; every decoration sits behind
 already set at `base.css:104`, so height-to-`auto` tweens are available.
 
 Figma's six `Gui › Interactions` specs, mapped to selectors that already exist
-in `poc/htmlonly-mobile/index.html`:
+in `raw/mobile/index.html`:
 
 | Figma group | Behaviour | Mobile selector | Reuse from desktop |
 |---|---|---|---|
@@ -185,7 +185,7 @@ this is decoration layered on top and nothing here may become load-bearing:
 `<details>` height tweens need `interpolate-size: allow-keywords`, already set
 at `base.css:104`, and must be an animation on the open state rather than a
 transition from a forced-closed one — the reason is written out at
-`poc/rawhtml/styles/motion.css:362`.
+`raw/web/styles/motion.css:362`.
 
 ### The Sobre deck — the one that is visibly broken
 
@@ -217,7 +217,7 @@ Three structural changes are needed before any motion can be attached:
 3. **`overflow: clip` on `.sobre__card`** (`sections.css:1113`) is fine
    collapsed but will clip during the spread — check it once the cards move.
 
-Then the motion, reusing `poc/rawhtml/styles/motion.css:76-106`: sticky
+Then the motion, reusing `raw/web/styles/motion.css:76-106`: sticky
 offsets rebuild the pile, and a per-card `scale`/`brightness` keyed off an
 `--i` custom property gives it depth. Read the comment there before starting —
 it records that a `view()` timeline was tried for this and is *wrong*, because
@@ -243,14 +243,14 @@ transition once already.
 
 Both are items 3 and 4 in `.ai/plans/remaining-work.md`, both unblocked.
 
-- **Serviços arrow.** `poc/rawhtml/index.html:117` and
-  `poc/htmlonly-mobile/index.html:73` both carry an invented inline
+- **Serviços arrow.** `raw/web/index.html:117` and
+  `raw/mobile/index.html:73` both carry an invented inline
   `<symbol id="i-arrow">`. Export the real vector from Figma (the `arrow`
   frames inside each Serviços `list-item`, e.g. `293:6454`), commit it to
   `assets/img/` in **both** folders — assets are duplicated on purpose, see
-  `poc/htmlonly-mobile/README.md:24-27` — and delete the `<defs>` block.
-- **`assets/img/og.jpg`.** Referenced by `poc/rawhtml/index.html:36` and
-  `poc/htmlonly-mobile/index.html:38`, and it does not exist, so every
+  `raw/mobile/README.md:24-27` — and delete the `<defs>` block.
+- **`assets/img/og.jpg`.** Referenced by `raw/web/index.html:36` and
+  `raw/mobile/index.html:38`, and it does not exist, so every
   WhatsApp and LinkedIn preview renders imageless. Matters more than its size
   suggests for a page whose lead capture *is* a WhatsApp link.
 
@@ -264,10 +264,10 @@ Both are items 3 and 4 in `.ai/plans/remaining-work.md`, both unblocked.
   revisited against the same spec. Then add the handover and the motion layer
   with the inclusive 1024px decision and its accepted trade-off — including
   why the boundary is `<=` and not `<`.
-- `poc/htmlonly-mobile/README.md:29-38` — the **Scope** section currently says
+- `raw/mobile/README.md:29-38` — the **Scope** section currently says
   "Mobile only. There are no breakpoints" and cites the 640 handover. Rewrite:
   this page now serves phones and tablets through 1024px inclusive, uncapped.
-- `poc/rawhtml/index.html:6-8` — the comment "Desktop-only implementation, per
+- `raw/web/index.html:6-8` — the comment "Desktop-only implementation, per
   scope. No mobile styles exist in this build" now sits directly above a
   redirect script and needs to say what that script does.
 
@@ -275,23 +275,23 @@ Both are items 3 and 4 in `.ai/plans/remaining-work.md`, both unblocked.
 
 ## Verification
 
-Run both sites from their own folders, which is the invariant `poc/` exists to
+Run both sites from their own folders, which is the invariant `raw/` exists to
 protect:
 
 ```sh
-cd poc/rawhtml          && python3 -m http.server 8000
-cd poc/htmlonly-mobile  && python3 -m http.server 8001
+cd raw/web          && python3 -m http.server 8000
+cd raw/mobile  && python3 -m http.server 8001
 ```
 
 **Geometry — must not regress.** The harness reports offsets unscaled, so the
 same table has to come out at every width:
 
 ```sh
-node tools/measure/measure.mjs poc/htmlonly-mobile 360
-node tools/measure/measure.mjs poc/htmlonly-mobile 390
-node tools/measure/measure.mjs poc/htmlonly-mobile 430
-node tools/measure/measure.mjs poc/htmlonly-mobile 834   # iPad Pro 11 portrait
-node tools/measure/measure.mjs poc/htmlonly-mobile 1024  # iPad Pro 12.9 portrait, the cut
+node tools/measure/measure.mjs raw/mobile 360
+node tools/measure/measure.mjs raw/mobile 390
+node tools/measure/measure.mjs raw/mobile 430
+node tools/measure/measure.mjs raw/mobile 834   # iPad Pro 11 portrait
+node tools/measure/measure.mjs raw/mobile 1024  # iPad Pro 12.9 portrait, the cut
 ```
 
 **The handover**, in Chrome via the browser tools, at each boundary width —

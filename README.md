@@ -15,9 +15,9 @@ itself, deliberately, so it cannot compete with the real domain — see
 
 ```
 .ai/plans/          architecture plan and decision record
-poc/                one folder per build approach — siblings, independently runnable
-  rawhtml/          zero-dependency desktop page, built to the 1440 frame  <- ships at /
-  htmlonly-mobile/  zero-dependency mobile page, built to the 360 frame    <- ships at /mobile/
+raw/                one folder per build approach — siblings, independently runnable
+  web/              zero-dependency desktop page, built to the 1440 frame  <- ships at /
+  mobile/           zero-dependency mobile page, built to the 360 frame    <- ships at /mobile/
 tools/figextract/   decodes a .fig export into a readable node tree
 tools/measure/      headless-Chrome geometry harness, no dependencies
 ```
@@ -29,11 +29,11 @@ differs in a dozen places. A responsive layer was tried in this repo and
 reverted in `d750c35` because it fought the desktop build. See
 [`.ai/plans/mobile-page.md`](.ai/plans/mobile-page.md).
 
-`poc/` exists so alternative build approaches can be evaluated side by side
+`raw/` exists so alternative build approaches can be evaluated side by side
 against the same design. Each folder is self-contained and deployable on its
 own; none of them depend on anything at the repo root.
 
-## Why `rawhtml` first
+## Why raw HTML first
 
 Two constraints drove the approach, both recorded in
 [`.ai/plans/joice-landing-page.md`](.ai/plans/joice-landing-page.md):
@@ -56,8 +56,8 @@ structure rather than inventing its own.
 No install, no build:
 
 ```sh
-cd poc/rawhtml && python3 -m http.server 8000          # desktop
-cd poc/htmlonly-mobile && python3 -m http.server 8000  # mobile
+cd raw/web && python3 -m http.server 8000          # desktop
+cd raw/mobile && python3 -m http.server 8000  # mobile
 ```
 
 Then open <http://localhost:8000>. Use the server rather than opening
@@ -74,8 +74,8 @@ GitHub Pages allows one site per repository, so it is **one artifact with the
 mobile build nested inside it**, not two deployments:
 
 ```
-poc/rawhtml/          →  _site/           →  /joicepage/
-poc/htmlonly-mobile/  →  _site/mobile/    →  /joicepage/mobile/
+raw/web/          →  _site/           →  /joicepage/
+raw/mobile/  →  _site/mobile/    →  /joicepage/mobile/
 ```
 
 Only those two folders are uploaded, so the plan docs and the `.fig` tooling
@@ -141,7 +141,7 @@ Every one of those is asserted after the fact, so a silent `sed` failure fails
 the run instead of publishing something that leaks.
 
 Gated on a `CNAME` file at the artifact root. To go live for real: add
-`poc/rawhtml/CNAME` with the domain, point DNS at Pages, and the step no-ops — the deployment is then
+`raw/web/CNAME` with the domain, point DNS at Pages, and the step no-ops — the deployment is then
 production and the authored canonical, `robots.txt` and `sitemap.xml` are
 already correct.
 

@@ -7,8 +7,8 @@
 #
 # The artifact is the two source directories copied verbatim:
 #
-#   poc/rawhtml/          → /            the 1440 desktop page
-#   poc/htmlonly-mobile/  → /mobile/     the 360 mobile page
+#   raw/web/          → /            the 1440 desktop page
+#   raw/mobile/  → /mobile/     the 360 mobile page
 #
 # There is still no build step, so either page stays deployable by dragging
 # its folder onto any static host.

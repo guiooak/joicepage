@@ -1,10 +1,10 @@
 # Publish BOTH landing pages to GitHub Pages on every push to main.
 #
-# Neither site is at the repo root — `poc/` holds one folder per build
+# Neither site is at the repo root — `raw/` holds one folder per build
 # approach, and two of them ship:
 #
-#   poc/rawhtml/          → /            the 1440 desktop page
-#   poc/htmlonly-mobile/  → /mobile/     the 360 mobile page
+#   raw/web/          → /            the 1440 desktop page
+#   raw/mobile/  → /mobile/     the 360 mobile page
 #
 # They are siblings, not a page and its breakpoint: the mobile frame is a
 # separately-designed layout with its own structure and its own copy. See

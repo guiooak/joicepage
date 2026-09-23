@@ -398,7 +398,7 @@
      jumps, which reads as a flicker rather than as an animation. Engines
      without it fade instead: no height interpolation, no discrete step,
      nothing to flicker. Same guard and same reasoning as
-     poc/htmlonly-mobile, which hit this first; phones and tablets are routed
+     raw/mobile, which hit this first; phones and tablets are routed
      to that page, but macOS Safari reaches this one directly.
 
      `overflow: hidden` belongs to the height half only — with no growing box

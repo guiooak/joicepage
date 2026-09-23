@@ -7,7 +7,7 @@ This file is the plan for the mobile page, written against `main` at `317fd43`.
 
 ## Context
 
-`poc/rawhtml/` is a finished, desktop-only landing page: a fixed 1440 canvas,
+`raw/web/` is a finished, desktop-only landing page: a fixed 1440 canvas,
 hand-authored HTML and modern CSS, zero dependencies and zero build step,
 published to <https://guiooak.github.io/joicepage/> on every push to `main`.
 
@@ -19,7 +19,7 @@ A responsive layer was attempted earlier in this repo and reverted in `d750c35`
 precisely because it fought the desktop build.
 
 So this is a second page, built the same way, living beside the first as a
-sibling `poc/` folder — which is what `poc/` is for: "one folder per build
+sibling `raw/` folder — which is what `raw/` is for: "one folder per build
 approach — siblings, independently runnable".
 
 Outcome: two hand-authored pages, two public URLs, both redeployed on every
@@ -36,10 +36,10 @@ push to `main`, both linked from the README.
   and MCP resolves instances, which the `.fig` decoder cannot. See the call
   budget below, which is the one real risk.
 - **Viewport**: hold the drawn 360 canvas and scale it, the same technique
-  `poc/rawhtml/styles/base.css` uses at 1440 — every drawn proportion survives
+  `raw/web/styles/base.css` uses at 1440 — every drawn proportion survives
   at any width.
 - **Assets**: duplicated into the mobile folder, not shared. Preserves the
-  invariant that each `poc/` folder is independently runnable and deployable on
+  invariant that each `raw/` folder is independently runnable and deployable on
   its own. Costs ~1.3 MB of duplication; the alternative (assembling shared
   assets at deploy time) trades that for a folder that no longer runs from
   `python3 -m http.server`.
@@ -52,7 +52,7 @@ Three sources, used in this order, cheapest first:
    the entire `MOBILE 360px` subtree: every node's id, name, position, size
    and `hidden` flag. Text nodes carry their copy in the `name` attribute, so
    most of the wording is already in hand, free. This is the backbone.
-2. **`poc/rawhtml/styles/tokens.css`**, already exact. Both layouts read the
+2. **`raw/web/styles/tokens.css`**, already exact. Both layouts read the
    same Figma variables, so colour, family and weight transfer directly.
 3. **`get_design_context` on the Figma file**, for what only it can give:
    per-section typography, fills, radii and auto-layout gaps, plus the
@@ -88,7 +88,7 @@ already wanted, so the `.fig` fallback is ready before it is needed:
   `Button`, an `Ellipse` and a whole footer column as `hidden="true"`. Without
   it the dump describes a page nobody sees.
 
-**Scaffold `poc/htmlonly-mobile/`** mirroring `poc/rawhtml/`:
+**Scaffold `raw/mobile/`** mirroring `raw/web/`:
 
 ```
 index.html
@@ -134,7 +134,7 @@ Five structures have no desktop counterpart and carry the risk:
 1. **Hamburger nav.** `Menu-links` (392:8102) and the header `Button`
    (392:8103) are hidden; a `List` icon (392:8108) is visible in a 56×56 tap
    target. Needs a drawer. Build it as a native `<details>`/`popover` so it
-   works without JS, the same contract `poc/rawhtml` holds.
+   works without JS, the same contract `raw/web` holds.
 2. **Credenciais rail.** A 720-wide frame in a 360 page — a horizontally
    scrolling rail, twice.
 3. **Princípios rail.** `Card` (392:8154) is 1120 wide inside a 328 mask.
@@ -155,9 +155,9 @@ Commit per section, as the desktop build did.
 ## Phase 3 — Publish both
 
 **`.github/workflows/deploy.yml`** — currently single-site, keyed on
-`env.SITE_DIR: poc/rawhtml` across three steps. Restructure to:
+`env.SITE_DIR: raw/web` across three steps. Restructure to:
 
-- Assemble one artifact: `poc/rawhtml/` at the root, `poc/htmlonly-mobile/`
+- Assemble one artifact: `raw/web/` at the root, `raw/mobile/`
   into `mobile/`.
 - Run the existing integrity guards (required-file manifest, relative-asset
   existence, CSS comment balance) over **both** directories. These guards
@@ -187,7 +187,7 @@ mobile `rel="canonical"` → desktop. Wire both now so the cutover is a DNS
 change, not an SEO project.
 
 **`README.md`** — add the mobile URL beside the review-app URL, add
-`poc/htmlonly-mobile/` to the repository layout, and document the two-into-one
+`raw/mobile/` to the repository layout, and document the two-into-one
 artifact. While in there, two claims are now false and should go: "FAQ copy
 does not exist in the Figma file" (it exists, in per-instance overrides — the
 whole FAQ is built) and the related "11 spots" `A capturar` count (zero remain).
@@ -205,11 +205,11 @@ whole FAQ is built) and the related "11 spots" `A capturar` count (zero remain).
   because `vw` includes the classic scrollbar gutter.
 - **No-JS.** Load with JavaScript disabled. Every section, every FAQ answer,
   every testimonial and the nav must still be reachable. This is a hard
-  constraint carried over from `poc/rawhtml`, not a nicety.
+  constraint carried over from `raw/web`, not a nicety.
 - **Both sites deploy.** After the workflow change, confirm the run uploads one
   artifact, both URLs return 200, and the smoke test greps pass on each.
 - **Desktop untouched.** Re-run the section-offset comparison against
-  `poc/rawhtml` and confirm zero delta — the workflow restructure must not
+  `raw/web` and confirm zero delta — the workflow restructure must not
   change what the desktop site serves.
 
 ## What actually happened

@@ -1,4 +1,4 @@
-# poc/htmlonly-mobile
+# raw/mobile
 
 Zero-dependency implementation of the Joice Sperandio landing page for mobile,
 built to match the Figma frame **Layouts › Mobile › `MOBILE 360px`**
@@ -11,7 +11,7 @@ Hand-authored HTML, pure CSS, one small additive script, no build step, no
 python3 -m http.server 8000
 ```
 
-## This is a sibling of `poc/rawhtml`, not a breakpoint of it
+## This is a sibling of `raw/web`, not a breakpoint of it
 
 The mobile frame is a **separately-designed layout**, not a responsive variant
 of the 1440 desktop page. The structure differs — hamburger nav, two
@@ -22,7 +22,7 @@ attempted in this repo and reverted in `d750c35` precisely because it fought
 the desktop build.
 
 So the two live side by side, each independently runnable, which is what
-`poc/` is for. Assets are **duplicated** rather than shared (~1.3 MB) to keep
+`raw/` is for. Assets are **duplicated** rather than shared (~1.3 MB) to keep
 that true: a shared-asset arrangement assembled at deploy time would leave a
 folder that no longer runs from `python3 -m http.server`.
 
@@ -38,7 +38,7 @@ this one scales up as well as down, and now scales a long way up. An iPad Pro
 The boundary is inclusive because iPad Pro 12.9" portrait is *exactly* 1024;
 `< 1024` would miss the widest tablet in portrait, which is the case the
 number exists for. Tablet landscape above it, and every laptop, gets
-`poc/rawhtml` instead.
+`raw/web` instead.
 
 Visitors are put on the right page by a small blocking head script in each of
 the two files — `rel="alternate"` is an annotation to search engines, not a
@@ -77,7 +77,7 @@ um style, e apliquei 40px, que por sua vez não tem um style dentro do Figma."*
 ## Deployment
 
 Both sites ship from one GitHub Pages artifact, assembled by
-`.github/workflows/deploy.yml`: `poc/rawhtml/` at the root and this folder at
+`.github/workflows/deploy.yml`: `raw/web/` at the root and this folder at
 `mobile/`. There is deliberately **no `robots.txt` here** — it is only honoured
 at the origin root, so one in a subdirectory would be dead weight that reads as
 policy. The root one covers the whole site.

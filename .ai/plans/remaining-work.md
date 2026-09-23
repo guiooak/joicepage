@@ -49,7 +49,7 @@ re-pulling the tree (one MCP call) after any significant design change.
 
 ## 1 · ~~Fix the broken comment in `motion.css`~~ — DONE (`cfc4f04`)
 
-`poc/rawhtml/styles/motion.css` has **nine `/*` against ten `*/`**. The comment
+`raw/web/styles/motion.css` has **nine `/*` against ten `*/`**. The comment
 opened at line 79 closes at line 83, and lines 84–88 are prose sitting in the
 stylesheet as code, terminated by a second `*/`:
 
@@ -84,7 +84,7 @@ The class of bug is now guarded rather than just the instance — the deploy
 workflow asserts comment balance across `styles/*.css` before upload:
 
 ```sh
-for f in poc/rawhtml/styles/*.css; do
+for f in raw/web/styles/*.css; do
   [ "$(grep -o '/\*' "$f" | wc -l)" = "$(grep -o '\*/' "$f" | wc -l)" ] \
     || { echo "unbalanced CSS comment in $f"; exit 1; }
 done
@@ -334,7 +334,7 @@ only state anywhere in the file that draws "Como saber se preciso de
 planejamento financeiro ou consultoria em investimentos?" open, and its
 override repeats question 1's answer word for word. Every other mobile answer
 is its own, and shorter than the desktop's. Shipping the duplicate would put
-the same paragraph under two different questions, so `poc/htmlonly-mobile`
+the same paragraph under two different questions, so `raw/mobile`
 carries the **desktop's** answer to that question with a comment saying so.
 One line from the designer replaces it.
 
@@ -345,7 +345,7 @@ reason. If the answer is "there is a video", both builds need it.
 **The Sobre deck hides three cards by design.** `392:8344` stacks four 204-tall
 cards 71 apart (a −133 auto-layout gap), so only the first line of copy on
 cards 01–03 is visible, with their numerals cut off below the fold of each
-card. `poc/htmlonly-mobile` reproduces it exactly, and the design's own
+card. `raw/mobile` reproduces it exactly, and the design's own
 screenshot of the node confirms that is what is drawn. Worth confirming it is
 intended as a static stack rather than a scroll-driven reveal that the frame
 cannot express — the desktop has the same construction at gap −65 and the
@@ -379,9 +379,9 @@ on Joice or the designer, except item 9 — teaching `figextract` to expand
 INSTANCE overrides — which is unblocked but is tooling rather than a
 launch item, and which item 8 depends on.
 
-Item 17 is the one thing this round opened rather than closed. `poc/rawhtml`
+Item 17 is the one thing this round opened rather than closed. `raw/web`
 already lays its five Sobre cards out flat and piles them with sticky, which
-is the same answer `poc/htmlonly-mobile` now gives — but the desktop's depth
+is the same answer `raw/mobile` now gives — but the desktop's depth
 ramp, its sticky offsets and its `--header-height` allowance were all tuned
 against a deck it believed was a static drawn overlap. Now that §10 has named
 the component, the two are worth reading side by side to check they are
@@ -423,7 +423,7 @@ the live one.
 Unchanged from the decision record — the checks that matter here are the first
 and the last:
 
-1. `cd poc/rawhtml && python3 -m http.server` — confirm it still works with JS
+1. `cd raw/web && python3 -m http.server` — confirm it still works with JS
    disabled. Non-negotiable.
 2. Confirm the Serviços cards *animate* rather than snap (the observable §1
    restored; regression-guarded by the workflow's comment-balance assertion).

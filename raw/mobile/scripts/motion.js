@@ -1,7 +1,7 @@
 /* ============================================================================
    MOTION — mobile.
 
-   Contract, carried over from poc/rawhtml and load bearing here too:
+   Contract, carried over from raw/web and load bearing here too:
      · The page is complete and readable without this file. Every string it
        touches is already in the HTML; nothing here creates content. The nav
        drawer, the FAQ and the Serviços carousel are all native elements that
@@ -290,7 +290,7 @@
   }
 
   /* ---- 4 · Testimonial -------------------------------------------------
-     A port of poc/rawhtml's carousel — same reference
+     A port of raw/web's carousel — same reference
      (minimal-testimonials.framer.website), same 7s, same resumable clock,
      same countdown drawn in CSS. The list advances on its own rather than
      waiting to be tapped, pauses while the entry being read is under the

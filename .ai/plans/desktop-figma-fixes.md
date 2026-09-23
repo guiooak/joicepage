@@ -1,4 +1,4 @@
-# Plano de correção — desktop `poc/rawhtml` contra o Figma
+# Plano de correção — desktop `raw/web` contra o Figma
 
 ## Context
 
@@ -76,9 +76,9 @@ accordion. Quem consome é `.accordion__item[open]::details-content`, que anima
 `block-size: 0 → auto` (`@keyframes panel-open`, `motion.css:464`). Declarar em
 `.accordion__item` cobre o elemento e o pseudo.
 
-- `poc/rawhtml/styles/base.css:134-141` — tirar `interpolate-size` do bloco
+- `raw/web/styles/base.css:134-141` — tirar `interpolate-size` do bloco
   `html` e reescrever o comentário, que hoje afirma o contrário da spec.
-- `poc/rawhtml/styles/motion.css` — declarar `interpolate-size: allow-keywords`
+- `raw/web/styles/motion.css` — declarar `interpolate-size: allow-keywords`
   em `.accordion__item`.
 
 Os dois `@supports (interpolate-size: allow-keywords)` (`motion.css:415` e
@@ -143,7 +143,7 @@ bloco desenhado é **532** — conteúdo 1280 × 452 com 40 de padding em volta.
 | coluna de pessoas | 452 | 381 |
 | bloco | 532 | 461 |
 
-**Correções** em `poc/rawhtml/styles/sections.css`:
+**Correções** em `raw/web/styles/sections.css`:
 
 - `.depoimento__quote` (1055) — `--text-h4` / `--leading-h4` / weight 800.
   Pela regra de arredondamento do Figma (28 × 1,2 = 33,6 → **34**), escrever a
@@ -240,8 +240,8 @@ quadrado.
 texto não mudam, então é só o tamanho. Escopar o 40 e dar 32 ao terceiro.
 
 **6.5 — redes sociais.** Remover `social-tiktok.svg` e `social-youtube.svg` de
-`poc/rawhtml/assets/img/` (e conferir as cópias em
-`poc/htmlonly-mobile/assets/img/`). O rodapé desenhado (`529:4400`) tem quatro
+`raw/web/assets/img/` (e conferir as cópias em
+`raw/mobile/assets/img/`). O rodapé desenhado (`529:4400`) tem quatro
 ícones — Instagram 24, TikTok 20, LinkedIn 20, YouTube 20, cada um numa pílula
 de 8 de padding. **Deixar um comentário no rodapé registrando que a ausência é
 deliberada**, para a próxima auditoria não reabrir isto como bug.
@@ -321,7 +321,7 @@ Lido nesta sessão contra o arquivo novo, sem divergência:
 Depois de cada commit, e no fim:
 
 ```
-node tools/measure/measure.mjs poc/rawhtml 1440 "main > *, .conversa, .numeros, .site-footer"
+node tools/measure/measure.mjs raw/web 1440 "main > *, .conversa, .numeros, .site-footer"
 ```
 
 A ferramenta já imprime o que interessa (`measure.mjs:173-187`): `scrollWidth`

@@ -624,7 +624,7 @@
 
   /* h3 + p as ONE flex child, so the icon and this block are the two the
      justify-between above distributes — the frame's own two children, and the
-     markup poc/htmlonly-mobile already uses.
+     markup raw/mobile already uses.
 
      The floor is what keeps the row of headings level. Bottom-pinning on its
      own only aligns the four cards while their copy runs the same depth: card
@@ -1111,7 +1111,7 @@
 
      The WEIGHT is a deliberate departure. The desktop frame draws this bold
      and its H4 style is bound to font-weight-800, which is what was built;
-     seen on the page it read far too heavy, and poc/htmlonly-mobile has
+     seen on the page it read far too heavy, and raw/mobile has
      shipped the same quote at the body's regular 400 all along and reads
      well. Matching mobile was the call. Note the token binding is suspect
      anyway: H3 in the same file is also `style: Bold` and resolves to 700, so

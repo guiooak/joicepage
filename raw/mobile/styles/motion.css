@@ -1,7 +1,7 @@
 /* ============================================================================
    MOTION — everything here is additive.
 
-   Same contract as poc/rawhtml: delete this file and scripts/motion.js and
+   Same contract as raw/web: delete this file and scripts/motion.js and
    the page is exactly the static build again. Nothing in here may be required
    to read the page, and every behaviour is guarded by
    `prefers-reduced-motion`.
@@ -21,7 +21,7 @@
 
      The header here is `position: relative`, not sticky, so there is no
      fixed chrome to clear — the offset is just the section's own 40px
-     rhythm. (poc/rawhtml adds `--header-height` for exactly that reason.) */
+     rhythm. (raw/web adds `--header-height` for exactly that reason.) */
   @media (prefers-reduced-motion: no-preference) {
     .sobre__deck .sobre__card {
       position: sticky;
@@ -40,7 +40,7 @@
        one that has settled over them.
 
        Per card, not scroll-driven, and that is deliberate — the note at
-       poc/rawhtml/styles/motion.css:83 records that a `view()` timeline was
+       raw/web/styles/motion.css:83 records that a `view()` timeline was
        measured here and is wrong, because cards sticky inside one container
        leave the scrollport together and all recede at once, which reads as
        the block flinching rather than as a stack.
@@ -134,7 +134,7 @@
 
      This has to be an animation on the OPEN state, not a transition from a
      forced-closed one, and the distinction is the whole point — it is
-     written out at poc/rawhtml/styles/motion.css:358 after a decorative
+     written out at raw/web/styles/motion.css:358 after a decorative
      animation there made panel content unreachable on one Chrome version.
      Written this way the default state is untouched: the worst case anywhere
      is no animation, never a panel that will not open.
@@ -433,7 +433,7 @@
 
   /* The desktop's countdown, ported: a rule fills under the name that is
      showing, for exactly as long as it has left. Same 7s, same accent, same
-     `tick` keyframes as poc/rawhtml — see its motion.css §3.
+     `tick` keyframes as raw/web — see its motion.css §3.
 
      Two things differ, both because the state lives in a radio here rather
      than in an `aria-current` attribute JS writes:

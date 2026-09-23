@@ -7,7 +7,7 @@
     <!-- Desktop-only implementation, per scope. No mobile styles exist in this
          build; the viewport is pinned to the 1440px Figma frame. Phones and
          tablets are not served by this page at all — the script below hands
-         them to poc/htmlonly-mobile, which is a separately-designed layout
+         them to raw/mobile, which is a separately-designed layout
          rather than a breakpoint of this one. -->
 
     <!-- HANDOVER. The `rel="alternate"` below is an annotation to search
@@ -72,7 +72,7 @@
     />
     <link rel="canonical" href="https://joicesperandio.com.br/" />
 
-    <!-- The mobile half of the pair, at its own URL — poc/htmlonly-mobile,
+    <!-- The mobile half of the pair, at its own URL — raw/mobile,
          built against the `MOBILE 360px` frame. Two URLs serving the same
          content compete for the same queries; the standard separate-URL
          annotation is this `rel="alternate"` here and a `rel="canonical"`

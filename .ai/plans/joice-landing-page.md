@@ -31,7 +31,7 @@ copying files, editable by anyone who knows HTML.
 | Fonts | Self-hosted woff2, committed. No CDN. |
 | Images | Real, exported from the `.fig` and committed to `assets/img/`. |
 | Hosting | **GitHub Pages**, deployed from `main` by Actions. Changed from Cloudflare Pages — same static files, one less account. Low-stakes: they port anywhere. |
-| Repo layout | `poc/<approach>/` so alternative builds can be compared as siblings. |
+| Repo layout | `raw/<approach>/` so alternative builds can be compared as siblings. |
 
 ## The JS decision, reversed
 
@@ -138,7 +138,7 @@ Buttons are 217×52 / 218×52 with a 24px gap.
 
 ## Done
 
-`poc/rawhtml/` — zero dependencies, zero build, one small additive script.
+`raw/web/` — zero dependencies, zero build, one small additive script.
 All thirteen sections built, copy transcribed verbatim from the frame:
 
 Header · Hero · Credenciais · Visão · Princípios · Serviços · Processo ·
@@ -233,7 +233,7 @@ to Avenir Next — **recheck on Windows**, where it resolves to Segoe UI.
 
 ## Verification
 
-1. `cd poc/rawhtml && python3 -m http.server` — confirm it works with JS disabled.
+1. `cd raw/web && python3 -m http.server` — confirm it works with JS disabled.
 2. `curl` the deployed URL — every word must be in the initial response.
 3. Lighthouse, mobile emulation, throttled. Target 100 SEO / 100 A11y, LCP < 2.5s.
 4. Google Rich Results Test — `Person` and `FinancialService` parse.

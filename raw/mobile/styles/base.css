@@ -69,9 +69,9 @@
 
 @layer base {
   /* The three faces are byte-identical copies of the desktop build's, and so
-     are these declarations — see poc/rawhtml/styles/base.css for why each one
+     are these declarations — see raw/web/styles/base.css for why each one
      is shaped the way it is (the unicode-range split on Lora, the
-     `font-weight: 100 900` range on the Allomira variable file). Each poc/
+     `font-weight: 100 900` range on the Allomira variable file). Each raw/
      folder has to run on its own, so they are duplicated rather than shared. */
   @font-face {
     font-family: "Lora";

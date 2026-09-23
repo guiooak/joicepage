@@ -12,7 +12,7 @@
 # directories copied verbatim, so either page stays deployable by dragging
 # its folder onto any static host.
 name: Build the site artifact
-description: Verify poc/rawhtml and poc/htmlonly-mobile, assemble _site, and neutralise it unless deploying to production.
+description: Verify raw/web and raw/mobile, assemble _site, and neutralise it unless deploying to production.
 
 inputs:
   base-url:
@@ -29,11 +29,11 @@ inputs:
   desktop-dir:
     description: Source folder for the 1440 desktop page.
     required: false
-    default: poc/rawhtml
+    default: raw/web
   mobile-dir:
     description: Source folder for the 360 mobile page.
     required: false
-    default: poc/htmlonly-mobile
+    default: raw/mobile
   mobile-path:
     description: Where the mobile build sits inside the assembled site.
     required: false
@@ -57,7 +57,7 @@ runs:
         set -euo pipefail
         rc=0
 
-        # Files every poc/ folder must have. robots.txt and sitemap.xml are
+        # Files every raw/ folder must have. robots.txt and sitemap.xml are
         # NOT in this list: they only make sense at the origin root, so the
         # desktop folder carries them and the mobile folder deliberately
         # does not — see the mobile README.

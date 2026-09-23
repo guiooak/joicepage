@@ -1,4 +1,4 @@
-# poc/rawhtml
+# raw/web
 
 Zero-dependency implementation of the Joice Sperandio landing page, built to
 match the Figma frame **Layouts › Finais › "Site desktop"**.

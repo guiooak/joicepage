@@ -8,7 +8,7 @@
          rather than a different one. -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <!-- HANDOVER, the other half of the pair in poc/rawhtml/index.html. Read
+    <!-- HANDOVER, the other half of the pair in raw/web/index.html. Read
          that one first — it carries the reasoning; this is its complement.
 
          `innerWidth` alone is right HERE, unlike over there: the viewport
@@ -121,7 +121,7 @@
          does not draw the open state, and a disclosure is the one control
          that carries "expanded/collapsed" to assistive tech, keyboard and
          no-JS readers without a line of script. Same contract as
-         poc/rawhtml — this page is complete with scripting off. -->
+         raw/web — this page is complete with scripting off. -->
     <header class="site-header">
       <!-- Logo 392:8101, 120x48. Drawn as a vector wordmark; set as the same
            two-line Lora lockup the desktop build uses, so the words stay in
@@ -596,7 +596,7 @@
              those radios rather than replacing them — it advances by CHECKING
              the next one, so the same CSS draws every state and the page
              keeps working, click by click, with the script off. That is the
-             one deliberate difference from poc/rawhtml, where the quote is a
+             one deliberate difference from raw/web, where the quote is a
              single element whose text JS rewrites from `data-quote`; doing
              that here would put the copy out of reach of a reader without
              scripting. -->
@@ -823,7 +823,7 @@
                each, with their numerals centred below the cut — so the cards
                live here as a flat list and motion.css rebuilds the pile with
                sticky offsets on scroll. Same decision, and the same reason,
-               as poc/rawhtml's `.sobre__cards`.
+               as raw/web's `.sobre__cards`.
 
                The fifth card is part of the deck for that reason too. The
                frame draws it outside `content`, overlapping its bottom by
