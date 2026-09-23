@@ -861,9 +861,37 @@
     flex-shrink: 0;
   }
 
+  /* The FAQ's mark is a CHEVRON, not the plus above. The two accordions draw
+     different icons and the build gave both the same one: Processo has an
+     xmark (I529:4274;121:2425, 24px) and the FAQ has _icon/chevron.right when
+     closed turning to _icon/chevron.down when open
+     (I529:4399;115:2188;401:9190 and I529:4399;115:2187;401:12176, both 16).
+
+     The exported path is a filled shape with rounded joins, not two strokes,
+     so a chevron built from borders would be an approximation. It is the real
+     asset, carried as a mask rather than an <img> so the colour stays a token
+     — the file paints it #5779AA, which is --color-accent — and so none of the
+     eight <summary> elements need an extra child. */
   .faq__list .accordion__icon {
     inline-size: 16px;
     block-size: 16px;
+    background-color: var(--color-accent);
+    mask-image: url("../assets/img/chevron.svg");
+    mask-repeat: no-repeat;
+    mask-position: center;
+    mask-size: 16px 16px;
+    transition: rotate var(--transition);
+  }
+
+  /* The bars belong to the Processo mark only. */
+  .faq__list .accordion__icon::before,
+  .faq__list .accordion__icon::after {
+    content: none;
+  }
+
+  /* right -> down. One asset, turned, rather than a second export. */
+  .faq__list .accordion__item[open] .accordion__icon {
+    rotate: 90deg;
   }
 
   .accordion__icon::before,
