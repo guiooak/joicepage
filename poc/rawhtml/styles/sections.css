@@ -1102,17 +1102,26 @@
      Figma file was out of reach at the time — and that guess was both a size
      and a weight short.
 
-     The arithmetic now closes exactly, which is how the reading is confirmed:
-     28 x 1.2 = 33.6, Figma rounds a computed line height to the nearest whole
-     pixel, so 34; the drawn box is 668x306; 306 / 34 = 9 lines. Hence the
-     literal 34px rather than the ratio — a ratio would set 33.6 here and lose
-     a third of a pixel per line, nine times over, on every one of five quotes.
+     The arithmetic closes exactly on the size, which is how that reading is
+     confirmed: 28 x 1.2 = 33.6, Figma rounds a computed line height to the
+     nearest whole pixel, so 34; the drawn box is 668x306; 306 / 34 = 9 lines.
+     Hence the literal 34px rather than the ratio — a ratio would set 33.6
+     here and lose a third of a pixel per line, nine times over, on every one
+     of five quotes.
+
+     The WEIGHT is a deliberate departure. The desktop frame draws this bold
+     and its H4 style is bound to font-weight-800, which is what was built;
+     seen on the page it read far too heavy, and poc/htmlonly-mobile has
+     shipped the same quote at the body's regular 400 all along and reads
+     well. Matching mobile was the call. Note the token binding is suspect
+     anyway: H3 in the same file is also `style: Bold` and resolves to 700, so
+     one style name points at two weights and 800 may simply be wrong.
      See .ai/plans/desktop-figma-fixes.md. */
   .depoimento__quote {
     margin-block-start: var(--size-32);
     font-size: var(--text-h4);
     line-height: 34px;
-    font-weight: var(--weight-extrabold);
+    font-weight: var(--weight-regular);
     color: var(--color-body);
     /* QA note 7, "ficou uma viuva aqui no texto". This quote ended on
        "tranquilidade." alone. `pretty` is the right tool rather than a
