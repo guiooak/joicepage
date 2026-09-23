@@ -499,6 +499,17 @@
     rotate: 90deg;
   }
 
+  /* And the same for the FAQ's chevron, which is one element rather than two
+     bars. It was added later and against `[open]` alone, so it had exactly
+     the defect the rule above exists to prevent: the chevron held its `down`
+     position for the whole 320ms collapse and only swung back to `right`
+     once the script dropped `[open]`, a beat after the panel had finished.
+     `.is-closing` lands in the click handler, so the turn now starts on the
+     click. */
+  .faq__list .accordion__item.is-closing[open] .accordion__icon {
+    rotate: 0deg;
+  }
+
   @keyframes panel-open {
     from {
       block-size: 0;
