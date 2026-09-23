@@ -1,0 +1,139 @@
+# Publish BOTH landing pages to Firebase Hosting on every push to main.
+#
+# This runs ALONGSIDE the GitHub Pages workflow rather than replacing it, so
+# the two can be compared before either is switched off. They build the same
+# artifact from the same composite action — .github/actions/site-build — and
+# differ only in where they put it and how they authenticate.
+#
+# The artifact is the two source directories copied verbatim:
+#
+#   poc/rawhtml/          → /            the 1440 desktop page
+#   poc/htmlonly-mobile/  → /mobile/     the 360 mobile page
+#
+# There is still no build step, so either page stays deployable by dragging
+# its folder onto any static host.
+#
+# ── What this needs to exist, once, outside the repo ──────────────────────
+#
+#   secrets.FIREBASE_SERVICE_ACCOUNT
+#     The full JSON key of a service account on the Firebase project, with
+#     the "Firebase Hosting Admin" and "Firebase Authentication Viewer" roles
+#     (the second is what lets the action resolve the default site). Paste the
+#     file's whole contents, not a path.
+#
+#   vars.FIREBASE_PRODUCTION   (optional, defaults to unset = review app)
+#     Set to "true" once this deployment serves joicesperandio.com.br. Until
+#     then every deploy is neutralised for search engines — noindex, a
+#     self-referential canonical, no sitemap — because a staging copy of a
+#     live site competes with the real domain otherwise. Flip it with:
+#
+#       gh variable set FIREBASE_PRODUCTION --body true
+#
+#     Unlike Pages there is no CNAME file to read: Firebase keeps the custom
+#     domain in its own console, so the repo has to be told.
+name: Deploy to Firebase Hosting
+
+on:
+  push:
+    branches: [main]
+  # Lets you redeploy the current main without an empty commit.
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# One deploy at a time, and deliberately NOT cancelling a run already in
+# progress — cancelling mid-deploy can leave the live site half-updated.
+concurrency:
+  group: firebase-hosting
+  cancel-in-progress: false
+
+env:
+  FIREBASE_PROJECT: site-joice-sperandio
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Fail early and in plain language. Without this the hosting action
+      # fails somewhere inside its own auth with a message that does not say
+      # which of the two setup steps was skipped.
+      - name: Check the service account secret is present
+        env:
+          KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+        run: |
+          set -euo pipefail
+          [ -n "$KEY" ] || {
+            echo "::error::secrets.FIREBASE_SERVICE_ACCOUNT is empty — see the header of this file"
+            exit 1
+          }
+          echo "$KEY" | python3 -c 'import json,sys; d=json.load(sys.stdin); print("service account:", d["client_email"], "· project:", d["project_id"])'
+
+      # Checks both folders, assembles _site, and neutralises it for search
+      # engines unless this deployment is production.
+      - uses: ./.github/actions/site-build
+        with:
+          base-url: https://${{ env.FIREBASE_PROJECT }}.web.app
+          production: ${{ vars.FIREBASE_PRODUCTION }}
+
+      - name: Deploy to the live channel
+        id: deploy
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          projectId: ${{ env.FIREBASE_PROJECT }}
+          channelId: live
+
+      - name: Smoke-test both deployed pages
+        run: |
+          set -euo pipefail
+          root="https://${FIREBASE_PROJECT}.web.app"
+          echo "deployed to $root"
+
+          fetch() {
+            local url="$1" out="$2" code=000
+            for i in $(seq 1 10); do
+              code=$(curl -sS -o "$out" -w '%{http_code}' -L "$url" || echo 000)
+              [ "$code" = "200" ] && return 0
+              echo "attempt $i on $url: HTTP $code — retrying"
+              sleep 6
+            done
+            echo "::error::$url returned $code"
+            return 1
+          }
+
+          # The whole point of both builds is that the copy ships in the HTML
+          # rather than waiting on JS, so assert that instead of assuming it.
+          # The phrases are page-SPECIFIC — a mobile URL that accidentally
+          # served the desktop page would still pass a generic name check.
+          fetch "$root" /tmp/desktop.html
+          for phrase in "Joice Sperandio" \
+                        "Planejamento Financeiro" \
+                        "Antes da conversa" \
+                        "Patrimônio não é apenas aquilo"; do
+            grep -qF "$phrase" /tmp/desktop.html \
+              || { echo "::error::desktop: \"$phrase\" missing from the served HTML"; exit 1; }
+          done
+
+          fetch "${root}/mobile/" /tmp/mobile.html
+          for phrase in "Joice Sperandio" \
+                        "Planejamento Financeiro" \
+                        "Patrimônio vai muito além" \
+                        "Não sei nada sobre investimentos" \
+                        "Recomendações independentes"; do
+            grep -qF "$phrase" /tmp/mobile.html \
+              || { echo "::error::mobile: \"$phrase\" missing from the served HTML"; exit 1; }
+          done
+
+          # A review app must not be indexable, and that is easy to lose in a
+          # refactor of the build action — so it is asserted against what the
+          # host actually served, not against the local file.
+          if [ "${{ vars.FIREBASE_PRODUCTION }}" != "true" ]; then
+            grep -q 'name="robots" content="noindex' /tmp/desktop.html \
+              || { echo "::error::the live URL is serving an indexable page"; exit 1; }
+          fi
+
+          echo "smoke test passed on both URLs"
