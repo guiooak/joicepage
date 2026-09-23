@@ -13,13 +13,23 @@
 # There is still no build step, so either page stays deployable by dragging
 # its folder onto any static host.
 #
-# ── What this needs to exist, once, outside the repo ──────────────────────
+# ── How this authenticates ────────────────────────────────────────────────
 #
-#   secrets.FIREBASE_SERVICE_ACCOUNT
-#     The full JSON key of a service account on the Firebase project, with
-#     the "Firebase Hosting Admin" and "Firebase Authentication Viewer" roles
-#     (the second is what lets the action resolve the default site). Paste the
-#     file's whole contents, not a path.
+# Workload Identity Federation, not a service account key. That is not a
+# preference: the organisation applies iam.managed.disableServiceAccountKeyCreation,
+# Google's secure-by-default policy, so a JSON key cannot be created at all.
+#
+# The upside is that there is no long-lived credential anywhere. GitHub mints
+# a short-lived OIDC token for this workflow run, Google's STS exchanges it
+# for a token that can impersonate the service account, and the exchange is
+# refused unless the token says it came from this repository. Nothing in the
+# repo or in GitHub's secret store is worth stealing.
+#
+#   vars.WIF_PROVIDER
+#     Full resource name of the workload identity provider, which looks like
+#     projects/<number>/locations/global/workloadIdentityPools/github/providers/github
+#     It is not a secret — it is an identifier, and the attribute condition on
+#     the provider is what actually restricts who may use it.
 #
 #   vars.FIREBASE_PRODUCTION   (optional, defaults to unset = review app)
 #     Set to "true" once this deployment serves joicesperandio.com.br. Until
@@ -41,6 +51,9 @@ on:
 
 permissions:
   contents: read
+  # Required for Workload Identity Federation: this is what lets the job ask
+  # GitHub for the OIDC token it trades in for Google credentials.
+  id-token: write
 
 # One deploy at a time, and deliberately NOT cancelling a run already in
 # progress — cancelling mid-deploy can leave the live site half-updated.
@@ -50,6 +63,7 @@ concurrency:
 
 env:
   FIREBASE_PROJECT: site-joice-sperandio
+  FIREBASE_SERVICE_ACCOUNT: github-actions-deploy@site-joice-sperandio.iam.gserviceaccount.com
 
 jobs:
   deploy:
@@ -57,19 +71,18 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Fail early and in plain language. Without this the hosting action
-      # fails somewhere inside its own auth with a message that does not say
-      # which of the two setup steps was skipped.
-      - name: Check the service account secret is present
-        env:
-          KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+      # Fail early and in plain language. Without this the auth step fails
+      # inside Google's STS with a message that does not say which piece of
+      # the one-time setup is missing.
+      - name: Check the workload identity provider is configured
         run: |
           set -euo pipefail
-          [ -n "$KEY" ] || {
-            echo "::error::secrets.FIREBASE_SERVICE_ACCOUNT is empty — see the header of this file"
+          [ -n "${{ vars.WIF_PROVIDER }}" ] || {
+            echo "::error::vars.WIF_PROVIDER is empty — see the header of this file"
             exit 1
           }
-          echo "$KEY" | python3 -c 'import json,sys; d=json.load(sys.stdin); print("service account:", d["client_email"], "· project:", d["project_id"])'
+          echo "provider: ${{ vars.WIF_PROVIDER }}"
+          echo "acting as: $FIREBASE_SERVICE_ACCOUNT"
 
       # Checks both folders, assembles _site, and neutralises it for search
       # engines unless this deployment is production.
@@ -78,14 +91,26 @@ jobs:
           base-url: https://${{ env.FIREBASE_PROJECT }}.web.app
           production: ${{ vars.FIREBASE_PRODUCTION }}
 
-      - name: Deploy to the live channel
-        id: deploy
-        uses: FirebaseExtended/action-hosting-deploy@v0
+      # Trades the run's OIDC token for Google credentials and writes them
+      # where every Google tool looks by default. FirebaseExtended's hosting
+      # action is not used: it wants a key JSON, which is the one thing this
+      # organisation will not issue.
+      - uses: google-github-actions/auth@v2
         with:
-          repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
-          projectId: ${{ env.FIREBASE_PROJECT }}
-          channelId: live
+          workload_identity_provider: ${{ vars.WIF_PROVIDER }}
+          service_account: ${{ env.FIREBASE_SERVICE_ACCOUNT }}
+
+      - name: Deploy to the live channel
+        run: |
+          set -euo pipefail
+          # Pinned to a major so a breaking release cannot land on a push that
+          # did not ask for it. firebase-tools reads GOOGLE_APPLICATION_CREDENTIALS,
+          # which the auth step above just set.
+          npx --yes firebase-tools@15 deploy \
+            --only hosting \
+            --project "$FIREBASE_PROJECT" \
+            --non-interactive \
+            --message "${GITHUB_SHA::7} — ${GITHUB_REF_NAME}"
 
       - name: Smoke-test both deployed pages
         run: |
