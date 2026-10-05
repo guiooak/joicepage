@@ -205,6 +205,16 @@
       run(remaining);
     };
 
+    /* The entries become buttons below, and a list may only hold list
+       items — so the <ul> stops being a list and becomes the group those
+       buttons belong to. Without scripting nothing here runs, and it stays
+       a plain, valid list of five people. */
+    const group = document.querySelector(".depoimento__people");
+    if (group) {
+      group.setAttribute("role", "group");
+      group.setAttribute("aria-label", "Depoimentos");
+    }
+
     selectable.forEach((person) => {
       person.setAttribute("role", "button");
       person.setAttribute("tabindex", "0");

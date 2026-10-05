@@ -165,7 +165,7 @@
     font-size: var(--text-paragraph);
     line-height: var(--leading-paragraph);
     letter-spacing: var(--tracking-paragraph);
-    color: var(--color-accent);
+    color: var(--color-accent-text);
     border: 1px solid var(--color-line-brand);
     border-radius: var(--radius-pill);
   }

@@ -72,6 +72,11 @@
     --color-ink-strong: var(--c-black);
 
     --color-accent: var(--c-blue);
+    /* The accent as TEXT on the page ground. --c-blue on --c-paper is
+       4.12:1, under the 4.5:1 WCAG AA asks of body-size type; this is the
+       same hue taken down just far enough to pass (4.57:1). Borders and
+       fills keep --c-blue — the rule is about legibility of words only. */
+    --color-accent-text: #5172a0;
     --color-accent-deep: var(--c-navy);
     /* Unrevealed state of the two-tone Visão headline — see the scroll reveal
        in the designer's Interactions spec. */

@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Página não encontrada — Joice Sperandio</title>
+    <!-- Served with a 404 status, which already keeps it out of the index;
+         the meta is belt and braces. -->
+    <meta name="robots" content="noindex" />
+
+    <!-- Firebase and GitHub Pages serve this one file for every missing URL,
+         at whatever depth it was asked for, so every path here is
+         root-absolute — a relative one would resolve against the missing
+         URL. On the github.io review app (served from a subpath) that means
+         the font, icon and logo fall back and the link lands on github.io's
+         root; on the real domain it is exact.
+
+         Self-contained on purpose: one small responsive page for desktop and
+         phone alike, rather than either build's fixed-width canvas. -->
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <style>
+      @font-face {
+        font-family: "Allomira";
+        src: url("/assets/fonts/allomira-variable.woff2") format("woff2");
+        font-weight: 100 900;
+        font-display: swap;
+      }
+
+      :root {
+        --c-navy: #28445e;
+        --c-blue: #5779aa;
+        --c-paper: #f4f7f7;
+        --c-muted: #4c646e;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+      }
+
+      body {
+        min-block-size: 100dvh;
+        display: grid;
+        place-items: center;
+        padding: 24px 16px;
+        background: var(--c-paper);
+        color: var(--c-navy);
+        font-family: "Allomira", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+        letter-spacing: 0.01em;
+        text-align: center;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 24px;
+        max-inline-size: 520px;
+      }
+
+      /* The site's own logo, drawn the way the header draws it: as a mask
+         filled with the current colour. */
+      .brand {
+        display: block;
+        inline-size: 111px;
+        block-size: 48px;
+        background-color: currentcolor;
+        -webkit-mask: url("/assets/img/logo.svg") no-repeat center / contain;
+        mask: url("/assets/img/logo.svg") no-repeat center / contain;
+      }
+
+      .code {
+        font-size: 16px;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        color: #5172a0;
+      }
+
+      h1 {
+        font-size: clamp(32px, 6vw, 48px);
+        line-height: 1;
+        font-weight: 700;
+      }
+
+      p {
+        font-size: 18px;
+        line-height: 1.5;
+        color: var(--c-muted);
+      }
+
+      a.btn {
+        display: inline-flex;
+        padding: 12px 24px;
+        border-radius: 16px;
+        background: var(--c-navy);
+        color: var(--c-paper);
+        font-size: 18px;
+        line-height: 1.4;
+        text-decoration: none;
+        transition: background-color 160ms ease;
+      }
+
+      a.btn:hover {
+        background: color-mix(in oklab, var(--c-navy) 86%, white);
+      }
+
+      a.btn:focus-visible {
+        outline: 2px solid var(--c-blue);
+        outline-offset: 3px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <a href="/" aria-label="Joice Sperandio — página inicial"><span class="brand"></span></a>
+      <p class="code">ERRO 404</p>
+      <h1>Página não encontrada</h1>
+      <p>O endereço que você acessou não existe ou mudou de lugar. A página inicial tem tudo sobre o trabalho da Joice.</p>
+      <a class="btn" href="/">Ir para a página inicial</a>
+    </main>
+  </body>
+</html>
