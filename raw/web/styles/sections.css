@@ -1832,7 +1832,7 @@
 
      `:has()` rather than a class from the script: this is a consequence of
      the dialog being open, and the stylesheet can see that for itself. */
-  html:has(.video-modal[open]) {
+  html:has(.video-modal[open], .policy-modal[open]) {
     overflow: hidden;
     scrollbar-gutter: stable;
   }
@@ -1926,4 +1926,205 @@
     stroke-linecap: round;
   }
 
+  /* ---- Políticas (modal) ------------------------------------------------
+     Not in the Figma file. A plain white reading card on the video's scrim,
+     in the page's own type and tokens rather than an invented surface.
+
+     Same `zoom` undo as the video, for the same reason: the dialog sits in
+     the top layer but still carries the canvas zoom, so it is put back at
+     1:1 with the viewport and sized in real pixels from there. The <dialog>
+     itself is a transparent box the size of its card, so a click that lands
+     on the dialog element is a click on the backdrop. */
+  .policy-modal {
+    zoom: calc(1 / var(--page-zoom));
+    margin: auto;
+    border: 0;
+    padding: 0;
+    background: none;
+    max-inline-size: none;
+    max-block-size: none;
+    overflow: visible;
+  }
+
+  .policy-modal::backdrop {
+    background: rgb(4 12 16 / 82%);
+  }
+
+  .policy-modal__card {
+    display: flex;
+    flex-direction: column;
+    inline-size: min(720px, calc(100vw - var(--size-16) * 2));
+    max-block-size: calc(100dvh - var(--size-16) * 2);
+    margin: auto;
+    border-radius: var(--radius-lg);
+    background-color: var(--color-surface);
+    color: var(--color-body);
+    overflow: hidden;
+  }
+
+  .policy-modal__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--size-16);
+    padding: var(--size-24) var(--size-24) var(--size-16);
+    border-block-end: 1px solid var(--color-line);
+  }
+
+  .policy-modal__head h2 {
+    font-size: 28px;
+    line-height: 1.2;
+    font-weight: var(--weight-bold);
+    color: var(--color-accent-deep);
+  }
+
+  .policy-modal__close {
+    flex-shrink: 0;
+    display: block;
+    inline-size: 40px;
+    block-size: 40px;
+    padding: var(--size-8);
+    border-radius: var(--radius-pill);
+    color: var(--color-accent-deep);
+    transition: background-color var(--transition);
+  }
+
+  .policy-modal__close:hover {
+    background-color: var(--color-surface-tint);
+  }
+
+  .policy-modal__close svg {
+    inline-size: 100%;
+    block-size: 100%;
+    fill: none;
+    stroke: currentcolor;
+    stroke-width: 2;
+    stroke-linecap: round;
+  }
+
+  /* The body scrolls, not the card, so the title and the close stay put. */
+  .policy-modal__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-12);
+    padding: var(--size-16) var(--size-24) var(--size-32);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    font-size: 16px;
+    line-height: 1.5;
+    letter-spacing: 0;
+  }
+
+  .policy-modal__body h3 {
+    margin-block-start: var(--size-12);
+    font-size: 20px;
+    line-height: 1.3;
+    font-weight: var(--weight-bold);
+    color: var(--color-accent-deep);
+  }
+
+  .policy-modal__body ul {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-8);
+    padding-inline-start: var(--size-24);
+    list-style: disc;
+  }
+
+  .policy-modal__body a {
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .policy-modal__body strong {
+    font-weight: var(--weight-bold);
+  }
+
+  .policy-modal__date {
+    font-size: 14px;
+    color: var(--color-body-soft);
+  }
+
+  .policy-modal__prefs {
+    display: inline-flex;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--color-button-ink);
+    background-color: var(--color-button);
+  }
+
+  .policy-modal__prefs:hover {
+    background-color: var(--color-button-hover);
+  }
+
+  /* `.btn` sets a display, which beats the UA's [hidden]. */
+  .policy-modal__prefs[hidden] {
+    display: none;
+  }
+
+  /* ---- Consentimento (barra) --------------------------------------------
+     Fixed to the foot of the viewport, in the footer's navy. Undoes the
+     canvas zoom like the dialogs: it is fixed to the viewport, so it is
+     sized in the viewport's pixels. The two buttons are the same button on
+     purpose — refusing must be as easy as accepting. */
+  .consent {
+    zoom: calc(1 / var(--page-zoom));
+    position: fixed;
+    inset-inline: var(--size-16);
+    inset-block-end: var(--size-16);
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    gap: var(--size-16) var(--size-24);
+    max-inline-size: 960px;
+    margin-inline: auto;
+    padding: var(--size-16) var(--size-24);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-accent-deep);
+    color: var(--color-button-ink);
+    box-shadow: 0 8px 32px rgb(4 12 16 / 24%);
+  }
+
+  .consent[hidden] {
+    display: none;
+  }
+
+  .consent__text {
+    flex: 1 1 auto;
+    font-size: 16px;
+    line-height: 1.5;
+    letter-spacing: 0;
+  }
+
+  .consent__text a {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .consent__actions {
+    display: flex;
+    flex-shrink: 0;
+    gap: var(--size-8);
+  }
+
+  .consent__btn {
+    flex: 1 1 0;
+    padding-block: var(--size-8);
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--color-accent-deep);
+    background-color: var(--color-button-ink);
+  }
+
+  .consent__btn:hover {
+    background-color: var(--color-surface-tint);
+  }
+
+  .consent__btn:focus-visible,
+  .consent__text a:focus-visible {
+    outline: 2px solid var(--color-button-ink);
+    outline-offset: 2px;
+  }
 }

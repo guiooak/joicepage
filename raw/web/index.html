@@ -136,6 +136,27 @@
     <!-- Deferred and entirely additive: the page is complete without it. -->
     <script src="scripts/motion.js" defer></script>
 
+    <!-- Consent and the two policy dialogs. Loads analytics only after an
+         explicit "Aceitar"; see the comment on the dialogs in the body. -->
+    <script src="scripts/consent.js" defer></script>
+
+    <!-- With scripting off the policy links are plain fragment links, so the
+         targeted dialog is shown by CSS rather than by showModal(). Inside
+         <noscript> so it never competes with the scripted dialog. -->
+    <noscript>
+      <style>
+        .policy-modal:target {
+          display: flex;
+          position: fixed;
+          inset: 0;
+          z-index: 10;
+          inline-size: auto;
+          block-size: auto;
+          background: rgb(4 12 16 / 82%);
+        }
+      </style>
+    </noscript>
+
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -960,7 +981,7 @@
          not the top-row / credentials / bottom-row stack this used to be.
          Everything here comes from the resolved instance 318:7401; before it
          could be expanded, the whole footer was inferred. -->
-    <footer class="shell site-footer">
+    <footer class="shell site-footer" id="rodape">
       <div class="site-footer__col">
         <div class="site-footer__brand">
           <a class="brand brand--inverse" href="#inicio">
@@ -1029,8 +1050,8 @@
         <a href="#historias">Histórias</a>
         <a href="#sobre">Sobre</a>
         <a href="#duvidas">Dúvidas</a>
-        <a href="/politica-de-cookies">Política de Cookies</a>
-        <a href="/politica-de-privacidade">Política de Privacidade</a>
+        <a href="#politica-de-cookies">Política de Cookies</a>
+        <a href="#politica-de-privacidade">Política de Privacidade</a>
       </nav>
 
       <div class="site-footer__col site-footer__end">
@@ -1063,5 +1084,198 @@
         </div>
       </div>
     </dialog>
+
+    <!-- The two policies. Dialogs rather than pages, so the texts need no
+         second copy of the header, footer and stylesheets. The text is in the
+         HTML, not the script, so it is indexed and readable with scripting
+         off: the footer links are plain fragment links, scripts/consent.js
+         turns them into showModal(), and without it the <noscript> style in
+         the <head> shows the targeted dialog instead. The close control is a
+         link to the footer for the same reason — it is what still works when
+         nothing intercepts it.
+
+         Standard LGPD wording, not legal advice: have it reviewed before
+         treating it as final. The cookie list must follow the code — if a
+         tool is added to consent.js, it is added here too. -->
+    <dialog class="policy-modal" id="politica-de-privacidade" aria-labelledby="politica-de-privacidade-titulo">
+      <article class="policy-modal__card">
+        <header class="policy-modal__head">
+          <h2 id="politica-de-privacidade-titulo">Política de Privacidade</h2>
+          <a class="policy-modal__close" href="#rodape" aria-label="Fechar">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M6 6 18 18M18 6 6 18" />
+            </svg>
+          </a>
+        </header>
+        <div class="policy-modal__body">
+          <p class="policy-modal__date">Última atualização: 4 de outubro de 2026</p>
+
+          <p>
+            Esta política explica como os seus dados pessoais são tratados quando você visita este
+            site, em conformidade com a Lei Geral de Proteção de Dados (Lei nº 13.709/2018 — LGPD).
+          </p>
+
+          <h3>1. Quem é a responsável pelos seus dados</h3>
+          <p>
+            Este site é mantido por Joice Sperandio, planejadora financeira CFP® e consultora de valores
+            mobiliários autorizada pela CVM, que atua como controladora dos dados pessoais tratados por
+            meio dele. Para qualquer assunto relacionado aos seus dados, escreva para
+            <a href="mailto:oi@joicesperandio.com.br">oi@joicesperandio.com.br</a>.
+          </p>
+
+          <h3>2. Quais dados são tratados</h3>
+          <ul>
+            <li>
+              <strong>Dados que você envia.</strong> O site não tem formulários. Ao entrar em contato por
+              WhatsApp ou e-mail, você compartilha dados como nome, telefone, e-mail e as informações que
+              decidir incluir na conversa.
+            </li>
+            <li>
+              <strong>Dados de navegação.</strong> Somente se você aceitar os cookies de análise, o Google
+              Analytics registra informações como páginas visitadas, tempo de permanência, tipo de
+              dispositivo e navegador, localização aproximada e um identificador aleatório do navegador.
+            </li>
+            <li>
+              <strong>Vídeo.</strong> Ao reproduzir o vídeo de apresentação, ele é carregado do YouTube, que
+              recebe dados técnicos da sua conexão conforme a política de privacidade do Google.
+            </li>
+          </ul>
+
+          <h3>3. Para que os dados são usados</h3>
+          <ul>
+            <li>
+              Responder ao seu contato e preparar uma proposta de serviço — base legal: procedimentos
+              preliminares a contrato (art. 7º, V, da LGPD).
+            </li>
+            <li>
+              Medir a audiência e melhorar o site — base legal: consentimento (art. 7º, I), que você pode
+              revogar a qualquer momento.
+            </li>
+            <li>
+              Cumprir obrigações legais e regulatórias, inclusive as da CVM — base legal: art. 7º, II.
+            </li>
+          </ul>
+
+          <h3>4. Com quem os dados são compartilhados</h3>
+          <p>
+            Seus dados não são vendidos. Eles são compartilhados apenas com os prestadores de serviço
+            necessários ao funcionamento do site — Google (hospedagem, Google Analytics e YouTube) e Meta
+            (WhatsApp, quando você escolhe esse canal) — e com autoridades, quando exigido por lei. Alguns
+            desses prestadores armazenam dados fora do Brasil, com as salvaguardas previstas no art. 33 da
+            LGPD.
+          </p>
+
+          <h3>5. Por quanto tempo os dados são guardados</h3>
+          <p>
+            Os dados de navegação são mantidos pelo Google Analytics por até 14 meses. Os dados de contato
+            são mantidos enquanto houver relacionamento ou pelo prazo exigido por lei ou pela regulação
+            aplicável, e depois eliminados.
+          </p>
+
+          <h3>6. Seus direitos</h3>
+          <p>
+            Você pode pedir, a qualquer momento: confirmação de que seus dados são tratados; acesso;
+            correção; anonimização, bloqueio ou eliminação de dados desnecessários; portabilidade;
+            informação sobre com quem eles são compartilhados; e revogação do consentimento. Basta escrever
+            para <a href="mailto:oi@joicesperandio.com.br">oi@joicesperandio.com.br</a>. Você também pode
+            apresentar reclamação à Autoridade Nacional de Proteção de Dados (ANPD).
+          </p>
+
+          <h3>7. Segurança</h3>
+          <p>
+            O site é servido apenas por conexão criptografada (HTTPS), e são adotadas medidas razoáveis para
+            proteger os dados contra acesso não autorizado. Nenhum sistema é totalmente imune a incidentes;
+            caso ocorra algum que possa causar risco relevante, você e a ANPD serão comunicados.
+          </p>
+
+          <h3>8. Cookies</h3>
+          <p>
+            O uso de cookies está descrito na <a href="#politica-de-cookies">Política de Cookies</a>.
+          </p>
+
+          <h3>9. Alterações</h3>
+          <p>
+            Esta política pode ser atualizada. A data no topo indica a versão em vigor.
+          </p>
+        </div>
+      </article>
+    </dialog>
+
+    <dialog class="policy-modal" id="politica-de-cookies" aria-labelledby="politica-de-cookies-titulo">
+      <article class="policy-modal__card">
+        <header class="policy-modal__head">
+          <h2 id="politica-de-cookies-titulo">Política de Cookies</h2>
+          <a class="policy-modal__close" href="#rodape" aria-label="Fechar">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M6 6 18 18M18 6 6 18" />
+            </svg>
+          </a>
+        </header>
+        <div class="policy-modal__body">
+          <p class="policy-modal__date">Última atualização: 4 de outubro de 2026</p>
+
+          <h3>1. O que são cookies</h3>
+          <p>
+            Cookies são pequenos arquivos que um site guarda no seu navegador. O armazenamento local
+            (localStorage) funciona de forma parecida: guarda informações no próprio navegador, que não são
+            enviadas a nenhum servidor.
+          </p>
+
+          <h3>2. O que este site usa</h3>
+          <ul>
+            <li>
+              <strong>consent</strong> (armazenamento local, necessário) — guarda a sua escolha sobre os
+              cookies de análise, para que o aviso não apareça a cada visita. Fica no navegador até você
+              limpar os dados do site.
+            </li>
+            <li>
+              <strong>_ga e _ga_&lt;ID&gt;</strong> (cookies de análise do Google Analytics) — distinguem
+              visitantes e sessões de forma estatística, para medir a audiência do site. Duram até 2 anos e
+              <strong>só são criados se você clicar em “Aceitar”</strong>.
+            </li>
+            <li>
+              <strong>YouTube</strong> (terceiro) — o vídeo de apresentação usa o modo de privacidade
+              aprimorada do YouTube (youtube-nocookie.com) e só é carregado quando você o reproduz. A partir
+              daí, valem as regras do Google.
+            </li>
+          </ul>
+          <p>
+            Se você recusar, nenhum cookie de análise é criado e o site funciona normalmente.
+          </p>
+
+          <h3>3. Como gerenciar</h3>
+          <p>
+            Você pode mudar sua escolha a qualquer momento pelo botão abaixo, ou apagar e bloquear cookies
+            nas configurações do seu navegador.
+          </p>
+          <p>
+            <button class="btn policy-modal__prefs" type="button" data-consent-reopen hidden>
+              Alterar preferências de cookies
+            </button>
+          </p>
+
+          <h3>4. Contato</h3>
+          <p>
+            Dúvidas sobre esta política podem ser enviadas para
+            <a href="mailto:oi@joicesperandio.com.br">oi@joicesperandio.com.br</a>. Mais detalhes sobre o
+            tratamento de dados estão na <a href="#politica-de-privacidade">Política de Privacidade</a>.
+          </p>
+        </div>
+      </article>
+    </dialog>
+
+    <!-- Consent bar. Ships `hidden` and only scripts/consent.js shows it: with
+         scripting off there is no analytics either, so nothing to consent to.
+         The two choices are the same button, deliberately — refusing must be
+         as easy as accepting. -->
+    <section class="consent" aria-label="Aviso de cookies" hidden>
+      <p class="consent__text">
+        Este site usa cookies para entender como é visitado só se você permitir. Saiba mais na <a href="#politica-de-cookies">Política de Cookies</a>.
+      </p>
+      <div class="consent__actions">
+        <button class="btn consent__btn" type="button" data-consent="reject">Recusar</button>
+        <button class="btn consent__btn" type="button" data-consent="accept">Aceitar</button>
+      </div>
+    </section>
   </body>
 </html>

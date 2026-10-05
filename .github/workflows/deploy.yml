@@ -105,7 +105,8 @@ jobs:
           for phrase in "Joice Sperandio" \
                         "Planejamento Financeiro" \
                         "Antes da conversa" \
-                        "Patrimônio não é apenas aquilo"; do
+                        "Patrimônio não é apenas aquilo" \
+                        "Política de Privacidade"; do
             grep -qF "$phrase" /tmp/desktop.html \
               || { echo "::error::desktop: \"$phrase\" missing from the served HTML"; exit 1; }
           done
@@ -115,7 +116,8 @@ jobs:
                         "Planejamento Financeiro" \
                         "Patrimônio vai muito além" \
                         "Não sei nada sobre investimentos" \
-                        "Recomendações independentes"; do
+                        "Recomendações independentes" \
+                        "Política de Privacidade"; do
             grep -qF "$phrase" /tmp/mobile.html \
               || { echo "::error::mobile: \"$phrase\" missing from the served HTML"; exit 1; }
           done

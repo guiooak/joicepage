@@ -153,9 +153,15 @@ links are how Google finds a URL in the first place.
 
 - ~~`assets/img/og.jpg` does not exist~~ — created in `8da4d28`, 1200x630,
   in both folders. Link previews now carry an image.
-- The footer links `/politica-de-cookies` and `/politica-de-privacidade` are
-  site-absolute — correct for a root domain, but they resolve outside the
-  project path on `guiooak.github.io/joicepage/`. Neither page exists yet.
+- ~~The policy pages do not exist~~ — the two policies are now dialogs at
+  the foot of each `index.html`, opened from the footer by
+  `scripts/consent.js`, with a `:target` fallback when scripting is off. The
+  texts are standard LGPD wording and should get a legal review.
+- **Analytics is wired but off.** `scripts/consent.js` (identical in both
+  folders) shows a consent bar on the first visit, stores the answer in
+  `localStorage` only, and loads GA4 only after "Aceitar". Set
+  `GA_MEASUREMENT_ID` in **both** copies to turn it on, and bump
+  `CONSENT_VERSION` whenever the cookie policy changes enough to re-ask.
 - The domain currently serves a **different site**. Replacing it means its
   existing URLs start 404ing, so plan redirects for anything already indexed.
 - Pushing changes to `.github/workflows/` needs a token with the `workflow`

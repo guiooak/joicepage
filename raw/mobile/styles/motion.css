@@ -507,4 +507,36 @@
       scroll-behavior: smooth;
     }
   }
+
+  /* ---- Consent bar fade-in ---------------------------------------------
+     Plays whenever the bar goes from `hidden` to shown, which is the moment
+     scripts/consent.js reveals it.
+
+     The fade is NOT behind the reduced-motion guard, on purpose: an opacity
+     change is not motion, and Linux desktops with animations turned off
+     report `reduce`, which silently dropped the whole effect. Only the 12px
+     rise is motion, so only the rise is guarded. */
+  .consent:not([hidden]) {
+    animation: consent-fade 300ms ease-out both;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .consent:not([hidden]) {
+      animation:
+        consent-fade 300ms ease-out both,
+        consent-rise 300ms cubic-bezier(0.2, 0, 0, 1) both;
+    }
+  }
+
+  @keyframes consent-fade {
+    from {
+      opacity: 0;
+    }
+  }
+
+  @keyframes consent-rise {
+    from {
+      translate: 0 12px;
+    }
+  }
 }
