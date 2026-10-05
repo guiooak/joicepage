@@ -2066,8 +2066,9 @@
   /* ---- Consentimento (barra) --------------------------------------------
      Fixed to the foot of the viewport, in the footer's navy. Undoes the
      canvas zoom like the dialogs: it is fixed to the viewport, so it is
-     sized in the viewport's pixels. The two buttons are the same button on
-     purpose — refusing must be as easy as accepting. */
+     sized in the viewport's pixels. "Recusar" is the secondary button and
+     "Aceitar" the primary, but at the same size, side by side — refusing
+     must stay as easy as accepting. */
   .consent {
     zoom: calc(1 / var(--page-zoom));
     position: fixed;
@@ -2120,6 +2121,18 @@
 
   .consent__btn:hover {
     background-color: var(--color-surface-tint);
+  }
+
+  /* Outlined in the bar's ink rather than filled. The outline is an inset
+     shadow, not a border, so the two buttons keep the same height. */
+  .consent__btn--secondary {
+    color: var(--color-button-ink);
+    background-color: transparent;
+    box-shadow: inset 0 0 0 1px var(--color-button-ink);
+  }
+
+  .consent__btn--secondary:hover {
+    background-color: rgb(244 247 247 / 14%);
   }
 
   .consent__btn:focus-visible,

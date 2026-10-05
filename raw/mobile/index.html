@@ -1434,14 +1434,15 @@
 
     <!-- Consent bar. Ships `hidden` and only scripts/consent.js shows it: with
          scripting off there is no analytics either, so nothing to consent to.
-         The two choices are the same button, deliberately — refusing must be
-         as easy as accepting. -->
+         "Aceitar" is the primary button and "Recusar" the secondary one, but
+         both sit side by side at the same size and are equally reachable —
+         refusing must stay as easy as accepting. -->
     <section class="consent" aria-label="Aviso de cookies" hidden>
       <p class="consent__text">
         Este site usa cookies para entender como é visitado só se você permitir. Saiba mais na <a href="#politica-de-cookies">Política de Cookies</a>.
       </p>
       <div class="consent__actions">
-        <button class="btn consent__btn" type="button" data-consent="reject">Recusar</button>
+        <button class="btn consent__btn consent__btn--secondary" type="button" data-consent="reject">Recusar</button>
         <button class="btn consent__btn" type="button" data-consent="accept">Aceitar</button>
       </div>
     </section>
