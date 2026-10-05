@@ -135,6 +135,47 @@
         }
       </style>
     </noscript>
+
+    <!-- Same entities as the desktop page, and it has to be here too: Google
+         indexes the mobile version, so structured data that exists only on
+         the desktop is structured data it never reads. Keep the two copies
+         identical. -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Person",
+            "@id": "https://joicesperandio.com.br/#joice",
+            "name": "Joice Sperandio",
+            "jobTitle": "Planejadora Financeira e Consultora de Valores Mobiliários",
+            "url": "https://joicesperandio.com.br/",
+            "knowsAbout": [
+              "Planejamento financeiro pessoal",
+              "Consultoria em investimentos",
+              "Planejamento de aposentadoria"
+            ],
+            "sameAs": [
+              "https://www.linkedin.com/in/joice-sperandio/",
+              "https://www.instagram.com/joicesperandio/"
+            ]
+          },
+          {
+            "@type": "FinancialService",
+            "@id": "https://joicesperandio.com.br/#business",
+            "name": "Joice Sperandio — Planejamento Financeiro",
+            "url": "https://joicesperandio.com.br/",
+            "telephone": "+5547991939397",
+            "founder": { "@id": "https://joicesperandio.com.br/#joice" },
+            "areaServed": { "@type": "Country", "name": "Brasil" },
+            "sameAs": [
+              "https://www.linkedin.com/in/joice-sperandio/",
+              "https://www.instagram.com/joicesperandio/"
+            ]
+          }
+        ]
+      }
+    </script>
   </head>
 
   <!-- The page frame IS the body: a 360-wide vertical stack, 16 padding, 16
