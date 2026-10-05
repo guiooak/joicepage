@@ -20,6 +20,7 @@ raw/                one folder per build approach — siblings, independently ru
   mobile/           zero-dependency mobile page, built to the 360 frame    <- ships at /mobile/
 tools/figextract/   decodes a .fig export into a readable node tree
 tools/measure/      headless-Chrome geometry harness, no dependencies
+originals/          the images as exported, before WebP — kept, never deployed
 ```
 
 The two pages are **siblings, not a page and its breakpoint**. The Figma file
@@ -183,10 +184,17 @@ export — the earlier provisional/sampled tokens are gone, and so is the note
 here that said Figma access was pending. It isn't.
 
 **Images are all real.** Every asset is exported from the `.fig` and committed
-under `assets/img/` (1.2 MB total). There are no placeholders left — the Figma
+under `assets/img/`. There are no placeholders left — the Figma
 MCP plan ran out of tool calls partway through, so the images came from the
 `.fig` route instead, which needs no subscription and no quota. That route is
 the reason it kept working; keep it.
+
+They ship as **WebP**, not as exported: photos at quality 82, the logos and
+icons at whichever of lossless or quality 90 came out smaller. That took the
+set from 1.3 MB to 0.47 MB per page. Only `og-v2.jpg` stays JPEG, because
+share sheets are the one consumer that handles it better. The exports
+themselves are kept in `originals/`; re-encode from there, and convert a new
+asset the same way, keeping its export alongside.
 
 The FAQ copy **does** exist and the whole FAQ is built. An earlier note here
 said otherwise; it was wrong. The text lives in per-instance overrides, which
