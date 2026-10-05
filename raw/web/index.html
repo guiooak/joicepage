@@ -162,15 +162,63 @@
         "@context": "https://schema.org",
         "@graph": [
           {
+            "@type": "WebSite",
+            "@id": "https://joicesperandio.com.br/#website",
+            "name": "Joice Sperandio",
+            "url": "https://joicesperandio.com.br/",
+            "inLanguage": "pt-BR",
+            "publisher": {
+              "@id": "https://joicesperandio.com.br/#joice"
+            }
+          },
+          {
             "@type": "Person",
             "@id": "https://joicesperandio.com.br/#joice",
             "name": "Joice Sperandio",
             "jobTitle": "Planejadora Financeira e Consultora de Valores Mobiliários",
             "url": "https://joicesperandio.com.br/",
+            "image": "https://joicesperandio.com.br/assets/img/hero-joice.webp",
+            "email": "oi@joicesperandio.com.br",
+            "worksFor": {
+              "@id": "https://joicesperandio.com.br/#business"
+            },
             "knowsAbout": [
               "Planejamento financeiro pessoal",
               "Consultoria em investimentos",
               "Planejamento de aposentadoria"
+            ],
+            "hasCredential": [
+              {
+                "@type": "EducationalOccupationalCredential",
+                "name": "CFP® — Certified Financial Planner",
+                "credentialCategory": "certification",
+                "recognizedBy": {
+                  "@type": "Organization",
+                  "name": "Planejar — Associação Brasileira de Planejamento Financeiro",
+                  "url": "https://www.planejar.org.br/"
+                }
+              },
+              {
+                "@type": "EducationalOccupationalCredential",
+                "name": "CEA — Certificação ANBIMA de Especialistas em Investimento",
+                "credentialCategory": "certification",
+                "recognizedBy": {
+                  "@type": "Organization",
+                  "name": "ANBIMA",
+                  "url": "https://www.anbima.com.br/"
+                }
+              },
+              {
+                "@type": "EducationalOccupationalCredential",
+                "name": "Consultora de Valores Mobiliários",
+                "credentialCategory": "license",
+                "identifier": "002276-4",
+                "recognizedBy": {
+                  "@type": "GovernmentOrganization",
+                  "name": "Comissão de Valores Mobiliários (CVM)",
+                  "url": "https://www.gov.br/cvm/"
+                }
+              }
             ],
             "sameAs": [
               "https://www.linkedin.com/in/joice-sperandio/",
@@ -182,9 +230,38 @@
             "@id": "https://joicesperandio.com.br/#business",
             "name": "Joice Sperandio — Planejamento Financeiro",
             "url": "https://joicesperandio.com.br/",
+            "image": "https://joicesperandio.com.br/assets/img/og-v2.jpg",
+            "logo": "https://joicesperandio.com.br/assets/img/logo.svg",
             "telephone": "+5547991939397",
-            "founder": { "@id": "https://joicesperandio.com.br/#joice" },
-            "areaServed": { "@type": "Country", "name": "Brasil" },
+            "email": "oi@joicesperandio.com.br",
+            "founder": {
+              "@id": "https://joicesperandio.com.br/#joice"
+            },
+            "foundingDate": "2020",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Belo Horizonte",
+              "addressRegion": "MG",
+              "addressCountry": "BR"
+            },
+            "areaServed": {
+              "@type": "Country",
+              "name": "Brasil"
+            },
+            "openingHoursSpecification": [
+              {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": [
+                  "Monday",
+                  "Tuesday",
+                  "Wednesday",
+                  "Thursday",
+                  "Friday"
+                ],
+                "opens": "09:00",
+                "closes": "18:00"
+              }
+            ],
             "sameAs": [
               "https://www.linkedin.com/in/joice-sperandio/",
               "https://www.instagram.com/joicesperandio/"
