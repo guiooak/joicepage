@@ -21,7 +21,7 @@
 
   /* The GA4 measurement id, "G-XXXXXXXXXX". Empty means analytics is off:
      the bar still asks and records the answer, but nothing is loaded. */
-  const GA_MEASUREMENT_ID = "";
+  const GA_MEASUREMENT_ID = "G-N6PG98GN9R";
 
   const STORAGE_KEY = "consent";
   const CONSENT_VERSION = 1;
