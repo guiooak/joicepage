@@ -3,15 +3,19 @@
 # Neither site is at the repo root — `raw/` holds one folder per build
 # approach, and two of them ship:
 #
-#   raw/web/          → /            the 1440 desktop page
-#   raw/mobile/  → /mobile/     the 360 mobile page
+#   raw/mobile/  → /          the 360 mobile page — the root
+#   raw/web/     → /inicio/   the 1440 desktop page
+#
+# Pages has no server-side redirects, so /mobile/ — where the mobile page
+# used to be — is a refresh stub the build action writes, pointing at the
+# root.
 #
 # They are siblings, not a page and its breakpoint: the mobile frame is a
 # separately-designed layout with its own structure and its own copy. See
 # .ai/plans/mobile-page.md.
 #
 # GitHub Pages allows one site per repository, so this is one artifact with
-# the mobile build nested inside it rather than two deployments.
+# the desktop build nested inside it rather than two deployments.
 #
 # The checks, the assembly and the search-engine neutralisation all live in
 # .github/actions/site-build, because Firebase Hosting deploys the same
@@ -101,17 +105,7 @@ jobs:
           # The phrases are chosen to be page-SPECIFIC — a mobile URL that
           # accidentally served the desktop page would still pass a generic
           # "Joice Sperandio" check.
-          fetch "$root" /tmp/desktop.html
-          for phrase in "Joice Sperandio" \
-                        "Planejamento Financeiro" \
-                        "Antes da conversa" \
-                        "Patrimônio não é apenas aquilo" \
-                        "Política de Privacidade"; do
-            grep -qF "$phrase" /tmp/desktop.html \
-              || { echo "::error::desktop: \"$phrase\" missing from the served HTML"; exit 1; }
-          done
-
-          fetch "${root%/}/mobile/" /tmp/mobile.html
+          fetch "$root" /tmp/mobile.html
           for phrase in "Joice Sperandio" \
                         "Planejamento Financeiro" \
                         "Patrimônio vai muito além" \
@@ -119,7 +113,23 @@ jobs:
                         "Recomendações independentes" \
                         "Política de Privacidade"; do
             grep -qF "$phrase" /tmp/mobile.html \
-              || { echo "::error::mobile: \"$phrase\" missing from the served HTML"; exit 1; }
+              || { echo "::error::mobile (root): \"$phrase\" missing from the served HTML"; exit 1; }
           done
+
+          fetch "${root%/}/inicio/" /tmp/desktop.html
+          for phrase in "Joice Sperandio" \
+                        "Planejamento Financeiro" \
+                        "Antes da conversa" \
+                        "Patrimônio não é apenas aquilo" \
+                        "Política de Privacidade"; do
+            grep -qF "$phrase" /tmp/desktop.html \
+              || { echo "::error::desktop (/inicio/): \"$phrase\" missing from the served HTML"; exit 1; }
+          done
+
+          # The old mobile URL must still lead to the root. Pages cannot
+          # redirect, so this is the refresh stub the build action wrote.
+          fetch "${root%/}/mobile/" /tmp/stub.html
+          grep -q 'http-equiv="refresh" content="0; url=../"' /tmp/stub.html \
+            || { echo "::error::/mobile/ is not the refresh stub to the root"; exit 1; }
 
           echo "smoke test passed on both URLs"

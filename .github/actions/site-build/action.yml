@@ -11,6 +11,15 @@
 # the same on any host, which is the point: the artifact is the two source
 # directories copied verbatim, so either page stays deployable by dragging
 # its folder onto any static host.
+#
+#   raw/mobile/  →  /          the mobile page owns the root
+#   raw/web/     →  /inicio/   the desktop page
+#
+# The mobile page is at the root because most visitors arrive on a phone and
+# Google indexes the mobile version: both get it without a redirect, which
+# desktops now pay instead. /mobile/, where it used to live, still lands on
+# the root — a 301 in firebase.json, and a refresh stub built below for hosts
+# without server-side redirects.
 name: Build the site artifact
 description: Verify raw/web and raw/mobile, assemble _site, and neutralise it unless deploying to production.
 
@@ -22,8 +31,8 @@ inputs:
     description: >-
       "true" when this deployment serves the real domain, which leaves the
       authored canonical, sitemap and indexability intact. A CNAME file in the
-      desktop folder forces this on as well, which is how GitHub Pages signals
-      a custom domain.
+      root (mobile) folder forces this on as well, which is how GitHub Pages
+      signals a custom domain.
     required: false
     default: "false"
   desktop-dir:
@@ -34,10 +43,10 @@ inputs:
     description: Source folder for the 360 mobile page.
     required: false
     default: raw/mobile
-  mobile-path:
-    description: Where the mobile build sits inside the assembled site.
+  desktop-path:
+    description: Where the desktop build sits inside the assembled site. The mobile build is the root.
     required: false
-    default: mobile
+    default: inicio
 
 outputs:
   site-dir:
@@ -57,10 +66,10 @@ runs:
         set -euo pipefail
         rc=0
 
-        # Files every raw/ folder must have. robots.txt and sitemap.xml are
-        # NOT in this list: they only make sense at the origin root, so the
-        # desktop folder carries them and the mobile folder deliberately
-        # does not — see the mobile README.
+        # Files every raw/ folder must have. robots.txt, sitemap.xml and
+        # 404.html are NOT in this list: they only make sense at the origin
+        # root, so the mobile folder — which is the root — carries them and
+        # the desktop folder deliberately does not.
         common="index.html favicon.svg favicon.png apple-touch-icon.png
                 styles/tokens.css styles/base.css styles/sections.css
                 styles/motion.css scripts/motion.js
@@ -122,14 +131,14 @@ runs:
           ) || rc=1
         }
 
-        check_dir "$DESKTOP_DIR" "robots.txt sitemap.xml"
-        check_dir "$MOBILE_DIR"  ""
+        check_dir "$MOBILE_DIR"  "robots.txt sitemap.xml 404.html"
+        check_dir "$DESKTOP_DIR" ""
 
-        # The mobile folder must NOT ship a robots.txt. It is only honoured
-        # at the origin root, so one at /mobile/robots.txt is dead weight
-        # that reads as policy.
-        [ -f "$MOBILE_DIR/robots.txt" ] \
-          && { echo "::error::$MOBILE_DIR/robots.txt would be ignored at a subpath — delete it"; rc=1; }
+        # The desktop folder must NOT ship a robots.txt. It is only honoured
+        # at the origin root, so one at /inicio/robots.txt is dead weight that
+        # reads as policy.
+        [ -f "$DESKTOP_DIR/robots.txt" ] \
+          && { echo "::error::$DESKTOP_DIR/robots.txt would be ignored at a subpath — delete it"; rc=1; }
 
         [ "$rc" -eq 0 ]
 
@@ -140,16 +149,39 @@ runs:
       env:
         DESKTOP_DIR: ${{ inputs.desktop-dir }}
         MOBILE_DIR: ${{ inputs.mobile-dir }}
-        MOBILE_PATH: ${{ inputs.mobile-path }}
+        DESKTOP_PATH: ${{ inputs.desktop-path }}
       run: |
         set -euo pipefail
         rm -rf _site
-        mkdir -p "_site/$MOBILE_PATH"
-        cp -R "$DESKTOP_DIR/." _site/
-        cp -R "$MOBILE_DIR/." "_site/$MOBILE_PATH/"
+        mkdir -p "_site/$DESKTOP_PATH"
+        cp -R "$MOBILE_DIR/." _site/
+        cp -R "$DESKTOP_DIR/." "_site/$DESKTOP_PATH/"
 
-        [ -f _site/index.html ] || { echo "::error::desktop index.html did not land"; exit 1; }
-        [ -f "_site/$MOBILE_PATH/index.html" ] || { echo "::error::mobile index.html did not land"; exit 1; }
+        [ -f _site/index.html ] || { echo "::error::mobile index.html did not land at the root"; exit 1; }
+        [ -f "_site/$DESKTOP_PATH/index.html" ] || { echo "::error::desktop index.html did not land"; exit 1; }
+
+        # The mobile page used to live at /mobile/, and links to it are out
+        # there. Firebase answers them with a 301 (firebase.json), which runs
+        # before static files, so this stub is never served there. GitHub
+        # Pages has no server-side redirects; for it, this is the redirect.
+        # A zero-second refresh is treated by Google as a redirect too.
+        mkdir -p _site/mobile
+        [ -e _site/mobile/index.html ] && { echo "::error::_site/mobile/ is taken — the stub would overwrite it"; exit 1; }
+        cat > _site/mobile/index.html <<'STUB'
+        <!doctype html>
+        <html lang="pt-BR">
+          <head>
+            <meta charset="utf-8" />
+            <title>Joice Sperandio</title>
+            <link rel="canonical" href="https://joicesperandio.com.br/" />
+            <meta http-equiv="refresh" content="0; url=../" />
+          </head>
+          <body>
+            <p><a href="../">Joice Sperandio — Planejamento Financeiro e Investimentos</a></p>
+          </body>
+        </html>
+        STUB
+
         echo "artifact assembled — $(du -sh _site | cut -f1)"
 
     # A REVIEW APP is not production. joicesperandio.com.br is a live site on
@@ -170,12 +202,11 @@ runs:
     #    combination Google warns against, because the noindex can end up
     #    attributed to the canonical target, i.e. the real site.
     #
-    #    The mobile page needs one more rewrite than the desktop. Its
-    #    authored canonical points at the DESKTOP url (that is the standard
-    #    separate-URL mobile annotation, paired with the desktop's
-    #    rel="alternate" back to it), and the blanket rewrite would leave it
-    #    pointing at the deployment ROOT — cross-page, not self-referential.
-    #    So it is re-pointed at <base>/mobile/ afterwards.
+    #    The desktop page needs one more rewrite than the root. Its authored
+    #    canonical points at the ROOT (it is the same content at a second
+    #    address), and the blanket rewrite would leave it pointing at the
+    #    deployment root — cross-page, not self-referential. So it is
+    #    re-pointed at <base>/inicio/ afterwards.
     #
     # 3. Drop sitemap.xml. It lists the production URL, and a review app has
     #    no business advertising a sitemap at all.
@@ -187,12 +218,13 @@ runs:
       env:
         BASE_URL: ${{ inputs.base-url }}
         PRODUCTION: ${{ inputs.production }}
-        MOBILE_PATH: ${{ inputs.mobile-path }}
+        DESKTOP_PATH: ${{ inputs.desktop-path }}
       run: |
         set -euo pipefail
 
         # Two ways to say "this is production". The CNAME file is how GitHub
-        # Pages carries a custom domain, and it travels in the desktop folder;
+        # Pages carries a custom domain, and it travels in the root (mobile)
+        # folder;
         # the input is for hosts that keep the domain in their own console,
         # where the repo has no such file to look at.
         if [ -f _site/CNAME ] || [ "$PRODUCTION" = "true" ]; then
@@ -213,8 +245,8 @@ runs:
           sed -i "s|https://joicesperandio\.com\.br|${base}|g" "$file"
 
           # Make the canonical self-referential — see (2) above. og:url
-          # follows it, or the mobile page ends up canonicalising to
-          # /mobile/ while telling every share sheet it is the root.
+          # follows it, or the desktop page ends up canonicalising to
+          # /inicio/ while telling every share sheet it is the root.
           sed -i "s|rel=\"canonical\" href=\"[^\"]*\"|rel=\"canonical\" href=\"${self}\"|" "$file"
           sed -i "s|property=\"og:url\" content=\"[^\"]*\"|property=\"og:url\" content=\"${self}\"|" "$file"
 
@@ -234,15 +266,19 @@ runs:
           echo "neutralised $file — noindex, crawlable, canonical → ${self}"
         }
 
-        neutralise _site/index.html                  "${base}/"
-        neutralise "_site/$MOBILE_PATH/index.html"   "${base}/${MOBILE_PATH}/"
+        neutralise _site/index.html                   "${base}/"
+        neutralise "_site/$DESKTOP_PATH/index.html"   "${base}/${DESKTOP_PATH}/"
+
+        # The /mobile/ stub carries a canonical too. It has no og:url, no
+        # mailto and nothing else to assert, so it gets only the two rewrites
+        # that matter: noindex, and its canonical onto this deployment.
+        sed -i 's|</head>|  <meta name="robots" content="noindex, nofollow" />\n  </head>|' _site/mobile/index.html
+        sed -i "s|https://joicesperandio\.com\.br/|${base}/|g" _site/mobile/index.html
+        if grep -q 'https://joicesperandio\.com\.br' _site/mobile/index.html; then
+          echo "::error::_site/mobile/index.html: a production URL survived the rewrite"; exit 1
+        fi
 
         # Crawlable on purpose — see (1) above. Root only: robots.txt is
         # ignored at a subpath.
         printf 'User-agent: *\nAllow: /\n' > _site/robots.txt
         rm -f _site/sitemap.xml
-
-        # The desktop's rel="alternate" has to reach the mobile page as
-        # deployed, or the pair is only half-wired on the review app.
-        grep -q "rel=\"alternate\"[^>]*href=\"${base}/${MOBILE_PATH}/\"" _site/index.html \
-          || { echo "::error::the desktop alternate does not point at ${base}/${MOBILE_PATH}/"; exit 1; }

@@ -41,8 +41,8 @@ number exists for. Tablet landscape above it, and every laptop, gets
 `raw/web` instead.
 
 Visitors are put on the right page by a small blocking head script in each of
-the two files — `rel="alternate"` is an annotation to search engines, not a
-redirect. The desktop half has to read `Math.min(screen.width, innerWidth)`
+the two files. This page is published at the **root** and sends wide screens
+to `inicio/`; the desktop page, at `/inicio/`, sends narrow ones back up to `../`. The desktop half has to read `Math.min(screen.width, innerWidth)`
 because its viewport is pinned to 1440 and `innerWidth` reports the pin; this
 page reads `innerWidth` alone, since its viewport is `device-width` and honest.
 The two tests are strict complements so they cannot ping-pong, and
@@ -76,8 +76,9 @@ um style, e apliquei 40px, que por sua vez não tem um style dentro do Figma."*
 
 ## Deployment
 
-Both sites ship from one GitHub Pages artifact, assembled by
-`.github/workflows/deploy.yml`: `raw/web/` at the root and this folder at
-`mobile/`. There is deliberately **no `robots.txt` here** — it is only honoured
-at the origin root, so one in a subdirectory would be dead weight that reads as
-policy. The root one covers the whole site.
+Both sites ship from one artifact, assembled by
+`.github/actions/site-build`: **this folder at the root** and `raw/web/` at
+`inicio/`. So the files that only mean anything at the origin root live here —
+`robots.txt`, `sitemap.xml` and `404.html` — and the desktop folder
+deliberately has none of them. The page used to be served at `/mobile/`; that
+URL still lands on the root (see the top-level README).

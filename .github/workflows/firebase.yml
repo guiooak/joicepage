@@ -7,8 +7,11 @@
 #
 # The artifact is the two source directories copied verbatim:
 #
-#   raw/web/          → /            the 1440 desktop page
-#   raw/mobile/  → /mobile/     the 360 mobile page
+#   raw/mobile/  → /          the 360 mobile page — the root
+#   raw/web/     → /inicio/   the 1440 desktop page
+#
+# /mobile/, where the mobile page used to be, answers with a 301 to the root
+# (firebase.json), so links shared before the swap keep working.
 #
 # There is still no build step, so either page stays deployable by dragging
 # its folder onto any static host.
@@ -134,17 +137,7 @@ jobs:
           # rather than waiting on JS, so assert that instead of assuming it.
           # The phrases are page-SPECIFIC — a mobile URL that accidentally
           # served the desktop page would still pass a generic name check.
-          fetch "$root" /tmp/desktop.html
-          for phrase in "Joice Sperandio" \
-                        "Planejamento Financeiro" \
-                        "Antes da conversa" \
-                        "Patrimônio não é apenas aquilo" \
-                        "Política de Privacidade"; do
-            grep -qF "$phrase" /tmp/desktop.html \
-              || { echo "::error::desktop: \"$phrase\" missing from the served HTML"; exit 1; }
-          done
-
-          fetch "${root}/mobile/" /tmp/mobile.html
+          fetch "$root" /tmp/mobile.html
           for phrase in "Joice Sperandio" \
                         "Planejamento Financeiro" \
                         "Patrimônio vai muito além" \
@@ -152,14 +145,32 @@ jobs:
                         "Recomendações independentes" \
                         "Política de Privacidade"; do
             grep -qF "$phrase" /tmp/mobile.html \
-              || { echo "::error::mobile: \"$phrase\" missing from the served HTML"; exit 1; }
+              || { echo "::error::mobile (root): \"$phrase\" missing from the served HTML"; exit 1; }
           done
+
+          fetch "${root}/inicio/" /tmp/desktop.html
+          for phrase in "Joice Sperandio" \
+                        "Planejamento Financeiro" \
+                        "Antes da conversa" \
+                        "Patrimônio não é apenas aquilo" \
+                        "Política de Privacidade"; do
+            grep -qF "$phrase" /tmp/desktop.html \
+              || { echo "::error::desktop (/inicio/): \"$phrase\" missing from the served HTML"; exit 1; }
+          done
+
+          # The old mobile URL must still land on the root, permanently. Read
+          # without -L: the point is the redirect itself, not where it ends.
+          code=$(curl -sS -o /dev/null -w '%{http_code} %{redirect_url}' "${root}/mobile/")
+          case "$code" in
+            "301 ${root}/") ;;
+            *) echo "::error::/mobile/ answered \"$code\", expected a 301 to ${root}/"; exit 1 ;;
+          esac
 
           # A review app must not be indexable, and that is easy to lose in a
           # refactor of the build action — so it is asserted against what the
           # host actually served, not against the local file.
           if [ "${{ vars.FIREBASE_PRODUCTION }}" != "true" ]; then
-            grep -q 'name="robots" content="noindex' /tmp/desktop.html \
+            grep -q 'name="robots" content="noindex' /tmp/mobile.html \
               || { echo "::error::the live URL is serving an indexable page"; exit 1; }
           fi
 

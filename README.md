@@ -2,8 +2,8 @@
 
 Single-page landing site for Joice Sperandio, financial planner.
 
-**Review app:** <https://guiooak.github.io/joicepage/> (desktop) and
-<https://guiooak.github.io/joicepage/mobile/> (mobile) — both redeployed on
+**Review app:** <https://guiooak.github.io/joicepage/> (mobile) and
+<https://guiooak.github.io/joicepage/inicio/> (desktop) — both redeployed on
 every push to `main`.
 
 Those URLs are for review only. It is served `noindex` and its canonical points at
@@ -16,8 +16,8 @@ itself, deliberately, so it cannot compete with the real domain — see
 ```
 .ai/plans/          architecture plan and decision record
 raw/                one folder per build approach — siblings, independently runnable
-  web/              zero-dependency desktop page, built to the 1440 frame  <- ships at /
-  mobile/           zero-dependency mobile page, built to the 360 frame    <- ships at /mobile/
+  mobile/           zero-dependency mobile page, built to the 360 frame    <- ships at /
+  web/              zero-dependency desktop page, built to the 1440 frame  <- ships at /inicio/
 tools/figextract/   decodes a .fig export into a readable node tree
 tools/measure/      headless-Chrome geometry harness, no dependencies
 originals/          the images as exported, before WebP — kept, never deployed
@@ -29,6 +29,14 @@ holds a separately-designed `MOBILE 360px` frame whose structure differs
 differs in a dozen places. A responsive layer was tried in this repo and
 reverted in `d750c35` because it fought the desktop build. See
 [`.ai/plans/mobile-page.md`](.ai/plans/mobile-page.md).
+
+**The mobile page owns the root.** Most visitors arrive on a phone, from
+Instagram and WhatsApp, and Google indexes the mobile version of a site. With
+the mobile page at `/`, both get it with no redirect; the hand-over script
+now sends wide screens down to `/inicio/`, so the extra page request is paid on
+desktops, where the connection is usually the faster one. Until October 2026
+it was the other way round, with the mobile page at `/mobile/`; that URL
+still lands on the root (see [Deploying](#deploying)).
 
 `raw/` exists so alternative build approaches can be evaluated side by side
 against the same design. Each folder is self-contained and deployable on its
@@ -57,8 +65,8 @@ structure rather than inventing its own.
 No install, no build:
 
 ```sh
-cd raw/web && python3 -m http.server 8000          # desktop
 cd raw/mobile && python3 -m http.server 8000  # mobile
+cd raw/web && python3 -m http.server 8000     # desktop
 ```
 
 Then open <http://localhost:8000>. Use the server rather than opening
@@ -72,17 +80,25 @@ block them, so the type would silently fall back.
 without an empty commit.
 
 GitHub Pages allows one site per repository, so it is **one artifact with the
-mobile build nested inside it**, not two deployments:
+desktop build nested inside it**, not two deployments:
 
 ```
-raw/web/          →  _site/           →  /joicepage/
-raw/mobile/  →  _site/mobile/    →  /joicepage/mobile/
+raw/mobile/  →  _site/          →  /joicepage/
+raw/web/     →  _site/inicio/   →  /joicepage/inicio/
 ```
 
 Only those two folders are uploaded, so the plan docs and the `.fig` tooling
-never reach the public site. `robots.txt` and `sitemap.xml` exist at the root
-only — they are ignored at a subpath, and the guard fails the run if one turns
-up in the mobile folder.
+never reach the public site. `robots.txt`, `sitemap.xml` and `404.html` live in
+the mobile folder, because it is the root — the first two are ignored at a
+subpath, and the guard fails the run if a `robots.txt` turns up in the desktop
+folder.
+
+`/mobile/`, where the mobile page lived before the swap, still lands on the
+root. Firebase answers it with a **301** (`redirects` in `firebase.json`,
+which run before static files). GitHub Pages has no server-side redirects, so
+the build action writes a small `mobile/index.html` with a zero-second refresh
+and a canonical to the root, which Google also treats as a redirect. Both
+workflows assert their version of it after deploying.
 
 Pages had to be enabled once by hand. `configure-pages` is set to
 `enablement: true`, but the workflow's `GITHUB_TOKEN` can deploy to Pages
@@ -127,22 +143,22 @@ three ways. The reasoning matters more than the code, so it is spelled out:
 3. **`sitemap.xml` dropped.** It lists the production URL, and a review app
    should not advertise a sitemap at all.
 
-The mobile page needs one rewrite the desktop does not. Its authored canonical
-points at the **desktop** URL — that is the standard separate-URL mobile
-annotation, paired with the desktop's `rel="alternate" media="only screen and
-(max-width: 640px)"` pointing back at it — so the blanket rewrite would leave
-it aimed at the deployment root rather than at itself. The step re-points it
-(and `og:url`) at `<base>/mobile/` afterwards, and asserts both.
+The desktop page needs one rewrite the root does not. Its authored canonical
+points at the **root** — it is the same content at a second address, and the
+root is the one URL that should rank — so the blanket rewrite would leave it
+aimed at the deployment root rather than at itself. The step re-points it
+(and `og:url`) at `<base>/inicio/` afterwards, and asserts both.
 
-That annotation is wired **now**, while both pages are `noindex` review apps,
-so the production cutover is a DNS change rather than an SEO project. Two URLs
-serving the same content otherwise compete for the same queries.
+There is no `rel="alternate" media=…` any more. That annotation belongs to the
+layout this site had before the swap — desktop canonical, mobile at its own
+URL — and has no documented meaning the other way round; the canonical alone
+carries the signal now.
 
 Every one of those is asserted after the fact, so a silent `sed` failure fails
 the run instead of publishing something that leaks.
 
 Gated on a `CNAME` file at the artifact root. To go live for real: add
-`raw/web/CNAME` with the domain, point DNS at Pages, and the step no-ops — the deployment is then
+`raw/mobile/CNAME` with the domain, point DNS at Pages, and the step no-ops — the deployment is then
 production and the authored canonical, `robots.txt` and `sitemap.xml` are
 already correct.
 

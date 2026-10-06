@@ -11,6 +11,10 @@
     <!-- HANDOVER, the other half of the pair in raw/web/index.html. Read
          that one first — it carries the reasoning; this is its complement.
 
+         This page is published at the ROOT and the desktop one at /inicio/, so
+         wide screens are sent down into `inicio/`, relatively, which holds on
+         the review app's subpath as well as on the domain.
+
          `innerWidth` alone is right HERE, unlike over there: the viewport
          above is `device-width`, so nothing is pinning it and it already
          reports the truth. `screen.width` is deliberately NOT consulted —
@@ -33,7 +37,7 @@
         if (navigator.webdriver) return;
 
         function go() {
-          location.replace("../" + location.search + location.hash);
+          location.replace("inicio/" + location.search + location.hash);
         }
         if (pinned === "desktop") return go();
         if (pinned === "mobile") return;
@@ -59,17 +63,14 @@
       content="Planejadora financeira CFP® e consultora de investimentos autorizada pela CVM, em Belo Horizonte, com atendimento online para todo o Brasil."
     />
 
-    <!-- The mobile/desktop pair, wired now so the production cutover is a DNS
-         change rather than an SEO project. This page is the mobile half: it
-         points its canonical at the desktop URL, which in turn points back
-         here with `rel="alternate" media="only screen and (max-width: 1024px)"`.
-         That is the standard annotation for separate-URL mobile sites; without
-         it the two URLs compete for the same queries.
+    <!-- Self-referential: this page is served at the root, and the root is
+         the URL that ranks. The desktop page at /inicio/ points its canonical
+         here too, as the same content at a second address.
 
-         The deploy workflow rewrites this to a self-referential
-         `<base>/mobile/` on review apps — see the README. A cross-domain
-         canonical on a `noindex` page can attribute the `noindex` to the
-         canonical target, i.e. to the real site. -->
+         The deploy workflow rewrites this to the deployment's own root on
+         review apps — see the README. A cross-domain canonical on a
+         `noindex` page can attribute the `noindex` to the canonical target,
+         i.e. to the real site. -->
     <link rel="canonical" href="https://joicesperandio.com.br/" />
 
     <meta property="og:type" content="website" />
