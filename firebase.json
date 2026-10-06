@@ -13,6 +13,16 @@
         "source": "/mobile/**",
         "destination": "/",
         "type": 301
+      },
+      {
+        "source": "/inicio",
+        "destination": "/",
+        "type": 301
+      },
+      {
+        "source": "/inicio/**",
+        "destination": "/",
+        "type": 301
       }
     ],
 
