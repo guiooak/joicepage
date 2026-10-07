@@ -120,12 +120,18 @@ explained in full at the top of `firebase.yml`.
   embed would each need carving out, and one missed source breaks the page
   silently. HSTS is Firebase's own. GitHub Pages cannot set headers, so the
   review app has none of this.
-- **Caching.** Paths ending in `/` and every `.html`, `.js` and `.css` are
-  `no-cache`: browsers keep them but revalidate with a cheap 304, so a deploy
-  reaches returning visitors at once. Images and fonts are cached for seven
-  days. Before this, Firebase's default `max-age=3600` kept the previous
-  deploy alive for up to an hour — which is how a `consent.js` without the
-  GA id outlived the deploy that added it.
+- **Caching.** Paths ending in `/` and every `.html`, `.js` and `.css` get
+  `public, max-age=0, s-maxage=31536000`. The two halves do different jobs:
+  `max-age=0` makes browsers revalidate on every visit (a cheap 304), so a
+  deploy reaches returning visitors at once; `s-maxage` lets Firebase's CDN
+  keep its copy, which is safe because every deploy purges the CDN. Plain
+  `no-cache` was tried first and was a mistake — the CDN honours it too, so
+  every request went back to the origin and the server response time went
+  from ~0.1s to ~0.25s. Fonts never change and are cached for a year;
+  images, which are sometimes replaced in place, for seven days. Before any
+  of this, Firebase's default `max-age=3600` kept the previous deploy alive
+  in browsers for up to an hour — which is how a `consent.js` without the GA
+  id outlived the deploy that added it.
 
 Only those two folders are uploaded, so the plan docs and the `.fig` tooling
 never reach the public site. `robots.txt`, `sitemap.xml` and `404.html` live in
