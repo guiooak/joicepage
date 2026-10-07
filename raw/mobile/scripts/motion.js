@@ -695,8 +695,31 @@
       if (data.event === "onReady" || playing) dropCaptions();
     });
 
+    /* Closing has two halves now that the dialog fades out (styles/
+       motion.css, 150ms). The sound must stop at once, so the player is
+       paused by command the moment the dialog closes — the same postMessage
+       protocol as the caption handshake above. The src is emptied only after
+       the fade, so the picture leaves with the box instead of the box going
+       black first. Emptying it is still what really stops playback; the
+       pause only covers the moment in between.
+
+       A fixed wait rather than transitionend: it also has to run where
+       there is no transition at all — an older browser, or one that never
+       fades. */
+    const CLOSE_FADE_MS = 200;
+
     videoModal.addEventListener("close", () => {
-      videoFrame.removeAttribute("src");
+      const win = videoFrame.contentWindow;
+      if (win) {
+        win.postMessage(
+          JSON.stringify({ event: "command", func: "pauseVideo", args: [] }),
+          PLAYER_ORIGIN
+        );
+      }
+      setTimeout(() => {
+        // Reopened inside the wait: the src now belongs to the new opening.
+        if (!videoModal.open) videoFrame.removeAttribute("src");
+      }, CLOSE_FADE_MS);
     });
 
     videoModal.querySelectorAll("[type='button']").forEach((button) => {

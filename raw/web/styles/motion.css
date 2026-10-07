@@ -591,4 +591,91 @@
       translate: 0 12px;
     }
   }
+
+  /* ---- Dialog fade -----------------------------------------------------
+     The video player and the two policy dialogs, with their scrim. Both
+     move together, so the box and the dark behind it read as one thing.
+
+     Open, 220ms: the scrim fades in and the box fades in while settling
+     from 96% to full size, on an ease-out curve — fast start, soft landing.
+     Close, 150ms: the same in reverse on an ease-in curve. Leaving is
+     quicker than arriving on purpose; whoever closes it has already
+     decided and should not be made to wait.
+
+     Fading OUT is the hard half: close() removes [open], which flips the
+     dialog to display:none and drops it from the top layer at once.
+     Transitioning `display` and `overlay` with allow-discrete holds both
+     until the fade is over. The transition that runs is the one on the
+     state being entered, which is how open and close get different
+     timings. @starting-style gives the opening a first frame to start
+     from, since a dialog coming out of display:none has no previous style.
+
+     The size change is motion and sits behind the reduced-motion guard;
+     the fade is not and runs for everyone (the same call as the consent
+     bar's). Browsers without these features open and close instantly. */
+  .video-modal,
+  .policy-modal {
+    opacity: 0;
+    transition:
+      opacity 150ms cubic-bezier(0.4, 0, 1, 1),
+      scale 150ms cubic-bezier(0.4, 0, 1, 1),
+      display 150ms allow-discrete,
+      overlay 150ms allow-discrete;
+  }
+
+  .video-modal[open],
+  .policy-modal[open] {
+    opacity: 1;
+    transition:
+      opacity 220ms cubic-bezier(0.2, 0, 0, 1),
+      scale 220ms cubic-bezier(0.2, 0, 0, 1),
+      display 220ms allow-discrete,
+      overlay 220ms allow-discrete;
+  }
+
+  .video-modal::backdrop,
+  .policy-modal::backdrop {
+    opacity: 0;
+    transition:
+      opacity 150ms cubic-bezier(0.4, 0, 1, 1),
+      display 150ms allow-discrete,
+      overlay 150ms allow-discrete;
+  }
+
+  .video-modal[open]::backdrop,
+  .policy-modal[open]::backdrop {
+    opacity: 1;
+    transition:
+      opacity 220ms cubic-bezier(0.2, 0, 0, 1),
+      display 220ms allow-discrete,
+      overlay 220ms allow-discrete;
+  }
+
+  @starting-style {
+    .video-modal[open],
+    .policy-modal[open],
+    .video-modal[open]::backdrop,
+    .policy-modal[open]::backdrop {
+      opacity: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .video-modal,
+    .policy-modal {
+      scale: 0.96;
+    }
+
+    .video-modal[open],
+    .policy-modal[open] {
+      scale: 1;
+    }
+
+    @starting-style {
+      .video-modal[open],
+      .policy-modal[open] {
+        scale: 0.96;
+      }
+    }
+  }
 }
