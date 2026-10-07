@@ -3,7 +3,7 @@
 Single-page landing site for Joice Sperandio, financial planner.
 
 **Review app:** <https://guiooak.github.io/joicepage/> (mobile) and
-<https://guiooak.github.io/joicepage/js/> (desktop) — both redeployed on
+<https://guiooak.github.io/joicepage/br/> (desktop) — both redeployed on
 every push to `main`.
 
 Those URLs are for review only. It is served `noindex` and its canonical points at
@@ -17,7 +17,7 @@ itself, deliberately, so it cannot compete with the real domain — see
 .ai/plans/          architecture plan and decision record
 raw/                one folder per build approach — siblings, independently runnable
   mobile/           zero-dependency mobile page, built to the 360 frame    <- ships at /
-  web/              zero-dependency desktop page, built to the 1440 frame  <- ships at /js/
+  web/              zero-dependency desktop page, built to the 1440 frame  <- ships at /br/
 tools/figextract/   decodes a .fig export into a readable node tree
 tools/measure/      headless-Chrome geometry harness, no dependencies
 originals/          the images as exported, before WebP — kept, never deployed
@@ -33,7 +33,7 @@ reverted in `d750c35` because it fought the desktop build. See
 **The mobile page owns the root.** Most visitors arrive on a phone, from
 Instagram and WhatsApp, and Google indexes the mobile version of a site. With
 the mobile page at `/`, both get it with no redirect; the hand-over script
-now sends wide screens down to `/js/`, so the extra page request is paid on
+now sends wide screens down to `/br/`, so the extra page request is paid on
 desktops, where the connection is usually the faster one. Until October 2026
 it was the other way round, with the mobile page at `/mobile/`; that URL
 still lands on the root (see [Deploying](#deploying)).
@@ -84,7 +84,7 @@ desktop build nested inside it**, not two deployments:
 
 ```
 raw/mobile/  →  _site/      →  /joicepage/
-raw/web/     →  _site/js/   →  /joicepage/js/
+raw/web/     →  _site/br/   →  /joicepage/br/
 ```
 
 Only those two folders are uploaded, so the plan docs and the `.fig` tooling
@@ -95,13 +95,13 @@ folder.
 
 `/mobile/`, where the mobile page lived before the swap, still lands on the
 root. Firebase answers it with a **301** (`redirects` in `firebase.json`,
-which run before static files) — and so does `/inicio/`, where the desktop
-page sat for an hour on 2026-10-06 before moving to `/js/`, since
-`/js/#inicio` reads better than `/inicio/#inicio`. GitHub Pages has no
-server-side redirects, so the build action writes a small `mobile/index.html`
-with a zero-second refresh and a canonical to the root, which Google also
-treats as a redirect. Both workflows assert their version of the `/mobile/`
-redirect after deploying.
+which run before static files) — and so do `/inicio/` and `/js/`, the two
+names the desktop page had briefly on 2026-10-06 before settling on `/br/`;
+each answers with a 301 to the root, which routes the visitor on. GitHub
+Pages has no server-side redirects, so the build action writes a small
+`mobile/index.html` with a zero-second refresh and a canonical to the root,
+which Google also treats as a redirect. Both workflows assert their version
+of the `/mobile/` redirect after deploying.
 
 Pages had to be enabled once by hand. `configure-pages` is set to
 `enablement: true`, but the workflow's `GITHUB_TOKEN` can deploy to Pages
@@ -150,7 +150,7 @@ The desktop page needs one rewrite the root does not. Its authored canonical
 points at the **root** — it is the same content at a second address, and the
 root is the one URL that should rank — so the blanket rewrite would leave it
 aimed at the deployment root rather than at itself. The step re-points it
-(and `og:url`) at `<base>/js/` afterwards, and asserts both.
+(and `og:url`) at `<base>/br/` afterwards, and asserts both.
 
 There is no `rel="alternate" media=…` any more. That annotation belongs to the
 layout this site had before the swap — desktop canonical, mobile at its own

@@ -15,7 +15,7 @@ python3 -m http.server 8000
 build — `body` holds `min-inline-size: 1440px` and the viewport meta is pinned
 to the frame width. Mobile is a separate exercise against the `Mobile` frame.
 
-**Published at `/js/`**, not at the root: the mobile page (`raw/mobile`) owns
+**Published at `/br/`**, not at the root: the mobile page (`raw/mobile`) owns
 the root, and this page's head script sends anything 1024px wide or narrower
 back up to it. Its canonical points at the root too. The files that only mean
 anything at the origin root — `robots.txt`, `sitemap.xml`, `404.html` — live

@@ -23,6 +23,16 @@
         "source": "/inicio/**",
         "destination": "/",
         "type": 301
+      },
+      {
+        "source": "/js",
+        "destination": "/",
+        "type": 301
+      },
+      {
+        "source": "/js/**",
+        "destination": "/",
+        "type": 301
       }
     ],
 
