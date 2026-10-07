@@ -2,14 +2,17 @@
 
 Single-page landing site for Joice Sperandio, financial planner.
 
-**Review app:** <https://guiooak.github.io/joicepage/> (mobile) and
-<https://guiooak.github.io/joicepage/e/> (desktop) — both redeployed on
-every push to `main`.
+**Production:** <https://joicesperandio.com.br/> (mobile, the root) and
+<https://joicesperandio.com.br/e/> (desktop), on Firebase Hosting.
 
-Those URLs are for review only. It is served `noindex` and its canonical points at
-itself, deliberately, so it cannot compete with the real domain — see
-[Deploying](#deploying). The production home will be
-`joicesperandio.com.br`, which today still serves a different site.
+**Review app:** <https://guiooak.github.io/joicepage/> and
+<https://guiooak.github.io/joicepage/e/>, on GitHub Pages — served `noindex`
+with a self-referential canonical, deliberately, so it cannot compete with
+the real domain.
+
+Both are redeployed on every push to `main` — see [Deploying](#deploying).
+What is still open before the site can be called finished is under
+[Open items](#open-items).
 
 ## Repository layout
 
@@ -56,9 +59,9 @@ Two constraints drove the approach, both recorded in
    static HTML puts every word of content in the initial response, with nothing
    waiting on JavaScript.
 
-The design system lives in Figma
-(`35gFTPRFgD9FZ0pwIxO3GL`) and has real token layers, so the CSS mirrors that
-structure rather than inventing its own.
+The design system lives in Figma (`qbR4qsKh2ORznVybIlH7J6`; the older file
+keys referenced in `.ai/plans/` are dead ends) and has real token layers, so
+the CSS mirrors that structure rather than inventing its own.
 
 ## Running it
 
@@ -75,17 +78,54 @@ block them, so the type would silently fall back.
 
 ## Deploying
 
-`.github/workflows/deploy.yml` publishes **both** pages on every push to
-`main`, plus a manual `workflow_dispatch` for redeploying the current `main`
-without an empty commit.
+Two workflows run on every push to `main`, each with a manual
+`workflow_dispatch` for redeploying the current `main` without an empty
+commit. Both build the **same artifact** from one composite action,
+`.github/actions/site-build`, and differ only in where they put it:
 
-GitHub Pages allows one site per repository, so it is **one artifact with the
-desktop build nested inside it**, not two deployments:
+| Workflow | Host | Serves | Role |
+|---|---|---|---|
+| `firebase.yml` | Firebase Hosting, project `site-joice-sperandio` | `joicesperandio.com.br` | **production** |
+| `deploy.yml` | GitHub Pages | `guiooak.github.io/joicepage/` | review app |
+
+The artifact is one site with the desktop build nested inside it, not two
+deployments:
 
 ```
-raw/mobile/  →  _site/      →  /joicepage/
-raw/web/     →  _site/e/    →  /joicepage/e/
+raw/mobile/  →  _site/      →  /             (/joicepage/ on Pages)
+raw/web/     →  _site/e/    →  /e/           (/joicepage/e/ on Pages)
 ```
+
+**Firebase** authenticates with Workload Identity Federation, not a service
+account key — the organisation forbids key creation, and this way there is no
+long-lived credential anywhere. The repository variable
+`FIREBASE_PRODUCTION=true` tells the build that this deployment is the real
+domain, so it is left exactly as authored. The default `web.app` and
+`firebaseapp.com` hosts serve the same production files; their canonicals
+point at the domain, which is what keeps them out of the index. The setup is
+explained in full at the top of `firebase.yml`.
+
+`firebase.json` also carries three things the pages cannot:
+
+- **Redirects** — see below.
+- **Security headers**, on every path: `X-Content-Type-Options: nosniff`,
+  `Referrer-Policy: strict-origin-when-cross-origin`, `X-Frame-Options: DENY`
+  with `Content-Security-Policy: frame-ancestors 'none'` (nobody can frame the
+  site), and a `Permissions-Policy` that switches off camera, microphone,
+  location, payment and the device APIs. That policy deliberately leaves alone
+  everything the YouTube player's `allow` list asks for — autoplay,
+  fullscreen, encrypted media, picture-in-picture — because a feature denied
+  to the page cannot be delegated to the iframe. A full content security
+  policy is not attempted: the inline head script, the JSON-LD, GA and the
+  embed would each need carving out, and one missed source breaks the page
+  silently. HSTS is Firebase's own. GitHub Pages cannot set headers, so the
+  review app has none of this.
+- **Caching.** Paths ending in `/` and every `.html`, `.js` and `.css` are
+  `no-cache`: browsers keep them but revalidate with a cheap 304, so a deploy
+  reaches returning visitors at once. Images and fonts are cached for seven
+  days. Before this, Firebase's default `max-age=3600` kept the previous
+  deploy alive for up to an hour — which is how a `consent.js` without the
+  GA id outlived the deploy that added it.
 
 Only those two folders are uploaded, so the plan docs and the `.fig` tooling
 never reach the public site. `robots.txt`, `sitemap.xml` and `404.html` live in
@@ -126,9 +166,10 @@ that accidentally served the desktop page still fails.
 
 ### The github.io deployment is a review app
 
-It is **not** production and must not compete with `joicesperandio.com.br`,
-which is a live site on other hosting. The deploy neutralises the artifact
-three ways. The reasoning matters more than the code, so it is spelled out:
+It is **not** production and must not compete with `joicesperandio.com.br`.
+The build neutralises the artifact three ways whenever it is not deploying
+production — on Pages always, on Firebase only if `FIREBASE_PRODUCTION` were
+unset. The reasoning matters more than the code, so it is spelled out:
 
 1. **`noindex`, with crawling left open.** The instinct is to add a
    disallow-all `robots.txt`; that is counterproductive. Google cannot read a
@@ -160,33 +201,51 @@ carries the signal now.
 Every one of those is asserted after the fact, so a silent `sed` failure fails
 the run instead of publishing something that leaks.
 
-Gated on a `CNAME` file at the artifact root. To go live for real: add
-`raw/mobile/CNAME` with the domain, point DNS at Pages, and the step no-ops — the deployment is then
-production and the authored canonical, `robots.txt` and `sitemap.xml` are
-already correct.
+On Pages the step is gated on a `CNAME` file at the artifact root: adding
+`raw/mobile/CNAME` and pointing DNS at Pages would make that deployment
+production instead, with nothing else to change. Production is Firebase, so
+there is no `CNAME`.
 
 Two habits that matter more than the config: **don't verify the review app in
 Search Console**, and **don't link to it from anywhere public** — inbound
 links are how Google finds a URL in the first place.
 
-### Before the real cutover
+## Open items
 
-- ~~`assets/img/og.jpg` does not exist~~ — created in `8da4d28`, 1200x630,
-  in both folders. Link previews now carry an image.
-- ~~The policy pages do not exist~~ — the two policies are now dialogs at
-  the foot of each `index.html`, opened from the footer by
-  `scripts/consent.js`, with a `:target` fallback when scripting is off. The
-  texts are standard LGPD wording and should get a legal review.
-- **Analytics is wired but off.** `scripts/consent.js` (identical in both
-  folders) shows a consent bar on the first visit, stores the answer in
-  `localStorage` only, and loads GA4 only after "Aceitar". Set
-  `GA_MEASUREMENT_ID` in **both** copies to turn it on, and bump
-  `CONSENT_VERSION` whenever the cookie policy changes enough to re-ask.
-- The domain currently serves a **different site**. Replacing it means its
-  existing URLs start 404ing, so plan redirects for anything already indexed.
-- Pushing changes to `.github/workflows/` needs a token with the `workflow`
-  scope. The `gh` login here does not have it, so use SSH for those pushes or
-  run `gh auth refresh -s workflow`.
+Done: the domain serves this site from Firebase; the policies open as dialogs
+from the footer; the consent bar gates **Google Analytics 4**
+(`G-N6PG98GN9R`, set in both copies of `scripts/consent.js` — bump
+`CONSENT_VERSION` there whenever the cookie policy changes enough to re-ask);
+both pages carry the same structured data (`WebSite`, `Person` with her
+credentials, `FinancialService` based in Belo Horizonte); share previews use
+`og-v2.jpg`; there is a `404.html`. The SEO reasoning and what is left of it
+are in [`.ai/plans/seo-and-analytics.md`](.ai/plans/seo-and-analytics.md).
+
+Still open:
+
+- **The phone number needs confirming.** The design draws `9193-9397`, eight
+  digits after the DDD; the site uses `99193-9397`, since Brazilian mobiles
+  have nine. It is in the footer and every WhatsApp link — nine places across
+  the two pages — and each footer carries a `TODO` beside it.
+- **TikTok and YouTube.** The design draws four social marks; only Instagram
+  and LinkedIn are wired, because only those two profiles are known.
+- **Legal review of the policies.** The texts are standard LGPD wording, not
+  advice, and she is a CVM-regulated professional.
+- **Search Console** is not verified yet (DNS TXT record, or a `<meta>` tag in
+  both pages). Once it is: submit `sitemap.xml`, and check how Google treats
+  the root and `/e/`.
+- **Google Analytics settings:** data retention at 14 months (what the privacy
+  policy promises), Google Signals off, and optionally the WhatsApp click as a
+  key event. The property's "data collection is not active" banner is
+  expected at first: the tag loads only after consent, so Google's tag checker
+  never finds it in the HTML.
+- **Off-site:** a Google Business Profile as a service area (Belo Horizonte,
+  MG, with the same phone), and the site linked from her Planejar profile and
+  her Instagram and LinkedIn bios.
+
+Pushing changes to `.github/` needs a token with the `workflow` scope. The
+`gh` login here does not have it, so push those over SSH or run
+`gh auth refresh -s workflow`.
 
 ## Status
 
@@ -251,7 +310,9 @@ metadata, not the build (that headline's stored box is 156px from when it was
 The Metrisch family is **not used** by the desktop page — the only faces the
 `Site desktop` frame references are Allomira and Lora.
 
-There is now one small script, `scripts/motion.js`, implementing the designer's
-interaction spec. The page is complete and readable without it — that is a
-hard constraint, not a nicety, and it is worth re-checking with JS disabled
-after any change.
+Two small scripts, both additive. `scripts/motion.js` implements the
+designer's interaction spec and the video dialog; `scripts/consent.js`
+handles the cookie bar, analytics and the policy dialogs (which fall back to
+`:target` without it). The page is complete and readable without either —
+that is a hard constraint, not a nicety, and it is worth re-checking with JS
+disabled after any change.
