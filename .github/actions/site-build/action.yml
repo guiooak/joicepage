@@ -160,6 +160,11 @@ runs:
         [ -f _site/index.html ] || { echo "::error::mobile index.html did not land at the root"; exit 1; }
         [ -f "_site/$DESKTOP_PATH/index.html" ] || { echo "::error::desktop index.html did not land"; exit 1; }
 
+        # Each folder carries a README for whoever works on it. They are notes
+        # for the repo, not pages for visitors, and were being served at
+        # /README.md and /<desktop>/README.md.
+        find _site -name README.md -delete
+
         # The mobile page used to live at /mobile/, and links to it are out
         # there. Firebase answers them with a 301 (firebase.json), which runs
         # before static files, so this stub is never served there. GitHub
@@ -282,3 +287,41 @@ runs:
         # ignored at a subpath.
         printf 'User-agent: *\nAllow: /\n' > _site/robots.txt
         rm -f _site/sitemap.xml
+
+    # Minify what ships, never what is kept. The source is written to be read
+    # — its comments carry the reasoning, and on the stylesheets they are most
+    # of the bytes — and it stays that way in the repo, where each folder
+    # still runs from `python3 -m http.server`. Only the assembled copy is
+    # minified, here, after every check and rewrite above has read it in its
+    # authored form.
+    #
+    # Measured on the mobile page before adding this: HTML, CSS and JS came to
+    # ~66 KB compressed, ~24 KB with comments and whitespace gone.
+    #
+    # Conservative on purpose. HTML keeps its attribute quotes, so the smoke
+    # tests' greps for `name="robots" content="noindex` and the /mobile/
+    # stub's refresh still match; whitespace collapses to one space rather
+    # than none, so no two inline words run together; JSON-LD is left as
+    # written. CSS and JS go through esbuild with no target, which minifies
+    # without lowering any syntax — @layer, @starting-style and the rest pass
+    # through untouched. Pinned to a major, like firebase-tools in the
+    # workflow, so a breaking release cannot land on a push that did not ask
+    # for it.
+    - name: Minify the artifact
+      shell: bash
+      run: |
+        set -euo pipefail
+        before=$(find _site -name '*.html' -o -name '*.css' -o -name '*.js' | xargs cat | wc -c)
+
+        npx --yes html-minifier-terser@7 \
+          --input-dir _site --output-dir _site --file-ext html \
+          --collapse-whitespace --conservative-collapse \
+          --remove-comments \
+          --minify-css true --minify-js true
+
+        mapfile -t assets < <(find _site -name '*.css' -o -name '*.js')
+        npx --yes esbuild@0.25 "${assets[@]}" \
+          --minify --outbase=_site --outdir=_site --allow-overwrite --log-level=warning
+
+        after=$(find _site -name '*.html' -o -name '*.css' -o -name '*.js' | xargs cat | wc -c)
+        echo "minified HTML, CSS and JS: $((before / 1024)) KB → $((after / 1024)) KB (before compression)"
