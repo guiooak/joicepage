@@ -13,7 +13,7 @@
 # its folder onto any static host.
 #
 #   raw/mobile/  →  /      the mobile page owns the root
-#   raw/web/     →  /br/   the desktop page
+#   raw/web/     →  /e/    the desktop page
 #
 # The mobile page is at the root because most visitors arrive on a phone and
 # Google indexes the mobile version: both get it without a redirect, which
@@ -46,7 +46,7 @@ inputs:
   desktop-path:
     description: Where the desktop build sits inside the assembled site. The mobile build is the root.
     required: false
-    default: br
+    default: e
 
 outputs:
   site-dir:
@@ -135,7 +135,7 @@ runs:
         check_dir "$DESKTOP_DIR" ""
 
         # The desktop folder must NOT ship a robots.txt. It is only honoured
-        # at the origin root, so one at /br/robots.txt is dead weight that
+        # at the origin root, so one at /e/robots.txt is dead weight that
         # reads as policy.
         [ -f "$DESKTOP_DIR/robots.txt" ] \
           && { echo "::error::$DESKTOP_DIR/robots.txt would be ignored at a subpath — delete it"; rc=1; }
@@ -206,7 +206,7 @@ runs:
     #    canonical points at the ROOT (it is the same content at a second
     #    address), and the blanket rewrite would leave it pointing at the
     #    deployment root — cross-page, not self-referential. So it is
-    #    re-pointed at <base>/br/ afterwards.
+    #    re-pointed at <base>/e/ afterwards.
     #
     # 3. Drop sitemap.xml. It lists the production URL, and a review app has
     #    no business advertising a sitemap at all.
@@ -246,7 +246,7 @@ runs:
 
           # Make the canonical self-referential — see (2) above. og:url
           # follows it, or the desktop page ends up canonicalising to
-          # /br/ while telling every share sheet it is the root.
+          # /e/ while telling every share sheet it is the root.
           sed -i "s|rel=\"canonical\" href=\"[^\"]*\"|rel=\"canonical\" href=\"${self}\"|" "$file"
           sed -i "s|property=\"og:url\" content=\"[^\"]*\"|property=\"og:url\" content=\"${self}\"|" "$file"
 

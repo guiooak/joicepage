@@ -11,8 +11,8 @@
     <!-- HANDOVER, the other half of the pair in raw/web/index.html. Read
          that one first — it carries the reasoning; this is its complement.
 
-         This page is published at the ROOT and the desktop one at /br/, so
-         wide screens are sent down into `br/`, relatively, which holds on
+         This page is published at the ROOT and the desktop one at /e/, so
+         wide screens are sent down into `e/`, relatively, which holds on
          the review app's subpath as well as on the domain.
 
          `innerWidth` alone is right HERE, unlike over there: the viewport
@@ -37,7 +37,7 @@
         if (navigator.webdriver) return;
 
         function go() {
-          location.replace("br/" + location.search + location.hash);
+          location.replace("e/" + location.search + location.hash);
         }
         if (pinned === "desktop") return go();
         if (pinned === "mobile") return;
@@ -64,7 +64,7 @@
     />
 
     <!-- Self-referential: this page is served at the root, and the root is
-         the URL that ranks. The desktop page at /br/ points its canonical
+         the URL that ranks. The desktop page at /e/ points its canonical
          here too, as the same content at a second address.
 
          The deploy workflow rewrites this to the deployment's own root on

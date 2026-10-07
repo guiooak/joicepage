@@ -42,7 +42,7 @@ number exists for. Tablet landscape above it, and every laptop, gets
 
 Visitors are put on the right page by a small blocking head script in each of
 the two files. This page is published at the **root** and sends wide screens
-to `br/`; the desktop page, at `/br/`, sends narrow ones back up to `../`. The desktop half has to read `Math.min(screen.width, innerWidth)`
+to `e/`; the desktop page, at `/e/`, sends narrow ones back up to `../`. The desktop half has to read `Math.min(screen.width, innerWidth)`
 because its viewport is pinned to 1440 and `innerWidth` reports the pin; this
 page reads `innerWidth` alone, since its viewport is `device-width` and honest.
 The two tests are strict complements so they cannot ping-pong, and
@@ -78,7 +78,7 @@ um style, e apliquei 40px, que por sua vez não tem um style dentro do Figma."*
 
 Both sites ship from one artifact, assembled by
 `.github/actions/site-build`: **this folder at the root** and `raw/web/` at
-`br/`. So the files that only mean anything at the origin root live here —
+`e/`. So the files that only mean anything at the origin root live here —
 `robots.txt`, `sitemap.xml` and `404.html` — and the desktop folder
 deliberately has none of them. The page used to be served at `/mobile/`; that
 URL still lands on the root (see the top-level README).

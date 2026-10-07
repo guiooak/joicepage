@@ -10,7 +10,7 @@
          them to raw/mobile, which is a separately-designed layout
          rather than a breakpoint of this one.
 
-         This page is published at /br/. The mobile page owns the root:
+         This page is published at /e/. The mobile page owns the root:
          most visitors arrive on a phone, and Google indexes the mobile
          version, so they get it without a hop and the redirect is paid by
          desktops instead. -->
@@ -31,7 +31,7 @@
 
          Inclusive at 1024 on purpose — iPad Pro 12.9" portrait is exactly
          1024, and `< 1024` would miss it. Relative navigation — `../`, up
-         from /br/ to the root — because the review app is served from a
+         from /e/ to the root — because the review app is served from a
          subpath and production from a root.
          `?layout=desktop` pins a choice for the session so nobody is
          trapped. -->
@@ -76,7 +76,7 @@
       name="description"
       content="Planejadora financeira CFP® e consultora de investimentos autorizada pela CVM, em Belo Horizonte, com atendimento online para todo o Brasil."
     />
-    <!-- Points at the ROOT, not at /br/: this page is the desktop rendering
+    <!-- Points at the ROOT, not at /e/: this page is the desktop rendering
          of the same content the mobile page serves there, and the root is
          the one URL that should rank. Two URLs with the same content
          otherwise compete for the same queries.
@@ -86,7 +86,7 @@
          canonical, mobile at its own URL — and has no documented meaning the
          other way round; with the mobile page at the root, the canonical is
          the whole signal. The deploy workflow rewrites this to a
-         self-referential `<base>/br/` on review apps — see the README. -->
+         self-referential `<base>/e/` on review apps — see the README. -->
     <link rel="canonical" href="https://joicesperandio.com.br/" />
 
     <meta property="og:type" content="website" />

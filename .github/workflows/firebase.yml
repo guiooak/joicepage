@@ -8,7 +8,7 @@
 # The artifact is the two source directories copied verbatim:
 #
 #   raw/mobile/  → /      the 360 mobile page — the root
-#   raw/web/     → /br/   the 1440 desktop page
+#   raw/web/     → /e/    the 1440 desktop page
 #
 # /mobile/, where the mobile page used to be, answers with a 301 to the root
 # (firebase.json), so links shared before the swap keep working.
@@ -148,14 +148,14 @@ jobs:
               || { echo "::error::mobile (root): \"$phrase\" missing from the served HTML"; exit 1; }
           done
 
-          fetch "${root}/br/" /tmp/desktop.html
+          fetch "${root}/e/" /tmp/desktop.html
           for phrase in "Joice Sperandio" \
                         "Planejamento Financeiro" \
                         "Antes da conversa" \
                         "Patrimônio não é apenas aquilo" \
                         "Política de Privacidade"; do
             grep -qF "$phrase" /tmp/desktop.html \
-              || { echo "::error::desktop (/br/): \"$phrase\" missing from the served HTML"; exit 1; }
+              || { echo "::error::desktop (/e/): \"$phrase\" missing from the served HTML"; exit 1; }
           done
 
           # The old mobile URL must still land on the root, permanently. Read
