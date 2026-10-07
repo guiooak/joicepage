@@ -709,4 +709,11 @@
       if (event.target === videoModal) videoModal.close();
     });
   }
+
+  /* ---- 10 · Ano do rodapé ----------------------------------------------
+     The copyright year, from the visitor's clock rather than the markup,
+     so it turns over on its own every January. The element ships empty;
+     see the comment on it in index.html. */
+  const year = document.querySelector(".site-footer__year");
+  if (year) year.textContent = "© " + new Date().getFullYear();
 })();

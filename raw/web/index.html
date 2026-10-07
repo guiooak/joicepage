@@ -1142,7 +1142,11 @@
         <a class="site-footer__totop" href="#inicio" aria-label="Voltar ao topo">
           <img src="assets/img/to-top.svg" alt="" width="40" height="40" />
         </a>
-        <small>© 2026</small>
+        <!-- Filled with "© <current year>" by scripts/motion.js (section 10),
+             so it never goes stale. Left empty without scripting on
+             purpose: a copyright line is not content anyone needs, and a
+             fixed year would be wrong from the next January on. -->
+        <small class="site-footer__year"></small>
       </div>
     </footer>
 
