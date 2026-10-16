@@ -694,6 +694,11 @@
     color: var(--color-body);
   }
 
+  /* The claim proper; the paragraph after it is the description. */
+  .service-card__claim p:first-child {
+    font-weight: var(--weight-bold);
+  }
+
   /* list-item 297.5 wide · one-liners 48, the two-line "Organização
      financeira para autônomos" 72 · arrow 32 at gap 24. A floor plus 8
      padding gives both without pinning two heights. */

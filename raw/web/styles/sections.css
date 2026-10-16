@@ -645,7 +645,7 @@
   .principio h3 {
     font-size: var(--text-paragraph);
     line-height: var(--leading-paragraph);
-    font-weight: var(--weight-regular);
+    font-weight: var(--weight-bold);
     letter-spacing: var(--tracking-paragraph);
     color: var(--color-accent);
   }
@@ -729,6 +729,7 @@
 
   .service-card__claim {
     margin-block-start: var(--size-24);
+    font-weight: var(--weight-bold);
     color: var(--color-body);
   }
 
