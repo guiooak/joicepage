@@ -88,6 +88,6 @@ Adicionar em `.claude/launch.json` duas configurações, `acf-mobile` e `acf-web
 6. **Links:** os CTAs de WhatsApp vão para `wa.me/5547991939397` e os mailtos para `oi@joicesperandio.com.br`. Nenhum link aponta para zelofinancas.com.br.
 
 ## Pendências para o README (fora do escopo)
-- **Licença da Allomira:** é uma fonte comercial. Confirmar se a licença cobre um segundo domínio.
+- ~~**Licença da Allomira:** é uma fonte comercial. Confirmar se a licença cobre um segundo domínio.~~ Liberada em 16 de outubro de 2026.
 - **Revisão do texto:** confirmar as três edições que tiram a Zelo.
 - Deploy e domínio (Firebase ou outro), Search Console e analytics.

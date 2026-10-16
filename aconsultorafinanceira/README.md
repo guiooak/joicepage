@@ -44,8 +44,14 @@ cd aconsultorafinanceira/web && python3 -m http.server 8011
 Open <http://localhost:8010/?layout=mobile> or
 <http://localhost:8011/?layout=desktop>. The `?layout=` pin stops the
 handover script from redirecting: each folder served on its own has no
-sibling to redirect to. To test the handover, serve a copy with `mobile/` at
-the root and `web/` at `inicio/`.
+sibling to redirect to. To run it the way it will be served, with the
+handover, assemble a copy with `mobile/` at the root and `web/` at `inicio/`:
+
+```sh
+rm -rf /tmp/acf-site && mkdir -p /tmp/acf-site/inicio && cp -R aconsultorafinanceira/mobile/. /tmp/acf-site/ && cp -R aconsultorafinanceira/web/. /tmp/acf-site/inicio/ && python3 -m http.server 8012 --directory /tmp/acf-site
+```
+
+Then open <http://localhost:8012>.
 
 ## Decisions
 
@@ -99,8 +105,6 @@ fix that.
 
 ## Open items
 
-- **Allomira licence.** It is a commercial face. Confirm the licence covers a
-  second domain before publishing.
 - **Copy review.** Joice should confirm the three wording changes above.
 - **Privacy policy.** Standard LGPD wording, not legal advice. Have it
   reviewed.
