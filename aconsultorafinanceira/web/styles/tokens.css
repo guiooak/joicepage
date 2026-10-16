@@ -1,0 +1,196 @@
+/* Cascade order, declared once for the whole site. */
+@layer reset, tokens, base, components;
+
+/* ============================================================================
+   DESIGN TOKENS — Joice Sperandio
+
+   COPIED VERBATIM from raw/web/styles/tokens.css in this repository, so
+   aconsultorafinanceira.com.br wears exactly the joicesperandio.com.br
+   system. Nothing here is new and nothing from the old WordPress theme is
+   in it. If a value changes over there, copy it across by hand — this app
+   imports nothing from outside its own folder. The provenance notes below
+   are the original file's and refer to its Figma source.
+
+   PROVENANCE: every value below is EXACT, taken from the Figma file rather
+   than sampled. Two independent sources agree on them:
+
+     · Figma MCP `get_variable_defs` on frame 318:7275 — the named variables
+       (Background/Color/primary-base, Elements/Text/Body/neutral, …).
+     · `tools/figextract/site-desktop.spec.txt` — the decoded .fig export,
+       which carries the same fills and type stack per node.
+
+   Where the two are quoted below, the Figma variable name is in the comment
+   so a future edit can be traced back to source.
+
+   Desktop only. There are deliberately no breakpoints in this stylesheet.
+   ========================================================================= */
+
+@layer tokens {
+  :root {
+    /* ---- Primitives ------------------------------------------------------
+       Named for what they are. The semantic layer below is what components
+       should reference — these exist so a palette change happens once. */
+    --c-navy: #28445e;        /* Background/Color/secondary-base   */
+    --c-blue: #5779aa;        /* Background/Color/primary-base     */
+    --c-blue-tint: #ccdceb;   /* Background/Color/secondary-subtle */
+    --c-blue-pale: #e5eef4;   /* Background/Color/primary-subtle   */
+    --c-violet: #50518a;      /* Elements/Text/Title/Color/quaternary-base */
+
+    --c-ink: #151a1d;         /* Elements/Text/Title/Neutral/default */
+    --c-muted: #4c646e;       /* Elements/Text/Body/neutral          */
+
+    /* The accordion component carries its own two text colours, and they are
+       not the page's: Text/txt-primary is pure black and Text/txt-secondary
+       is #3c3c43 at 85%. Kept verbatim rather than mapped onto --c-ink /
+       --c-muted, because the whole point of the pair is that the title and
+       the copy under it read as different colours. */
+    --c-black: #000000;       /* Text/txt-primary   */
+    --c-slate: #3c3c43;       /* Text/txt-secondary */
+
+    --c-line: #e2e9eb;        /* Elements/Border/neutral-subtle */
+
+    --c-paper: #f4f7f7;       /* Background/Neutral/default — the page ground */
+    --c-white: #ffffff;       /* Background/Neutral/white */
+    /* The wordmark's own ink, read off the exported Logo asset. Not a
+       mapped Figma variable and not --c-ink (#151a1d), which is what the
+       type-based approximation used to draw it in. */
+    --c-logo: #35425d;
+    --c-mist: #f7fafc;        /* decorative ellipse behind the LOGOS bars */
+
+    /* ---- Semantic -------------------------------------------------------- */
+    /* The page ground is #f4f7f7, NOT white. White is a surface (menu bar,
+       Princípios cards, the testimonial block) that sits on top of it. */
+    --color-page: var(--c-paper);
+    --color-surface: var(--c-white);
+
+    --color-ink: var(--c-ink);
+    /* Body copy is #151a1d almost everywhere; #4c646e is the deliberately
+       quieter variant used under the big numbers and in the credential bars. */
+    --color-body: var(--c-ink);
+    --color-body-soft: var(--c-muted);
+    /* Accordion panels only — see the primitives above. The alpha is the
+       design's, and it is worth keeping as alpha: the component is drawn on
+       white in the Desktop section and on the page ground in the frame. */
+    /* Text/txt-secondary at 85%, which is how the accordion panel is drawn
+       (I529:4274;121:2428 is rgba(60,60,67,.85)). Mixed from --c-slate
+       rather than restating its hex, which is what left --c-slate reading
+       as an unused token while its value was in use three lines down. */
+    --color-body-quiet: color-mix(in srgb, var(--c-slate) 85%, transparent);
+    --color-ink-strong: var(--c-black);
+
+    --color-accent: var(--c-blue);
+    /* The accent as TEXT on the page ground. --c-blue on --c-paper is
+       4.12:1, under the 4.5:1 WCAG AA asks of body-size type; this is the
+       same hue taken down just far enough to pass (4.57:1). Borders and
+       fills keep --c-blue — the rule is about legibility of words only. */
+    --color-accent-text: #5172a0;
+    --color-accent-deep: var(--c-navy);
+    /* Unrevealed state of the two-tone Visão headline — see the scroll reveal
+       in the designer's Interactions spec. */
+    --color-ghost-ink: var(--c-blue-tint);
+
+    --color-surface-card: var(--c-blue-tint);
+    --color-surface-card-alt: var(--c-blue-pale);
+    --color-surface-tint: var(--c-blue-pale);
+    --color-line: var(--c-line);
+    /* Elements/Border/brand-subtle. Named `-strong` it read as an alias for
+       --c-line-strong, the neutral #587882 — which it never was, and which
+       nothing uses. The rendered colour was always right; only the name lied. */
+    --color-line-brand: var(--c-blue);
+
+    --color-button: var(--c-navy);
+    --color-button-primary: var(--c-blue);
+    --color-button-ink: var(--c-paper);
+    --color-button-hover: color-mix(in oklab, var(--c-navy) 86%, white);
+
+    /* The hero is a photograph with two large #50518a ellipses blended over
+       it in hard-light — not a gradient. Kept as tokens so the blend colour
+       and the wash under it stay editable in one place. */
+    --hero-blend: var(--c-violet);
+    --hero-veil: rgb(0 0 0 / 8%);
+
+    /* ---- Typography ------------------------------------------------------
+       Two families, both real and self-hosted. Allomira is the licensed
+       commercial face (one variable woff2, 100–900); Lora is open (SIL OFL)
+       and sets the numerals. The generics after them are a safety net for a
+       failed font load, not a design fallback. */
+    --font-sans: "Allomira", ui-sans-serif, system-ui, -apple-system,
+      "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-serif: "Lora", ui-serif, Georgia, "Times New Roman", serif;
+
+    /* Size / line-height pairs, read per node from the .fig export. */
+    --text-display-lg: 90px;      /* Visão headline, Allomira Black       */
+    --leading-display-lg: 0.92;
+    --text-display: 72px;         /* Hero headline only                   */
+    --leading-display: 0.92;
+    --text-h1: 56px;              /* every section title · weight 600      */
+    --leading-h1: 0.92;
+    --text-h2: 48px;              /* service card titles, CTA paragraph   */
+    --leading-h2: 1;
+    --text-h3: 32px;              /* Processo closing, Sobre card numbers */
+    --leading-h3: 1;
+    --text-h4: 28px;
+    --leading-h4: 1.2;
+    --text-h5: 24px;              /* credential text, big-number labels   */
+    --leading-h5: 1.2;
+    --text-paragraph: 20px;       /* ALL body copy. Not 16px.             */
+    --leading-paragraph: 1.4;
+    --text-caption: 16px;
+    --leading-caption: 1.5;
+    /* Caption's size at solid leading, which is the testimonial pill and
+       nothing else: 16 x 1 plus 6 of padding top and bottom is the 28 the
+       file draws (I529:4302;295:9355). Caption's own 1.5 would make it 36.
+       There is no --text-tag to go with this; the size is Caption's. */
+    --leading-tag: 1;
+
+    /* Lora numerals. */
+    --text-numeral: 136px;        /* big-numbers      */
+    --leading-numeral: 1;
+    --text-numeral-sm: 120px;     /* service card 01 / 02 */
+    --leading-numeral-sm: 0.92;
+
+    --weight-regular: 400;
+    --weight-medium: 500;
+    --weight-semibold: 600;
+    --weight-bold: 700;
+    --weight-extrabold: 800;  /* H4 only — the testimonial quote */
+    --weight-black: 900;
+
+    /* Figma sets letterSpacing 1% on the 20px paragraph style and -1% on the
+       big numerals; every heading style is 0. */
+    --tracking-paragraph: 0.01em;
+    --tracking-numeral: -0.01em;
+
+    /* ---- Dimension ------------------------------------------------------- */
+    --frame-width: 1440px;
+    --content-width: 1360px;
+    --section-padding-top: 160px;
+
+    --size-4: 4px;
+    --size-8: 8px;
+    --size-12: 12px;
+    --size-16: 16px;
+    --size-24: 24px;
+    --size-32: 32px;
+    --size-40: 40px;
+    --size-48: 48px;
+    --size-56: 56px;
+    --size-64: 64px;
+    --size-72: 72px;
+    --size-80: 80px;
+    --size-96: 96px;
+    --size-100: 100px;
+    --size-120: 120px;
+    --size-140: 140px;
+    --size-160: 160px;
+
+    --radius-sm: 8px;
+    --radius-md: 16px;   /* buttons, Princípios cards, Sobre cards */
+    --radius-lg: 24px;   /* menu bar, hero, service cards, CTA, footer */
+    --radius-pill: 999px;
+
+    --header-height: 84px;
+
+    --transition: 160ms ease;
+  }
+}

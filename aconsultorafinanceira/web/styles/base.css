@@ -1,0 +1,272 @@
+@layer reset {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  * {
+    margin: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  img,
+  picture,
+  svg {
+    display: block;
+    max-inline-size: 100%;
+  }
+
+  ul,
+  ol {
+    list-style: none;
+    padding: 0;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  /* Mobile browsers paint a translucent blue box over whatever you tap, and
+     it lands on the CTA pills and the drawer toggle as a flash of colour that
+     is not in the design. Cleared here rather than per component, because it
+     applies to every tappable thing on the page.
+
+     `:focus-visible` is deliberately untouched — that is the keyboard user's
+     only way of knowing where they are, and it is a different mechanism. */
+  a,
+  button,
+  summary,
+  label,
+  [role="button"] {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  button {
+    font: inherit;
+    color: inherit;
+    background: none;
+    border: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer base {
+  /* Lora — the real face, self-hosted and committed. It is open (SIL OFL), so
+     unlike Allomira it needs no licence. It sets every numeral on the page:
+     the 01/02 service card figures (120px) and the big numbers (136px), plus
+     the wordmark and the quote mark. Two subsets, latin-ext first so pt-BR
+     diacritics resolve without pulling the larger file when unused. */
+  @font-face {
+    font-family: "Lora";
+    src: url("../assets/fonts/lora-latin.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
+      U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
+      U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
+
+  @font-face {
+    font-family: "Lora";
+    src: url("../assets/fonts/lora-latin-ext.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7,
+      U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F,
+      U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F,
+      U+A720-A7FF;
+  }
+
+  /* Allomira — the real face, licensed and self-hosted. This replaces the
+     measured metric-override fallback that stood in for it; there is no
+     size-adjust here and none is wanted.
+
+     One variable file covers the whole range the design uses (Regular 400,
+     Medium 500, Bold 700, Black 900) in 26KB, against 64KB for the four
+     statics. Checked before choosing: instancing the VF at each of those
+     weights matches the corresponding static font's advance widths to within
+     0.1% — exact at 400 and 900 — so the variable file is not an
+     approximation of the designer's instances, it reproduces them.
+
+     Subset to latin + latin-ext, which covers every pt-BR diacritic plus the
+     ©, → and typographic quotes the page uses. Verified: no glyph the copy
+     needs is missing.
+
+     `font-weight: 100 900` is the range this face answers for. It is load
+     bearing — a @font-face without it matches only 400, and every 500/700/900
+     run would silently fall through to the next family in the stack. */
+  @font-face {
+    font-family: "Allomira";
+    src: url("../assets/fonts/allomira-variable.woff2") format("woff2");
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  /* Makes `cqw` below resolve against the root's CONTENT box. That is the
+     whole point of using a container unit here rather than `vw`: `100vw`
+     includes the classic scrollbar gutter on Windows and Linux, so a zoom
+     derived from it would scale the page ~15px wider than the space it has
+     and reintroduce the very scrollbar this removes. `100cqw` excludes it.
+
+     Safe here because a container is also the containing block for fixed
+     descendants — and this page has no `position: fixed` at all. Check that
+     before adding any. */
+  html {
+    container-type: inline-size;
+  }
+
+  body {
+    background-color: var(--color-page);
+    color: var(--color-body);
+    font-family: var(--font-sans);
+    font-size: var(--text-paragraph);
+    line-height: var(--leading-paragraph);
+    letter-spacing: var(--tracking-paragraph);
+    /* Desktop-only implementation: the page holds the 1440px frame width and
+       does not reflow below it. */
+    min-inline-size: var(--frame-width);
+
+    /* The design is a fixed 1440 canvas, so on a narrower window it used to
+       run off the side and the page scrolled horizontally. It now scales to
+       fit instead: the whole canvas shrinks proportionally, so the layout is
+       never cut off and never reflows — every proportion the .fig specifies
+       is preserved at any width.
+
+       Capped at 1 by the min(), so above 1440 the page stops growing and
+       sits centred at its drawn size rather than being blown up.
+
+       Degrades to exactly the previous behaviour: a browser that cannot
+       compute this drops the declaration, leaving the 1440 pin and its
+       horizontal scroll. Nothing else depends on it. */
+    /* Named rather than inlined because the video dialog has to undo it:
+       a top-layer element still carries its ancestors' effective zoom, and a
+       player sized in viewport units would then be painted at zoom x zoom.
+       Dividing by this is the only way back to 1:1 from inside the canvas. */
+    --page-zoom: min(1, calc(100cqw / var(--frame-width)));
+    zoom: var(--page-zoom);
+  }
+
+  /* Weights are per-level, not shared, and the STYLE NAMES in the file do not
+     give them: Figma calls H1, H2, H3 and H4 all "Bold", but the weight token
+     behind each one differs — H1 is font-weight-600, H2 and H3 are 700, H4 is
+     800, H5 is Medium 500. Read off the variables rather than the style name,
+     which is what put H1 a step too heavy here until the designer's QA pass
+     caught it on every section title at once. Headline tracking is 0 in every
+     style — the earlier blanket -0.01em was invented. */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    color: var(--color-ink);
+    letter-spacing: 0;
+  }
+
+  h1 {
+    font-size: var(--text-h1);
+    line-height: var(--leading-h1);
+    font-weight: var(--weight-semibold);
+  }
+
+  h2 {
+    font-size: var(--text-h2);
+    line-height: var(--leading-h2);
+    font-weight: var(--weight-bold);
+  }
+
+  h3 {
+    font-size: var(--text-h3);
+    line-height: var(--leading-h3);
+    font-weight: var(--weight-bold);
+  }
+
+  /* h4 and h5 have no element in today's markup, and they stay: h1-h5 is the
+     document's heading scale, and dropping the two that happen to be unused
+     means the next heading added falls back to body size instead of landing
+     on its step. h4's 800 is not arbitrary either — it is the weight Figma
+     gives the H4 style, the one the testimonial quote uses. */
+  h4 {
+    font-size: var(--text-h4);
+    line-height: var(--leading-h4);
+    font-weight: var(--weight-extrabold);
+  }
+
+  h5 {
+    font-size: var(--text-h5);
+    line-height: var(--leading-h5);
+    font-weight: var(--weight-medium);
+  }
+
+  /* Where a menu click lands. The offset has to cancel the section's own top
+     padding, otherwise it positions the section's BOX and the padding then
+     pushes the content down the screen — measured, every section landed
+     correctly at 124 while its heading sat between 240 and 400, which reads
+     as the middle of the page rather than the top.
+
+     Subtracting the section's own padding — declared once, in sections.css —
+     puts the section's first visible element, the eyebrow tag, 48 from the
+     top, with the heading immediately under it. Aiming the heading itself at
+     48 would push the tag off screen.
+
+     There used to be a second term here for a 40px "content lead". No such
+     lead exists in the file; it was removed from sections.css along with the
+     padding it sat under, and taking it out of this sum is half of that fix
+     — left in, every anchor would now overshoot by 40.
+
+     The subtraction is scoped to `.section[id]` rather than every `[id]`,
+     and that scope is load bearing. `--section-pad` is a custom property, so
+     it INHERITS: an id nested inside a padded section sees its parent's pad
+     even though it has none of its own. #contato lives inside #processo,
+     which declares 160 — so the bare `[id]` rule resolved to 48 - 160 =
+     -112px there, and the menu jump to the CTA landed 112px above it. Every
+     section that declares the variable carries `class="section"`, so the
+     subtraction still applies exactly where it did.
+
+     Anything without the variable (the hero, the CTA) just gets the 48. */
+  [id] {
+    scroll-margin-top: var(--size-48);
+  }
+
+  .section[id] {
+    scroll-margin-top: calc(var(--size-48) - var(--section-pad, 0px));
+  }
+
+  /* Início in the menu, the wordmark and the footer's back-to-top all aim at
+     #inicio, the hero — which is NOT the top of the page: the header and the
+     24px frame gap put it 132 down. The 48 above therefore stopped 84 short.
+
+     Any offset at least as large as that distance lands the scroll at 0,
+     because scrolling clamps there — so this is deliberately generous rather
+     than exact. Matching the 132 with a constant would mean keeping it in
+     step with the header's height, and the header is not --header-height
+     tall: that token sizes the row inside it, and the padding around the row
+     brings the element to 108. Overshooting sidesteps the whole question. */
+  #inicio {
+    scroll-margin-top: 1000px;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+}
