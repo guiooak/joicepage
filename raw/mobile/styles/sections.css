@@ -173,6 +173,10 @@
     block-size: 724px;
     border-radius: var(--radius-lg);
     overflow: hidden;
+    /* Safari drops an overflow + border-radius clip for a child on its own
+       compositing layer, and the photo is one (rotate, will-change, the
+       parallax). It painted square-cornered there; a clip-path is honoured. */
+    clip-path: inset(0 round var(--radius-lg));
     isolation: isolate;
   }
 
@@ -415,6 +419,7 @@
     block-size: 584px;
     border-radius: var(--radius-lg);
     overflow: hidden;
+    clip-path: inset(0 round var(--radius-lg)); /* Safari, see .hero */
     isolation: isolate;
   }
 
