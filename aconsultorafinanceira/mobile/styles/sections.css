@@ -1,0 +1,1131 @@
+/* ============================================================================
+   COMPONENTS — mobile, no breakpoints by design.
+
+   Every component here is raw/mobile's (this repository's joicesperandio.com.br
+   mobile page), copied and then laid out for this page's content. There is no
+   Figma frame behind this page, so where raw/mobile pins a drawn height or a
+   drawn offset, this file lets the content size the box instead; where it
+   sets a colour, a size, a radius or a gap, this file uses the same token.
+   No value from the old WordPress theme is used anywhere.
+   ========================================================================= */
+
+@layer components {
+  /* The page frame: a 360-wide vertical stack, 16 padding, 16 gap. `main`
+     repeats the stack without the padding. */
+  .frame,
+  .frame > main {
+    display: flex;
+    flex-direction: column;
+    gap: var(--frame-gap);
+  }
+
+  .frame {
+    padding: var(--page-gutter);
+  }
+
+  /* ---- Header ---------------------------------------------------------- */
+  .site-header {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-inline: var(--size-24);
+    padding-block: var(--size-16);
+    background-color: var(--color-surface);
+    /* Inset shadow rather than a border, so the hairline costs no height. */
+    box-shadow: inset 0 0 0 1px var(--c-paper);
+    border-radius: var(--radius-lg);
+    filter: drop-shadow(0 16px 10px rgb(87 121 170 / 8%));
+  }
+
+  /* The wordmark, painted as a mask over `currentcolor` so one asset serves
+     the header (#35425d) and the footer (#f4f7f7). */
+  .brand {
+    display: block;
+    inline-size: 120px;
+    block-size: 48px;
+    color: var(--c-logo);
+    background-color: currentcolor;
+    -webkit-mask: url("../assets/img/logo.svg") no-repeat center / contain;
+    mask: url("../assets/img/logo.svg") no-repeat center / contain;
+  }
+
+  .brand span {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  /* ---- Nav drawer ------------------------------------------------------ */
+  .menu__toggle {
+    display: grid;
+    place-items: center;
+    inline-size: var(--size-56);
+    block-size: var(--size-56);
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .menu__toggle::-webkit-details-marker {
+    display: none;
+  }
+
+  .menu__icon {
+    inline-size: var(--size-24);
+    block-size: var(--size-24);
+    fill: none;
+    stroke: #343330; /* Phosphor "stone", the icon's own colour in raw/mobile */
+    stroke-width: 1.5;
+    stroke-linecap: round;
+  }
+
+  /* Hangs off the bar rather than pushing the page down. */
+  .menu__panel {
+    position: absolute;
+    inset-inline: 0;
+    inset-block-start: calc(100% + var(--size-8));
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-16);
+    padding: var(--size-24);
+    background-color: var(--color-surface);
+    box-shadow: inset 0 0 0 1px var(--c-paper);
+    border-radius: var(--radius-lg);
+    filter: drop-shadow(0 16px 10px rgb(87 121 170 / 8%));
+  }
+
+  .menu__panel a:not(.btn) {
+    font-size: var(--text-paragraph);
+    line-height: var(--leading-paragraph);
+    letter-spacing: var(--tracking-paragraph);
+    color: var(--color-ink);
+  }
+
+  /* ---- Button ---------------------------------------------------------- */
+  .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--size-8);
+    padding-inline: var(--size-24);
+    padding-block: var(--size-12);
+    font-size: var(--text-paragraph);
+    line-height: var(--leading-paragraph);
+    letter-spacing: var(--tracking-paragraph);
+    border-radius: var(--radius-md);
+    color: var(--color-button-ink);
+    background-color: var(--color-button);
+    transition: background-color var(--transition);
+  }
+
+  .btn--primary {
+    background-color: var(--color-button-primary);
+  }
+
+  /* ---- Tag pill -------------------------------------------------------- */
+  /* Inset-shadow hairline, as raw/mobile: a real border adds 2px. */
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding-inline: var(--size-32);
+    padding-block: var(--size-4);
+    font-size: var(--text-tag);
+    line-height: var(--leading-tag);
+    letter-spacing: var(--tracking-paragraph);
+    color: var(--color-accent-text);
+    box-shadow: inset 0 0 0 1px var(--color-accent);
+    border-radius: var(--radius-pill);
+  }
+
+  /* The same pill in the hero's ink, for the one tag set on the photograph,
+     where the accent would not read. */
+  .tag--inverse {
+    color: var(--color-button-ink);
+    box-shadow: inset 0 0 0 1px var(--color-button-ink);
+  }
+
+  /* ---- Hero ------------------------------------------------------------
+     raw/mobile's composite — photo, 8% black veil, two hard-light violet
+     lenses, copy, in that z order, clipped to r24 — with the copy in flow
+     at the foot of the card. The card is at least raw/mobile's 724 and
+     grows with the copy; the 280 on top is where the face shows through. */
+  .hero {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    min-block-size: 724px;
+    padding: 300px 12px var(--size-32);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    /* Safari drops an overflow + border-radius clip for a child on its own
+       compositing layer (the parallax makes the photo one); a clip-path is
+       honoured. */
+    clip-path: inset(0 round var(--radius-lg));
+    isolation: isolate;
+  }
+
+  /* The portrait at its own proportions across the top of the card. Covering
+     the whole card would zoom it until the face filled the screen, because
+     this copy makes the card far taller than the photograph. Below the
+     picture the card is --c-ink, the colour of the shirt it fades into, so
+     the seam disappears under the veil and the lenses. */
+  .hero {
+    background-color: var(--c-ink);
+  }
+
+  .hero__photo {
+    position: absolute;
+    inset-inline: 0;
+    inset-block-start: 0;
+    inline-size: 100%;
+    block-size: auto;
+    max-inline-size: none;
+    z-index: 0;
+    -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent);
+    mask-image: linear-gradient(to bottom, #000 70%, transparent);
+  }
+
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background-color: var(--hero-veil);
+    pointer-events: none;
+  }
+
+  /* raw/mobile's two 794 x 281 lenses, measured from the BOTTOM of the card
+     here (152 and -60 are its 291 and 503 from the top of a 724 card), so
+     they stay under the copy however tall the card grows. */
+  .hero__blob {
+    position: absolute;
+    inline-size: 794px;
+    block-size: 281.156px;
+    inset-inline-start: -233px;
+    background-color: var(--hero-blend);
+    border-radius: 50%;
+    mix-blend-mode: hard-light;
+    opacity: 0.6;
+    filter: blur(30px);
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .hero__blob--1 {
+    inset-block-end: 152px;
+  }
+
+  .hero__blob--2 {
+    inset-block-end: -60px;
+  }
+
+  .hero__content {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--size-24);
+    text-align: center;
+    color: var(--color-button-ink);
+  }
+
+  .hero__titleblock {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-16);
+  }
+
+  .hero__title {
+    font-size: var(--text-hero);
+    line-height: var(--leading-hero);
+    font-weight: var(--weight-bold);
+    color: var(--color-button-ink);
+  }
+
+  .hero__subtitle {
+    font-size: var(--text-h5);
+    line-height: var(--leading-h5);
+    font-weight: var(--weight-medium);
+    letter-spacing: 0;
+    color: var(--color-ghost-ink);
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-16);
+    align-self: stretch;
+  }
+
+  .hero__note {
+    font-size: var(--text-caption);
+    line-height: var(--leading-caption);
+    letter-spacing: 0;
+  }
+
+  /* ---- Credenciais rail ------------------------------------------------
+     raw/mobile's: a 720-wide row in a 360 page, so the section scrolls.
+     The scrollbar is hidden; momentum scrolling and the drag are not. */
+  .credenciais {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    overscroll-behavior-inline: contain;
+  }
+
+  .credenciais::-webkit-scrollbar {
+    display: none;
+  }
+
+  .credenciais__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    inline-size: 720px;
+    block-size: 84px;
+    margin-block: var(--size-48);
+    padding-inline-end: var(--size-24);
+  }
+
+  .credenciais li {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--size-8);
+    font-size: var(--text-paragraph);
+    line-height: var(--leading-paragraph);
+    font-weight: var(--weight-medium);
+    letter-spacing: 0;
+    color: var(--color-body-soft);
+  }
+
+  .credenciais__rule {
+    inline-size: 1px;
+    block-size: 64px;
+    background-color: var(--color-line);
+    align-self: center;
+  }
+
+  .credenciais img {
+    inline-size: 64px;
+    block-size: 64px;
+    flex-shrink: 0;
+    object-fit: contain;
+    margin-block-start: 10px;
+  }
+
+  .credenciais strong {
+    display: block;
+    font-weight: inherit;
+  }
+
+  /* ---- Sobre ------------------------------------------------------------
+     The section rhythm of raw/mobile's Visão: pt40, the copy block, then the
+     cards 56 below it. */
+  .sobre {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-56);
+    padding-block-start: var(--size-40);
+    --section-pad: var(--size-40);
+  }
+
+  .sobre__head,
+  .sobre__intro {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-24);
+    align-items: flex-start;
+  }
+
+  .sobre__head {
+    gap: var(--size-40);
+  }
+
+  /* The CTA's round portrait, at the same 141. */
+  .sobre__avatar {
+    inline-size: 141px;
+    block-size: 141px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  /* Visão's headline treatment: H1 in the accent. */
+  .sobre__intro h2 {
+    font-size: var(--text-h1);
+    line-height: var(--leading-h1);
+    font-weight: var(--weight-bold);
+    color: var(--color-accent);
+  }
+
+  .sobre__claim {
+    font-size: var(--text-h5);
+    line-height: var(--leading-h5);
+    font-weight: var(--weight-medium);
+    letter-spacing: 0;
+    color: var(--color-accent-deep);
+  }
+
+  /* raw/mobile's Princípios cards, stacked. */
+  .pilares {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-16);
+  }
+
+  .principio {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-16);
+    padding: var(--size-24);
+    background-color: var(--color-surface);
+    border-radius: var(--radius-md);
+  }
+
+  .principio__icon {
+    inline-size: var(--size-40);
+    block-size: var(--size-40);
+  }
+
+  .principio__icon--sm {
+    inline-size: var(--size-32);
+    block-size: var(--size-32);
+  }
+
+  .principio div {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-8);
+  }
+
+  .principio h3 {
+    font-size: var(--text-paragraph);
+    line-height: var(--leading-paragraph);
+    font-weight: var(--weight-bold);
+    letter-spacing: var(--tracking-paragraph);
+    color: var(--color-accent);
+  }
+
+  /* ---- Serviços ---------------------------------------------------------
+     raw/mobile's: pt80, gap56, a 32/32 Black navy headline. */
+  .servicos {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-56);
+    padding-block-start: var(--size-80);
+    --section-pad: var(--size-80);
+  }
+
+  .servicos__head,
+  .servicos__intro {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-40);
+    align-items: flex-start;
+  }
+
+  .servicos__head {
+    gap: var(--size-24);
+  }
+
+  .servicos__intro {
+    margin-block-end: var(--size-16);
+  }
+
+  .servicos__head h2 {
+    font-size: var(--text-h3);
+    line-height: var(--leading-h3);
+    font-weight: var(--weight-black);
+    color: var(--color-accent-deep);
+  }
+
+  .servicos__questions {
+    font-weight: var(--weight-bold);
+  }
+
+  .servicos__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-16);
+  }
+
+  /* raw/mobile's service card: padX16 · padY24 · r24 · the two card tints. */
+  .service-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-16);
+    padding-inline: var(--size-16);
+    padding-block: var(--size-24);
+    background-color: var(--color-surface-card);
+    border-radius: var(--radius-lg);
+  }
+
+  .service-card--alt {
+    background-color: var(--color-surface-card-alt);
+  }
+
+  .service-card__number {
+    font-family: var(--font-serif);
+    font-size: var(--text-numeral-sm);
+    line-height: var(--leading-numeral-sm);
+    font-weight: var(--weight-regular);
+    letter-spacing: 0;
+    color: var(--color-accent);
+  }
+
+  .service-card__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-16);
+    color: var(--color-body);
+  }
+
+  .service-card__body h3 {
+    font-size: var(--text-h3);
+    line-height: var(--leading-h3);
+    font-weight: var(--weight-bold);
+    color: var(--color-accent-deep);
+  }
+
+  /* ---- Método -----------------------------------------------------------
+     raw/mobile's Processo head (pt80 · gap40 · 32 Black navy) over its
+     processo-extras blocks (h3 32 Bold navy, 8 to the copy, 40 apart). */
+  .metodo {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-56);
+    padding-block: var(--size-80) var(--size-40);
+    --section-pad: var(--size-80);
+  }
+
+  .metodo__head {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-40);
+    align-items: flex-start;
+  }
+
+  .metodo__intro {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-24);
+  }
+
+  .metodo__intro h2 {
+    font-size: var(--text-h3);
+    line-height: var(--leading-h3);
+    font-weight: var(--weight-black);
+    color: var(--color-accent-deep);
+  }
+
+  .metodo__claim {
+    font-weight: var(--weight-bold);
+  }
+
+  .metodo__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-40);
+  }
+
+  /* Each block opens on the hairline raw/mobile draws between accordion
+     rows, so the four read as one list. */
+  .metodo__list li {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-8);
+    padding-block-start: var(--size-24);
+    box-shadow: inset 0 1px 0 var(--color-line);
+  }
+
+  .metodo__num {
+    font-family: var(--font-serif);
+    font-size: var(--text-h3);
+    line-height: var(--leading-h3);
+    color: var(--color-accent);
+  }
+
+  .metodo__list h3 {
+    font-size: var(--text-h3);
+    line-height: var(--leading-h3);
+    font-weight: var(--weight-bold);
+    color: var(--color-accent-deep);
+  }
+
+  /* ---- Depoimentos ------------------------------------------------------
+     raw/mobile's Histórias head and its testimonial block, three stories
+     instead of five. */
+  .historias {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-48);
+    padding-block-start: 60px;
+    --section-pad: 60px;
+  }
+
+  .historias__left {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-40);
+    align-items: flex-start;
+  }
+
+  .historias__content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-24);
+  }
+
+  .historias__content h2 {
+    font-size: var(--text-h3);
+    line-height: var(--leading-h3);
+    font-weight: var(--weight-bold);
+    color: var(--color-accent-deep);
+  }
+
+  /* The block reserves its tallest state, so the carousel turning over never
+     moves the page under a reader. Measured with all three listed (no JS)
+     and with one (JS); re-measure if the copy changes. */
+  .depoimento {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-24);
+    min-block-size: 651px;
+    scroll-margin-block-start: var(--size-24);
+  }
+
+  /* With scripting on the list carries one entry, so the reserve is
+     re-measured for that: Ana Luiza's state, the tallest by its quote. */
+  .js .depoimento {
+    min-block-size: 497px;
+  }
+
+  .depoimento__pick {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+    clip-path: inset(50%);
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .depoimento__stage {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-40);
+  }
+
+  .depoimento__mark {
+    inline-size: 72px;
+    block-size: 48px;
+  }
+
+  /* One height per story, so the box ends where its text ends; measured at
+     328. The fallback is the tallest. */
+  .depoimento__quotes {
+    display: grid;
+    align-items: start;
+    block-size: 232px;
+  }
+
+  #depo-1:checked ~ .depoimento__stage .depoimento__quotes {
+    block-size: 232px;
+  }
+
+  #depo-2:checked ~ .depoimento__stage .depoimento__quotes {
+    block-size: 174px;
+  }
+
+  #depo-3:checked ~ .depoimento__stage .depoimento__quotes {
+    block-size: 203px;
+  }
+
+  .depoimento__quotes blockquote {
+    grid-area: 1 / 1;
+    font-size: var(--text-h5);
+    line-height: var(--leading-h5);
+    letter-spacing: 0;
+    color: var(--color-body);
+    visibility: hidden;
+  }
+
+  #depo-1:checked ~ .depoimento__stage blockquote:nth-of-type(1),
+  #depo-2:checked ~ .depoimento__stage blockquote:nth-of-type(2),
+  #depo-3:checked ~ .depoimento__stage blockquote:nth-of-type(3) {
+    visibility: visible;
+  }
+
+  .depoimento__people li {
+    position: relative;
+    padding-block: var(--size-24);
+    color: var(--color-body-soft);
+    border-block-start: 1px solid var(--color-line);
+  }
+
+  /* With scripting on, only the story being read is listed; the others stay
+     in the HTML and the radios still take the arrow keys. */
+  .js .depoimento__people li {
+    display: none;
+  }
+
+  .js #depo-1:checked ~ .depoimento__people li:nth-child(1),
+  .js #depo-2:checked ~ .depoimento__people li:nth-child(2),
+  .js #depo-3:checked ~ .depoimento__people li:nth-child(3) {
+    display: grid;
+  }
+
+  .depoimento__people label {
+    display: block;
+    cursor: pointer;
+  }
+
+  #depo-1:checked ~ .depoimento__people li:nth-child(1) label,
+  #depo-2:checked ~ .depoimento__people li:nth-child(2) label,
+  #depo-3:checked ~ .depoimento__people li:nth-child(3) label {
+    color: var(--color-ink);
+  }
+
+  .depoimento__photo {
+    display: none;
+    inline-size: 104px;
+    block-size: 104px;
+    overflow: hidden;
+    border-radius: 50%;
+  }
+
+  .depoimento__photo img {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .depoimento__tags {
+    display: none;
+    flex-wrap: wrap;
+    gap: var(--size-8);
+    margin-block-start: var(--size-8);
+  }
+
+  #depo-1:checked ~ .depoimento__people li:nth-child(1) .depoimento__tags,
+  #depo-2:checked ~ .depoimento__people li:nth-child(2) .depoimento__tags,
+  #depo-3:checked ~ .depoimento__people li:nth-child(3) .depoimento__tags,
+  #depo-1:checked ~ .depoimento__people li:nth-child(1) .depoimento__photo,
+  #depo-2:checked ~ .depoimento__people li:nth-child(2) .depoimento__photo,
+  #depo-3:checked ~ .depoimento__people li:nth-child(3) .depoimento__photo {
+    display: flex;
+  }
+
+  #depo-1:checked ~ .depoimento__people li:nth-child(1),
+  #depo-2:checked ~ .depoimento__people li:nth-child(2),
+  #depo-3:checked ~ .depoimento__people li:nth-child(3) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: var(--size-12);
+    align-items: start;
+  }
+
+  /* raw/mobile's testimonial tag: a filled pill at caption size. These are
+     the old page's story titles, longer than a tag usually is, so they are
+     allowed to wrap — the pill keeps its radius at r16 when they do. */
+  .depoimento__tags span {
+    padding: 6px var(--size-12);
+    background-color: var(--color-surface-card-alt);
+    border-radius: var(--radius-md);
+    font-size: var(--text-caption);
+    line-height: 1.25;
+    color: var(--color-accent);
+  }
+
+  /* ---- Conversas --------------------------------------------------------
+     raw/mobile's Princípios rail without the photograph: snap, hidden
+     scrollbar, each card centred. The rail bleeds to the canvas edge (the
+     negative gutter), and the end inset (360 - 220) / 2 = 70 is what makes
+     the first and last stops reachable at centre. */
+  .conversas__rail {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 220px;
+    gap: var(--size-16);
+    padding-inline: 70px;
+    margin-inline: calc(var(--page-gutter) * -1);
+    padding-block: var(--size-8);
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: inline mandatory;
+    scrollbar-width: none;
+    overscroll-behavior-inline: contain;
+  }
+
+  .conversas__rail::-webkit-scrollbar {
+    display: none;
+  }
+
+  .conversas__rail li {
+    scroll-snap-align: center;
+  }
+
+  /* The screenshots carry their own white chrome, so they sit on a hairline
+     the way raw/mobile's Sobre cards do. */
+  .conversas__rail img {
+    inline-size: 100%;
+    block-size: auto;
+    border-radius: var(--radius-md);
+    box-shadow: 0 0 0 1px var(--color-line);
+  }
+
+  /* ---- Contato ("conversa") --------------------------------------------
+     raw/mobile's CTA: #e5eef4 · r24 · padX24 · padY64, centred. */
+  .conversa {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--size-48);
+    padding-inline: var(--size-24);
+    padding-block: var(--size-64);
+    background-color: var(--color-surface-tint);
+    border-radius: var(--radius-lg);
+    text-align: center;
+  }
+
+  .conversa__avatar {
+    inline-size: 141px;
+    block-size: 141px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .conversa__body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--size-24);
+    inline-size: 100%;
+  }
+
+  .conversa__body .btn {
+    align-self: stretch;
+  }
+
+  .conversa__text {
+    font-size: var(--text-h3);
+    line-height: var(--leading-h3);
+    font-weight: var(--weight-semibold);
+    letter-spacing: 0;
+    color: var(--color-body);
+  }
+
+  .conversa__mail {
+    color: var(--color-accent-text);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  /* ---- FAQ --------------------------------------------------------------
+     raw/mobile's: white cards on the page ground at r8, 16 apart, chevron. */
+  .faq {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-24);
+    padding-block: var(--size-40);
+    --section-pad: var(--size-40);
+  }
+
+  .faq__head {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-40);
+    align-items: flex-start;
+  }
+
+  .faq__intro {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-16);
+  }
+
+  .faq__intro h2 {
+    font-size: var(--text-h3);
+    line-height: var(--leading-h3);
+    font-weight: var(--weight-bold);
+    color: var(--color-accent-deep);
+  }
+
+  .faq__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-16);
+  }
+
+  .faq__item {
+    background-color: var(--color-surface);
+    border-radius: var(--radius-sm);
+    overflow: clip;
+  }
+
+  .faq__item summary {
+    display: flex;
+    align-items: center;
+    gap: var(--size-16);
+    padding-inline: var(--size-16);
+    padding-block: var(--size-24);
+    font-size: var(--text-paragraph);
+    line-height: var(--leading-paragraph);
+    letter-spacing: var(--tracking-paragraph);
+    font-weight: var(--weight-bold);
+    color: var(--color-ink-strong);
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .faq__item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq__chevron {
+    inline-size: var(--size-16);
+    block-size: var(--size-16);
+    flex-shrink: 0;
+    margin-inline-start: auto;
+    background-color: currentcolor;
+    rotate: -90deg;
+    transition: rotate var(--transition);
+    clip-path: polygon(
+      12% 30%, 50% 68%, 88% 30%, 100% 42%, 50% 92%, 0% 42%
+    );
+  }
+
+  .faq__item[open] .faq__chevron {
+    rotate: 0deg;
+  }
+
+  .faq__item[open] summary {
+    padding-block-end: 0;
+  }
+
+  .faq__answer {
+    padding-inline: var(--size-16);
+    padding-block-end: var(--size-24);
+    margin-block-start: var(--size-16);
+    color: var(--color-body-quiet);
+  }
+
+  /* ---- Footer -----------------------------------------------------------
+     raw/mobile's: #28445e · r24 · padX16 · padY24 · two columns 24 apart. */
+  .site-footer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-24);
+    padding-inline: var(--size-16);
+    padding-block: var(--size-24);
+    background-color: var(--color-accent-deep);
+    border-radius: var(--radius-lg);
+    color: var(--color-button-ink);
+  }
+
+  .site-footer__col {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-24);
+  }
+
+  .site-footer__brand {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-24);
+  }
+
+  .brand--inverse {
+    color: var(--color-button-ink);
+  }
+
+  .site-footer__brand p {
+    inline-size: 268px;
+  }
+
+  .site-footer__creds {
+    font-size: var(--text-caption);
+    line-height: var(--leading-caption);
+    letter-spacing: 0;
+  }
+
+  .site-footer__col:last-child,
+  .site-footer__contact {
+    gap: var(--size-32);
+  }
+
+  .site-footer__contact {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .site-footer__field,
+  .site-footer__social {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-8);
+  }
+
+  .site-footer__label,
+  .site-footer__copy {
+    font-size: var(--text-caption);
+    line-height: var(--leading-caption);
+    letter-spacing: 0;
+  }
+
+  .site-footer__social ul {
+    display: flex;
+    align-items: center;
+    gap: var(--size-8);
+    block-size: var(--size-40);
+  }
+
+  .site-footer__social a {
+    display: grid;
+    place-items: center;
+    inline-size: var(--size-40);
+    block-size: var(--size-40);
+  }
+
+  .site-footer__legal {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-8);
+    font-size: var(--text-caption);
+    line-height: var(--leading-caption);
+    letter-spacing: 0;
+  }
+
+  .site-footer__legal a {
+    color: var(--color-button-ink);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  /* ---- Política (modal) -------------------------------------------------
+     raw/mobile's reading card. The dialog sits in the top layer but still
+     carries the canvas zoom, so it is put back at 1:1 with the viewport. */
+  html:has(.policy-modal[open]) {
+    overflow: hidden;
+    scrollbar-gutter: stable;
+  }
+
+  .policy-modal {
+    zoom: calc(1 / var(--page-zoom));
+    margin: auto;
+    border: 0;
+    padding: 0;
+    background: none;
+    max-inline-size: none;
+    max-block-size: none;
+    overflow: visible;
+  }
+
+  .policy-modal::backdrop {
+    background: rgb(4 12 16 / 82%);
+  }
+
+  .policy-modal__card {
+    display: flex;
+    flex-direction: column;
+    inline-size: min(720px, calc(100vw - var(--size-16) * 2));
+    max-block-size: calc(100dvh - var(--size-16) * 2);
+    margin: auto;
+    border-radius: var(--radius-lg);
+    background-color: var(--color-surface);
+    color: var(--color-body);
+    overflow: hidden;
+  }
+
+  .policy-modal__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--size-16);
+    padding: var(--size-24) var(--size-24) var(--size-16);
+    border-block-end: 1px solid var(--color-line);
+  }
+
+  .policy-modal__head h2 {
+    font-size: 28px;
+    line-height: 1.2;
+    font-weight: var(--weight-bold);
+    color: var(--color-accent-deep);
+  }
+
+  .policy-modal__close {
+    flex-shrink: 0;
+    display: block;
+    inline-size: 40px;
+    block-size: 40px;
+    padding: var(--size-8);
+    border-radius: var(--radius-pill);
+    color: var(--color-accent-deep);
+    transition: background-color var(--transition);
+  }
+
+  .policy-modal__close:hover {
+    background-color: var(--color-surface-tint);
+  }
+
+  .policy-modal__close svg {
+    inline-size: 100%;
+    block-size: 100%;
+    fill: none;
+    stroke: currentcolor;
+    stroke-width: 2;
+    stroke-linecap: round;
+  }
+
+  .policy-modal__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-12);
+    padding: var(--size-16) var(--size-24) var(--size-32);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    font-size: 16px;
+    line-height: 1.5;
+    letter-spacing: 0;
+  }
+
+  .policy-modal__body h3 {
+    margin-block-start: var(--size-12);
+    font-size: 20px;
+    line-height: 1.3;
+    font-weight: var(--weight-bold);
+    color: var(--color-accent-deep);
+  }
+
+  .policy-modal__body ul {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-8);
+    padding-inline-start: var(--size-24);
+    list-style: disc;
+  }
+
+  .policy-modal__body a {
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .policy-modal__body strong {
+    font-weight: var(--weight-bold);
+  }
+
+  .policy-modal__date {
+    font-size: 14px;
+    color: var(--color-body-soft);
+  }
+}

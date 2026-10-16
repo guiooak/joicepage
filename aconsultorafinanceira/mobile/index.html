@@ -1,0 +1,966 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <!-- device-width, not a pinned number: the 360 canvas is the narrowest
+         phone, not the target. base.css scales the whole canvas to whatever
+         width the device reports, so 390 and 430 get the same layout larger.
+         Same technique as raw/mobile, which this page is built from. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- HANDOVER, the other half of the pair in ../web/index.html. This page
+         is published at the ROOT and the desktop one at /inicio/, so wide
+         screens are sent down into `inicio/`. `> 1024` leaves; `<= 1024`
+         stays — the strict complement of the desktop page's test, which is
+         what stops the two from ping-ponging. `?layout=mobile|desktop` pins
+         a choice for the session. The reasoning is raw/mobile's, unchanged. -->
+    <script>
+      (function () {
+        "use strict";
+        var BREAK = 1024;
+        var pinned = null;
+        try {
+          var asked = new URLSearchParams(location.search).get("layout");
+          if (asked) sessionStorage.setItem("acf-layout", asked);
+          pinned = sessionStorage.getItem("acf-layout");
+        } catch (e) {}
+
+        if (navigator.webdriver) return;
+
+        function go() {
+          location.replace("inicio/" + location.search + location.hash);
+        }
+        if (pinned === "desktop") return go();
+        if (pinned === "mobile") return;
+
+        function check() {
+          if (innerWidth > BREAK) go();
+        }
+        check();
+
+        var t;
+        function later() {
+          clearTimeout(t);
+          t = setTimeout(check, 150);
+        }
+        addEventListener("resize", later);
+        addEventListener("orientationchange", later);
+      })();
+    </script>
+
+    <title>Joice Sperandio — Consultora Financeira</title>
+    <meta
+      name="description"
+      content="Especialista em investimentos, sem conflitos de interesse e com foco no atendimento humanizado"
+    />
+
+    <!-- Self-referential: this page is the root. The desktop page at /inicio/
+         points its canonical here too, as the same content at a second
+         address. -->
+    <link rel="canonical" href="https://aconsultorafinanceira.com.br/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:title" content="Joice Sperandio — Consultora Financeira" />
+    <meta
+      property="og:description"
+      content="Especialista em investimentos, sem conflitos de interesse e com foco no atendimento humanizado"
+    />
+    <meta property="og:url" content="https://aconsultorafinanceira.com.br/" />
+    <meta property="og:site_name" content="A Consultora Financeira" />
+    <!-- Versioned filename: share sheets cache a preview per image URL, so
+         bump the name whenever the image changes. -->
+    <meta property="og:image" content="https://aconsultorafinanceira.com.br/assets/img/og-v1.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Joice Sperandio, consultora financeira especialista em investimentos" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="favicon.png" sizes="32x32" type="image/png" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="assets/fonts/allomira-variable.woff2"
+      crossorigin
+    />
+    <link rel="preload" as="image" href="assets/img/hero.webp" fetchpriority="high" />
+
+    <link rel="stylesheet" href="styles/tokens.css" />
+    <link rel="stylesheet" href="styles/base.css" />
+    <link rel="stylesheet" href="styles/sections.css" />
+    <link rel="stylesheet" href="styles/motion.css" />
+
+    <!-- Deferred and entirely additive: the page is complete without it. -->
+    <script src="scripts/motion.js" defer></script>
+
+    <!-- With scripting off the policy link is a plain fragment link, so the
+         targeted dialog is shown by CSS rather than by showModal(). -->
+    <noscript>
+      <style>
+        .policy-modal:target {
+          display: flex;
+          position: fixed;
+          inset: 0;
+          z-index: 10;
+          inline-size: auto;
+          block-size: auto;
+          background: rgb(4 12 16 / 82%);
+          opacity: 1;
+        }
+      </style>
+    </noscript>
+
+    <!-- Same entities as the desktop page. Keep the two copies identical. -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://aconsultorafinanceira.com.br/#website",
+            "name": "A Consultora Financeira",
+            "url": "https://aconsultorafinanceira.com.br/",
+            "inLanguage": "pt-BR",
+            "publisher": {
+              "@id": "https://aconsultorafinanceira.com.br/#joice"
+            }
+          },
+          {
+            "@type": "Person",
+            "@id": "https://aconsultorafinanceira.com.br/#joice",
+            "name": "Joice Sperandio",
+            "jobTitle": "Consultora Financeira, Especialista em Investimentos",
+            "description": "Especialista em investimentos, sem conflitos de interesse e com foco no atendimento humanizado",
+            "url": "https://joicesperandio.com.br/",
+            "image": "https://aconsultorafinanceira.com.br/assets/img/hero.webp",
+            "email": "oi@joicesperandio.com.br",
+            "telephone": "+5547991939397",
+            "knowsAbout": [
+              "Consultoria de investimentos",
+              "Planejamento financeiro pessoal",
+              "Aposentadoria"
+            ],
+            "hasCredential": [
+              {
+                "@type": "EducationalOccupationalCredential",
+                "name": "CEA — Certificação ANBIMA de Especialistas em Investimento",
+                "credentialCategory": "certification",
+                "recognizedBy": {
+                  "@type": "Organization",
+                  "name": "ANBIMA",
+                  "url": "https://www.anbima.com.br/"
+                }
+              },
+              {
+                "@type": "EducationalOccupationalCredential",
+                "name": "Consultora de Valores Mobiliários",
+                "credentialCategory": "license",
+                "identifier": "002276-4",
+                "recognizedBy": {
+                  "@type": "GovernmentOrganization",
+                  "name": "Comissão de Valores Mobiliários (CVM)",
+                  "url": "https://www.gov.br/cvm/"
+                }
+              }
+            ],
+            "sameAs": [
+              "https://joicesperandio.com.br/",
+              "https://www.linkedin.com/in/joice-sperandio/",
+              "https://www.instagram.com/joicesperandio/"
+            ]
+          }
+        ]
+      }
+    </script>
+  </head>
+
+  <!-- The page frame IS the body: a 360-wide vertical stack, 16 padding, 16
+       gap, exactly as raw/mobile draws it. -->
+  <body class="frame">
+    <!-- The bar and the <details> drawer are raw/mobile's, unchanged: a
+         disclosure carries expanded/collapsed to assistive tech, keyboard and
+         no-JS readers without a line of script. The links are this page's
+         own sections. -->
+    <header class="site-header">
+      <a class="brand" href="#inicio">
+        <span>Joice Sperandio</span>
+      </a>
+
+      <details class="menu">
+        <summary class="menu__toggle" aria-label="Menu">
+          <svg class="menu__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M3.75 6h16.5M3.75 12h16.5M3.75 18h16.5" />
+          </svg>
+        </summary>
+
+        <nav class="menu__panel" aria-label="Navegação principal">
+          <a href="#inicio">Início</a>
+          <a href="#sobre">Sobre</a>
+          <a href="#servicos">Serviços</a>
+          <a href="#metodo">Método</a>
+          <a href="#depoimentos">Depoimentos</a>
+          <a href="#contato">Contato</a>
+          <a href="#duvidas">Dúvidas</a>
+          <a class="btn btn--primary" href="https://wa.me/5547991939397" target="_blank" rel="noopener noreferrer">Agendar avaliação</a>
+        </nav>
+      </details>
+    </header>
+
+    <main>
+      <!-- Hero. raw/mobile's construction — the photograph clipped to r24
+           under the 8% veil and the two violet hard-light lenses — with the
+           copy in flow at the foot of the card rather than pinned at drawn
+           offsets, because this copy is longer than the one that frame was
+           drawn for. -->
+      <section class="hero" id="inicio">
+        <img
+          class="hero__photo"
+          src="assets/img/hero.webp"
+          alt="Joice Sperandio"
+          width="718"
+          height="946"
+          fetchpriority="high"
+        />
+        <span class="hero__blob hero__blob--1" aria-hidden="true"></span>
+        <span class="hero__blob hero__blob--2" aria-hidden="true"></span>
+
+        <div class="hero__content">
+          <p class="tag tag--inverse">Avaliação gratuita</p>
+          <div class="hero__titleblock">
+            <h1 class="hero__title">Investimentos com tranquilidade e segurança</h1>
+            <p class="hero__subtitle">Consultoria de investimentos isenta e personalizada</p>
+          </div>
+          <p class="hero__lead">
+            Não sabe como começar?<br />
+            Sou Joice Sperandio, consultora financeira especialista em
+            investimentos. De maneira imparcial e segura, posso te ajudar a
+            encontrar os melhores caminhos para fazer o seu dinheiro render
+            mais.
+          </p>
+          <div class="hero__actions">
+            <a class="btn btn--primary" href="#contato">Vamos conversar</a>
+            <p class="hero__note">
+              Nosso primeiro encontro é por minha conta. Entre em contato e
+              agende já a sua avaliação.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Credenciais rail, raw/mobile's: 720 wide in a 360 page, so it
+           scrolls. Only what this page's own copy claims — CVM, CEA and the
+           MBA. There is no CEA mark among the Joice assets, so that entry is
+           type alone rather than a borrowed or invented badge. -->
+      <div class="credenciais">
+        <ul class="credenciais__row">
+          <li>
+            <img src="assets/img/cred-cvm.webp" alt="" width="64" height="64" />
+            <span>
+              <strong>CVM</strong>
+              Consultora de Valores <br />Mobiliários 002276-4
+            </span>
+          </li>
+          <li class="credenciais__rule" aria-hidden="true"></li>
+          <li>
+            <span>
+              <strong>CEA</strong>
+              Especialista em <br />Investimentos
+            </span>
+          </li>
+          <li class="credenciais__rule" aria-hidden="true"></li>
+          <li>
+            <img src="assets/img/cred-mba.webp" alt="" width="64" height="64" />
+            <span>
+              <strong>MBA</strong>
+              Mercado de <br />Capitais
+            </span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Sobre — the old site's "currículo" block. The round portrait, the
+           credentials paragraph and the "Online para todo o Brasil" line,
+           then the four pillars as Joice's Princípios cards: white, icon,
+           accent title. On solid white here rather than 90% over a
+           photograph, because there is no photograph behind them. -->
+      <section class="sobre" id="sobre">
+        <div class="sobre__head">
+          <p class="tag">Sobre</p>
+          <img
+            class="sobre__avatar"
+            src="assets/img/joice-avatar.webp"
+            alt="Joice Sperandio"
+            width="210"
+            height="210"
+            loading="lazy"
+          />
+          <div class="sobre__intro">
+            <h2>Joice Sperandio</h2>
+            <p class="sobre__claim">
+              Especialista em investimentos, sem conflitos de interesse e com
+              foco no atendimento humanizado
+            </p>
+            <p>
+              Planejadora Financeira, Especialista em Investimentos, certificada
+              CEA e habilitada na CVM como Consultora de Valores Mobiliários sob
+              o registro 002276-4.
+            </p>
+            <p class="tag">Online para todo o Brasil</p>
+          </div>
+        </div>
+
+        <ul class="pilares">
+          <li class="principio">
+            <img class="principio__icon" src="assets/img/icon-01.webp" alt="" width="40" height="40" loading="lazy" />
+            <div>
+              <h3>Experiência</h3>
+              <p>
+                Com formação em Administração Financeira e MBA em Mercado de
+                Capitais, é criadora de uma consultoria financeira focada em
+                inteligência financeira pessoal e para autônomos. Já realizou
+                mais de 500 serviços de curadoria financeira.
+              </p>
+            </div>
+          </li>
+          <li class="principio">
+            <img class="principio__icon" src="assets/img/icon-02.webp" alt="" width="40" height="40" loading="lazy" />
+            <div>
+              <h3>Imparcialidade</h3>
+              <p>
+                Atuação dentro das normas da CVM, trabalhando de forma
+                independente na orientação, recomendação e aconselhamento
+                personalizado de ativos para seus clientes (sem vinculação com
+                quaisquer instituição financeira).
+              </p>
+            </div>
+          </li>
+          <li class="principio">
+            <img class="principio__icon principio__icon--sm" src="assets/img/icon-03.webp" alt="" width="32" height="32" loading="lazy" />
+            <div>
+              <h3>Personalização</h3>
+              <p>
+                Apoio a pessoas físicas e profissionais autônomos que já tenham
+                (ou não) uma organização financeira prévia e que já tenham (ou
+                não) experiência com investimentos. Seu atendimento é
+                totalmente personalizado e com olhar para as necessidades e
+                perfil do cliente.
+              </p>
+            </div>
+          </li>
+          <li class="principio">
+            <img class="principio__icon" src="assets/img/icon-04.webp" alt="" width="40" height="40" loading="lazy" />
+            <div>
+              <h3>Disponibilidade</h3>
+              <p>
+                Disponível para atendimentos online para todo o Brasil e também
+                para brasileiros que moram no exterior. Conta com uma
+                metodologia própria na consultoria de investimentos, que
+                contempla um acompanhamento próximo em todas as etapas da
+                aplicação.
+              </p>
+            </div>
+          </li>
+        </ul>
+      </section>
+
+      <!-- Serviços — the four goals as Joice's service cards: Lora numeral,
+           navy title, the claim under it, alternating the two card tints.
+           Stacked rather than on raw/mobile's two-card rail, so all four are
+           readable without a control. -->
+      <section class="servicos" id="servicos">
+        <div class="servicos__head">
+          <div class="servicos__intro">
+            <p class="tag">Serviços</p>
+            <h2>Vamos conversar?</h2>
+          </div>
+          <p class="servicos__questions">
+            Nunca investiu e quer começar?<br />
+            Já investiu, mas quer um serviço transparente e imparcial?
+          </p>
+          <p>
+            Minha consultoria é focada nas suas necessidades e perfil. Vamos
+            conversar muito, alinhar seus objetivos e traçar planos
+            estratégicos em busca dos seus sonhos. Deixe toda a parte técnica
+            comigo!
+          </p>
+        </div>
+
+        <div class="servicos__list">
+          <article class="service-card">
+            <p class="service-card__number">01</p>
+            <div class="service-card__body">
+              <h3>Independência financeira</h3>
+              <p>
+                Quer poder se sustentar com os rendimentos dos seus aportes?
+                Arcar com um custo de vida com renda passiva? Posso te mostrar
+                alternativas para isso.
+              </p>
+            </div>
+          </article>
+          <article class="service-card service-card--alt">
+            <p class="service-card__number">02</p>
+            <div class="service-card__body">
+              <h3>Projeto de vida</h3>
+              <p>
+                Quer viabilizar seus sonhos mais importantes? Adquirir um
+                imóvel, um veículo, viajar com a família? Te ajudo a pensar no
+                melhor caminho para isso.
+              </p>
+            </div>
+          </article>
+          <article class="service-card">
+            <p class="service-card__number">03</p>
+            <div class="service-card__body">
+              <h3>Aposentadoria e patrimônio</h3>
+              <p>
+                Quer garantir uma tranquilidade financeira de longo prazo? Quer
+                proteger o futuro financeiro de quem você ama? Vamos juntos
+                encontrar os melhores investimentos.
+              </p>
+            </div>
+          </article>
+          <article class="service-card service-card--alt">
+            <p class="service-card__number">04</p>
+            <div class="service-card__body">
+              <h3>Organização e gestão de risco</h3>
+              <p>
+                Quer organizar e montar uma reserva financeira? Quer manter uma
+                grana disponível para emergências ou gastos inesperados?
+                Podemos pensar na melhor estratégia.
+              </p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Método — "Entre tantas opções" and its four points, as raw/mobile's
+           Processo head over its processo-extras blocks: every point open
+           and readable, the way the old page showed them. -->
+      <section class="metodo" id="metodo">
+        <div class="metodo__head">
+          <p class="tag">Método</p>
+          <div class="metodo__intro">
+            <h2>Entre tantas opções</h2>
+            <p class="metodo__claim">Minha consultoria é focada nas suas necessidades e perfil.</p>
+            <p>
+              Vamos conversar muito, alinhar seus objetivos e traçar planos
+              estratégicos em busca dos seus sonhos. Deixe toda a parte técnica
+              comigo!
+            </p>
+          </div>
+        </div>
+
+        <ol class="metodo__list">
+          <li>
+            <span class="metodo__num">01</span>
+            <h3>Isenção garantida</h3>
+            <p>
+              Garantia de 100% de imparcialidade nos aconselhamentos de valores
+              mobiliários e produtos de investimento.
+            </p>
+          </li>
+          <li>
+            <span class="metodo__num">02</span>
+            <h3>Encontros online e presenciais individuais</h3>
+            <p>
+              Os encontros podem ser realizados de forma presencial ou remota, a
+              partir de uma plataforma segura de audioconferência (Zoom). A
+              ideia é que, de fato, possamos construir uma estratégia de
+              investimentos baseada nas suas metas.
+            </p>
+          </li>
+          <li>
+            <span class="metodo__num">03</span>
+            <h3>Metodologia prática e personalizada</h3>
+            <p>
+              Tem muitas dúvidas sobre o processo de aplicação? Não se
+              preocupe, estarei disponível para apoiar em toda a sua jornada,
+              também atuando de forma educativa e esclarecedora, a partir de
+              práticas e simulações.
+            </p>
+          </li>
+          <li>
+            <span class="metodo__num">04</span>
+            <h3>Conversa inicial gratuita</h3>
+            <p>
+              Se quiser conhecer mais antes de fechar uma consultoria, é
+              possível realizarmos uma primeira conversa onde poderei entender
+              mais sobre sua vida financeira e suas necessidades. Após esse
+              encontro, você receberá uma proposta personalizada.
+            </p>
+          </li>
+        </ol>
+      </section>
+
+      <!-- Depoimentos — raw/mobile's testimonial, unchanged in mechanism:
+           radios decide which quote shows, so every quote is in the HTML and
+           reachable with scripting off; scripts/motion.js layers the 7s
+           carousel on top by checking the next radio.
+
+           The pairing is positional in three places — radio N,
+           `blockquote:nth-of-type(N)` and `li:nth-child(N)` — plus the
+           `#depo-N` groups in both stylesheets. Each story's title from the
+           old page is its tag. -->
+      <section class="historias" id="depoimentos">
+        <div class="historias__left">
+          <p class="tag">Depoimentos</p>
+          <div class="historias__content">
+            <h2>Quem recomenda</h2>
+            <p>
+              Conheça a história de quem já investe de forma prática e segura
+              com o apoio da minha consultoria.
+            </p>
+          </div>
+        </div>
+
+        <div class="depoimento">
+          <input class="depoimento__pick" type="radio" name="depoimento" id="depo-1" aria-label="Depoimento de Ana Luiza David" checked />
+          <input class="depoimento__pick" type="radio" name="depoimento" id="depo-2" aria-label="Depoimento de Renato Cal" />
+          <input class="depoimento__pick" type="radio" name="depoimento" id="depo-3" aria-label="Depoimento de Kamila e Tiago" />
+
+          <div class="depoimento__stage">
+            <img class="depoimento__mark" src="assets/img/quote.svg" alt="" width="72" height="48" />
+            <div class="depoimento__quotes">
+              <blockquote>
+                Desde o início do processo, sinto que aprendi muito e me tornei
+                mais segura para me aventurar no mundo dos investimentos. A
+                Joice me deu o empurrão que faltava. Me ensinou a separar a
+                pessoa física da jurídica e hoje consigo tomar decisões mais
+                acertadas.
+              </blockquote>
+              <blockquote>
+                A consultoria da Joice tem um cuidado especial e domínio pleno
+                no repasse de conhecimento. Gosto muito das partes práticas e
+                simulações. Consegui fazer meu primeiro investimento. É
+                realmente excelente!
+              </blockquote>
+              <blockquote>
+                Falar em dinheiro entre o casal era algo pesado e
+                desconfortável. Com a consultoria da Joice, conseguimos rever
+                nossos gastos para melhor aplicação de renda. Hoje, estamos
+                começando nossa reserva de emergência.
+              </blockquote>
+            </div>
+          </div>
+
+          <ul class="depoimento__people">
+            <li>
+              <span class="depoimento__who">
+                <label for="depo-1">Ana Luiza David</label>
+                <span class="depoimento__tags">
+                  <span>Segurança como peça-chave para finanças e investimentos</span>
+                </span>
+              </span>
+              <span class="depoimento__photo">
+                <img src="assets/img/depoimento-ana-luiza.webp" alt="" width="260" height="256" loading="lazy" />
+              </span>
+            </li>
+            <li>
+              <span class="depoimento__who">
+                <label for="depo-2">Renato Cal</label>
+                <span class="depoimento__tags">
+                  <span>Início no mundo dos investimentos</span>
+                </span>
+              </span>
+              <span class="depoimento__photo">
+                <img src="assets/img/depoimento-renato.webp" alt="" width="260" height="256" loading="lazy" />
+              </span>
+            </li>
+            <li>
+              <span class="depoimento__who">
+                <label for="depo-3">Kamila e Tiago</label>
+                <span class="depoimento__tags">
+                  <span>Investir em casal</span>
+                </span>
+              </span>
+              <span class="depoimento__photo">
+                <img src="assets/img/depoimento-kamila-tiago.webp" alt="" width="260" height="256" loading="lazy" />
+              </span>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Conversas — the four message screenshots from the old page, on a
+           snap rail like raw/mobile's Princípios rail: every card rests
+           centred, with the end inset (328 - 220) / 2 = 54 that makes the
+           last one reachable. -->
+      <section class="conversas" aria-label="Mensagens de clientes">
+        <ul class="conversas__rail">
+          <li>
+            <img src="assets/img/conversa-01.webp" alt="Mensagem de uma cliente agradecendo a escuta ativa, a tranquilidade e a clareza da consultoria" width="502" height="886" loading="lazy" />
+          </li>
+          <li>
+            <img src="assets/img/conversa-02.webp" alt="Mensagem de cliente sobre a consultoria de investimentos" width="502" height="886" loading="lazy" />
+          </li>
+          <li>
+            <img src="assets/img/conversa-03.webp" alt="Mensagem de cliente sobre a consultoria de investimentos" width="502" height="886" loading="lazy" />
+          </li>
+          <li>
+            <img src="assets/img/conversa-04.webp" alt="Mensagem de cliente sobre a consultoria de investimentos" width="502" height="886" loading="lazy" />
+          </li>
+        </ul>
+      </section>
+
+      <!-- Contato — raw/mobile's "conversa" CTA: the round portrait, the
+           invitation, one WhatsApp button. The old page's form is gone; the
+           e-mail is the second way in. -->
+      <section class="conversa" id="contato">
+        <img
+          class="conversa__avatar"
+          src="assets/img/joice-avatar.webp"
+          alt="Joice Sperandio"
+          width="141"
+          height="141"
+          loading="lazy"
+        />
+
+        <div class="conversa__body">
+          <p class="tag">Invista você também</p>
+          <h2 class="conversa__text">Vamos conversar?</h2>
+          <p class="conversa__lead">
+            Basta me chamar e vamos entender juntos quais são as suas
+            necessidades e qual é o melhor modelo de consultoria que podemos
+            seguir.
+          </p>
+          <a class="btn" href="https://wa.me/5547991939397" target="_blank" rel="noopener noreferrer">Me chama no WhatsApp</a>
+          <a class="conversa__mail" href="mailto:oi@joicesperandio.com.br">oi@joicesperandio.com.br</a>
+        </div>
+      </section>
+
+      <!-- Dúvidas — raw/mobile's FAQ component: white cards, chevron, native
+           <details> so every answer stays in the HTML and readable with
+           scripting off. -->
+      <section class="faq" id="duvidas">
+        <div class="faq__head">
+          <p class="tag">Dúvidas</p>
+          <div class="faq__intro">
+            <h2>Perguntas frequentes</h2>
+            <p>
+              Tem alguma dúvida específica sobre minha consultoria ou sobre o
+              mercado de investimentos?
+            </p>
+          </div>
+        </div>
+
+        <div class="faq__list">
+          <details class="faq__item" name="duvidas" open>
+            <summary>
+              Não tenho conhecimento algum sobre investimentos. Posso fazer uma consultoria?
+              <span class="faq__chevron" aria-hidden="true"></span>
+            </summary>
+            <div class="faq__answer">
+              Claro! Você não precisa de nenhuma preparação prévia sobre esse
+              tema. Minha intenção é justamente te colocar a par de todas as
+              possibilidades e tirar todas as dúvidas que você tiver. É somente
+              necessário que você tenha disposição para investigar suas
+              finanças e organizá-las de forma clara.
+            </div>
+          </details>
+
+          <details class="faq__item" name="duvidas">
+            <summary>
+              O que faz um consultor CVM?
+              <span class="faq__chevron" aria-hidden="true"></span>
+            </summary>
+            <div class="faq__answer">
+              Um consultor com essa certificação é regulamentado pela Comissão
+              de Valores Mobiliários (CVM) para atender clientes interessados
+              em receber aconselhamento sobre seus investimentos. É um dos
+              poucos profissionais que podem recomendar valores mobiliários e
+              produtos de investimentos. Além de técnicas e práticas para
+              auxílio em investimentos, esse tipo de consultor precisa ser
+              isento e autônomo, sem vínculo com instituições, eliminando
+              qualquer conflito de interesse.
+            </div>
+          </details>
+
+          <details class="faq__item" name="duvidas">
+            <summary>
+              Como um consultor de investimentos pode me ajudar?
+              <span class="faq__chevron" aria-hidden="true"></span>
+            </summary>
+            <div class="faq__answer">
+              Esse profissional pode te orientar sobre todos os produtos
+              disponíveis no mercado financeiro, além dos riscos de cada um
+              deles. Também apoia na construção de um plano de ativos, a partir
+              dos seus objetivos e perfil, e aconselha sobre a manutenção do
+              seu patrimônio.
+            </div>
+          </details>
+
+          <details class="faq__item" name="duvidas">
+            <summary>
+              Preciso contar tudo sobre a minha vida financeira a um consultor?
+              <span class="faq__chevron" aria-hidden="true"></span>
+            </summary>
+            <div class="faq__answer">
+              Sim! Mas existe uma garantia de sigilo das suas informações.
+              Compartilhar suas entradas e saídas de dinheiro é essencial para
+              a construção de um plano de investimentos que esteja adequado à
+              sua rotina.
+            </div>
+          </details>
+
+          <details class="faq__item" name="duvidas">
+            <summary>
+              O que um consultor de investimentos NÃO pode fazer?
+              <span class="faq__chevron" aria-hidden="true"></span>
+            </summary>
+            <div class="faq__answer">
+              Um consultor jamais pode intervir na tomada de decisão do seu
+              cliente. Seu papel reside no aconselhamento, mas não é o dono do
+              dinheiro, nunca podendo obrigar o cliente a seguir sua
+              orientação. Inclusive, em casos como esse, o cliente pode
+              procurar entidades, como a CVM, para análise de irregularidades.
+            </div>
+          </details>
+
+          <details class="faq__item" name="duvidas">
+            <summary>
+              Já tenho uma carteira de investimentos, como um consultor de investimentos pode me auxiliar?
+              <span class="faq__chevron" aria-hidden="true"></span>
+            </summary>
+            <div class="faq__answer">
+              Nesses casos, o consultor terá um trabalho de analisar tudo o que
+              você possui, vai entender se estão alinhados com o seu perfil e
+              seus projetos de vida e vai sugerir uma nova carteira de
+              investimentos.
+            </div>
+          </details>
+
+          <details class="faq__item" name="duvidas">
+            <summary>
+              O consultor de investimentos vai me ligar oferecendo oportunidades de investimentos?
+              <span class="faq__chevron" aria-hidden="true"></span>
+            </summary>
+            <div class="faq__answer">
+              Não. Um consultor não vende produtos de investimentos, portanto
+              você não receberá ligações com ofertas de produtos.
+            </div>
+          </details>
+
+          <details class="faq__item" name="duvidas">
+            <summary>
+              Qual a diferença entre Consultoria de Investimentos e Planejamento Financeiro?
+              <span class="faq__chevron" aria-hidden="true"></span>
+            </summary>
+            <div class="faq__answer">
+              São dois serviços distintos. A Consultoria de Investimentos tem
+              um foco maior nos seus ativos financeiros, em analisar os seus
+              investimentos e montar uma carteira de investimentos mais
+              adequada ao seu perfil. Já o serviço de Planejamento Financeiro
+              engloba: organização financeira, orçamento, dívidas,
+              estruturação bancária, análise sobre compra de imóvel,
+              planejamento para aposentadoria, entre outras demandas diversas
+              da saúde financeira. O ideal é que você faça um planejamento
+              financeiro para se organizar e planejar os seus objetivos de vida
+              e uma consultoria de investimentos para saber onde colocar o seu
+              dinheiro. Por aqui, você pode contratar os dois serviços.
+            </div>
+          </details>
+
+          <details class="faq__item" name="duvidas">
+            <summary>
+              O que é CEA?
+              <span class="faq__chevron" aria-hidden="true"></span>
+            </summary>
+            <div class="faq__answer">
+              Segundo a ANBIMA, a CEA (Certificação ANBIMA de Especialistas em
+              Investimento) habilita profissionais do mercado financeiro a
+              atuarem como especialistas em investimentos. Eles podem
+              recomendar produtos de investimentos para clientes em diversos
+              segmentos, além de assessorar gerentes de contas. Joice Sperandio
+              é uma profissional certificada CEA.
+            </div>
+          </details>
+
+          <details class="faq__item" name="duvidas">
+            <summary>
+              O consultor executa os investimentos dentro da corretora para mim?
+              <span class="faq__chevron" aria-hidden="true"></span>
+            </summary>
+            <div class="faq__answer">
+              Não. Toda a parte operacional precisa ser feita por você ou pelo
+              seu assessor ou gerente. O consultor irá orientar quais
+              investimentos você pode aplicar, mas não pode executar a operação
+              para você.
+            </div>
+          </details>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer — raw/mobile's navy block: wordmark, description, credentials,
+           the policy and the contact fields, the two social marks. The site
+           link is the one outward brand link on the page. -->
+    <footer class="site-footer" id="rodape">
+      <div class="site-footer__col">
+        <div class="site-footer__brand">
+          <a class="brand brand--inverse" href="#inicio">
+            <span>Joice Sperandio</span>
+          </a>
+          <p>
+            Especialista em investimentos, sem conflitos de interesse e com
+            foco no atendimento humanizado.
+          </p>
+        </div>
+
+        <p class="site-footer__creds">
+          → CEA Especialista em Investimentos<br />
+          → CVM Consultora de Valores Mobiliários 002276-4<br />
+          → MBA Mercado de Capitais
+        </p>
+      </div>
+
+      <div class="site-footer__col">
+        <nav class="site-footer__legal" aria-label="Navegação do rodapé">
+          <a href="#inicio">Início</a>
+          <a href="#politica-de-privacidade">Política de Privacidade</a>
+        </nav>
+
+        <div class="site-footer__contact">
+          <div class="site-footer__field">
+            <span class="site-footer__label">Telefone:</span>
+            <a href="https://wa.me/5547991939397" target="_blank" rel="noopener noreferrer">+55 47 99193-9397</a>
+          </div>
+          <div class="site-footer__field">
+            <span class="site-footer__label">Email:</span>
+            <a href="mailto:oi@joicesperandio.com.br">oi@joicesperandio.com.br</a>
+          </div>
+          <div class="site-footer__field">
+            <span class="site-footer__label">Site:</span>
+            <a href="https://joicesperandio.com.br/" target="_blank" rel="noopener">joicesperandio.com.br</a>
+          </div>
+        </div>
+
+        <div class="site-footer__social">
+          <span class="site-footer__label">Acompanhe pelas redes sociais:</span>
+          <ul>
+            <li>
+              <a href="https://www.instagram.com/joicesperandio/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                <img src="assets/img/social-instagram.svg" alt="" width="24" height="24" />
+              </a>
+            </li>
+            <li>
+              <a href="https://www.linkedin.com/in/joice-sperandio/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                <img src="assets/img/social-linkedin.svg" alt="" width="20" height="20" />
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <p class="site-footer__copy">©2026 Joice Sperandio. Todos os direitos reservados.</p>
+      </div>
+    </footer>
+
+    <!-- The privacy policy, as raw/mobile's dialog: the text is in the HTML,
+         so it is indexed and readable with scripting off — the footer link is
+         a plain fragment link, scripts/motion.js turns it into showModal(),
+         and without it the <noscript> style in the <head> shows the targeted
+         dialog. The close control is a link to the footer for the same
+         reason.
+
+         Standard LGPD wording, not legal advice: have it reviewed before
+         treating it as final. This page loads no analytics and sets no
+         cookies; if that changes, this text changes with it. -->
+    <dialog class="policy-modal" id="politica-de-privacidade" aria-labelledby="politica-de-privacidade-titulo">
+      <article class="policy-modal__card">
+        <header class="policy-modal__head">
+          <h2 id="politica-de-privacidade-titulo">Política de Privacidade</h2>
+          <a class="policy-modal__close" href="#rodape" aria-label="Fechar">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M6 6 18 18M18 6 6 18" />
+            </svg>
+          </a>
+        </header>
+        <div class="policy-modal__body">
+          <p class="policy-modal__date">Última atualização: 16 de outubro de 2026</p>
+
+          <p>
+            Esta política explica como os seus dados pessoais são tratados quando você visita este
+            site, em conformidade com a Lei Geral de Proteção de Dados (Lei nº 13.709/2018 — LGPD).
+          </p>
+
+          <h3>1. Quem é a responsável pelos seus dados</h3>
+          <p>
+            Este site é mantido por Joice Sperandio, consultora de valores mobiliários habilitada pela
+            CVM, que atua como controladora dos dados pessoais tratados por meio dele. Para qualquer
+            assunto relacionado aos seus dados, escreva para
+            <a href="mailto:oi@joicesperandio.com.br">oi@joicesperandio.com.br</a>.
+          </p>
+
+          <h3>2. Quais dados são tratados</h3>
+          <ul>
+            <li>
+              <strong>Dados que você envia.</strong> O site não tem formulários. Ao entrar em contato por
+              WhatsApp ou e-mail, você compartilha dados como nome, telefone, e-mail e as informações que
+              decidir incluir na conversa.
+            </li>
+            <li>
+              <strong>Dados de navegação.</strong> O site não usa ferramentas de análise nem cookies. O
+              servidor que o hospeda pode registrar dados técnicos de acesso, como endereço IP, data e
+              hora, pelo tempo exigido por lei.
+            </li>
+          </ul>
+
+          <h3>3. Para que os dados são usados</h3>
+          <ul>
+            <li>
+              Responder ao seu contato e preparar uma proposta de serviço — base legal: procedimentos
+              preliminares a contrato (art. 7º, V, da LGPD).
+            </li>
+            <li>
+              Cumprir obrigações legais e regulatórias, inclusive as da CVM — base legal: art. 7º, II.
+            </li>
+          </ul>
+
+          <h3>4. Com quem os dados são compartilhados</h3>
+          <p>
+            Seus dados não são vendidos. Eles são compartilhados apenas com os prestadores de serviço
+            necessários — o provedor de hospedagem do site e a Meta (WhatsApp, quando você escolhe esse
+            canal) — e com autoridades, quando exigido por lei. Alguns desses prestadores armazenam dados
+            fora do Brasil, com as salvaguardas previstas no art. 33 da LGPD.
+          </p>
+
+          <h3>5. Por quanto tempo os dados são guardados</h3>
+          <p>
+            Os dados de contato são mantidos enquanto houver relacionamento ou pelo prazo exigido por lei
+            ou pela regulação aplicável, e depois eliminados.
+          </p>
+
+          <h3>6. Seus direitos</h3>
+          <p>
+            Você pode pedir, a qualquer momento: confirmação de que seus dados são tratados; acesso;
+            correção; anonimização, bloqueio ou eliminação de dados desnecessários; portabilidade; e
+            informação sobre com quem eles são compartilhados. Basta escrever para
+            <a href="mailto:oi@joicesperandio.com.br">oi@joicesperandio.com.br</a>. Você também pode
+            apresentar reclamação à Autoridade Nacional de Proteção de Dados (ANPD).
+          </p>
+
+          <h3>7. Armazenamento no navegador</h3>
+          <p>
+            O site não cria cookies. Ele guarda apenas, na sessão do seu navegador, qual versão da página
+            você preferiu ver (celular ou computador), e essa informação é apagada quando a aba é fechada.
+          </p>
+
+          <h3>8. Segurança</h3>
+          <p>
+            O site é servido apenas por conexão criptografada (HTTPS), e são adotadas medidas razoáveis para
+            proteger os dados contra acesso não autorizado.
+          </p>
+
+          <h3>9. Alterações</h3>
+          <p>
+            Esta política pode ser atualizada. A data no topo indica a versão em vigor.
+          </p>
+        </div>
+      </article>
+    </dialog>
+  </body>
+</html>
