@@ -986,7 +986,7 @@
   .conversa__text {
     font-size: var(--text-h2);
     line-height: var(--leading-h2);
-    font-weight: var(--weight-bold);
+    font-weight: var(--weight-semibold);
     letter-spacing: 0;
     color: var(--color-body);
   }
