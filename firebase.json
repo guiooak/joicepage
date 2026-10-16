@@ -15,12 +15,12 @@
         "type": 301
       },
       {
-        "source": "/inicio",
+        "source": "/e",
         "destination": "/",
         "type": 301
       },
       {
-        "source": "/inicio/**",
+        "source": "/e/**",
         "destination": "/",
         "type": 301
       },

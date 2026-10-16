@@ -716,4 +716,39 @@
      see the comment on it in index.html. */
   const year = document.querySelector(".site-footer__year");
   if (year) year.textContent = "© " + new Date().getFullYear();
+
+  /* ---- 11 · Início sem #inicio -----------------------------------------
+     The page is published at /inicio/, so the plain fragment link would
+     leave /inicio/#inicio in the address bar. The links keep their
+     href="#inicio" — that is still what they do without scripting, and
+     what a copied link points at — and this only takes over the plain
+     click: scroll to 0 and leave the URL bare.
+
+     scrollTo picks up `scroll-behavior` from the stylesheet, so it is
+     smooth, and instant under reduced motion, exactly like the fragment
+     jump it replaces. A history entry is pushed only when there was a hash
+     to drop, so Back from the top still returns to the section the visitor
+     came from, and a second click at the top adds nothing. */
+  const bare = () => location.pathname + location.search;
+
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest('a[href="#inicio"]');
+    if (!link) return;
+    // cmd/ctrl/shift/middle all mean "somewhere else"; leave them be.
+    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+      return;
+    }
+    event.preventDefault();
+    if (location.hash) history.pushState(null, "", bare());
+    window.scrollTo({ top: 0 });
+  });
+
+  // Arriving with the hash already on — the mobile handover carries it
+  // across, and so does an old link or one typed into the address bar —
+  // lands at the top as before; only the address is tidied.
+  const tidy = () => {
+    if (location.hash === "#inicio") history.replaceState(null, "", bare());
+  };
+  tidy();
+  addEventListener("hashchange", tidy);
 })();

@@ -3,10 +3,10 @@
 Single-page landing site for Joice Sperandio, financial planner.
 
 **Production:** <https://joicesperandio.com.br/> (mobile, the root) and
-<https://joicesperandio.com.br/e/> (desktop), on Firebase Hosting.
+<https://joicesperandio.com.br/inicio/> (desktop), on Firebase Hosting.
 
 **Review app:** <https://guiooak.github.io/joicepage/> and
-<https://guiooak.github.io/joicepage/e/>, on GitHub Pages — served `noindex`
+<https://guiooak.github.io/joicepage/inicio/>, on GitHub Pages — served `noindex`
 with a self-referential canonical, deliberately, so it cannot compete with
 the real domain.
 
@@ -20,7 +20,7 @@ What is still open before the site can be called finished is under
 .ai/plans/          architecture plan and decision record
 raw/                one folder per build approach — siblings, independently runnable
   mobile/           zero-dependency mobile page, built to the 360 frame    <- ships at /
-  web/              zero-dependency desktop page, built to the 1440 frame  <- ships at /e/
+  web/              zero-dependency desktop page, built to the 1440 frame  <- ships at /inicio/
 tools/figextract/   decodes a .fig export into a readable node tree
 tools/measure/      headless-Chrome geometry harness, no dependencies
 originals/          the images as exported, before WebP — kept, never deployed
@@ -36,7 +36,7 @@ reverted in `d750c35` because it fought the desktop build. See
 **The mobile page owns the root.** Most visitors arrive on a phone, from
 Instagram and WhatsApp, and Google indexes the mobile version of a site. With
 the mobile page at `/`, both get it with no redirect; the hand-over script
-now sends wide screens down to `/e/`, so the extra page request is paid on
+now sends wide screens down to `/inicio/`, so the extra page request is paid on
 desktops, where the connection is usually the faster one. Until October 2026
 it was the other way round, with the mobile page at `/mobile/`; that URL
 still lands on the root (see [Deploying](#deploying)).
@@ -92,8 +92,8 @@ The artifact is one site with the desktop build nested inside it, not two
 deployments:
 
 ```
-raw/mobile/  →  _site/      →  /             (/joicepage/ on Pages)
-raw/web/     →  _site/e/    →  /e/           (/joicepage/e/ on Pages)
+raw/mobile/  →  _site/         →  /          (/joicepage/ on Pages)
+raw/web/     →  _site/inicio/  →  /inicio/   (/joicepage/inicio/ on Pages)
 ```
 
 **Firebase** authenticates with Workload Identity Federation, not a service
@@ -141,9 +141,9 @@ folder.
 
 `/mobile/`, where the mobile page lived before the swap, still lands on the
 root. Firebase answers it with a **301** (`redirects` in `firebase.json`,
-which run before static files) — and so do `/inicio/`, `/js/` and `/br/`,
-names the desktop page had briefly on 2026-10-06 before settling on `/e/`;
-each answers with a 301 to the root, which routes the visitor on. GitHub
+which run before static files) — and so do `/e/`, where the desktop page
+sat until it moved to `/inicio/`, and `/js/` and `/br/`, names it had briefly
+on 2026-10-06; each answers with a 301 to the root, which routes the visitor on. GitHub
 Pages has no server-side redirects, so the build action writes a small
 `mobile/index.html` with a zero-second refresh and a canonical to the root,
 which Google also treats as a redirect. Both workflows assert their version
@@ -197,7 +197,7 @@ The desktop page needs one rewrite the root does not. Its authored canonical
 points at the **root** — it is the same content at a second address, and the
 root is the one URL that should rank — so the blanket rewrite would leave it
 aimed at the deployment root rather than at itself. The step re-points it
-(and `og:url`) at `<base>/e/` afterwards, and asserts both.
+(and `og:url`) at `<base>/inicio/` afterwards, and asserts both.
 
 There is no `rel="alternate" media=…` any more. That annotation belongs to the
 layout this site had before the swap — desktop canonical, mobile at its own
@@ -239,7 +239,7 @@ Still open:
   advice, and she is a CVM-regulated professional.
 - **Search Console** is not verified yet (DNS TXT record, or a `<meta>` tag in
   both pages). Once it is: submit `sitemap.xml`, and check how Google treats
-  the root and `/e/`.
+  the root and `/inicio/`.
 - **Google Analytics settings:** data retention at 14 months (what the privacy
   policy promises), Google Signals off, and optionally the WhatsApp click as a
   key event. The property's "data collection is not active" banner is
