@@ -68,6 +68,18 @@ jobs:
         with:
           base-url: ${{ steps.pages.outputs.base_url }}
 
+      # A second, unrelated app in the same Pages site, at a subpath: Pages
+      # serves one site per repository, and this is how aconsultorafinanceira
+      # shares it. Pages only — firebase.yml does not run this step, so the
+      # production deploy never carries the app. Its own script checks it,
+      # copies it in and neutralises it as a review app. It runs after
+      # site-build, so it is not minified.
+      - name: Add aconsultorafinanceira at /aconsultorafinanceira/
+        run: |
+          bash aconsultorafinanceira/build.sh \
+            _site/aconsultorafinanceira \
+            "${{ steps.pages.outputs.base_url }}/aconsultorafinanceira"
+
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site
@@ -132,4 +144,23 @@ jobs:
           grep -q 'http-equiv="refresh" content="0; url=../"' /tmp/stub.html \
             || { echo "::error::/mobile/ is not the refresh stub to the root"; exit 1; }
 
-          echo "smoke test passed on both URLs"
+          # aconsultorafinanceira, both pages. `class="menu"` and `class="nav"`
+          # tell the mobile page from the desktop one.
+          acf="${root%/}/aconsultorafinanceira"
+          fetch "$acf/" /tmp/acf-mobile.html
+          fetch "$acf/inicio/" /tmp/acf-desktop.html
+          for page in /tmp/acf-mobile.html /tmp/acf-desktop.html; do
+            for phrase in "Investimentos com tranquilidade e segurança" \
+                          "O que um consultor de investimentos NÃO pode fazer?" \
+                          "Kamila e Tiago" \
+                          'name="robots" content="noindex'; do
+              grep -qF "$phrase" "$page" \
+                || { echo "::error::aconsultorafinanceira $page: \"$phrase\" missing"; exit 1; }
+            done
+          done
+          grep -q 'class="menu"' /tmp/acf-mobile.html \
+            || { echo "::error::/aconsultorafinanceira/ is not the mobile page"; exit 1; }
+          grep -q 'class="nav"' /tmp/acf-desktop.html \
+            || { echo "::error::/aconsultorafinanceira/inicio/ is not the desktop page"; exit 1; }
+
+          echo "smoke test passed on all URLs"
