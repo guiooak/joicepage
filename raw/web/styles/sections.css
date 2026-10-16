@@ -692,6 +692,7 @@
      measured 1014 of content in an 874 box. A min lets the row grow if the
      copy ever needs it, so text can never be sliced. */
   .service-card {
+    position: relative;
     display: flex;
     flex-direction: column;
     flex: 0 0 437px;
@@ -706,7 +707,6 @@
   }
 
   .service-card--muted {
-    position: relative;
     background-color: var(--color-surface-card-alt);
   }
 
@@ -739,7 +739,7 @@
   }
 
   .service-card__list {
-    margin-block-start: var(--size-96);
+    margin-block-start: var(--size-64);
   }
 
   /* list-item 803x64 · padY 16 · arrow 32 · text at x=56 */
@@ -767,6 +767,11 @@
     inset-block-end: var(--size-48);
     inline-size: 90px;
     block-size: 90px;
+  }
+
+  /* Card 01's, pointing back the way card 02's points forward. */
+  .service-card__arrow--back {
+    scale: -1 1;
   }
 
   /* ---- Processo --------------------------------------------------------
