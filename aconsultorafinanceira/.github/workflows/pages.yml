@@ -1,0 +1,198 @@
+# Publish aconsultorafinanceira to GitHub Pages on every push to main.
+#
+# This file lives in joicepage/aconsultorafinanceira/.github/, where it is
+# inert — GitHub only reads workflows at a repository's root. It runs in
+# guiooak/aconsultorafinanceira, which is this folder pushed out with
+# `git subtree push` (see the README), so there mobile/ and web/ are at the
+# repository root.
+#
+#   mobile/  →  _site/          the 360 page — the root
+#   web/     →  _site/inicio/   the 1440 page
+#
+# A REVIEW APP, not production: aconsultorafinanceira.com.br is still served
+# by the old WordPress site. So the artifact is neutralised the way
+# joicepage's review app is — noindex with crawling left open, every
+# production URL rewritten to this deployment so the canonical is
+# self-referential, and no sitemap. The reasoning is written out in
+# joicepage/.github/actions/site-build/action.yml. Adding a CNAME file to
+# mobile/ marks the deployment as production and skips all three.
+#
+# Pages had to be enabled once by hand:
+#   gh api -X POST repos/guiooak/aconsultorafinanceira/pages -f build_type=workflow
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  # Lets you redeploy the current main without an empty commit.
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deploy at a time, never cancelling one in progress.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/configure-pages@v5
+        id: pages
+
+      # Cheap guard against publishing a broken site, over both folders.
+      - name: Check both site directories are intact
+        run: |
+          set -euo pipefail
+          rc=0
+          common="index.html favicon.svg favicon.png apple-touch-icon.png
+                  styles/tokens.css styles/base.css styles/sections.css
+                  styles/motion.css scripts/motion.js
+                  assets/fonts/allomira-variable.woff2
+                  assets/fonts/lora-latin.woff2"
+
+          check_dir() {
+            local dir="$1" extra="$2"
+            echo "── $dir"
+            ( cd "$dir"
+              for f in $common $extra; do
+                [ -f "$f" ] || { echo "::error::$dir is missing $f"; exit 1; }
+              done
+
+              inner=0
+              grep -oE '(src|href)="[^":#]+"' index.html \
+                | sed -E 's/^(src|href)="//; s/"$//' \
+                | grep -vE '^(https?:|mailto:|//|/)' \
+                | sort -u > /tmp/refs.txt
+              while read -r ref; do
+                [ -e "$ref" ] || { echo "::error::$dir/index.html references missing $ref"; inner=1; }
+              done < /tmp/refs.txt
+
+              grep -ohE 'url\("[^"]+"\)' styles/*.css \
+                | sed -E 's/^url\("//; s/"\)$//' \
+                | grep -vE '^(https?:|data:|//)' \
+                | sort -u > /tmp/cssrefs.txt
+              while read -r ref; do
+                [ -n "$ref" ] || continue
+                [ -e "styles/$ref" ] || { echo "::error::$dir/styles references missing $ref"; inner=1; }
+              done < /tmp/cssrefs.txt
+
+              # An unbalanced comment silently swallows the next rule.
+              for f in styles/*.css; do
+                o=$(grep -o '/\*' "$f" | wc -l | tr -d ' ')
+                c=$(grep -o '\*/' "$f" | wc -l | tr -d ' ')
+                [ "$o" = "$c" ] || { echo "::error::$dir/$f has $o '/*' against $c '*/'"; inner=1; }
+              done
+              [ "$inner" -eq 0 ] || exit 1
+              echo "   $(wc -l < /tmp/refs.txt | tr -d ' ') relative refs OK"
+            ) || rc=1
+          }
+
+          check_dir mobile "robots.txt sitemap.xml 404.html"
+          check_dir web ""
+          [ -f web/robots.txt ] && { echo "::error::web/robots.txt would be ignored at a subpath"; rc=1; }
+          [ "$rc" -eq 0 ]
+
+      - name: Assemble the artifact
+        run: |
+          set -euo pipefail
+          rm -rf _site
+          mkdir -p _site/inicio
+          cp -R mobile/. _site/
+          cp -R web/. _site/inicio/
+          [ -f _site/index.html ] && [ -f _site/inicio/index.html ]
+          echo "artifact assembled — $(du -sh _site | cut -f1)"
+
+      - name: Neutralise the review app for search engines
+        env:
+          BASE_URL: ${{ steps.pages.outputs.base_url }}
+        run: |
+          set -euo pipefail
+          if [ -f _site/CNAME ]; then
+            echo "CNAME present — deploying as production, files left as authored"
+            exit 0
+          fi
+
+          base="${BASE_URL%/}"
+          [ -n "$base" ] || { echo "::error::no base url"; exit 1; }
+
+          neutralise() {
+            local file="$1" self="$2"
+            sed -i 's|</head>|  <meta name="robots" content="noindex, nofollow" />\n  </head>|' "$file"
+            # Only the https:// origin: the mailto address is joicesperandio's
+            # and is not touched anyway, but keep the match narrow.
+            sed -i "s|https://aconsultorafinanceira\.com\.br|${base}|g" "$file"
+            sed -i "s|rel=\"canonical\" href=\"[^\"]*\"|rel=\"canonical\" href=\"${self}\"|" "$file"
+            sed -i "s|property=\"og:url\" content=\"[^\"]*\"|property=\"og:url\" content=\"${self}\"|" "$file"
+
+            grep -q 'name="robots" content="noindex' "$file" \
+              || { echo "::error::$file: noindex meta missing"; exit 1; }
+            if grep -q 'https://aconsultorafinanceira\.com\.br' "$file"; then
+              echo "::error::$file: a production URL survived the rewrite"; exit 1
+            fi
+            grep -q "rel=\"canonical\" href=\"${self}\"" "$file" \
+              || { echo "::error::$file: canonical is not ${self}"; exit 1; }
+            echo "neutralised $file — canonical → ${self}"
+          }
+
+          neutralise _site/index.html        "${base}/"
+          neutralise _site/inicio/index.html "${base}/inicio/"
+
+          printf 'User-agent: *\nAllow: /\n' > _site/robots.txt
+          rm -f _site/sitemap.xml
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
+
+      # The copy has to be in the HTML rather than waiting on JS, and each URL
+      # has to serve its own page — so the phrases are page-specific.
+      - name: Smoke-test both deployed pages
+        run: |
+          set -euo pipefail
+          root="${{ steps.deployment.outputs.page_url }}"
+          root="${root%/}"
+
+          fetch() {
+            local url="$1" out="$2" code=000
+            for i in $(seq 1 10); do
+              code=$(curl -sS -o "$out" -w '%{http_code}' -L "$url" || echo 000)
+              [ "$code" = "200" ] && return 0
+              echo "attempt $i on $url: HTTP $code — retrying"
+              sleep 6
+            done
+            echo "::error::$url returned $code"
+            return 1
+          }
+
+          fetch "$root/" /tmp/mobile.html
+          fetch "$root/inicio/" /tmp/desktop.html
+          for page in /tmp/mobile.html /tmp/desktop.html; do
+            for phrase in "Investimentos com tranquilidade e segurança" \
+                          "O que um consultor de investimentos NÃO pode fazer?" \
+                          "Kamila e Tiago" \
+                          "Política de Privacidade" \
+                          'name="robots" content="noindex'; do
+              grep -qF "$phrase" "$page" \
+                || { echo "::error::$page: \"$phrase\" missing"; exit 1; }
+            done
+          done
+          grep -q 'class="menu"' /tmp/mobile.html  || { echo "::error::/ is not the mobile page"; exit 1; }
+          grep -q 'class="nav"' /tmp/desktop.html || { echo "::error::/inicio/ is not the desktop page"; exit 1; }
+          echo "smoke test passed on both URLs"
